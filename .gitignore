@@ -1,0 +1,11 @@
+Library
+Temp
+*.Identifier
+*.Identifier.meta
+*.db
+*.csproj
+*.sln
+*.suo
+obj/*
+UnityVS
+UnityVS.meta

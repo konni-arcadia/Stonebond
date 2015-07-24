@@ -57,11 +57,11 @@ public class PlayerControl : MonoBehaviour
 		Vector2 velocity = body.velocity;
 		if (h == 0.0f) {
 			if(velocity.x > 0.0f) {
-				velocity.x -= breakForce * Time.deltaTime;
+				velocity.x -= breakForce * Time.fixedDeltaTime;
 				if(velocity.x < 0.0f) velocity.x = 0.0f;
 			}
 			else if(velocity.x < 0.0f) {
-				velocity.x += breakForce * Time.deltaTime;
+				velocity.x += breakForce * Time.fixedDeltaTime;
 				if(velocity.x > 0.0f) velocity.x = 0.0f;
 			}
 		}

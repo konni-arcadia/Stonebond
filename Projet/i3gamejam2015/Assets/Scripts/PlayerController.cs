@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour {
 	public float maxFallSpeed = 100.0f / 5;
 	public float breakForce = 200.0f / 5;
 	public float jumpForce = 1000.0f / 5;			// Amount of force added when the player jumps
+	public Transform[] groundChecks;			// A position marking where to check if the player is grounded.
 
 	public AudioClip jumpClip;
 	public AudioClip landClip;
@@ -20,21 +21,26 @@ public class PlayerController : MonoBehaviour {
 
 	private Transform groundCheck;			// A position marking where to check if the player is grounded.
 	private Rigidbody2D body;
+	private InputManager inputManager;
+	private int playerId = 1;
 
 	void Awake() {
 		// Setting up references.
 		groundCheck = transform.Find("groundCheck");
 		body = GetComponent<Rigidbody2D>();
+		inputManager = FindObjectOfType<InputManager>();
 	}
 
 
 	void Update() {
 		// The player is grounded if a linecast to the groundcheck position hits anything on the ground layer.
 		bool wasGrounded = grounded;
-		grounded = Physics2D.Linecast(body.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground"));
+		grounded = false;
+		for (int i = 0; i < groundChecks.Length; i++)
+			grounded = grounded || Physics2D.Linecast(transform.position, groundChecks[i].position, 1 << LayerMask.NameToLayer("Ground"));
 
 		// If the jump button is pressed and the player is grounded then the player should jump.
-		if (Input.GetButtonDown("Jump") && grounded) {
+		if (inputManager.IsHeld(playerId, InputManager.A) && grounded) {
 			// jump
 			Debug.Log("jump", gameObject);
 			jump = true;
@@ -43,16 +49,16 @@ public class PlayerController : MonoBehaviour {
 
 	void FixedUpdate() {
 		// Cache the horizontal input.
-		float h = Input.GetAxis("Horizontal");
+		float h = inputManager.AxisValue(playerId, InputManager.Horizontal);
 
 		// If the player is changing direction (h has a different sign to velocity.x) or hasn't reached maxSpeed yet...
-		if (h * body.velocity.x < maxSpeed) {
-			// ... add a force to the player.
-			body.AddForce(Vector2.right * h * moveForce);
-		}
+//		body.AddForce(Vector2.right * h * moveForce);
 
 		Vector2 velocity = body.velocity;
-		if (h == 0.0f) {
+		float targetSpeed = h * maxSpeed;
+		velocity.x += (targetSpeed - velocity.x) / 5.0f;
+
+/*		if (h == 0.0f) {
 			if (velocity.x > 0.0f) {
 				velocity.x -= breakForce * Time.fixedDeltaTime;
 				if (velocity.x < 0.0f) velocity.x = 0.0f;
@@ -67,9 +73,9 @@ public class PlayerController : MonoBehaviour {
 		if (Mathf.Abs(velocity.x) > maxSpeed) {
 			// ... set the player's velocity to the maxSpeed in the x axis.
 			velocity.x = Mathf.Sign(velocity.x) * maxSpeed;
-		}
+		}*/
 
-		if (body.velocity.y < -maxFallSpeed) {
+		if (velocity.y < -maxFallSpeed) {
 			velocity.y = -maxFallSpeed;
 		}
 

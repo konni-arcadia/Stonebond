@@ -12,6 +12,7 @@ public class PlayerAttackScript : MonoBehaviour {
 	public float cooldownTime = 4.0f;
 
 	private List<PlayerAttackScript> enemies = new List<PlayerAttackScript>();
+	private Collider2D  colliderLeft;
 	private Collider2D  colliderRight;
 
 	public enum State {
@@ -28,7 +29,8 @@ public class PlayerAttackScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake () {
-		colliderRight = transform.Find ("colliderAttackRight").GetComponent<Collider2D> ();
+		colliderRight = transform.Find ("slashAttackColliderRight").GetComponent<Collider2D> ();
+		colliderLeft = transform.Find ("slashAttackColliderLeft").GetComponent<Collider2D> ();
 	}
 
 	void Start() {
@@ -88,7 +90,11 @@ public class PlayerAttackScript : MonoBehaviour {
 		bool knockedBack = false;
 		for(int i = 0; i < enemies.Count; ++i) {
 			PlayerAttackScript enemy = enemies[i];
-			if (colliderRight.IsTouching (enemy.bodyCollider)) {
+
+			// TODO player.getAimDirection()
+			Collider2D collider = colliderRight;
+
+			if (collider.IsTouching (enemy.bodyCollider)) {
 				if(enemy.state != State.INIT && enemy.state != State.ATTACK) {
 					damage ();
 				}

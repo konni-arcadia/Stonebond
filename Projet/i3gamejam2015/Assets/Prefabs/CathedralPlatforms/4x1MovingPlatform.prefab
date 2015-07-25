@@ -10,7 +10,7 @@ GameObject:
   - 4: {fileID: 443422}
   - 114: {fileID: 11430486}
   m_Layer: 0
-  m_Name: 3x1MovingPlatform2
+  m_Name: 4x1MovingPlatform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

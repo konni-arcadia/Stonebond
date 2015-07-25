@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class PlayerMovementController : MonoBehaviour {
 
@@ -19,6 +20,8 @@ public class PlayerMovementController : MonoBehaviour {
 	private bool wantJump = false, wantJumpExtension = false;
 	private int playerId;
 	private float allowJumpTime = 0;
+	private List<Vector2> pendingForcesToApply = new List<Vector2>();
+	private bool isMovementEnabled = true;
 
 	private Rigidbody2D body;
 	private InputManager inputManager;
@@ -29,7 +32,6 @@ public class PlayerMovementController : MonoBehaviour {
 		inputManager = FindObjectOfType<InputManager>();
 		playerId = GetComponent<PlayerStateController>().GetPlayerId();
 	}
-
 
 	void Update() {
 		// The player is grounded if a linecast to the groundcheck position hits anything on the ground layer.
@@ -53,8 +55,15 @@ public class PlayerMovementController : MonoBehaviour {
 	}
 
 	void FixedUpdate() {
+		foreach (Vector2 vector in pendingForcesToApply)
+			body.AddForce(vector);
+		pendingForcesToApply.Clear();
+
 		// Cache the horizontal input.
-		float h = inputManager.AxisValue(playerId, InputManager.Horizontal);
+		float h = isMovementEnabled ? inputManager.AxisValue(playerId, InputManager.Horizontal) : 0;
+		// Facing right?
+		if (Mathf.Abs(h) >= Mathf.Epsilon)
+			setFacingRight(h > 0);
 
 		// If the player is changing direction (h has a different sign to velocity.x) or hasn't reached maxSpeed yet...
 //		body.AddForce(Vector2.right * h * moveForce);
@@ -83,14 +92,23 @@ public class PlayerMovementController : MonoBehaviour {
 		else if (wantJumpExtension) {
 			body.AddForce(new Vector2(0, extensionJumpForce * Time.fixedDeltaTime));
 		}
-
 	}
 
 	public void setMovementEnabled(bool enabled) {
-		// TODO
+		isMovementEnabled = enabled;
 	}
 
 	public void applyForce(Vector2 force) {
-		body.AddForce (force);
+		pendingForcesToApply.Add(force);
+	}
+
+	public bool isFacingRight() {
+		return transform.localScale.x > 0;
+	}
+
+	public void setFacingRight(bool facingRight) {
+		Vector2 val = transform.localScale;
+		val.x = facingRight ? 1 : -1;
+		transform.localScale = val;
 	}
 }

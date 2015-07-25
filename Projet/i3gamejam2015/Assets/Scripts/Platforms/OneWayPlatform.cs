@@ -30,7 +30,7 @@ public class OneWayPlatform : MonoBehaviour {
         //On devra certainement tester un tag ou un layer savoir si c'est un player qui nous a touché, un bullet ou autre
         if(other.gameObject.layer == LayerMask.NameToLayer("Players"))
         {
-            //Debug.Log(other.name + " entre dans le trigger de la plateforme, collision désactivées");
+            Debug.Log(other.name + " entre dans le trigger de la plateforme, collision désactivées");
             Physics2D.IgnoreCollision(myCollisionCollider, other, true);
         }
     }
@@ -40,8 +40,9 @@ public class OneWayPlatform : MonoBehaviour {
         //On devra certainement tester un tag ou un layer savoir si c'est un player qui nous a touché, un bullet ou autre
         if (other.gameObject.layer == LayerMask.NameToLayer("Players"))
         {
-            //Debug.Log(other.name + " sors du trigger de la plateforme, collision réactivées");
+            Debug.Log(other.name + " sors du trigger de la plateforme, collision réactivées");
             Physics2D.IgnoreCollision(myCollisionCollider, other, false);
         }
     }
+
 }

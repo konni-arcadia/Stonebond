@@ -58,7 +58,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 162808}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -12.54, y: 4.42000008, z: 0}
+  m_LocalPosition: {x: 13.46, y: 4.42000008, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 416148}
@@ -129,8 +129,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myEdgeCollider: {fileID: 6861178}
   boxTrigger: {fileID: 6105072}
-  waitBeforeFading: 2
-  waitBeforeAppearing: 2
+  waitBeforeFading: 4
+  waitBeforeAppearing: 4
+  isActiveAtStart: 1
 --- !u!212 &21212248
 SpriteRenderer:
   m_ObjectHideFlags: 1

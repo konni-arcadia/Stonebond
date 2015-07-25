@@ -126,11 +126,6 @@ public class PlayerStateController : MonoBehaviour
 	public void setBondLink(BondLink link) {
 	}
 
-	public void TEMP_setSprite(Sprite s) {
-		// TEMP -- move to view
-		transform.Find("Sprite").GetComponent<SpriteRenderer>().sprite = s;
-	}
-
 	//
 	// STATE MACHINE
 	//

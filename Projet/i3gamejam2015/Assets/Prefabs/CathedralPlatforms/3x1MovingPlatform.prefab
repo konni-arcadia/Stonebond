@@ -164,7 +164,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 164538}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10.0144348, y: -13.2508335, z: 0}
+  m_LocalPosition: {x: 5.86999989, y: -5.23999977, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 401398}
@@ -289,7 +289,7 @@ MonoBehaviour:
   rightBound: {fileID: 421648}
   platform: {fileID: 401398}
   movementSpeed: 3
-  startToLeft: 1
+  startToLeft: 0
 --- !u!114 &11460958
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -301,7 +301,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 797aa5a95a80d2a42946420269bfcfe2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myDisableCollisionTrigger: {fileID: 0}
+  myDisableCollisionTrigger: {fileID: 6115080}
   myCollisionCollider: {fileID: 6189204}
 --- !u!212 &21214350
 SpriteRenderer:

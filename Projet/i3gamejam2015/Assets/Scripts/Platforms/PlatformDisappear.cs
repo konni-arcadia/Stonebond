@@ -7,14 +7,23 @@ public class PlatformDisappear : MonoBehaviour {
 
     public BoxCollider2D boxTrigger;
 
-    public float waitBeforeFading = 2;
-    public float waitBeforeAppearing = 2;
+    public float waitBeforeFading = 8;
+    public float waitBeforeAppearing = 8;
+
+    public bool isActiveAtStart = true;
 
 
 	// Use this for initialization
 	void Start () {
 
-
+        if (isActiveAtStart)
+        {
+            StartCoroutine(WaitAndFade(waitBeforeFading));
+        }
+        else
+        {
+            StartCoroutine(WaitAndFade(0));
+        }
 	
 	}
 	
@@ -34,15 +43,7 @@ public class PlatformDisappear : MonoBehaviour {
 
     IEnumerator WaitAndFade(float waitTime)
     {
-        //flashing the Sprites before disappearing
-       /* yield return new WaitForSeconds(waitTime / 5);
-        DisableChildrenSprites();
-        yield return new WaitForSeconds(waitTime / 5);
-        EnableChildrenSprites();
-        yield return new WaitForSeconds(waitTime / 5);
-        DisableChildrenSprites();
-        yield return new WaitForSeconds(waitTime / 5);
-        EnableChildrenSprites();*/
+ 
         yield return new WaitForSeconds(waitTime);
 
         //Unable the colliders
@@ -64,6 +65,7 @@ public class PlatformDisappear : MonoBehaviour {
         myEdgeCollider.enabled = true;
         boxTrigger.enabled = true;
         EnableChildrenSprites();
+        StartCoroutine(WaitAndFade(waitBeforeFading));
 
     }
 

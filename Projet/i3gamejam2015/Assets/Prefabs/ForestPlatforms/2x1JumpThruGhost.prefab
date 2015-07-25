@@ -58,7 +58,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 162808}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.46000004, y: -1.52999997, z: 0}
+  m_LocalPosition: {x: 13.46, y: 4.42000008, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 416148}
@@ -129,8 +129,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myEdgeCollider: {fileID: 6861178}
   boxTrigger: {fileID: 6105072}
-  waitBeforeFading: 2
-  waitBeforeAppearing: 2
+  waitBeforeFading: 4
+  waitBeforeAppearing: 4
+  isActiveAtStart: 1
 --- !u!212 &21212248
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -154,7 +155,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: cf1082b515db3954d9f89ae862e2a4a0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!212 &21256980
@@ -180,7 +181,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: cf1082b515db3954d9f89ae862e2a4a0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!251 &25171982

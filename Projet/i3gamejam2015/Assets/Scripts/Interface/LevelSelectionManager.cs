@@ -2,74 +2,75 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class MenuManager : MonoBehaviour {
+public class LevelSelectionManager : MonoBehaviour {
 
-    enum StartMenuItem { GameStart, HowTo, Quit };
+    enum LvlSelectionItem { Cathedrale, Foret};
+
     private string dpadHorizontal = "Horizontal";
     private string dpadVertical = "Vertical";
-    private Color32 highlithed = new Color32(107, 107, 107, 255);
-    private Color32 normal = new Color32(0, 0, 0, 255);
-    
+    private Color32 highlithed = new Color32(152, 152, 152, 255);
+    private Color32 normal = new Color32(0, 0, 0, 0);
+
     public GameObject StartButtonArea;
     private Outline[] buttonList;
 
-    private StartMenuItem menuSelectedItem = StartMenuItem.GameStart;
+    private LvlSelectionItem menuSelectedItem = LvlSelectionItem.Cathedrale;
 
     private bool[] wasPressed = new bool[4];
 
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start()
+    {
         buttonList = StartButtonArea.GetComponentsInChildren<Outline>();
 
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-        for (int i = 1; i < 5; i++ )
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        for (int i = 1; i < 5; i++)
             CheckControlerStartMenu(i);
-	}
+    }
 
     void CheckControlerStartMenu(int noControler)
     {
 
         if (Input.GetButtonDown(InputManager.A + " P" + noControler))
         {
-            switch (menuSelectedItem){
-            
-                case StartMenuItem.Quit : Application.Quit();
+            switch (menuSelectedItem)
+            {
+
+                case LvlSelectionItem.Cathedrale: Application.LoadLevel("LevelCathedrale");
                     break;
 
-                case StartMenuItem.GameStart: Application.LoadLevelAdditiveAsync("SelectLvl");
+                case LvlSelectionItem.Foret: Application.LoadLevel("LevelForest"); ;
                     break;
             }
-
-            Destroy(gameObject);
-            
         }
 
-        if (!wasPressed[noControler-1] && Input.GetAxis(dpadVertical + noControler) < 0)
+        if (!wasPressed[noControler - 1] && Input.GetAxis(dpadVertical + noControler) < 0)
         {
-            if (menuSelectedItem != (StartMenuItem)0)
+            if (menuSelectedItem != (LvlSelectionItem)0)
             {
                 buttonList[(int)menuSelectedItem].effectColor = normal;
                 menuSelectedItem -= 1;
                 buttonList[(int)menuSelectedItem].effectColor = highlithed;
                 wasPressed[noControler - 1] = true;
             }
-            
+
         }
         else if (!wasPressed[noControler - 1] && Input.GetAxis(dpadVertical + noControler) > 0)
         {
-            if (menuSelectedItem != StartMenuItem.Quit)
+            if (menuSelectedItem != LvlSelectionItem.Foret)
             {
                 buttonList[(int)menuSelectedItem].effectColor = normal;
                 menuSelectedItem += 1;
                 buttonList[(int)menuSelectedItem].effectColor = highlithed;
                 wasPressed[noControler - 1] = true;
             }
-            
+
         }
         else if (Input.GetAxis(dpadVertical + noControler) == 0 && wasPressed[noControler - 1])
         {

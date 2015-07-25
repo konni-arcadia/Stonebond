@@ -182,7 +182,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
 --- !u!1 &317758940
 GameObject:
   m_ObjectHideFlags: 0
@@ -216,7 +216,7 @@ Transform:
   - {fileID: 1539990754}
   - {fileID: 1978163104}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
 --- !u!1 &445976323
 GameObject:
   m_ObjectHideFlags: 0
@@ -594,7 +594,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 1089814630}
-  - 114: {fileID: 1089814629}
   - 82: {fileID: 1089814631}
   m_Layer: 0
   m_Name: MenuManager
@@ -603,18 +602,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1089814629
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1089814628}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a26408759e20e954e8479c6e3f73d4c0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  StartButtonArea: {fileID: 1192211267}
 --- !u!4 &1089814630
 Transform:
   m_ObjectHideFlags: 0
@@ -626,7 +613,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
 --- !u!82 &1089814631
 AudioSource:
   m_ObjectHideFlags: 0
@@ -803,8 +790,9 @@ GameObject:
   - 223: {fileID: 1274668246}
   - 114: {fileID: 1274668245}
   - 114: {fileID: 1274668244}
+  - 114: {fileID: 1274668247}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: Menu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -823,7 +811,7 @@ RectTransform:
   - {fileID: 1192211269}
   - {fileID: 1835716206}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 4
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
@@ -883,6 +871,18 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
+--- !u!114 &1274668247
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1274668242}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a26408759e20e954e8479c6e3f73d4c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StartButtonArea: {fileID: 1192211267}
 --- !u!1 &1391114344
 GameObject:
   m_ObjectHideFlags: 0

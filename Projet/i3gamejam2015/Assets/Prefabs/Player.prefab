@@ -502,7 +502,7 @@ MonoBehaviour:
   initialJumpForce: 1000
   extensionJumpForce: 4100
   wallJumpLateralForce: 1000
-  maxVelocityWhenGrinding: -16
+  maxVelocityWhenGrinding: -5
   groundChecks:
   - {fileID: 421090}
   - {fileID: 423130}
@@ -658,6 +658,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: wallJumpLateralForce
       value: 2500
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: maxVelocityWhenGrinding
+      value: -5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

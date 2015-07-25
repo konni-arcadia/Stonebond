@@ -11,7 +11,6 @@ GameObject:
   - 61: {fileID: 6189204}
   - 50: {fileID: 5093440}
   - 252: {fileID: 25293022}
-  - 61: {fileID: 6169832}
   - 114: {fileID: 11460958}
   m_Layer: 8
   m_Name: Platform
@@ -82,6 +81,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &170718
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 438106}
+  - 61: {fileID: 6115080}
+  m_Layer: 0
+  m_Name: PlatformTrigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &176278
 GameObject:
   m_ObjectHideFlags: 1
@@ -122,8 +137,9 @@ Transform:
   m_GameObject: {fileID: 120188}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 438106}
   - {fileID: 401818}
   - {fileID: 495914}
   - {fileID: 428362}
@@ -137,10 +153,10 @@ Transform:
   m_GameObject: {fileID: 176278}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: .200000003, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 401398}
-  m_RootOrder: 0
+  m_RootOrder: 1
 --- !u!4 &407260
 Transform:
   m_ObjectHideFlags: 1
@@ -148,7 +164,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 164538}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 12.0299997, y: -6.59353495, z: 0}
+  m_LocalPosition: {x: -10.0144348, y: -13.2508335, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 401398}
@@ -175,11 +191,23 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 143692}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.200000003, y: 0, z: 0}
-  m_LocalScale: {x: .200000003, y: 1, z: 1}
+  m_LocalPosition: {x: -1, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 401398}
-  m_RootOrder: 2
+  m_RootOrder: 3
+--- !u!4 &438106
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 170718}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 401398}
+  m_RootOrder: 0
 --- !u!4 &440226
 Transform:
   m_ObjectHideFlags: 1
@@ -199,11 +227,11 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 196552}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .200000003, y: 0, z: 0}
-  m_LocalScale: {x: .200000003, y: 1, z: 1}
+  m_LocalPosition: {x: 1, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 401398}
-  m_RootOrder: 1
+  m_RootOrder: 2
 --- !u!50 &5093440
 Rigidbody2D:
   serializedVersion: 2
@@ -220,19 +248,19 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!61 &6169832
+--- !u!61 &6115080
 BoxCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 120188}
+  m_GameObject: {fileID: 170718}
   m_Enabled: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
-  m_Offset: {x: .007723141, y: -.327121019}
+  m_Offset: {x: 0, y: -.290428162}
   serializedVersion: 2
-  m_Size: {x: .836373746, y: 1.1291914}
+  m_Size: {x: 3.83945513, y: 1.10096288}
 --- !u!61 &6189204
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -243,9 +271,9 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 1
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 1.78813941e-08, y: .329637527}
   serializedVersion: 2
-  m_Size: {x: .600000024, y: 1}
+  m_Size: {x: 3, y: .280000001}
 --- !u!114 &11402290
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -273,7 +301,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 797aa5a95a80d2a42946420269bfcfe2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myDisableCollisionTrigger: {fileID: 6169832}
+  myDisableCollisionTrigger: {fileID: 0}
   myCollisionCollider: {fileID: 6189204}
 --- !u!212 &21214350
 SpriteRenderer:

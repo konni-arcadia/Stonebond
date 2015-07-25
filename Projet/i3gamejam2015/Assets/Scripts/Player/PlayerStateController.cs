@@ -59,7 +59,9 @@ public class PlayerStateController : MonoBehaviour
 	//
 	// INIT
 	//
-	
+
+	private bool initialized = false;
+
 	void Awake ()
 	{
 		print ("Awake player " + playerId);
@@ -88,6 +90,8 @@ public class PlayerStateController : MonoBehaviour
 		if (inputManager == null) {
 			print ("WARN: inputManager not found");
 		}
+
+		initialized = true;
 	}
 
 	void Start ()
@@ -299,6 +303,10 @@ public class PlayerStateController : MonoBehaviour
 
 	public void OnDrawGizmos ()
 	{
+		if (!initialized) {
+			return;
+		}
+
 		switch (state) {
 		case State.IDLE:
 			drawColliderRect (bodyCollider, Color.white);

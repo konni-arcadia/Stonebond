@@ -31,7 +31,7 @@ public class LevelManager : MonoBehaviour {
 				activePlayers.Add(player);
 		}
 
-		if (/*activePlayers.Count == 2 &&*/ !bondMode) {
+		if (activePlayers.Count == 2 && !bondMode) {
 			Debug.Log("Entering bond mode");
 			bondMode = true;
 			// Create a bond object linking the two players
@@ -46,7 +46,7 @@ public class LevelManager : MonoBehaviour {
 
 	public void bondHasBeenSlashed() {
 		Destroy(bondLink.gameObject);
-			bondLink.emitterA.GetComponent<PlayerStateController>().setBondLink(null);
+		bondLink.emitterA.GetComponent<PlayerStateController>().setBondLink(null);
 		bondLink.emitterB.GetComponent<PlayerStateController>().setBondLink(null);
 	}
 }

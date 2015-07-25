@@ -10,7 +10,7 @@ GameObject:
   - 4: {fileID: 470014}
   - 114: {fileID: 11485962}
   m_Layer: 0
-  m_Name: Player Spawner 1
+  m_Name: Player Spawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

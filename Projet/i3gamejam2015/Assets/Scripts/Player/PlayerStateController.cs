@@ -355,6 +355,10 @@ public class PlayerStateController : MonoBehaviour
 		return playerId;
 	}
 
+	public bool IsSlashed() {
+		return false;
+	}
+
 	//
 	// HELPERS
 	//

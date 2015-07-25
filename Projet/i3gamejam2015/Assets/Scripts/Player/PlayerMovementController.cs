@@ -138,6 +138,10 @@ public class PlayerMovementController : MonoBehaviour {
 		pendingForcesToApply.Add(force);
 	}
 
+	public void setVelocity(Vector2 velocity) {
+		body.velocity = velocity;
+	}
+
 	public bool isFacingRight() {
 		return transform.localScale.x > 0;
 	}

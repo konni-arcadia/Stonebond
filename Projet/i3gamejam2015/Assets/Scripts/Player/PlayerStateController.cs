@@ -18,7 +18,7 @@ public class PlayerStateController : MonoBehaviour
 
 	public int playerId;
 
-	public enum State
+	private enum State
 	{
 		IDLE,
 		SLASH_ATTACK,
@@ -42,7 +42,7 @@ public class PlayerStateController : MonoBehaviour
 	// AIM DIRECTION
 	//
 	
-	public enum AimDirection
+	private enum AimDirection
 	{
 		UP,
 		DOWN,
@@ -58,9 +58,9 @@ public class PlayerStateController : MonoBehaviour
 
 	public float slashAttackTime = 1.0f;
 	public float slashAttackCooldownTime = 4.0f;
-	public float slashAttackDashForceUp = 1000.0f;
-	public float slashAttackDashForceDown = 1000.0f;
-	public float slashAttackDashForceForward = 2000.0f;
+	public float slashAttackDashVelocityUp = 1000.0f;
+	public float slashAttackDashVelocityDown = 1000.0f;
+	public float slashAttackDashVelocityForward = 2000.0f;
 	public AnimationCurve slashAttackDashCurve;
 
 	//
@@ -68,10 +68,10 @@ public class PlayerStateController : MonoBehaviour
 	//
 
 	public float knockbackTime = 2.0f;
-	public float knockbackForceUp = 2000.0f;
-	public float knockbackForceDown = 2000.0f;
-	public float knockbackForceForward = 3000.0f;
-	public AnimationCurve slashAttackKnockbackCurve;
+	public float knockbackVelocityUp = 2000.0f;
+	public float knockbackVelocityDown = 2000.0f;
+	public float knockbackVelocityForward = 3000.0f;
+	public AnimationCurve knockbackCurve;
 
 	private float slashAttackCooldown;
 	private AimDirection knockbackDirection;
@@ -111,6 +111,14 @@ public class PlayerStateController : MonoBehaviour
 				enemies.Add (player);
 			}
 		}
+	}
+
+	//
+	// PUBLIC
+	//
+
+	public bool isSlashed() {
+		return state == State.SLASHED;
 	}
 
 	//
@@ -187,18 +195,18 @@ public class PlayerStateController : MonoBehaviour
 		// dash
 
 		float slashPct = 1.0f - stateTime / slashAttackTime;
-		float dashForcePct = slashAttackDashCurve.Evaluate (slashPct);
+		float dashVelocityPct = slashAttackDashCurve.Evaluate (slashPct);
 
 		switch (aimDirection) {
 		case AimDirection.UP:
-			movementController.applyForce (new Vector2(0.0f, dashForcePct * Time.deltaTime * slashAttackDashForceUp));
+			movementController.setVelocity (new Vector2(0.0f, dashVelocityPct * Time.deltaTime * slashAttackDashVelocityUp));
 			break;
 		case AimDirection.DOWN:
-			movementController.applyForce (new Vector2(0.0f, dashForcePct * Time.deltaTime * -slashAttackDashForceDown));
+			movementController.setVelocity (new Vector2(0.0f, dashVelocityPct * Time.deltaTime * -slashAttackDashVelocityDown));
 			break;
 		case AimDirection.FORWARD:
-			float force = movementController.isFacingRight() ? slashAttackDashForceForward : -slashAttackDashForceForward;
-			movementController.applyForce (new Vector2(dashForcePct * Time.deltaTime * force, 0.0f));
+			float force = movementController.isFacingRight() ? slashAttackDashVelocityForward : -slashAttackDashVelocityForward;
+			movementController.setVelocity (new Vector2(dashVelocityPct * Time.deltaTime * force, 0.0f));
 			break;
 		}
 
@@ -254,18 +262,19 @@ public class PlayerStateController : MonoBehaviour
 		}
 
 		float knockbackPct = 1.0f - stateTime / knockbackTime;
-		float knockbackForcePct = slashAttackKnockbackCurve.Evaluate (knockbackPct);
-	
+		float knockbackVelocityPct = knockbackCurve.Evaluate (knockbackPct);
+		//float knockbackVelocityPct = 1.0f - knockbackPct;
+
 		switch (knockbackDirection) {
 		case AimDirection.UP:
-			movementController.applyForce (new Vector2(0.0f, knockbackForcePct * Time.deltaTime * slashAttackDashForceUp));
+			movementController.applyForce (new Vector2(0.0f, knockbackVelocityPct * Time.deltaTime * knockbackVelocityUp));
 			break;
 		case AimDirection.DOWN:
-			movementController.applyForce (new Vector2(0.0f, knockbackForcePct * Time.deltaTime * -slashAttackDashForceDown));
+			movementController.applyForce (new Vector2(0.0f, knockbackVelocityPct * Time.deltaTime * -knockbackVelocityDown));
 			break;
 		case AimDirection.FORWARD:
-			float force = movementController.isFacingRight() ? -slashAttackDashForceForward : slashAttackDashForceForward;
-			movementController.applyForce (new Vector2(knockbackForcePct * Time.deltaTime * force, 0.0f));
+			float velocity = movementController.isFacingRight() ? -knockbackVelocityForward : knockbackVelocityForward;
+			movementController.applyForce (new Vector2(knockbackVelocityPct * Time.deltaTime * velocity, 0.0f));
 			break;
 		}
 	}

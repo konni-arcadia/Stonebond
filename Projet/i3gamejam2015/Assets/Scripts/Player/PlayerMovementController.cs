@@ -1,13 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerController : MonoBehaviour {
+public class PlayerMovementController : MonoBehaviour {
 
-	[HideInInspector]
-	public bool jump = false;				// Condition for whether the player should jump.
-
-
-	public float moveForce = 365.0f / 5;			// Amount of force added to move the player left and right.
 	public float maxSpeed = 5.0f / 5;				// The fastest the player can travel in the x axis.
 	public float maxFallSpeed = 100.0f / 5;
 	public float breakForce = 200.0f / 5;
@@ -17,18 +12,20 @@ public class PlayerController : MonoBehaviour {
 	public AudioClip jumpClip;
 	public AudioClip landClip;
 
+	private bool jump = false;				// Condition for whether the player should jump.
 	private bool grounded = false;			// Whether or not the player is grounded.
 
 	private Transform groundCheck;			// A position marking where to check if the player is grounded.
 	private Rigidbody2D body;
 	private InputManager inputManager;
-	private int playerId = 1;
+	private int playerId;
 
 	void Awake() {
 		// Setting up references.
 		groundCheck = transform.Find("groundCheck");
 		body = GetComponent<Rigidbody2D>();
 		inputManager = FindObjectOfType<InputManager>();
+		playerId = GetComponent<PlayerStateController>().PlayerId();
 	}
 
 

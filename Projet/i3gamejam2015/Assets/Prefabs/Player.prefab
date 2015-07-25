@@ -55,7 +55,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 476360}
   - 61: {fileID: 6147806}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: slashAttackColliderForward
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -86,7 +86,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 404064}
   - 61: {fileID: 6151464}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: bodyCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -164,7 +164,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 430852}
   - 61: {fileID: 6103116}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: slashAttackColliderDown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -201,7 +201,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 442656}
   - 61: {fileID: 6124196}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: slashAttackColliderUp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -662,6 +662,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: maxVelocityWhenGrinding
       value: -5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

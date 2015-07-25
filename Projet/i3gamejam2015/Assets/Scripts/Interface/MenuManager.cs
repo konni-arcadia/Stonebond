@@ -41,7 +41,7 @@ public class MenuManager : MonoBehaviour {
                 case StartMenuItem.Quit : Application.Quit();
                     break;
 
-                case StartMenuItem.GameStart: Application.LoadLevelAdditiveAsync("SelectLvl");
+                case StartMenuItem.GameStart: Application.LoadLevelAdditiveAsync("SelectPlayers");
                     break;
             }
 

@@ -14,6 +14,7 @@ public class MovingPlatform : MonoBehaviour {
     public float movementSpeed = 1f;
 
     SurfaceEffector2D surfaceEffector;
+    float surfaceEffectorSpeed;
 
     public bool startToLeft = true;
 
@@ -23,7 +24,8 @@ public class MovingPlatform : MonoBehaviour {
         bounds[1] = rightBound;
         surfaceEffector = GetComponentInChildren<SurfaceEffector2D>();
         currentBoundIndex = startToLeft ? 0 : 1;
-        surfaceEffector.speed = (startToLeft  ? -1 : 1) * movementSpeed * 5.5f;
+        surfaceEffectorSpeed = movementSpeed * 5.5f;
+        surfaceEffector.speed = (startToLeft ? -1 : 1) * surfaceEffectorSpeed;
         if (surfaceEffector == null)
         { 
             Debug.LogError("Surface effector can't be found in moving platform " + name);
@@ -35,12 +37,12 @@ public class MovingPlatform : MonoBehaviour {
 	    if(platform.position.x < bounds[0].position.x)
         {
             currentBoundIndex = 1;
-            surfaceEffector.speed *= -1;
+            surfaceEffector.speed = surfaceEffectorSpeed;
         }
         if(platform.position.x > bounds[1].position.x)
         {
             currentBoundIndex = 0;
-            surfaceEffector.speed *= -1;
+            surfaceEffector.speed = -surfaceEffectorSpeed;
         }
 
         platform.position += new Vector3((currentBoundIndex == 0 ? -1 : 1) * movementSpeed * Time.deltaTime, 0f, 0f);

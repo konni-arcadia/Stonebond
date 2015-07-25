@@ -94,9 +94,14 @@ public class PlayerStateController : MonoBehaviour
 		print ("Awake player " + playerId);
 
 		bodyCollider = transform.Find ("bodyCollider").GetComponent<Collider2D> ();
+
 		slashAttackColliderForward = transform.Find ("slashAttackColliderForward").GetComponent<Collider2D> ();
 		slashAttackColliderUp = transform.Find ("slashAttackColliderUp").GetComponent<Collider2D> ();
 		slashAttackColliderDown = transform.Find ("slashAttackColliderDown").GetComponent<Collider2D> ();
+		slashAttackColliderUp.enabled = false;
+		slashAttackColliderDown.enabled = false;
+		slashAttackColliderForward.enabled = false;
+
 		inputManager = FindObjectOfType<InputManager>();
 		movementController = GetComponent<PlayerMovementController>();
 		statusProvider = GetComponent<PlayerStatusProvider> ();
@@ -123,8 +128,8 @@ public class PlayerStateController : MonoBehaviour
 		return state == State.SLASHED;
 	}
 
-	public void setBondLink(BondLink link) {
-	}
+	//public void setBondLink(BondLink bondLink) {
+	//}
 
 	//
 	// STATE MACHINE
@@ -189,6 +194,11 @@ public class PlayerStateController : MonoBehaviour
 			print ("p" + playerId + ": enter IDLE state");
 			state = State.IDLE;
 			slashAttackCooldown = slashAttackCooldownTime;
+
+			slashAttackColliderUp.enabled = false;
+			slashAttackColliderDown.enabled = false;
+			slashAttackColliderForward.enabled = false;
+
 			return;
 		}
 
@@ -212,44 +222,90 @@ public class PlayerStateController : MonoBehaviour
 
 		// collision
 
-		bool knockedBack = false;
-		AimDirection knockedBackDirection = AimDirection.FORWARD;
+//		bool knockedBack = false;
+//		AimDirection knockedBackDirection = AimDirection.FORWARD;
+//
+//		Collider2D collider = null;
+//		switch (aimDirection) {
+//		case AimDirection.UP:
+//			collider = slashAttackColliderUp;
+//			break;
+//		case AimDirection.DOWN:
+//			collider = slashAttackColliderDown;
+//			break;
+//		case AimDirection.FORWARD:
+//			collider = slashAttackColliderForward;
+//			break;
+//		}
+//
+//		for (int i = 0; i < enemies.Count; ++i) {
+//			PlayerStateController enemy = enemies [i];
+//
+//			//print ("p" + playerId + ": testing " + collider + " against " + enemy.bodyCollider);
+//			if (collider.IsTouching (enemy.bodyCollider)) {
+//
+//				print ("enemy.isAttack=" + enemy.isPerformingSlashAttack() + " isAimingOpposite=" + isAimingOppositeDirection (enemy));
+//				print ("dir=" + aimDirection + " enemy.dir=" + enemy.aimDirection);
+//
+//				if (enemy.isPerformingSlashAttack () && isAimingOppositeDirection (enemy)) {
+//					enemy.knockback (aimDirection);
+//					knockedBack = true;
+//					knockedBackDirection = enemy.aimDirection;
+//				} else if (enemy.isSlashable ()) {
+//					enemy.hitWithSlash ();
+//				}
+//			}
+//		}
+//		
+//		if (knockedBack) {
+//			knockback (knockedBackDirection);
+//		}
+	}
 
-		for (int i = 0; i < enemies.Count; ++i) {
-			PlayerStateController enemy = enemies [i];
+	public void onCollide(Collider2D source, Collider2D other) {
+		//debug ("onCollide");
 
-			Collider2D collider = null;
-			switch (aimDirection) {
-			case AimDirection.UP:
-				collider = slashAttackColliderUp;
-				break;
-			case AimDirection.DOWN:
-				collider = slashAttackColliderDown;
-				break;
-			case AimDirection.FORWARD:
-				collider = slashAttackColliderForward;
-				break;
-			}
-
-			//print ("p" + playerId + ": testing " + collider + " against " + enemy.bodyCollider);
-			if (collider.IsTouching (enemy.bodyCollider)) {
-
-				print ("enemy.isAttack=" + enemy.isPerformingSlashAttack() + " isAimingOpposite=" + isAimingOppositeDirection (enemy));
-				print ("dir=" + aimDirection + " enemy.dir=" + enemy.aimDirection);
-
-				if (enemy.isPerformingSlashAttack () && isAimingOppositeDirection (enemy)) {
-					enemy.knockback (aimDirection);
-					knockedBack = true;
-					knockedBackDirection = enemy.aimDirection;
-				} else if (enemy.isSlashable ()) {
-					enemy.hitWithSlash ();
-				}
-			}
+		if (state != State.SLASH_ATTACK) {
+			//debug ("not in SLASH_ATTACK state");
+			return;
 		}
 		
-		if (knockedBack) {
-			knockback (knockedBackDirection);
+		switch (aimDirection) {
+		case AimDirection.UP:
+			if(source != slashAttackColliderUp) {
+				//debug ("source is up");
+				return;
+			}
+			break;
+		case AimDirection.DOWN:
+			if(source != slashAttackColliderDown) {
+				//debug ("source is down");
+				return;
+			}
+			break;
+		case AimDirection.FORWARD:
+			if(source != slashAttackColliderForward) {
+				//debug ("source is up");
+				return;
+			}
+			break;
 		}
+	
+		//debug ("collide");
+		PlayerStateController enemy = other.GetComponentInParent<PlayerStateController> ();
+		if (enemy != null) {
+			//debug ("collide with enemy " + enemy.playerId);
+			if (enemy.isPerformingSlashAttack () && isAimingOppositeDirection (enemy)) {
+				enemy.knockback (aimDirection);
+				knockback (enemy.aimDirection);
+				//knockedBack = true;
+				//knockedBackDirection = enemy.aimDirection;
+			} else if (enemy.isSlashable ()) {
+				enemy.hitWithSlash ();
+			}
+		}
+
+		// TODO bond link
 	}
 	
 	private void updateKnockback ()
@@ -286,6 +342,7 @@ public class PlayerStateController : MonoBehaviour
 			state = State.IDLE;
 
 			// FIXME to be called a bit before...
+			// notification
 			statusProvider.setRespawnWarning();
 		}
 	}
@@ -298,7 +355,26 @@ public class PlayerStateController : MonoBehaviour
 		
 		movementController.setMovementEnabled(false);
 		movementController.resetForces ();
-		
+
+		// notification
+		switch(aimDirection) {
+		case AimDirection.UP:
+			slashAttackColliderUp.enabled = true;
+			slashAttackColliderDown.enabled = false;
+			slashAttackColliderForward.enabled = false;
+			break;
+		case AimDirection.DOWN:
+			slashAttackColliderUp.enabled = false;
+			slashAttackColliderDown.enabled = true;
+			slashAttackColliderForward.enabled = false;
+			break;
+		case AimDirection.FORWARD:
+			slashAttackColliderUp.enabled = false;
+			slashAttackColliderDown.enabled = false;
+			slashAttackColliderForward.enabled = true;
+			break;
+		}
+
 		// notification
 		switch(aimDirection) {
 		case AimDirection.UP:
@@ -323,6 +399,10 @@ public class PlayerStateController : MonoBehaviour
 		movementController.setMovementEnabled (false);
 		movementController.resetForces ();
 
+		slashAttackColliderUp.enabled = false;
+		slashAttackColliderDown.enabled = false;
+		slashAttackColliderForward.enabled = false;
+
 		// notification
 		switch(aimDirection) {
 		case AimDirection.UP:
@@ -346,6 +426,7 @@ public class PlayerStateController : MonoBehaviour
 		movementController.setMovementEnabled (false);
 		movementController.resetForces ();
 
+		// notification
 		statusProvider.setDie ();
 	}
 
@@ -356,10 +437,6 @@ public class PlayerStateController : MonoBehaviour
 	public int GetPlayerId ()
 	{
 		return playerId;
-	}
-
-	public bool IsSlashed() {
-		return false;
 	}
 
 	//

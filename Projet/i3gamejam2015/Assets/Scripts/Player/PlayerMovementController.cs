@@ -30,6 +30,7 @@ public class PlayerMovementController : MonoBehaviour {
 
 
 	void Update() {
+		Debug.Log("V4: " + inputManager.AxisValue(4, InputManager.Horizontal));
 		// The player is grounded if a linecast to the groundcheck position hits anything on the ground layer.
 		bool wasGrounded = grounded;
 		grounded = false;

@@ -124,12 +124,13 @@ public class PlayerStateController : MonoBehaviour
 	// PUBLIC
 	//
 
-	public bool isSlashed() {
+	public bool IsSlashed() {
 		return state == State.SLASHED;
 	}
 
-	//public void setBondLink(BondLink bondLink) {
-	//}
+	public void setBondLink(BondLink bondLink) {
+		// TODO
+	}
 
 	//
 	// STATE MACHINE

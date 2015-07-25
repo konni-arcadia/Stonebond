@@ -34,7 +34,7 @@ public class PlayerMovementController : MonoBehaviour {
 
     private PlayerStatusProvider myStatusProvider;
 
-	void Awake() {
+	void Start() {
 		// Setting up references.
 		body = GetComponent<Rigidbody2D>();
 		inputManager = FindObjectOfType<InputManager>();

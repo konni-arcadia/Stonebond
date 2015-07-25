@@ -314,7 +314,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 797aa5a95a80d2a42946420269bfcfe2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myDisableCollisionTrigger: {fileID: 0}
+  myDisableCollisionTrigger: {fileID: 6115790}
   myCollisionCollider: {fileID: 6169630}
 --- !u!114 &11430486
 MonoBehaviour:

@@ -5,6 +5,8 @@ public class InputManager : MonoBehaviour {
 	private const float AxisDeadZone = 0.6f;
 	// Buttons
 	public const string A = "Jump";
+	public const string BUTTON_ATTACK = "Attack";
+
 	// Axis
 	public const string Horizontal = "Horizontal";
 	public const string Vertical = "Vertical";

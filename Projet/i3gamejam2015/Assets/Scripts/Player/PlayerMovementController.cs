@@ -22,7 +22,7 @@ public class PlayerMovementController : MonoBehaviour {
 	// Executed at next iteration
 	private bool wantJump = false, wantWallJump = false, wantJumpExtension = false;
 	private int playerId;
-	private float allowJumpTime = 0;
+	private float allowJumpTime = 0, disallowDirectionTime = 0;
 	private List<Vector2> pendingForcesToApply = new List<Vector2>();
 	private bool isMovementEnabled = true;
 
@@ -51,6 +51,8 @@ public class PlayerMovementController : MonoBehaviour {
 		else
 			allowJumpTime = Mathf.Max(0, allowJumpTime - Time.deltaTime);
 
+		disallowDirectionTime = Mathf.Max(0, disallowDirectionTime - Time.deltaTime);
+
 		// If the jump button is pressed and the player is grounded then the player should jump.
 		if (inputManager.WasPressed(playerId, InputManager.A)) {
 			// Standard way of jumping (allowed to jump)
@@ -72,7 +74,8 @@ public class PlayerMovementController : MonoBehaviour {
 		pendingForcesToApply.Clear();
 
 		// Cache the horizontal input.
-		float h = isMovementEnabled ? inputManager.AxisValue(playerId, InputManager.Horizontal) : 0;
+		float h = isMovementEnabled && disallowDirectionTime == 0 ?
+			inputManager.AxisValue(playerId, InputManager.Horizontal) : 0;
 		// Facing right?
 		if (Mathf.Abs(h) >= Mathf.Epsilon)
 			setFacingRight(h > 0);
@@ -83,7 +86,6 @@ public class PlayerMovementController : MonoBehaviour {
 		Vector2 velocity = body.velocity;
 		float targetSpeed = h * maxSpeed;
 		velocity.x += (targetSpeed - velocity.x) / 2.0f;
-
 		body.velocity = velocity;
 
 		// If the player should jump...
@@ -98,8 +100,10 @@ public class PlayerMovementController : MonoBehaviour {
 			body.AddForce(new Vector2(0.0f, initialJumpForce));
 
 			// Also move the player away from the wall
-			if (wantWallJump)
+			if (wantWallJump) {
 				body.AddForce(new Vector2(isFacingRight() ? -wallJumpLateralForce : wallJumpLateralForce, 0));
+				disallowDirectionTime = 0.3f;
+			}
 
 			// Make sure the player can't jump again until the jump conditions from Update are satisfied.
 			wantJump = wantWallJump = false;

@@ -10,6 +10,7 @@ public class PlayerStateController : MonoBehaviour
 
 	private InputManager inputManager;
 	private PlayerMovementController movementController;
+	private PlayerStatusProvider statusProvider;
 	private List<PlayerStateController> enemies = new List<PlayerStateController> ();
 	
 	// 
@@ -98,6 +99,7 @@ public class PlayerStateController : MonoBehaviour
 		slashAttackColliderDown = transform.Find ("slashAttackColliderDown").GetComponent<Collider2D> ();
 		inputManager = FindObjectOfType<InputManager>();
 		movementController = GetComponent<PlayerMovementController>();
+		statusProvider = GetComponent<PlayerStatusProvider> ();
 
 		initialized = true;
 	}
@@ -162,12 +164,7 @@ public class PlayerStateController : MonoBehaviour
 		// slash attack
 		if (inputManager.WasPressed (playerId, InputManager.BUTTON_ATTACK)) {
 			if (slashAttackCooldown == 0.0f) {
-				print ("p" + playerId + ": enter SLASH_ATTACK state");
-				state = State.SLASH_ATTACK;
-				stateTime = slashAttackTime;
-
-				movementController.setMovementEnabled(false);
-				movementController.resetForces ();
+				slash ();
 			} else {
 				print ("p" + playerId + ": slash attack on CD");
 			}
@@ -263,7 +260,6 @@ public class PlayerStateController : MonoBehaviour
 
 		float knockbackPct = 1.0f - stateTime / knockbackTime;
 		float knockbackVelocityPct = knockbackCurve.Evaluate (knockbackPct);
-		//float knockbackVelocityPct = 1.0f - knockbackPct;
 
 		switch (knockbackDirection) {
 		case AimDirection.UP:
@@ -285,9 +281,35 @@ public class PlayerStateController : MonoBehaviour
 		if (stateTime <= 0.0f) {
 			print ("p" + playerId + ": enter IDLE state");
 			state = State.IDLE;
+
+			// FIXME to be called a bit before...
+			statusProvider.setRespawnWarning();
 		}
 	}
 
+	private void slash()
+	{
+		print ("p" + playerId + ": enter SLASH_ATTACK state");
+		state = State.SLASH_ATTACK;
+		stateTime = slashAttackTime;
+		
+		movementController.setMovementEnabled(false);
+		movementController.resetForces ();
+		
+		// notification
+		switch(aimDirection) {
+		case AimDirection.UP:
+			statusProvider.setDashUp ();
+			break;
+		case AimDirection.DOWN:
+			statusProvider.setDashDown ();
+			break;
+		case AimDirection.FORWARD:
+			statusProvider.setDashForward ();
+			break;
+		}
+	}
+	
 	private void knockback (AimDirection knockbackDirection)
 	{
 		print ("p" + playerId + ": enter KNOCKBACK state (dir=" + knockbackDirection + ")");
@@ -297,8 +319,21 @@ public class PlayerStateController : MonoBehaviour
 
 		movementController.setMovementEnabled (false);
 		movementController.resetForces ();
-	}
 
+		// notification
+		switch(aimDirection) {
+		case AimDirection.UP:
+			statusProvider.setKnockBackUp ();
+			break;
+		case AimDirection.DOWN:
+			statusProvider.setKnockBackDown ();
+			break;
+		case AimDirection.FORWARD:
+			statusProvider.setKnockBackForward ();
+			break;
+		}
+	}
+	
 	private void hitWithSlash ()
 	{
 		print ("p" + playerId + ": enter SLASHED state");
@@ -307,6 +342,8 @@ public class PlayerStateController : MonoBehaviour
 
 		movementController.setMovementEnabled (false);
 		movementController.resetForces ();
+
+		statusProvider.setDie ();
 	}
 
 	//

@@ -438,7 +438,7 @@ MonoBehaviour:
   verticalAimThreshold: .850000024
   slashAttackWarningTime: 0
   slashAttackTime: .349999994
-  slashAttackCooldownTime: 3
+  slashAttackCooldownTime: .5
   slashAttackKnockbackTime: .5
   slashAttackSlashedTime: 2
   slashAttackDashForceUp: 14000

@@ -191,6 +191,7 @@ public class PlayerStateController : MonoBehaviour
 		if (stateTime <= 0.0f) {
 			print ("p" + playerId + ": enter IDLE state");
 			state = State.IDLE;
+			slashAttackCooldown = slashAttackCooldownTime;
 			return;
 		}
 

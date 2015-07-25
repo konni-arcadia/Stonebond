@@ -118,6 +118,9 @@ public class PlayerStateController : MonoBehaviour
 				enemies.Add (player);
 			}
 		}
+
+        //Tout le monde commence par spawner
+        statusProvider.setRespawnWarning();
 	}
 
 	//

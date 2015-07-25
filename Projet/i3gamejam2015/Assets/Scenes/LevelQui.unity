@@ -867,7 +867,7 @@ Transform:
   - {fileID: 1588389471}
   - {fileID: 233901149}
   m_Father: {fileID: 0}
-  m_RootOrder: 25
+  m_RootOrder: 26
 --- !u!61 &111758417
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1848,7 +1848,7 @@ Transform:
   m_Children:
   - {fileID: 1776343656}
   m_Father: {fileID: 0}
-  m_RootOrder: 19
+  m_RootOrder: 21
 --- !u!61 &266203850
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2121,10 +2121,6 @@ Prefab:
       propertyPath: m_Name
       value: Player 1
       objectReference: {fileID: 0}
-    - target: {fileID: 11436394, guid: 294137296027b2e479aede083fd94e21, type: 2}
-      propertyPath: wallJumpLateralForce
-      value: 1500
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 294137296027b2e479aede083fd94e21, type: 2}
   m_IsPrefabParent: 0
@@ -2321,7 +2317,7 @@ Transform:
   - {fileID: 888344530}
   - {fileID: 1993534950}
   m_Father: {fileID: 0}
-  m_RootOrder: 28
+  m_RootOrder: 29
 --- !u!61 &407954769
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -4276,7 +4272,7 @@ Transform:
   - {fileID: 1370509377}
   - {fileID: 677987268}
   m_Father: {fileID: 0}
-  m_RootOrder: 26
+  m_RootOrder: 27
 --- !u!1001 &853817128
 Prefab:
   m_ObjectHideFlags: 0
@@ -4870,7 +4866,7 @@ Transform:
   - {fileID: 423553548}
   - {fileID: 1138251457}
   m_Father: {fileID: 0}
-  m_RootOrder: 29
+  m_RootOrder: 30
 --- !u!61 &974214725
 BoxCollider2D:
   m_ObjectHideFlags: 0

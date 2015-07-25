@@ -85,7 +85,10 @@ public class PlayerMovementController : MonoBehaviour {
 
 		Vector2 velocity = body.velocity;
 		float targetSpeed = h * maxSpeed;
-		velocity.x += (targetSpeed - velocity.x) / 2.0f;
+		if (grounded)
+			velocity.x += (targetSpeed - velocity.x) / 2.0f;
+		else
+			velocity.x += (targetSpeed - velocity.x) / 10.0f;
 		body.velocity = velocity;
 
 		// If the player should jump...

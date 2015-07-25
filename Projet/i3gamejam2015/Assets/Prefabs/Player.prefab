@@ -187,7 +187,7 @@ MonoBehaviour:
   maxSpeed: 13
   maxFallSpeed: 200
   breakForce: 100
-  jumpForce: 1820
+  jumpForce: 1950
   groundChecks:
   - {fileID: 421090}
   - {fileID: 423130}

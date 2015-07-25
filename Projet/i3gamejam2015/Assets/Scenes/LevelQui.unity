@@ -2616,10 +2616,20 @@ Transform:
   m_LocalPosition: {x: 16.4102306, y: -2.73223257, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+<<<<<<< HEAD
   - {fileID: 329628637}
   m_Father: {fileID: 181527395}
   m_RootOrder: 4
 --- !u!61 &421288135
+=======
+  - {fileID: 1800276958}
+  - {fileID: 367650929}
+  - {fileID: 888344530}
+  - {fileID: 1993534950}
+  m_Father: {fileID: 0}
+  m_RootOrder: 22
+--- !u!61 &407954769
+>>>>>>> 4a195b66d50d306fa0c4ab110537576a461ea9c7
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
@@ -3877,8 +3887,13 @@ Transform:
   - {fileID: 435573622}
   - {fileID: 813599477}
   - {fileID: 693811810}
+<<<<<<< HEAD
   m_Father: {fileID: 181527395}
   m_RootOrder: 11
+=======
+  m_Father: {fileID: 0}
+  m_RootOrder: 14
+>>>>>>> 4a195b66d50d306fa0c4ab110537576a461ea9c7
 --- !u!61 &686179139
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -4520,7 +4535,11 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
+<<<<<<< HEAD
   m_RootOrder: 1
+=======
+  m_RootOrder: 25
+>>>>>>> 4a195b66d50d306fa0c4ab110537576a461ea9c7
 --- !u!1 &849038242
 GameObject:
   m_ObjectHideFlags: 0

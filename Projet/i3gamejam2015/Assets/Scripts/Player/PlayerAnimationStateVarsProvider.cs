@@ -95,6 +95,6 @@ public class PlayerAnimationStateVarsProvider : MonoBehaviour {
     public void RespawnWarningAction()
     {
         if (myAnimator != null)
-            myAnimator.SetTrigger("Rewpawn");
+            myAnimator.SetTrigger("Respawn");
     }
 }

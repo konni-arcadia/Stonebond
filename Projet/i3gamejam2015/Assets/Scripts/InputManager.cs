@@ -27,6 +27,10 @@ public class InputManager : MonoBehaviour {
 	}
 	
 	public bool IsHeld(int playerId, string keyName) {
+		return Input.GetButton(keyName + " P" + playerId);
+	}
+
+	public bool WasPressed(int playerId, string keyName) {
 		return Input.GetButtonDown(keyName + " P" + playerId);
 	}
 }

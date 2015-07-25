@@ -20,6 +20,7 @@ public class MovingPlatform : MonoBehaviour {
         bounds[0] = leftBound;
         bounds[1] = rightBound;
         surfaceEffector = GetComponentInChildren<SurfaceEffector2D>();
+        surfaceEffector.speed = -movementSpeed * 5.5f;
         if (surfaceEffector == null)
         { 
             Debug.LogError("Surface effector can't be found in moving platform " + name);

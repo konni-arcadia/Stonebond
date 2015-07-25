@@ -413,7 +413,8 @@ MonoBehaviour:
   breakForce: 100
   initialJumpForce: 1000
   extensionJumpForce: 4100
-  wallJumpLateralForce: 1200
+  wallJumpLateralForce: 1000
+  maxVelocityWhenGrinding: -16
   groundChecks:
   - {fileID: 421090}
   - {fileID: 423130}

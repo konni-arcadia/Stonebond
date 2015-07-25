@@ -9,6 +9,7 @@ public class PlayerStateController : MonoBehaviour
 	private bool facingRight;
 	private Collider2D bodyCollider;
 	private InputManager inputManager;
+	private PlayerMovementController movementController;
 	private List<PlayerStateController> enemies = new List<PlayerStateController> ();
 	
 	// 
@@ -50,11 +51,27 @@ public class PlayerStateController : MonoBehaviour
 	public float slashAttackCooldownTime = 4.0f;
 	public float slashAttackKnockbackTime = 2.0f;
 	public float slashAttackSlashedTime = 10.0f;
+	public float slashAttackDashForceUp = 1000.0f;
+	public float slashAttackDashForceDown = 1000.0f;
+	public float slashAttackDashForceForward = 2000.0f;
+	public float slashAttackKnockbackForceUp = 2000.0f;
+	public float slashAttackKnockbackForceDown = 2000.0f;
+	public float slashAttackKnockbackForceForward = 3000.0f;
+
+	public AnimationCurve slashAttackDashCurve;
+	public AnimationCurve slashAttackKnockbackCurve;
+
 	private float slashAttackCooldown;
+
 	private Collider2D  slashAttackColliderForward;
 	private Collider2D  slashAttackColliderUp;
 	private Collider2D  slashAttackColliderDown;
 
+	//
+	// KNOCKBACK
+	//
+
+	private AimDirection knockbackDirection;
 
 	//
 	// INIT
@@ -67,29 +84,11 @@ public class PlayerStateController : MonoBehaviour
 		print ("Awake player " + playerId);
 
 		bodyCollider = transform.Find ("bodyCollider").GetComponent<Collider2D> ();
-		if (bodyCollider == null) {
-			print ("WARN: bodyCollider not found");
-		}
-
 		slashAttackColliderForward = transform.Find ("slashAttackColliderForward").GetComponent<Collider2D> ();
-		if (bodyCollider == null) {
-			print ("WARN: slashAttackColliderForward not found");
-		}
-
 		slashAttackColliderUp = transform.Find ("slashAttackColliderUp").GetComponent<Collider2D> ();
-		if (bodyCollider == null) {
-			print ("WARN: slashAttackColliderUp not found");
-		}
-
 		slashAttackColliderDown = transform.Find ("slashAttackColliderDown").GetComponent<Collider2D> ();
-		if (bodyCollider == null) {
-			print ("WARN: slashAttackColliderDown not found");
-		}
-
 		inputManager = FindObjectOfType<InputManager>();
-		if (inputManager == null) {
-			print ("WARN: inputManager not found");
-		}
+		movementController = GetComponent<PlayerMovementController>();
 
 		initialized = true;
 	}
@@ -132,6 +131,8 @@ public class PlayerStateController : MonoBehaviour
 
 	private void updateIdle ()
 	{
+		movementController.setMovementEnabled (true);
+
 		// aim direction
 		float v = inputManager.AxisValue (playerId, InputManager.Vertical);
 		if (v <= -verticalAimThreshold) {
@@ -145,11 +146,22 @@ public class PlayerStateController : MonoBehaviour
 		//print (" v=" + v + " aim=" + aimDirection);
 
 		// slash attack
-		if (inputManager.IsHeld (playerId, InputManager.BUTTON_ATTACK)) {
+		if (inputManager.WasPressed (playerId, InputManager.BUTTON_ATTACK)) {
 			if (slashAttackCooldown == 0.0f) {
-				print ("p" + playerId + ": enter SLASH_ATTACK_WARNING state");
-				state = State.SLASH_ATTACK_WARNING;
-				stateTime = slashAttackWarningTime;
+				if(slashAttackWarningTime == 0.0f) {
+					print ("p" + playerId + ": enter SLASH_ATTACK state");
+					// don't loose a frame if warning is configured to 0
+					state = State.SLASH_ATTACK;
+					stateTime = slashAttackTime;
+				}
+				else {
+					print ("p" + playerId + ": enter SLASH_ATTACK_WARNING state");
+					state = State.SLASH_ATTACK_WARNING;
+					stateTime = slashAttackWarningTime;
+				}
+				movementController.setMovementEnabled(false);
+				movementController.resetForces ();
+
 			} else {
 				print ("p" + playerId + ": slash attack on CD");
 			}
@@ -170,8 +182,6 @@ public class PlayerStateController : MonoBehaviour
 			print ("p" + playerId + ": enter SLASH_ATTACK state dir=" + aimDirection);
 			state = State.SLASH_ATTACK;
 			stateTime = slashAttackTime;
-
-			// TODO dash in aimDirection
 		}
 	}
 	
@@ -183,8 +193,27 @@ public class PlayerStateController : MonoBehaviour
 			state = State.IDLE;
 			return;
 		}
+
+		float slashPct = 1.0f - stateTime / slashAttackTime;
+		float dashForcePct = slashAttackDashCurve.Evaluate (slashPct);
+
+		switch (aimDirection) {
+		case AimDirection.UP:
+			movementController.applyForce (new Vector2(0.0f, dashForcePct * Time.deltaTime * slashAttackDashForceUp));
+			break;
+		case AimDirection.DOWN:
+			movementController.applyForce (new Vector2(0.0f, dashForcePct * Time.deltaTime * -slashAttackDashForceDown));
+			break;
+		case AimDirection.FORWARD:
+			float force = movementController.isFacingRight() ? slashAttackDashForceForward : -slashAttackDashForceForward;
+		//	print ("force=" + force);
+			movementController.applyForce (new Vector2(dashForcePct * Time.deltaTime * force, 0.0f));
+			break;
+		}
 		
 		bool knockedBack = false;
+		AimDirection knockedBackDirection = AimDirection.FORWARD;
+
 		for (int i = 0; i < enemies.Count; ++i) {
 			PlayerStateController enemy = enemies [i];
 
@@ -201,19 +230,20 @@ public class PlayerStateController : MonoBehaviour
 				break;
 			}
 
-			print ("p" + playerId + ": testing " + collider + " against " + enemy.bodyCollider);
+			//print ("p" + playerId + ": testing " + collider + " against " + enemy.bodyCollider);
 			if (collider.IsTouching (enemy.bodyCollider)) {
 				if (enemy.isPerformingSlashAttack () && isAimingOppositeDirection (enemy)) {
-					enemy.knockback ();
+					enemy.knockback (aimDirection);
 					knockedBack = true;
+					knockedBackDirection = enemy.aimDirection;
 				} else {
-					enemy.slash ();
+					enemy.hitWithSlash ();
 				}
 			}
 		}
 		
 		if (knockedBack) {
-			knockback ();
+			knockback (knockedBackDirection);
 		}
 	}
 	
@@ -223,6 +253,23 @@ public class PlayerStateController : MonoBehaviour
 		if (stateTime <= 0.0f) {
 			print ("p" + playerId + ": enter IDLE state");
 			state = State.IDLE;
+			return;
+		}
+
+		float knockbackPct = 1.0f - stateTime / slashAttackKnockbackTime;
+		float knockbackForcePct = slashAttackKnockbackCurve.Evaluate (knockbackPct);
+		
+		switch (knockbackDirection) {
+		case AimDirection.UP:
+			movementController.applyForce (new Vector2(0.0f, knockbackForcePct * Time.deltaTime * slashAttackDashForceUp));
+			break;
+		case AimDirection.DOWN:
+			movementController.applyForce (new Vector2(0.0f, knockbackForcePct * Time.deltaTime * -slashAttackDashForceDown));
+			break;
+		case AimDirection.FORWARD:
+			float force = movementController.isFacingRight() ? slashAttackDashForceForward : -slashAttackDashForceForward;
+			movementController.applyForce (new Vector2(knockbackForcePct * Time.deltaTime * force, 0.0f));
+			break;
 		}
 	}
 
@@ -235,22 +282,22 @@ public class PlayerStateController : MonoBehaviour
 		}
 	}
 
-	private void knockback ()
+	private void knockback (AimDirection knockbackDirection)
 	{
 		print ("p" + playerId + ": enter KNOCKBACK state");
 		state = State.KNOCKBACK;
 		stateTime = slashAttackKnockbackTime;
-		
-		// TODO call animator
+		this.knockbackDirection = knockbackDirection;
+
+		movementController.setMovementEnabled (false);
+		movementController.resetForces ();
 	}
 
-	private void slash ()
+	private void hitWithSlash ()
 	{
 		print ("p" + playerId + ": enter SLASHED state");
 		state = State.SLASHED;
 		stateTime = slashAttackSlashedTime;
-		
-		// TODO call animator
 	}
 
 	//
@@ -324,7 +371,12 @@ public class PlayerStateController : MonoBehaviour
 				drawRect (bodyCollider.transform.position.x, bodyCollider.transform.position.y - 1.0f, 0.6f, 0.6f, Color.red);
 				break;
 			case AimDirection.FORWARD:
-				drawRect (bodyCollider.transform.position.x + 1.0f, bodyCollider.transform.position.y, 0.6f, 0.6f, Color.red);
+				if(movementController.isFacingRight()) {
+					drawRect (bodyCollider.transform.position.x + 1.0f, bodyCollider.transform.position.y, 0.6f, 0.6f, Color.red);
+				}
+				else {
+					drawRect (bodyCollider.transform.position.x - 1.0f, bodyCollider.transform.position.y, 0.6f, 0.6f, Color.red);
+				}
 				break;
 			}
 			break;

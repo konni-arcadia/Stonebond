@@ -68,7 +68,6 @@ public class PlayerMovementController : MonoBehaviour {
 
 		isGrinding = isMovementEnabled && allowJumpTime < Mathf.Epsilon &&
 			body.velocity.y < 0 && Physics2D.Linecast(raycastBase.position, wallJumpCheck.position, 1 << LayerMask.NameToLayer("Ground"));
-		Debug.Log("Grdinding: " + isGrinding);
 
         //Update grounded status in player status component
         myStatusProvider.setOnWallStatus(isGrinding);

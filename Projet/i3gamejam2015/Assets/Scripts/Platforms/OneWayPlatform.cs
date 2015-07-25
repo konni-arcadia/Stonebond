@@ -27,15 +27,21 @@ public class OneWayPlatform : MonoBehaviour {
     //On rentre dans la one way platform par le bas ou le cote
     void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log(other.name + " entre dans le trigger de la plateforme, collision désactivées");
         //On devra certainement tester un tag ou un layer savoir si c'est un player qui nous a touché, un bullet ou autre
-        Physics2D.IgnoreCollision(myCollisionCollider, other, true);
+        if(other.gameObject.layer == LayerMask.NameToLayer("Players"))
+        {
+            Debug.Log(other.name + " entre dans le trigger de la plateforme, collision désactivées");
+            Physics2D.IgnoreCollision(myCollisionCollider, other, true);
+        }
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
-        Debug.Log(other.name + " sors du trigger de la plateforme, collision réactivées");
         //On devra certainement tester un tag ou un layer savoir si c'est un player qui nous a touché, un bullet ou autre
-        Physics2D.IgnoreCollision(myCollisionCollider, other, false);
+        if (other.gameObject.layer == LayerMask.NameToLayer("Players"))
+        {
+            Debug.Log(other.name + " sors du trigger de la plateforme, collision réactivées");
+            Physics2D.IgnoreCollision(myCollisionCollider, other, false);
+        }
     }
 }

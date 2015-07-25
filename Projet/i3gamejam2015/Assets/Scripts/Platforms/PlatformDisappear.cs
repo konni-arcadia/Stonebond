@@ -3,9 +3,8 @@ using System.Collections;
 
 public class PlatformDisappear : MonoBehaviour {
 
-    public EdgeCollider2D myEdgeCollider;
-
-    public BoxCollider2D boxTrigger;
+    public BoxCollider2D boxColliderToUnable;
+    public BoxCollider2D boxColliderToUnable2;
 
     public float waitBeforeFading = 8;
     public float waitBeforeAppearing = 8;
@@ -46,8 +45,9 @@ public class PlatformDisappear : MonoBehaviour {
         yield return new WaitForSeconds(waitTime);
 
         //Unable the colliders
-        myEdgeCollider.enabled = false;
-        boxTrigger.enabled = false;
+        boxColliderToUnable.enabled = false;
+        boxColliderToUnable2.enabled = false;
+      //  boxTrigger.enabled = false;
         DisableChildrenSprites();
 
         //Re-appear
@@ -59,8 +59,9 @@ public class PlatformDisappear : MonoBehaviour {
     {
         yield return new WaitForSeconds(waitTime);
         //Unable the colliders
-        myEdgeCollider.enabled = true;
-        boxTrigger.enabled = true;
+        boxColliderToUnable.enabled = true;
+        boxColliderToUnable2.enabled = true;
+       // boxTrigger.enabled = true;
         EnableChildrenSprites();
         StartCoroutine(WaitAndFade(waitBeforeFading));
 

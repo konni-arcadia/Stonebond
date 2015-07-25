@@ -24,10 +24,11 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 401444}
-  - 68: {fileID: 6861178}
   - 251: {fileID: 25171982}
   - 114: {fileID: 11444820}
   - 61: {fileID: 6105072}
+  - 61: {fileID: 6196702}
+  - 114: {fileID: 11474216}
   m_Layer: 8
   m_Name: 2x1JumpThruGhost
   m_TagString: Untagged
@@ -42,7 +43,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 162808}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.46000004, y: 2.42000008, z: 0}
+  m_LocalPosition: {x: 7.54175711, y: 7.61999989, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 492208}
@@ -68,25 +69,24 @@ BoxCollider2D:
   m_GameObject: {fileID: 162808}
   m_Enabled: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_Offset: {x: .507168293, y: .331609726}
+  m_Offset: {x: .507168293, y: .0299999993}
   serializedVersion: 2
   m_Size: {x: 2.0143373, y: .882959366}
---- !u!68 &6861178
-EdgeCollider2D:
+--- !u!61 &6196702
+BoxCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 162808}
   m_Enabled: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 1
-  m_Offset: {x: 0, y: 0}
-  m_Points:
-  - {x: -.499954224, y: .501944065}
-  - {x: 1.54637718, y: .479498267}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_Offset: {x: .446135521, y: -.361825466}
+  serializedVersion: 2
+  m_Size: {x: 3.10069919, y: 1.16159272}
 --- !u!114 &11444820
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -98,11 +98,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59469a2d3eea10847a866087de6285b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myEdgeCollider: {fileID: 6861178}
-  boxTrigger: {fileID: 6105072}
-  waitBeforeFading: 4
-  waitBeforeAppearing: 4
+  boxColliderToUnable: {fileID: 6105072}
+  boxColliderToUnable2: {fileID: 6196702}
+  waitBeforeFading: 8
+  waitBeforeAppearing: 8
   isActiveAtStart: 1
+--- !u!114 &11474216
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 162808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 797aa5a95a80d2a42946420269bfcfe2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myDisableCollisionTrigger: {fileID: 6196702}
+  myCollisionCollider: {fileID: 6105072}
 --- !u!212 &21283394
 SpriteRenderer:
   m_ObjectHideFlags: 1

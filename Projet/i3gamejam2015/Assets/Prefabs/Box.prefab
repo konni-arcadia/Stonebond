@@ -47,22 +47,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &139888
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 495180}
-  - 61: {fileID: 6192312}
-  m_Layer: 8
-  m_Name: Ground (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &148856
 GameObject:
   m_ObjectHideFlags: 0
@@ -90,7 +74,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 447376}
-  m_RootOrder: 3
+  m_RootOrder: 2
 --- !u!4 &445318
 Transform:
   m_ObjectHideFlags: 1
@@ -102,7 +86,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 447376}
-  m_RootOrder: 2
+  m_RootOrder: 1
 --- !u!4 &447376
 Transform:
   m_ObjectHideFlags: 1
@@ -114,7 +98,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 458578}
-  - {fileID: 495180}
   - {fileID: 445318}
   - {fileID: 436658}
   m_Father: {fileID: 0}
@@ -131,18 +114,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 447376}
   m_RootOrder: 0
---- !u!4 &495180
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 139888}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 11.0170727, y: 9.89833641, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 447376}
-  m_RootOrder: 1
 --- !u!61 &6119040
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -180,19 +151,6 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: -8.5}
-  serializedVersion: 2
-  m_Size: {x: 33.0116196, y: 1}
---- !u!61 &6192312
-BoxCollider2D:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 139888}
-  m_Enabled: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_Offset: {x: .209857941, y: -8.5}
   serializedVersion: 2
   m_Size: {x: 33.0116196, y: 1}
 --- !u!1001 &100100000

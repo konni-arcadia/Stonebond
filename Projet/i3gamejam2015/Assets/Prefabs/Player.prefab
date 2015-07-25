@@ -413,7 +413,8 @@ MonoBehaviour:
   breakForce: 100
   initialJumpForce: 1000
   extensionJumpForce: 4100
-  wallJumpLateralForce: 1200
+  wallJumpLateralForce: 1000
+  maxVelocityWhenGrinding: -16
   groundChecks:
   - {fileID: 421090}
   - {fileID: 423130}
@@ -436,17 +437,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerId: 1
   verticalAimThreshold: .850000024
-  slashAttackWarningTime: 0
   slashAttackTime: .349999994
   slashAttackCooldownTime: .5
-  slashAttackKnockbackTime: .5
-  slashAttackSlashedTime: 2
   slashAttackDashForceUp: 14000
   slashAttackDashForceDown: 7000
   slashAttackDashForceForward: 35000
-  slashAttackKnockbackForceUp: 14000
-  slashAttackKnockbackForceDown: 7000
-  slashAttackKnockbackForceForward: 35000
   slashAttackDashCurve:
     serializedVersion: 2
     m_Curve:
@@ -462,11 +457,26 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+  knockbackTime: .5
+  knockbackForceUp: 14000
+  knockbackForceDown: 7000
+  knockbackForceForward: 35000
   slashAttackKnockbackCurve:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - time: .0486485399
+      value: 1.00764227
+      inSlope: -3.26577902
+      outSlope: -3.26577902
+      tangentMode: 0
+    - time: 1.00275373
+      value: -.00572657585
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+  slashedTime: 10
 --- !u!212 &21265822
 SpriteRenderer:
   m_ObjectHideFlags: 1

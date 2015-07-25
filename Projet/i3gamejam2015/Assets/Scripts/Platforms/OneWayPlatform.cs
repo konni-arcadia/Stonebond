@@ -44,4 +44,5 @@ public class OneWayPlatform : MonoBehaviour {
             Physics2D.IgnoreCollision(myCollisionCollider, other, false);
         }
     }
+
 }

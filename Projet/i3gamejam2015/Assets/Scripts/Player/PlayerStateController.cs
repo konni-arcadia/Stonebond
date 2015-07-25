@@ -4,10 +4,10 @@ using System.Collections.Generic;
 
 public class PlayerStateController : MonoBehaviour
 {
-	public int playerId;
+	//
+	// REFERENCES
+	//
 
-	private bool facingRight;
-	private Collider2D bodyCollider;
 	private InputManager inputManager;
 	private PlayerMovementController movementController;
 	private List<PlayerStateController> enemies = new List<PlayerStateController> ();
@@ -16,10 +16,11 @@ public class PlayerStateController : MonoBehaviour
 	// GLOBAL STATE
 	//
 
+	public int playerId;
+
 	public enum State
 	{
 		IDLE,
-		SLASH_ATTACK_WARNING,
 		SLASH_ATTACK,
 		KNOCKBACK,
 		SLASHED
@@ -27,6 +28,15 @@ public class PlayerStateController : MonoBehaviour
 
 	private State state = State.IDLE;
 	private float stateTime = 0.0f;
+
+	//
+	// COLLIDERS
+	//
+
+	private Collider2D bodyCollider;
+	private Collider2D slashAttackColliderForward;
+	private Collider2D slashAttackColliderUp;
+	private Collider2D slashAttackColliderDown;
 
 	//
 	// AIM DIRECTION
@@ -46,32 +56,31 @@ public class PlayerStateController : MonoBehaviour
 	// SLASH ATTACK
 	// 
 
-	public float slashAttackWarningTime = 1.0f;
 	public float slashAttackTime = 1.0f;
 	public float slashAttackCooldownTime = 4.0f;
-	public float slashAttackKnockbackTime = 2.0f;
-	public float slashAttackSlashedTime = 10.0f;
 	public float slashAttackDashForceUp = 1000.0f;
 	public float slashAttackDashForceDown = 1000.0f;
 	public float slashAttackDashForceForward = 2000.0f;
-	public float slashAttackKnockbackForceUp = 2000.0f;
-	public float slashAttackKnockbackForceDown = 2000.0f;
-	public float slashAttackKnockbackForceForward = 3000.0f;
-
 	public AnimationCurve slashAttackDashCurve;
-	public AnimationCurve slashAttackKnockbackCurve;
-
-	private float slashAttackCooldown;
-
-	private Collider2D  slashAttackColliderForward;
-	private Collider2D  slashAttackColliderUp;
-	private Collider2D  slashAttackColliderDown;
 
 	//
 	// KNOCKBACK
 	//
 
+	public float knockbackTime = 2.0f;
+	public float knockbackForceUp = 2000.0f;
+	public float knockbackForceDown = 2000.0f;
+	public float knockbackForceForward = 3000.0f;
+	public AnimationCurve slashAttackKnockbackCurve;
+
+	private float slashAttackCooldown;
 	private AimDirection knockbackDirection;
+
+	//
+	// SLASHED
+	//
+
+	public float slashedTime = 10.0f;
 
 	//
 	// INIT
@@ -114,9 +123,6 @@ public class PlayerStateController : MonoBehaviour
 		case State.IDLE:
 			updateIdle ();
 			break;
-		case State.SLASH_ATTACK_WARNING:
-			updateSlashAttackWarning ();
-			break;
 		case State.SLASH_ATTACK:
 			updateSlashAttack ();
 			break;
@@ -148,40 +154,23 @@ public class PlayerStateController : MonoBehaviour
 		// slash attack
 		if (inputManager.WasPressed (playerId, InputManager.BUTTON_ATTACK)) {
 			if (slashAttackCooldown == 0.0f) {
-				if(slashAttackWarningTime == 0.0f) {
-					print ("p" + playerId + ": enter SLASH_ATTACK state");
-					// don't loose a frame if warning is configured to 0
-					state = State.SLASH_ATTACK;
-					stateTime = slashAttackTime;
-				}
-				else {
-					print ("p" + playerId + ": enter SLASH_ATTACK_WARNING state");
-					state = State.SLASH_ATTACK_WARNING;
-					stateTime = slashAttackWarningTime;
-				}
+				print ("p" + playerId + ": enter SLASH_ATTACK state");
+				state = State.SLASH_ATTACK;
+				stateTime = slashAttackTime;
+
 				movementController.setMovementEnabled(false);
 				movementController.resetForces ();
-
 			} else {
 				print ("p" + playerId + ": slash attack on CD");
 			}
 		}
 
+		// slash attack cooldown
 		if (slashAttackCooldown > 0.0f) {
 			slashAttackCooldown -= Time.deltaTime;
 			if (slashAttackCooldown < 0.0f) {
 				slashAttackCooldown = 0.0f;
 			}
-		}
-	}
-	
-	private void updateSlashAttackWarning ()
-	{
-		stateTime -= Time.deltaTime;
-		if (stateTime <= 0.0f) {
-			print ("p" + playerId + ": enter SLASH_ATTACK state dir=" + aimDirection);
-			state = State.SLASH_ATTACK;
-			stateTime = slashAttackTime;
 		}
 	}
 	
@@ -195,6 +184,8 @@ public class PlayerStateController : MonoBehaviour
 			return;
 		}
 
+		// dash
+
 		float slashPct = 1.0f - stateTime / slashAttackTime;
 		float dashForcePct = slashAttackDashCurve.Evaluate (slashPct);
 
@@ -207,11 +198,12 @@ public class PlayerStateController : MonoBehaviour
 			break;
 		case AimDirection.FORWARD:
 			float force = movementController.isFacingRight() ? slashAttackDashForceForward : -slashAttackDashForceForward;
-		//	print ("force=" + force);
 			movementController.applyForce (new Vector2(dashForcePct * Time.deltaTime * force, 0.0f));
 			break;
 		}
-		
+
+		// collision
+
 		bool knockedBack = false;
 		AimDirection knockedBackDirection = AimDirection.FORWARD;
 
@@ -233,11 +225,15 @@ public class PlayerStateController : MonoBehaviour
 
 			//print ("p" + playerId + ": testing " + collider + " against " + enemy.bodyCollider);
 			if (collider.IsTouching (enemy.bodyCollider)) {
+
+				print ("enemy.isAttack=" + enemy.isPerformingSlashAttack() + " isAimingOpposite=" + isAimingOppositeDirection (enemy));
+				print ("dir=" + aimDirection + " enemy.dir=" + enemy.aimDirection);
+
 				if (enemy.isPerformingSlashAttack () && isAimingOppositeDirection (enemy)) {
 					enemy.knockback (aimDirection);
 					knockedBack = true;
 					knockedBackDirection = enemy.aimDirection;
-				} else {
+				} else if (enemy.isSlashable ()) {
 					enemy.hitWithSlash ();
 				}
 			}
@@ -257,9 +253,9 @@ public class PlayerStateController : MonoBehaviour
 			return;
 		}
 
-		float knockbackPct = 1.0f - stateTime / slashAttackKnockbackTime;
+		float knockbackPct = 1.0f - stateTime / knockbackTime;
 		float knockbackForcePct = slashAttackKnockbackCurve.Evaluate (knockbackPct);
-		
+	
 		switch (knockbackDirection) {
 		case AimDirection.UP:
 			movementController.applyForce (new Vector2(0.0f, knockbackForcePct * Time.deltaTime * slashAttackDashForceUp));
@@ -268,7 +264,7 @@ public class PlayerStateController : MonoBehaviour
 			movementController.applyForce (new Vector2(0.0f, knockbackForcePct * Time.deltaTime * -slashAttackDashForceDown));
 			break;
 		case AimDirection.FORWARD:
-			float force = movementController.isFacingRight() ? slashAttackDashForceForward : -slashAttackDashForceForward;
+			float force = movementController.isFacingRight() ? -slashAttackDashForceForward : slashAttackDashForceForward;
 			movementController.applyForce (new Vector2(knockbackForcePct * Time.deltaTime * force, 0.0f));
 			break;
 		}
@@ -285,9 +281,9 @@ public class PlayerStateController : MonoBehaviour
 
 	private void knockback (AimDirection knockbackDirection)
 	{
-		print ("p" + playerId + ": enter KNOCKBACK state");
+		print ("p" + playerId + ": enter KNOCKBACK state (dir=" + knockbackDirection + ")");
 		state = State.KNOCKBACK;
-		stateTime = slashAttackKnockbackTime;
+		stateTime = knockbackTime;
 		this.knockbackDirection = knockbackDirection;
 
 		movementController.setMovementEnabled (false);
@@ -298,7 +294,7 @@ public class PlayerStateController : MonoBehaviour
 	{
 		print ("p" + playerId + ": enter SLASHED state");
 		state = State.SLASHED;
-		stateTime = slashAttackSlashedTime;
+		stateTime = slashedTime;
 
 		movementController.setMovementEnabled (false);
 		movementController.resetForces ();
@@ -308,21 +304,9 @@ public class PlayerStateController : MonoBehaviour
 	// GETTERS
 	//
 
-	// Returns whether the character is facing right
-	public bool IsFacingRight ()
-	{
-		return facingRight;
-	}
-
 	public int GetPlayerId ()
 	{
 		return playerId;
-	}
-
-	// Meant to be used by the player movement controller only
-	public void SetFacingRight (bool rightDirection)
-	{
-		facingRight = rightDirection;
 	}
 
 	//
@@ -331,7 +315,11 @@ public class PlayerStateController : MonoBehaviour
 
 	private bool isPerformingSlashAttack ()
 	{
-		return state == State.SLASH_ATTACK || state == State.SLASH_ATTACK_WARNING;
+		return state == State.SLASH_ATTACK;
+	}
+
+	private bool isSlashable() {
+		return state != State.KNOCKBACK && state != State.SLASHED;
 	}
 
 	private bool isAimingOppositeDirection (PlayerStateController enemy)
@@ -343,7 +331,7 @@ public class PlayerStateController : MonoBehaviour
 			return true;
 
 		if (aimDirection == AimDirection.FORWARD && enemy.aimDirection == AimDirection.FORWARD)
-			return IsFacingRight () != enemy.IsFacingRight ();
+			return movementController.isFacingRight () != enemy.movementController.isFacingRight ();
 
 		return false;
 	}
@@ -351,6 +339,10 @@ public class PlayerStateController : MonoBehaviour
 	//
 	// DEBUG DRAW
 	//
+
+	void debug(string text) {
+		print ("p" + playerId + ": " + text);
+	}
 
 	public void OnDrawGizmos ()
 	{
@@ -361,9 +353,6 @@ public class PlayerStateController : MonoBehaviour
 		switch (state) {
 		case State.IDLE:
 			drawColliderRect (bodyCollider, Color.white);
-			break;
-		case State.SLASH_ATTACK_WARNING:
-			drawColliderRect (bodyCollider, Color.yellow);
 			break;
 		case State.SLASH_ATTACK:
 			drawColliderRect (bodyCollider, Color.red);

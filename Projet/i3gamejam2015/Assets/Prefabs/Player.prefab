@@ -40,7 +40,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 476360}
   - 61: {fileID: 6147806}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: slashAttackColliderForward
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -86,7 +86,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 430852}
   - 61: {fileID: 6103116}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: slashAttackColliderDown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -121,7 +121,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 442656}
   - 61: {fileID: 6124196}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: slashAttackColliderUp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -137,7 +137,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 484054}
   - 61: {fileID: 6180786}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: bodyCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -374,6 +374,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerId: 1
+  verticalAimThreshold: .850000024
   slashAttackWarningTime: 1
   slashAttackTime: 1
   slashAttackCooldownTime: 4

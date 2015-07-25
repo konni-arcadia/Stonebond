@@ -8,10 +8,11 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 407868}
-  - 68: {fileID: 6890964}
   - 251: {fileID: 25177714}
   - 61: {fileID: 6132572}
   - 114: {fileID: 11419190}
+  - 61: {fileID: 6102676}
+  - 114: {fileID: 11411688}
   m_Layer: 8
   m_Name: 3x1JumpThruGhost
   m_TagString: Untagged
@@ -42,7 +43,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 153802}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.57000017, y: -2, z: 0}
+  m_LocalPosition: {x: 9.5117569, y: 4.25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 480972}
@@ -60,6 +61,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 407868}
   m_RootOrder: 0
+--- !u!61 &6102676
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 153802}
+  m_Enabled: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: .970000029, y: 0}
+  serializedVersion: 2
+  m_Size: {x: 3, y: 1}
 --- !u!61 &6132572
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -70,23 +84,22 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
-  m_Offset: {x: .986418724, y: .52166605}
+  m_Offset: {x: 1.01999998, y: -.349999994}
   serializedVersion: 2
-  m_Size: {x: 3.24233055, y: .658125877}
---- !u!68 &6890964
-EdgeCollider2D:
+  m_Size: {x: 4.05000019, y: 1.02999997}
+--- !u!114 &11411688
+MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 153802}
   m_Enabled: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 1
-  m_Offset: {x: 0, y: 0}
-  m_Points:
-  - {x: -.499954224, y: .501944065}
-  - {x: 2.5001955, y: .499792099}
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 797aa5a95a80d2a42946420269bfcfe2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myDisableCollisionTrigger: {fileID: 6132572}
+  myCollisionCollider: {fileID: 6102676}
 --- !u!114 &11419190
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -98,10 +111,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59469a2d3eea10847a866087de6285b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myEdgeCollider: {fileID: 6890964}
-  boxTrigger: {fileID: 6132572}
-  waitBeforeFading: 4
-  waitBeforeAppearing: 4
+  boxColliderToUnable: {fileID: 6132572}
+  boxColliderToUnable2: {fileID: 6102676}
+  waitBeforeFading: 8
+  waitBeforeAppearing: 8
   isActiveAtStart: 0
 --- !u!212 &21275050
 SpriteRenderer:

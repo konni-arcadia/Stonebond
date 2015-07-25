@@ -54,7 +54,7 @@ public class PlayerMovementController : MonoBehaviour {
 		disallowDirectionTime = Mathf.Max(0, disallowDirectionTime - Time.deltaTime);
 
 		// If the jump button is pressed and the player is grounded then the player should jump.
-		if (inputManager.WasPressed(playerId, InputManager.A)) {
+		if (isMovementEnabled && inputManager.WasPressed(playerId, InputManager.A)) {
 			// Standard way of jumping (allowed to jump)
 			if (allowJumpTime > 0)
 				wantJump = true;

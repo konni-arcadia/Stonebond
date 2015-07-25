@@ -39,6 +39,7 @@ public class PlayerStateController : MonoBehaviour
 	}
 
 	private AimDirection aimDirection = AimDirection.FORWARD;
+	public float verticalAimThreshold = 0.85f;
 
 	//
 	// SLASH ATTACK
@@ -129,26 +130,24 @@ public class PlayerStateController : MonoBehaviour
 	{
 		// aim direction
 		float v = inputManager.AxisValue (playerId, InputManager.Vertical);
-		float h = inputManager.AxisValue (playerId, InputManager.Horizontal);
-
-		if (v == -1.0f) {
+		if (v <= -verticalAimThreshold) {
 			aimDirection = AimDirection.UP;
-		} else if (v == 1.0f) {
+		} else if (v >= verticalAimThreshold) {
 			aimDirection = AimDirection.DOWN;
 		} else {
 			aimDirection = AimDirection.FORWARD;
 		}
 
-		//print ("h=" + h + " v=" + v + " aim=" + aimDirection);
+		//print (" v=" + v + " aim=" + aimDirection);
 
 		// slash attack
 		if (inputManager.IsHeld (playerId, InputManager.BUTTON_ATTACK)) {
 			if (slashAttackCooldown == 0.0f) {
-				print ("enter SLASH_ATTACK_WARNING state");
+				print ("p" + playerId + ": enter SLASH_ATTACK_WARNING state");
 				state = State.SLASH_ATTACK_WARNING;
 				stateTime = slashAttackWarningTime;
 			} else {
-				print ("slash attack on CD");
+				print ("p" + playerId + ": slash attack on CD");
 			}
 		}
 
@@ -164,7 +163,7 @@ public class PlayerStateController : MonoBehaviour
 	{
 		stateTime -= Time.deltaTime;
 		if (stateTime <= 0.0f) {
-			print ("enter SLASH_ATTACK state dir=" + aimDirection);
+			print ("p" + playerId + ": enter SLASH_ATTACK state dir=" + aimDirection);
 			state = State.SLASH_ATTACK;
 			stateTime = slashAttackTime;
 
@@ -176,7 +175,7 @@ public class PlayerStateController : MonoBehaviour
 	{
 		stateTime -= Time.deltaTime;
 		if (stateTime <= 0.0f) {
-			print ("enter IDLE state");
+			print ("p" + playerId + ": enter IDLE state");
 			state = State.IDLE;
 			return;
 		}
@@ -197,7 +196,8 @@ public class PlayerStateController : MonoBehaviour
 				collider = slashAttackColliderForward;
 				break;
 			}
-			
+
+			print ("p" + playerId + ": testing " + collider + " against " + enemy.bodyCollider);
 			if (collider.IsTouching (enemy.bodyCollider)) {
 				if (enemy.isPerformingSlashAttack () && isAimingOppositeDirection (enemy)) {
 					enemy.knockback ();
@@ -217,7 +217,7 @@ public class PlayerStateController : MonoBehaviour
 	{
 		stateTime -= Time.deltaTime;
 		if (stateTime <= 0.0f) {
-			print ("enter IDLE state");
+			print ("p" + playerId + ": enter IDLE state");
 			state = State.IDLE;
 		}
 	}
@@ -226,14 +226,14 @@ public class PlayerStateController : MonoBehaviour
 	{
 		stateTime -= Time.deltaTime;
 		if (stateTime <= 0.0f) {
-			print ("enter IDLE state");
+			print ("p" + playerId + ": enter IDLE state");
 			state = State.IDLE;
 		}
 	}
 
 	private void knockback ()
 	{
-		print ("enter KNOCKBACK state");
+		print ("p" + playerId + ": enter KNOCKBACK state");
 		state = State.KNOCKBACK;
 		stateTime = slashAttackKnockbackTime;
 		
@@ -242,7 +242,7 @@ public class PlayerStateController : MonoBehaviour
 
 	private void slash ()
 	{
-		print ("enter SLASHED state");
+		print ("p" + playerId + ": enter SLASHED state");
 		state = State.SLASHED;
 		stateTime = slashAttackSlashedTime;
 		

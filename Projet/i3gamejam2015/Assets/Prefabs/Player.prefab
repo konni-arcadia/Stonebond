@@ -265,7 +265,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 170380}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -18.448143, y: 2.43340683, z: 0}
+  m_LocalPosition: {x: -14.8999996, y: -2.0999999, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 477898}
@@ -413,7 +413,7 @@ MonoBehaviour:
   breakForce: 100
   initialJumpForce: 1000
   extensionJumpForce: 4100
-  wallJumpLateralForce: 500
+  wallJumpLateralForce: 2500
   groundChecks:
   - {fileID: 421090}
   - {fileID: 423130}
@@ -437,16 +437,16 @@ MonoBehaviour:
   playerId: 1
   verticalAimThreshold: .850000024
   slashAttackWarningTime: 0
-  slashAttackTime: .300000012
-  slashAttackCooldownTime: 2
+  slashAttackTime: .349999994
+  slashAttackCooldownTime: 3
   slashAttackKnockbackTime: .5
   slashAttackSlashedTime: 2
-  slashAttackDashForceUp: 12500
-  slashAttackDashForceDown: 6000
-  slashAttackDashForceForward: 20000
-  slashAttackKnockbackForceUp: 11000
-  slashAttackKnockbackForceDown: 5500
-  slashAttackKnockbackForceForward: 20000
+  slashAttackDashForceUp: 14000
+  slashAttackDashForceDown: 7000
+  slashAttackDashForceForward: 35000
+  slashAttackKnockbackForceUp: 14000
+  slashAttackKnockbackForceDown: 7000
+  slashAttackKnockbackForceForward: 35000
   slashAttackDashCurve:
     serializedVersion: 2
     m_Curve:
@@ -457,8 +457,8 @@ MonoBehaviour:
       tangentMode: 0
     - time: 1.00192058
       value: -.00494285859
-      inSlope: -1.85796881
-      outSlope: -1.85796881
+      inSlope: -.0386722609
+      outSlope: -.0386722609
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -519,6 +519,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_Size.y
       value: 1.61764491
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: wallJumpLateralForce
+      value: 2500
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

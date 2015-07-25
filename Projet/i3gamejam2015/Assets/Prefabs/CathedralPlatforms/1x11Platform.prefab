@@ -9,7 +9,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 403350}
   - 61: {fileID: 6121614}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: 1x11Platform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25,7 +25,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 463536}
   - 212: {fileID: 21298148}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Tile_GS (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 413582}
   - 212: {fileID: 21296846}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Tile_GS (9)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -57,7 +57,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 480742}
   - 212: {fileID: 21250696}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Tile_GS (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73,7 +73,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 438890}
   - 212: {fileID: 21237422}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Tile_GS (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -89,7 +89,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 418948}
   - 212: {fileID: 21291112}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Tile_GS (10)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -105,7 +105,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 443592}
   - 212: {fileID: 21221974}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Tile_GS (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -121,7 +121,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 499336}
   - 212: {fileID: 21275866}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Tile_GS (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -137,7 +137,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 495314}
   - 212: {fileID: 21223746}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Tile_GS
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -153,7 +153,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 415610}
   - 212: {fileID: 21297904}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Tile_GS (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -169,7 +169,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 480032}
   - 212: {fileID: 21224920}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Tile_GS (11)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -185,7 +185,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 456900}
   - 212: {fileID: 21295554}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Tile_GS (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -652,7 +652,11 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 108138}

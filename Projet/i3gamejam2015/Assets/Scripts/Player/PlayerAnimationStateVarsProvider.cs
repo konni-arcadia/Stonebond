@@ -33,58 +33,68 @@ public class PlayerAnimationStateVarsProvider : MonoBehaviour {
 
     public void AxisHChangedAction(float axisHValue)
     {
-        myAnimator.SetFloat("VelocityX", axisHValue);
+        if(myAnimator != null)
+            myAnimator.SetFloat("VelocityX", axisHValue);
     }
    
     public void VelocityYChangedAction(float velocityYValue)
     {
-        myAnimator.SetFloat("VelocityY", velocityYValue);
+        if (myAnimator != null)
+            myAnimator.SetFloat("VelocityY", velocityYValue);
     }
 
 
     public void GroundedAction(bool isGrounded)
     {
-        myAnimator.SetBool("Grounded", isGrounded);
+        if (myAnimator != null)
+            myAnimator.SetBool("Grounded", isGrounded);
     }
 
 
     public void OnWallAction(bool isOnWall)
     {
-        myAnimator.SetBool("Riding", isOnWall);
+        if (myAnimator != null)
+            myAnimator.SetBool("Riding", isOnWall);
     }
 
 
     public void DashForwardAction()
     {
-        myAnimator.SetTrigger("ForwardDash");
+        if (myAnimator != null)
+            myAnimator.SetTrigger("ForwardDash");
     }
 
 
     public void DashUpAction()
     {
-        myAnimator.SetTrigger("UpwardDash");
+        if (myAnimator != null)
+            myAnimator.SetTrigger("UpwardDash");
     }
 
 
     public void DashDownAction()
     {
-        myAnimator.SetTrigger("DownwardDash");
+        if (myAnimator != null)
+            myAnimator.SetTrigger("DownwardDash");
     }
 
 
     public void KnockBackAction()
     {
-        myAnimator.SetTrigger("KnockBack");
+        if (myAnimator != null)
+            myAnimator.SetTrigger("KnockBack");
     }
 
 
     public void DieAction()
     {
-        myAnimator.SetTrigger("Die");
+        if (myAnimator != null)
+            myAnimator.SetTrigger("Die");
     }
 
     public void RespawnWarningAction()
     {
-        myAnimator.SetTrigger("Rewpawn");
+        if (myAnimator != null)
+            myAnimator.SetTrigger("Respawn");
     }
 }

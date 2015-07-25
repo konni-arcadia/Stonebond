@@ -36,7 +36,6 @@ public class PlatformDisappear : MonoBehaviour {
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Players"))
         {
-            Debug.Log(gameObject.name + " va disparaitre");
             StartCoroutine(WaitAndFade(waitBeforeFading));
         }
     }
@@ -58,9 +57,7 @@ public class PlatformDisappear : MonoBehaviour {
 
     IEnumerator WaitAndAppear(float waitTime)
     {
-        Debug.Log("J'apprais dans " + waitTime);
         yield return new WaitForSeconds(waitTime);
-        Debug.Log("J'apprais");
         //Unable the colliders
         myEdgeCollider.enabled = true;
         boxTrigger.enabled = true;

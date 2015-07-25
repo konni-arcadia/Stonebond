@@ -125,6 +125,7 @@ public class PlayerMovementController : MonoBehaviour {
 	// Freezes the player until an applyForce is called
 	public void resetForces() {
 		body.velocity = new Vector2(0, 0);
+		wantJumpExtension = false;
 	}
 
 	public void setFacingRight(bool facingRight) {

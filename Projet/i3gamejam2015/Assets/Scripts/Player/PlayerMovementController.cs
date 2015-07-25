@@ -10,6 +10,7 @@ public class PlayerMovementController : MonoBehaviour {
 	public float initialJumpForce;
 	public float extensionJumpForce;
 	public Transform[] groundChecks;			// A position marking where to check if the player is grounded.
+	public bool startsFacingRight = true;
 
 	public AudioClip jumpClip;
 	public AudioClip landClip;
@@ -31,6 +32,7 @@ public class PlayerMovementController : MonoBehaviour {
 		body = GetComponent<Rigidbody2D>();
 		inputManager = FindObjectOfType<InputManager>();
 		playerId = GetComponent<PlayerStateController>().GetPlayerId();
+		setFacingRight(startsFacingRight);
 	}
 
 	void Update() {

@@ -361,6 +361,7 @@ MonoBehaviour:
   - {fileID: 421090}
   - {fileID: 423130}
   - {fileID: 438792}
+  startsFacingRight: 1
   jumpClip: {fileID: 8300000, guid: 723aa24e67c6988479ddf99a6f1192cd, type: 3}
   landClip: {fileID: 8300000, guid: 799ec483160f49a488b58f01f729bb65, type: 3}
 --- !u!114 &11495908

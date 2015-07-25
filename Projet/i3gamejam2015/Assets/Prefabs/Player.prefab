@@ -211,7 +211,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 170380}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -18.448143, y: 2.43340683, z: 0}
+  m_LocalPosition: {x: -19.0200005, y: 5.23999977, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 482002}
@@ -355,7 +355,8 @@ MonoBehaviour:
   maxSpeed: 13
   maxFallSpeed: 200
   breakForce: 100
-  jumpForce: 1950
+  initialJumpForce: 1300
+  extensionJumpForce: 5800
   groundChecks:
   - {fileID: 421090}
   - {fileID: 423130}

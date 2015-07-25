@@ -164,7 +164,7 @@ PlatformEffector2D:
     serializedVersion: 2
     m_Bits: 4294967295
   m_UseOneWay: 1
-  m_SurfaceArc: 180
+  m_SurfaceArc: 0
   m_UseSideFriction: 0
   m_UseSideBounce: 0
 --- !u!1001 &100100000
@@ -185,6 +185,14 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_UsedByEffector
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_UseSideFriction
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_SurfaceArc
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

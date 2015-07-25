@@ -15,12 +15,15 @@ public class MovingPlatform : MonoBehaviour {
 
     SurfaceEffector2D surfaceEffector;
 
+    public bool startToLeft = true;
+
 	// Use this for initialization
 	void Start () {
         bounds[0] = leftBound;
         bounds[1] = rightBound;
         surfaceEffector = GetComponentInChildren<SurfaceEffector2D>();
-        surfaceEffector.speed = -movementSpeed * 5.5f;
+        currentBoundIndex = startToLeft ? 0 : 1;
+        surfaceEffector.speed = (startToLeft  ? -1 : 1) * movementSpeed * 5.5f;
         if (surfaceEffector == null)
         { 
             Debug.LogError("Surface effector can't be found in moving platform " + name);

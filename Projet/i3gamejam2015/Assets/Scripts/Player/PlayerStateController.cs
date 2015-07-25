@@ -298,6 +298,9 @@ public class PlayerStateController : MonoBehaviour
 		print ("p" + playerId + ": enter SLASHED state");
 		state = State.SLASHED;
 		stateTime = slashAttackSlashedTime;
+
+		movementController.setMovementEnabled (false);
+		movementController.resetForces ();
 	}
 
 	//

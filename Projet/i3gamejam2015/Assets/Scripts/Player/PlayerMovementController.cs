@@ -25,7 +25,7 @@ public class PlayerMovementController : MonoBehaviour {
 		groundCheck = transform.Find("groundCheck");
 		body = GetComponent<Rigidbody2D>();
 		inputManager = FindObjectOfType<InputManager>();
-		playerId = GetComponent<PlayerStateController>().PlayerId();
+		playerId = GetComponent<PlayerStateController>().GetPlayerId();
 	}
 
 
@@ -88,5 +88,13 @@ public class PlayerMovementController : MonoBehaviour {
 			// Make sure the player can't jump again until the jump conditions from Update are satisfied.
 			jump = false;
 		}
+	}
+
+	public void setMovementEnabled(bool enabled) {
+		// TODO
+	}
+
+	public void applyForce(Vector2 force) {
+		body.AddForce (force);
 	}
 }

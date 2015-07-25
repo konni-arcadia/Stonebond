@@ -61,11 +61,32 @@ public class PlayerStateController : MonoBehaviour
 	
 	void Awake ()
 	{
+		print ("Awake player " + playerId);
+
 		bodyCollider = transform.Find ("bodyCollider").GetComponent<Collider2D> ();
+		if (bodyCollider == null) {
+			print ("WARN: bodyCollider not found");
+		}
+
 		slashAttackColliderForward = transform.Find ("slashAttackColliderForward").GetComponent<Collider2D> ();
+		if (bodyCollider == null) {
+			print ("WARN: slashAttackColliderForward not found");
+		}
+
 		slashAttackColliderUp = transform.Find ("slashAttackColliderUp").GetComponent<Collider2D> ();
+		if (bodyCollider == null) {
+			print ("WARN: slashAttackColliderUp not found");
+		}
+
 		slashAttackColliderDown = transform.Find ("slashAttackColliderDown").GetComponent<Collider2D> ();
+		if (bodyCollider == null) {
+			print ("WARN: slashAttackColliderDown not found");
+		}
+
 		inputManager = FindObjectOfType<InputManager>();
+		if (inputManager == null) {
+			print ("WARN: inputManager not found");
+		}
 	}
 
 	void Start ()
@@ -118,7 +139,7 @@ public class PlayerStateController : MonoBehaviour
 			aimDirection = AimDirection.FORWARD;
 		}
 
-		print ("h=" + h + " v=" + v + " aim=" + aimDirection);
+		//print ("h=" + h + " v=" + v + " aim=" + aimDirection);
 
 		// slash attack
 		if (inputManager.IsHeld (playerId, InputManager.BUTTON_ATTACK)) {

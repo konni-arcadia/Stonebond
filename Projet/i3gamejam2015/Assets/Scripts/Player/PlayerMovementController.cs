@@ -24,7 +24,7 @@ public class PlayerMovementController : MonoBehaviour {
 	private int playerId;
 	private float allowJumpTime = 0, disallowDirectionTime = 0;
 	private List<Vector2> pendingForcesToApply = new List<Vector2>();
-	private bool isMovementEnabled = true;
+	private bool isMovementEnabled = true, inWallJump = false;
 
 	private Rigidbody2D body;
 	private InputManager inputManager;
@@ -52,6 +52,8 @@ public class PlayerMovementController : MonoBehaviour {
 			allowJumpTime = Mathf.Max(0, allowJumpTime - Time.deltaTime);
 
 		disallowDirectionTime = Mathf.Max(0, disallowDirectionTime - Time.deltaTime);
+		// Wall jump state stops when grounded
+		inWallJump = inWallJump && !grounded;
 
 		// If the jump button is pressed and the player is grounded then the player should jump.
 		if (isMovementEnabled && inputManager.WasPressed(playerId, InputManager.A)) {
@@ -84,11 +86,9 @@ public class PlayerMovementController : MonoBehaviour {
 //		body.AddForce(Vector2.right * h * moveForce);
 
 		Vector2 velocity = body.velocity;
-		float targetSpeed = h * maxSpeed;
-		if (grounded)
-			velocity.x += (targetSpeed - velocity.x) / 2.0f;
-		else
-			velocity.x += (targetSpeed - velocity.x) / 10.0f;
+		float targetSpeed = h * maxSpeed, frictionFactor = grounded ? 2 : 10;
+		// In the air, there is less friction
+		velocity.x += (targetSpeed - velocity.x) / frictionFactor;
 		body.velocity = velocity;
 
 		// If the player should jump...
@@ -105,7 +105,9 @@ public class PlayerMovementController : MonoBehaviour {
 			// Also move the player away from the wall
 			if (wantWallJump) {
 				body.AddForce(new Vector2(isFacingRight() ? -wallJumpLateralForce : wallJumpLateralForce, 0));
+				setFacingRight(!isFacingRight());
 				disallowDirectionTime = 0.3f;
+				inWallJump = true;
 			}
 
 			// Make sure the player can't jump again until the jump conditions from Update are satisfied.

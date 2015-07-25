@@ -24,11 +24,13 @@ public class PlayerStateController : MonoBehaviour
 		IDLE,
 		SLASH_ATTACK,
 		KNOCKBACK,
-		SLASHED
+		SLASHED,
+		INVINCIBLE_AFTER_SLASHED
 	}
 
 	private State state = State.IDLE;
 	private float stateTime = 0.0f;
+	private bool isBond = false;
 
 	//
 	// COLLIDERS
@@ -81,8 +83,8 @@ public class PlayerStateController : MonoBehaviour
 	// SLASHED
 	//
 
-	public float slashedTime = 10.0f;
-
+	public float slashedTime = 2.0f;
+	public float invincibleAfterSlahsedTime = 5.0f;
 	//
 	// INIT
 	//
@@ -132,7 +134,7 @@ public class PlayerStateController : MonoBehaviour
 	}
 
 	public void setBondLink(BondLink bondLink) {
-		// TODO
+		isBond = bondLink != null;
 	}
 
 	//
@@ -153,6 +155,9 @@ public class PlayerStateController : MonoBehaviour
 			break;
 		case State.SLASHED:
 			updateSlashed ();
+			break;
+		case State.INVINCIBLE_AFTER_SLASHED:
+			updateInvincibleAfterSlashed ();
 			break;
 		}
 	}
@@ -307,9 +312,16 @@ public class PlayerStateController : MonoBehaviour
 			} else if (enemy.isSlashable ()) {
 				enemy.hitWithSlash ();
 			}
+			return;
 		}
 
-		// TODO bond link
+		BondLink bondLink = other.GetComponent<BondLink> ();
+		if (bondLink != null) {
+			LevelManager levelManager = FindObjectOfType<LevelManager>();
+			levelManager.bondHasBeenSlashed();
+		}
+
+		debug ("WARNING unexpected collision");
 	}
 	
 	private void updateKnockback ()
@@ -342,12 +354,26 @@ public class PlayerStateController : MonoBehaviour
 	{
 		stateTime -= Time.deltaTime;
 		if (stateTime <= 0.0f) {
-			print ("p" + playerId + ": enter IDLE state");
-			state = State.IDLE;
+			print ("p" + playerId + ": enter INVINCIBLE_AFTER_SLASHED state");
+			state = State.INVINCIBLE_AFTER_SLASHED;
+			stateTime = invincibleAfterSlahsedTime;
 
 			// FIXME to be called a bit before...
 			// notification
 			statusProvider.setRespawnWarning();
+		}
+	}
+
+	private void updateInvincibleAfterSlashed ()
+	{
+		updateIdle ();
+
+		stateTime -= Time.deltaTime;
+		if (stateTime <= 0.0f) {
+			print ("p" + playerId + ": enter IDLE state");
+			state = State.IDLE;
+
+			// TODO notification
 		}
 	}
 
@@ -453,7 +479,8 @@ public class PlayerStateController : MonoBehaviour
 	}
 
 	private bool isSlashable() {
-		return state != State.KNOCKBACK && state != State.SLASHED;
+		// TODO blink for INVINCIBLE_AFTER_SLASHED
+		return !isBond && state != State.KNOCKBACK && state != State.SLASHED; //&& state != State.INVINCIBLE_AFTER_SLASHED;
 	}
 
 	private bool isAimingOppositeDirection (PlayerStateController enemy)
@@ -486,7 +513,7 @@ public class PlayerStateController : MonoBehaviour
 
 		switch (state) {
 		case State.IDLE:
-			drawColliderRect (bodyCollider, Color.white);
+			//drawColliderRect (bodyCollider, Color.white);
 			break;
 		case State.SLASH_ATTACK:
 			drawColliderRect (bodyCollider, Color.red);
@@ -508,10 +535,13 @@ public class PlayerStateController : MonoBehaviour
 			}
 			break;
 		case State.KNOCKBACK:
-			drawColliderRect (bodyCollider, Color.green);
+			//drawColliderRect (bodyCollider, Color.green);
 			break;
 		case State.SLASHED:
 			drawColliderRect (bodyCollider, Color.blue);
+			break;
+		case State.INVINCIBLE_AFTER_SLASHED:
+			drawColliderRect (bodyCollider, Color.yellow);
 			break;
 		}
 	}

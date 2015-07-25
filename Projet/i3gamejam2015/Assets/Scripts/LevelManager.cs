@@ -39,10 +39,14 @@ public class LevelManager : MonoBehaviour {
 			bondLink = obj.GetComponent<BondLink>();
 			bondLink.emitterA = activePlayers[0].gameObject;
 			bondLink.emitterB = activePlayers[1].gameObject;
+			activePlayers[0].setBondLink(bondLink);
+			activePlayers[1].setBondLink(bondLink);
 		}
 	}
 
 	public void bondHasBeenSlashed() {
 		Destroy(bondLink.gameObject);
+			bondLink.emitterA.GetComponent<PlayerStateController>().setBondLink(null);
+		bondLink.emitterB.GetComponent<PlayerStateController>().setBondLink(null);
 	}
 }

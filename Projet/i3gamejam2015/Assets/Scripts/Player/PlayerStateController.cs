@@ -123,6 +123,14 @@ public class PlayerStateController : MonoBehaviour
 		return state == State.SLASHED;
 	}
 
+	public void setBondLink(BondLink link) {
+	}
+
+	public void TEMP_setSprite(Sprite s) {
+		// TEMP -- move to view
+		transform.Find("Sprite").GetComponent<SpriteRenderer>().sprite = s;
+	}
+
 	//
 	// STATE MACHINE
 	//

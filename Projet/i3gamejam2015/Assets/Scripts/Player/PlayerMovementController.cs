@@ -53,7 +53,7 @@ public class PlayerMovementController : MonoBehaviour {
 		Vector2 velocity = body.velocity;
 		float targetSpeed = h * maxSpeed;
 //		velocity.x += (targetSpeed - velocity.x) / 5.0f;
-		velocity.x += (targetSpeed - velocity.x) / 3.0f;
+		velocity.x += (targetSpeed - velocity.x) / 2.0f;
 
 /*		if (h == 0.0f) {
 			if (velocity.x > 0.0f) {

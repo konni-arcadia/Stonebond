@@ -40,7 +40,6 @@ public class PlayerMovementController : MonoBehaviour {
 		// If the jump button is pressed and the player is grounded then the player should jump.
 		if (inputManager.IsHeld(playerId, InputManager.A) && grounded) {
 			// jump
-			Debug.Log("jump", gameObject);
 			jump = true;
 		}
 	}
@@ -54,7 +53,8 @@ public class PlayerMovementController : MonoBehaviour {
 
 		Vector2 velocity = body.velocity;
 		float targetSpeed = h * maxSpeed;
-		velocity.x += (targetSpeed - velocity.x) / 5.0f;
+//		velocity.x += (targetSpeed - velocity.x) / 5.0f;
+		velocity.x += (targetSpeed - velocity.x) / 3.0f;
 
 /*		if (h == 0.0f) {
 			if (velocity.x > 0.0f) {

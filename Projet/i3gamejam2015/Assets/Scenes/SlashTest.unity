@@ -616,6 +616,30 @@ Prefab:
       propertyPath: m_Name
       value: Player 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6103116, guid: 294137296027b2e479aede083fd94e21, type: 2}
+      propertyPath: m_Offset.y
+      value: .104696535
+      objectReference: {fileID: 0}
+    - target: {fileID: 6103116, guid: 294137296027b2e479aede083fd94e21, type: 2}
+      propertyPath: m_Size.y
+      value: .354370564
+      objectReference: {fileID: 0}
+    - target: {fileID: 6147806, guid: 294137296027b2e479aede083fd94e21, type: 2}
+      propertyPath: m_Offset.x
+      value: -.231119365
+      objectReference: {fileID: 0}
+    - target: {fileID: 6147806, guid: 294137296027b2e479aede083fd94e21, type: 2}
+      propertyPath: m_Size.x
+      value: .537747681
+      objectReference: {fileID: 0}
+    - target: {fileID: 6124196, guid: 294137296027b2e479aede083fd94e21, type: 2}
+      propertyPath: m_Offset.y
+      value: -.0697979331
+      objectReference: {fileID: 0}
+    - target: {fileID: 6124196, guid: 294137296027b2e479aede083fd94e21, type: 2}
+      propertyPath: m_Size.y
+      value: .336921632
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 294137296027b2e479aede083fd94e21, type: 2}
   m_IsPrefabParent: 0

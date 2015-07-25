@@ -152,7 +152,7 @@ GameObject:
   - 50: {fileID: 5007632}
   - 61: {fileID: 6179232}
   - 114: {fileID: 11492586}
-  - 114: {fileID: 11415056}
+  - 114: {fileID: 11421360}
   m_Layer: 9
   m_Name: Player
   m_TagString: Untagged
@@ -399,7 +399,7 @@ BoxCollider2D:
   m_Offset: {x: -.0039730072, y: -.179250717}
   serializedVersion: 2
   m_Size: {x: 1.01694679, y: 1.61764491}
---- !u!114 &11415056
+--- !u!114 &11421360
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -407,7 +407,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 170380}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d89fb1962bd38a04ea8ea51ebf9a5517, type: 3}
+  m_Script: {fileID: 11500000, guid: 304862b5613832545ac5833abc7e7ee0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &11436394

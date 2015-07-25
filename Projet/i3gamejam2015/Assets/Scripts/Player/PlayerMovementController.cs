@@ -10,6 +10,7 @@ public class PlayerMovementController : MonoBehaviour {
 	public float initialJumpForce;
 	public float extensionJumpForce;
 	public float wallJumpLateralForce;
+	public float maxVelocityWhenGrinding;
 	public Transform[] groundChecks;			// A position marking where to check if the player is grounded.
 	public Transform raycastBase, wallJumpCheck;
 	public bool startsFacingRight = true;
@@ -18,6 +19,7 @@ public class PlayerMovementController : MonoBehaviour {
 	public AudioClip landClip;
 
 	private bool grounded = false;			// Whether or not the player is grounded.
+	private bool isGrinding = false;
 
 	// Executed at next iteration
 	private bool wantJump = false, wantWallJump = false, wantJumpExtension = false;
@@ -43,8 +45,10 @@ public class PlayerMovementController : MonoBehaviour {
 		// The player is grounded if a linecast to the groundcheck position hits anything on the ground layer.
 		bool wasGrounded = grounded;
 		grounded = false;
-		for (int i = 0; i < groundChecks.Length; i++)
-			grounded = grounded || Physics2D.Linecast(raycastBase.position, groundChecks[i].position, 1 << LayerMask.NameToLayer("Ground"));
+		if (body.velocity.y <= 0) {
+			for (int i = 0; i < groundChecks.Length; i++)
+				grounded = grounded || Physics2D.Linecast(raycastBase.position, groundChecks[i].position, 1 << LayerMask.NameToLayer("Ground"));
+		}
 		// Allow jumping even after we left the ground for a short period
 		if (grounded)
 			allowJumpTime = 0.1f;
@@ -55,13 +59,17 @@ public class PlayerMovementController : MonoBehaviour {
 		// Wall jump state stops when grounded
 		inWallJump = inWallJump && !grounded;
 
+		isGrinding = isMovementEnabled && allowJumpTime < Mathf.Epsilon &&
+			body.velocity.y < 0 && Physics2D.Linecast(raycastBase.position, wallJumpCheck.position, 1 << LayerMask.NameToLayer("Ground"));
+		Debug.Log("Grdinding: " + isGrinding);
+
 		// If the jump button is pressed and the player is grounded then the player should jump.
 		if (isMovementEnabled && inputManager.WasPressed(playerId, InputManager.A)) {
 			// Standard way of jumping (allowed to jump)
 			if (allowJumpTime > 0)
 				wantJump = true;
 			// Or by going down while on a wall
-			else if (body.velocity.y < 0 && Physics2D.Linecast(raycastBase.position, wallJumpCheck.position, 1 << LayerMask.NameToLayer("Ground")))
+			else if (isGrinding)
 				wantWallJump = true;
 		}
 		if (inputManager.IsHeld(playerId, InputManager.A) && wantJumpExtension)
@@ -86,9 +94,12 @@ public class PlayerMovementController : MonoBehaviour {
 //		body.AddForce(Vector2.right * h * moveForce);
 
 		Vector2 velocity = body.velocity;
-		float targetSpeed = h * maxSpeed, frictionFactor = grounded ? 2 : 10;
+		float targetSpeed = h * maxSpeed, frictionFactor = grounded && !inWallJump ? 2 : 10;
 		// In the air, there is less friction
 		velocity.x += (targetSpeed - velocity.x) / frictionFactor;
+		// When grinding, limit the velocity
+		if (isGrinding && velocity.y < maxVelocityWhenGrinding)
+			velocity.y = maxVelocityWhenGrinding;
 		body.velocity = velocity;
 
 		// If the player should jump...

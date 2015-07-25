@@ -186,7 +186,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11402290, guid: 37df1ddf437764144b0777389a17dfdc, type: 2}
       propertyPath: startToLeft
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 164538, guid: 37df1ddf437764144b0777389a17dfdc, type: 2}
       propertyPath: m_IsActive
@@ -237,10 +237,6 @@ Prefab:
     - target: {fileID: 106184, guid: c5501fad9ab5b144ea2d91b926a85505, type: 2}
       propertyPath: m_Name
       value: 3x1MovingPlatform2 (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 11430486, guid: c5501fad9ab5b144ea2d91b926a85505, type: 2}
-      propertyPath: startToLeft
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c5501fad9ab5b144ea2d91b926a85505, type: 2}
@@ -1108,10 +1104,6 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11402290, guid: 37df1ddf437764144b0777389a17dfdc, type: 2}
       propertyPath: startToLeft
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 164538, guid: 37df1ddf437764144b0777389a17dfdc, type: 2}
-      propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []

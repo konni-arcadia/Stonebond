@@ -30,7 +30,6 @@ public class PlayerMovementController : MonoBehaviour {
 
 
 	void Update() {
-		Debug.Log("V4: " + inputManager.AxisValue(4, InputManager.Horizontal));
 		// The player is grounded if a linecast to the groundcheck position hits anything on the ground layer.
 		bool wasGrounded = grounded;
 		grounded = false;
@@ -54,7 +53,7 @@ public class PlayerMovementController : MonoBehaviour {
 		Vector2 velocity = body.velocity;
 		float targetSpeed = h * maxSpeed;
 //		velocity.x += (targetSpeed - velocity.x) / 5.0f;
-		velocity.x += (targetSpeed - velocity.x) / 3.0f;
+		velocity.x += (targetSpeed - velocity.x) / 2.0f;
 
 /*		if (h == 0.0f) {
 			if (velocity.x > 0.0f) {

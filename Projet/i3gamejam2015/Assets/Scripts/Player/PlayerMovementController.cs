@@ -32,13 +32,16 @@ public class PlayerMovementController : MonoBehaviour {
 	private InputManager inputManager;
 	private Collider2D bodyCollider;
 
-	void Awake() {
+    private PlayerStatusProvider myStatusProvider;
+
+	void Start() {
 		// Setting up references.
 		body = GetComponent<Rigidbody2D>();
 		inputManager = FindObjectOfType<InputManager>();
 		playerId = GetComponent<PlayerStateController>().GetPlayerId();
 		bodyCollider = transform.Find("bodyCollider").GetComponent<Collider2D>();
 		setFacingRight(startsFacingRight);
+        myStatusProvider = GetComponent<PlayerStatusProvider>();
 	}
 
 	void Update() {
@@ -49,6 +52,10 @@ public class PlayerMovementController : MonoBehaviour {
 			for (int i = 0; i < groundChecks.Length; i++)
 				grounded = grounded || Physics2D.Linecast(raycastBase.position, groundChecks[i].position, 1 << LayerMask.NameToLayer("Ground"));
 		}
+
+        //Update grounded status in player status component
+        myStatusProvider.setGroundedStatus(grounded);
+
 		// Allow jumping even after we left the ground for a short period
 		if (grounded)
 			allowJumpTime = 0.1f;
@@ -61,7 +68,9 @@ public class PlayerMovementController : MonoBehaviour {
 
 		isGrinding = isMovementEnabled && allowJumpTime < Mathf.Epsilon &&
 			body.velocity.y < 0 && Physics2D.Linecast(raycastBase.position, wallJumpCheck.position, 1 << LayerMask.NameToLayer("Ground"));
-		Debug.Log("Grdinding: " + isGrinding);
+
+        //Update grounded status in player status component
+        myStatusProvider.setOnWallStatus(isGrinding);
 
 		// If the jump button is pressed and the player is grounded then the player should jump.
 		if (isMovementEnabled && inputManager.WasPressed(playerId, InputManager.A)) {
@@ -89,6 +98,9 @@ public class PlayerMovementController : MonoBehaviour {
 		// Facing right?
 		if (Mathf.Abs(h) >= Mathf.Epsilon)
 			setFacingRight(h > 0);
+
+        //Update the horizontal input in the player status component
+        myStatusProvider.setAxisHValue(Mathf.Abs(h));
 
 		// If the player is changing direction (h has a different sign to velocity.x) or hasn't reached maxSpeed yet...
 //		body.AddForce(Vector2.right * h * moveForce);
@@ -128,6 +140,9 @@ public class PlayerMovementController : MonoBehaviour {
 		else if (wantJumpExtension) {
 			body.AddForce(new Vector2(0, extensionJumpForce * Time.fixedDeltaTime));
 		}
+
+        //Update Y velocity in player status component
+        myStatusProvider.setVelocityYValue(body.velocity.y);
 	}
 
 	public void setMovementEnabled(bool enabled) {
@@ -136,6 +151,10 @@ public class PlayerMovementController : MonoBehaviour {
 
 	public void applyForce(Vector2 force) {
 		pendingForcesToApply.Add(force);
+	}
+
+	public void setVelocity(Vector2 velocity) {
+		body.velocity = velocity;
 	}
 
 	public bool isFacingRight() {

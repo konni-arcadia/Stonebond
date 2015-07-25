@@ -54,10 +54,18 @@ public class PlayerStatusProvider : MonoBehaviour {
 
     public delegate void KnockBackAction();
     public event KnockBackAction OnKnockBackAction;
-    public void setKnockBack()
+    public void setKnockBackUp()
     {
         OnKnockBackAction();
     }
+	public void setKnockBackDown()
+	{
+		OnKnockBackAction();
+	}
+	public void setKnockBackForward()
+	{
+		OnKnockBackAction();
+	}
 
     public delegate void DieAction();
     public event DieAction OnDieAction;

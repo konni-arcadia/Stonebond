@@ -39,6 +39,8 @@ GameObject:
   m_Component:
   - 4: {fileID: 482002}
   - 95: {fileID: 9529712}
+  - 114: {fileID: 11408930}
+  - 82: {fileID: 8202776}
   m_Layer: 9
   m_Name: CharacterSprites
   m_TagString: Untagged
@@ -326,7 +328,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 170380}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -14.8999996, y: -3.11199999, z: 0}
+  m_LocalPosition: {x: -19.0200005, y: 4.51900005, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 477898}
@@ -460,6 +462,75 @@ BoxCollider2D:
   m_Offset: {x: -.0039730072, y: -.179250717}
   serializedVersion: 2
   m_Size: {x: 1.01694679, y: 1.61764491}
+--- !u!82 &8202776
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 106776}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
 --- !u!95 &9529712
 Animator:
   serializedVersion: 3
@@ -477,6 +548,23 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &11408930
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 106776}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 802d2ef6aab5de848af5fc8e3d070850, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Jump: {fileID: 8300000, guid: 3c4547c2416c227408cf4b8fe4380e0f, type: 3}
+  Land: {fileID: 8300000, guid: cc6596ded8868ac4594dcbb4b9492679, type: 3}
+  WallSlide: {fileID: 0}
+  Death: {fileID: 8300000, guid: ffd27528108187046b48a4882b149e5b, type: 3}
+  Rebirth: {fileID: 8300000, guid: 0971cce2bf5b1c54795d26542c3fe901, type: 3}
+  Attack01: {fileID: 8300000, guid: 216984fced3b64648bc09fc5c00395b1, type: 3}
 --- !u!114 &11421360
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -571,12 +659,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerId: 1
-  verticalAimThreshold: .850000024
+  VerticalAimThresholdDegree: 90
+  spawnTime: 2
   slashAttackTime: .349999994
   slashAttackCooldownTime: .5
   slashAttackDashVelocityUp: 1200
   slashAttackDashVelocityDown: 2000
-  slashAttackDashVelocityForward: 2000
+  slashAttackDashVelocityForwardGround: 2000
+  slashAttackDashVelocityForwardAir: 2000
   slashAttackHorizDashGravity: 20
   slashAttackDashCurve:
     serializedVersion: 2
@@ -613,7 +703,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
   slashedTime: 2
-  invincibleAfterSlahsedTime: 5
+  invincibleAfterSpawnTime: 5
 --- !u!212 &21232852
 SpriteRenderer:
   m_ObjectHideFlags: 1

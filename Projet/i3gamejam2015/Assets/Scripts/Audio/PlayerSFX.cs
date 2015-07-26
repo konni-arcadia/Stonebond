@@ -11,19 +11,38 @@ namespace Completed
         public AudioClip Land;
         public AudioClip WallSlide;
         public AudioClip Death;
-        public AudioClip BondStart;
-        public AudioClip Bound;
-        public AudioClip BondStop;
         public AudioClip Rebirth;
+        public AudioClip Attack01;
 
         public void Start()
         {
             playerAudioSource = GetComponent<AudioSource>();
         }
 
-        public void PlayOneShot(AudioClip _clip)
+        private void PlayOneShot(AudioClip _clip)
         {
             playerAudioSource.PlayOneShot(_clip);
         }
+
+        public void Jump_Play()
+        { PlayOneShot(Jump); }
+
+        public void Land_Play()
+        { PlayOneShot(Land); }
+
+        //public void Wallslide_Play()
+        //{ PlayOneShot(WallSlide); }
+
+        public void Death_Play()
+        { PlayOneShot(Death); }
+
+        public void Bond_Stop()
+        { PlayOneShot(Land); }
+
+        public void Rebirth_Play()
+        { PlayOneShot(Rebirth); }
+
+        public void Attack_Play()
+        { PlayOneShot(Attack01); }
     }
 }

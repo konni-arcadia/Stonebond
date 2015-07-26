@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 8942fab4317034849ad938873a1e416b
-timeCreated: 1437872792
+guid: 7a12ce4704e44de4e9af83c9f804522c
+timeCreated: 1437892877
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -12,38 +12,37 @@ TextureImporter:
     21300010: Shred_idle_002
     21300012: Shred_idle_003
     21300014: Shred_idle_004
-    21300016: Shred_idle_005
-    21300018: Shred_jump_001
-    21300020: Shred_jump_002
-    21300022: Shred_jump_003
-    21300024: Shred_jump_004
-    21300026: Shred_jump_005
-    21300028: Shred_jump_006
-    21300030: Shred_jump_007
-    21300032: Shred_jump_008
-    21300034: Shred_jump_009
-    21300036: Shred_jump_010
-    21300038: Shred_jump_011
-    21300040: Shred_run_001
-    21300042: Shred_run_002
-    21300044: Shred_run_003
-    21300046: Shred_run_004
-    21300048: Shred_run_005
-    21300050: Shred_run_006
-    21300052: Shred_run_007
-    21300054: Shred_run_008
-    21300056: Shred_run_009
-    21300058: Shred_run_010
-    21300060: Shred_start_001
-    21300062: Shred_start_002
-    21300064: Shred_start_003
-    21300066: Shred_start_004
-    21300068: Shred_start_005
-    21300070: Shred_start_006
+    21300016: Shred_jump_001
+    21300018: Shred_jump_002
+    21300020: Shred_jump_003
+    21300022: Shred_jump_004
+    21300024: Shred_jump_005
+    21300026: Shred_jump_006
+    21300028: Shred_jump_007
+    21300030: Shred_jump_008
+    21300032: Shred_jump_009
+    21300034: Shred_jump_010
+    21300036: Shred_jump_011
+    21300038: Shred_run_001
+    21300040: Shred_run_002
+    21300042: Shred_run_003
+    21300044: Shred_run_004
+    21300046: Shred_run_005
+    21300048: Shred_run_006
+    21300050: Shred_run_007
+    21300052: Shred_run_008
+    21300054: Shred_run_009
+    21300056: Shred_run_010
+    21300058: Shred_start_001
+    21300060: Shred_start_002
+    21300062: Shred_start_003
+    21300064: Shred_start_004
+    21300066: Shred_start_005
+    21300068: Shred_start_006
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
-    enableMipMap: 0
+    enableMipMap: 1
     linearTexture: 0
     correctGamma: 0
     fadeOut: 0
@@ -65,8 +64,8 @@ TextureImporter:
   textureFormat: -1
   maxTextureSize: 4096
   textureSettings:
-    filterMode: 0
-    aniso: 16
+    filterMode: -1
+    aniso: -1
     mipBias: -1
     wrapMode: 1
   nPOTScale: 0
@@ -79,7 +78,7 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: .5, y: .5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 10
+  spritePixelsToUnits: 100
   alphaIsTransparency: 1
   textureType: 8
   buildTargetSettings: []

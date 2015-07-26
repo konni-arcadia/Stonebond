@@ -18,7 +18,7 @@ public class WinScreenManager : MonoBehaviour {
     private bool[] wasPressed = new bool[4];
 
     private bool isDisplayed = false;
-	private float awakeForSeconds = 0;
+	private float displayedForSeconds = 0;
     public Canvas menu;
 
 
@@ -32,7 +32,7 @@ public class WinScreenManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		awakeForSeconds += Time.deltaTime;
+		displayedForSeconds += Time.deltaTime;
         for (int i = 1; i < 5; i++ )
             CheckControlerStartMenu(i);
 	}
@@ -42,7 +42,7 @@ public class WinScreenManager : MonoBehaviour {
 
         if (isDisplayed)
         {
-            if (Input.GetButtonDown(InputManager.A + " P" + noControler) && awakeForSeconds >= 1)
+            if (Input.GetButtonDown(InputManager.A + " P" + noControler) && displayedForSeconds >= 1)
             {
                 switch (menuSelectedItem)
                 {
@@ -101,6 +101,6 @@ public class WinScreenManager : MonoBehaviour {
 		isDisplayed = true;
 		menu.enabled = true;
 		Time.timeScale = 0.0f;
-		awakeForSeconds = 0;
+		displayedForSeconds = 0;
 	}
 }

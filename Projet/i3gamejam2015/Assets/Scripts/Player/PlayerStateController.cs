@@ -226,18 +226,23 @@ public class PlayerStateController : MonoBehaviour
 	{
 		switch (state) {
 		case State.SPAWN:
+			setVisible (true); // dirty make sure sprite is visible if went out of invinsible
 			updateSpawn ();
 			break;
 		case State.IDLE:
+			setVisible (true); // dirty make sure sprite is visible if went out of invinsible
 			updateIdle ();
 			break;
 		case State.SLASH_ATTACK:
+			setVisible (true); // dirty make sure sprite is visible if went out of invinsible
 			updateSlashAttack ();
 			break;
 		case State.KNOCKBACK:
+			setVisible (true); // dirty make sure sprite is visible if went out of invinsible
 			updateKnockback ();
 			break;
 		case State.SLASHED:
+			setVisible (true); // dirty make sure sprite is visible if went out of invinsible
 			updateSlashed ();
 			break;
 		case State.INVINCIBLE:
@@ -421,8 +426,6 @@ public class PlayerStateController : MonoBehaviour
 
 	private void slash()
 	{
-		setVisible (true); // dirty make sure sprite is visible if went out of invinsible
-
 		print ("p" + playerId + ": enter SLASH_ATTACK state");
 		state = State.SLASH_ATTACK;
 		stateTime = slashAttackTime;
@@ -560,11 +563,13 @@ public class PlayerStateController : MonoBehaviour
 	}
 
 	private void setVisible(bool visible) {
-		debug ("setVisible(" + visible + ")");
-		foreach(SpriteRenderer sprite in GetComponentsInChildren<SpriteRenderer>()) {
-			sprite.enabled = visible;
+		if (this.visible != visible) {
+			debug ("setVisible(" + visible + ")");
+			foreach (SpriteRenderer sprite in GetComponentsInChildren<SpriteRenderer>()) {
+				sprite.enabled = visible;
+			}
+			this.visible = visible;
 		}
-		this.visible = visible;
 	}
 
 	//

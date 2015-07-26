@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-using UnityEditor;
-
 public class BondLink : MonoBehaviour {
 
 	public GameObject emitterA;

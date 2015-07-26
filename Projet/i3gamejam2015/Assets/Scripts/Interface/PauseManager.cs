@@ -40,7 +40,7 @@ public class PauseManager : MonoBehaviour {
 
         if (isDisplayed)
         {
-            if (Input.GetButtonDown(InputManager.START + " P" + noControler))
+            if (Input.GetButtonDown(InputManager.A + " P" + noControler))
             {
                 switch (menuSelectedItem)
                 {
@@ -50,7 +50,6 @@ public class PauseManager : MonoBehaviour {
 
                     case StartMenuItem.Resume: isDisplayed = false;
                                                 menu.enabled = false;
-                                                Time.timeScale = 1.0f;
                                                 break;
 
                     case StartMenuItem.LvlSelection: PlayerPrefs.SetInt("ComeFromLVL", 0); 
@@ -60,7 +59,14 @@ public class PauseManager : MonoBehaviour {
                     case StartMenuItem.MenuSelection: Application.LoadLevel("Menu");
                                                 break;
                 }
+                Time.timeScale = 1.0f;
 
+            }
+            else if (Input.GetButtonDown(InputManager.START + " P" + noControler))
+            {
+                isDisplayed = false;
+                menu.enabled = false;
+                Time.timeScale = 1.0f;
             }
 
             if (!wasPressed[noControler - 1] && Input.GetAxis(dpadVertical + noControler) < 0)

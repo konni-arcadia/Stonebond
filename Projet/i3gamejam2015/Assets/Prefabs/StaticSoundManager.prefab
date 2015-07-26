@@ -128,6 +128,8 @@ MonoBehaviour:
   VOICEGetReady: {fileID: 8300000, guid: a8d9c197841657a4b9cf0b15986bbef7, type: 3}
   VOICEFight: {fileID: 8300000, guid: 1c8e6ddce89247d49b8679457a47bdc2, type: 3}
   VOICEGameover: {fileID: 8300000, guid: c7b0b560c9799df438b0a3a9835203a5, type: 3}
+  BoundStart: {fileID: 8300000, guid: 22db80cff9c560d488c54bba00044f91, type: 3}
+  BoundBreak: {fileID: 8300000, guid: 674fbb9bf26efa146a78ddaa6bf1aa90, type: 3}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

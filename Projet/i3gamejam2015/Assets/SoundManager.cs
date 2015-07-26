@@ -20,6 +20,8 @@ public class SoundManager : MonoBehaviour
     public AudioClip VOICEGetReady;
     public AudioClip VOICEFight;
     public AudioClip VOICEGameover;
+    public AudioClip BoundStart;
+    public AudioClip BoundBreak;
     //public AudioClip SelectYourCharacter;
     //public AudioClip SelectYourStage;
     //public AudioClip Bound;
@@ -161,6 +163,14 @@ public class SoundManager : MonoBehaviour
     public void VOICE_Gameover_Play()
     {
         audioSource.PlayOneShot(VOICEGameover);
+    }
+    public void GAMEPLAY_Bound_Play()
+    {
+        audioSource.PlayOneShot(BoundStart);
+    }
+    public void GAMEPLAY_BoundBreak()
+    {
+        audioSource.PlayOneShot(BoundBreak);
     }
     //public void SelectYourCharacter_Play()
     //{

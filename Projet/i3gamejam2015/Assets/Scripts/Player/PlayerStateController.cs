@@ -316,7 +316,7 @@ public class PlayerStateController : MonoBehaviour
 			return;
 		}
 
-		BondLink bondLink = other.GetComponent<BondLink> ();
+		BondLink bondLink = other.GetComponentInParent<BondLink> ();
 		if (bondLink != null) {
 			LevelManager levelManager = FindObjectOfType<LevelManager>();
 			levelManager.bondHasBeenSlashed();

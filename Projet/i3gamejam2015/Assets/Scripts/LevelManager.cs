@@ -70,6 +70,9 @@ public class LevelManager : MonoBehaviour {
 			return;
 		}
 		ExitBondMode(p1, p2);
+
+		MyLittlePoney.shake (1.0f, 1.0f, 2.0f, 2.0f);
+		Flash.flash (0.0f, 0.0f, 0.0f);
 	}
 
 	private void EnterBondMode(List<PlayerStateController> activePlayers) {

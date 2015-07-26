@@ -62,6 +62,7 @@ public class PlayerStateController : MonoBehaviour
 	//
 
 	public float spawnTime = 2.0f;
+	private bool firstSpawn = true;
 
 	//
 	// SLASH ATTACK
@@ -277,13 +278,22 @@ public class PlayerStateController : MonoBehaviour
 	{
 		stateTime -= Time.deltaTime;
 		if (stateTime <= 0.0f) {
-			print ("p" + playerId + ": enter INVINCIBLE state");
-			state = State.INVINCIBLE;
-			setVisible(false);
-			invisibleBlinkCounter = invinsibleBlinkInterval;
-			stateTime = invincibleAfterSpawnTime;
-			movementController.setMovementEnabled (true);
-			//statusProvider.setInvincibleStatus(true);
+			if(firstSpawn) {
+				// prout
+				print ("p" + playerId + ": enter IDLE state");
+				state = State.IDLE;
+
+				firstSpawn = false;
+			}
+			else {
+				print ("p" + playerId + ": enter INVINCIBLE state");
+				state = State.INVINCIBLE;
+				setVisible(false);
+				invisibleBlinkCounter = invinsibleBlinkInterval;
+				stateTime = invincibleAfterSpawnTime;
+				movementController.setMovementEnabled (true);
+				//statusProvider.setInvincibleStatus(true);
+			}
 		}
 	}
 

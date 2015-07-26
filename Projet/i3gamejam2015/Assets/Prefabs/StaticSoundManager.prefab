@@ -119,6 +119,12 @@ MonoBehaviour:
   Cursor: {fileID: 8300000, guid: 77d371aa62af3ec42a02203e57c90929, type: 3}
   Validate: {fileID: 8300000, guid: 4b2e4d7018ba8de439a6badfe5729081, type: 3}
   Cancel: {fileID: 8300000, guid: 45d8095ab4cb69940881ea52e57914bf, type: 3}
+  VOICETitle: {fileID: 8300000, guid: 18808372bcdfebb4d8008da90274fc17, type: 3}
+  VOICECharacterSelect: {fileID: 8300000, guid: f6784856f3fedc844bd78c544302939d,
+    type: 3}
+  VOICEGetReady: {fileID: 8300000, guid: a8d9c197841657a4b9cf0b15986bbef7, type: 3}
+  VOICEFight: {fileID: 8300000, guid: 1c8e6ddce89247d49b8679457a47bdc2, type: 3}
+  VOICEGameover: {fileID: 8300000, guid: c7b0b560c9799df438b0a3a9835203a5, type: 3}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

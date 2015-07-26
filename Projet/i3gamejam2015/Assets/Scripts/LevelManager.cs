@@ -16,7 +16,7 @@ public class LevelManager : MonoBehaviour {
 	private WinScreenManager WinScreenManager {
 		get { return FindObjectOfType<WinScreenManager>(); }
 	}
-	private bool hasAlreadyShownWinScreen;
+	private bool hasAlreadyShownWinScreen, allowsCreateBond;
 
 	// Requires the objects to have already been spawned (PlayerSpawner::Awake, which is executed before)
 	void Start () {
@@ -42,8 +42,10 @@ public class LevelManager : MonoBehaviour {
 			if (!player.IsSlashed())
 				activePlayers.Add(player);
 		}
+		// Only allows the creation of the bond if all players have been active since the last cut
+		allowsCreateBond |= activePlayers.Count == players.Length && !bondMode;
 
-		if (activePlayers.Count == 2 && !bondMode)
+		if (activePlayers.Count == 2 && !bondMode && allowsCreateBond)
 			EnterBondMode(activePlayers);
 
 		if (bondMode) {
@@ -112,5 +114,6 @@ public class LevelManager : MonoBehaviour {
 		p2.setBondLink(null);
 		Debug.Log("Leaving bond mode");
 		bondMode = false;
+		allowsCreateBond = false;
 	}
 }

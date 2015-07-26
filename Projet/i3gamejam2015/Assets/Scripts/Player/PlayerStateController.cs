@@ -151,7 +151,7 @@ public class PlayerStateController : MonoBehaviour
 	//
 
 	public bool IsSlashed() {
-		return state == State.SLASHED;
+		return state == State.SLASHED || state == State.SPAWN;
 	}
 
 	public void setBondLink(BondLink bondLink) {
@@ -564,7 +564,6 @@ public class PlayerStateController : MonoBehaviour
 
 	private void setVisible(bool visible) {
 		if (this.visible != visible) {
-			debug ("setVisible(" + visible + ")");
 			foreach (SpriteRenderer sprite in GetComponentsInChildren<SpriteRenderer>()) {
 				sprite.enabled = visible;
 			}

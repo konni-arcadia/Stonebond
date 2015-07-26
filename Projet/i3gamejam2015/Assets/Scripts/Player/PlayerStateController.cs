@@ -32,6 +32,7 @@ public class PlayerStateController : MonoBehaviour
 	private State state = State.SPAWN;
 	private float stateTime = 0.0f;
 	private bool isBond = false;
+	private bool visible = true;
 
 	//
 	// COLLIDERS
@@ -98,6 +99,13 @@ public class PlayerStateController : MonoBehaviour
 	private GameObject crystal = null;
 
 	//
+	// SLASHED
+	//
+
+	public float invinsibleBlinkInterval = 0.2f;
+	private float invisibleBlinkCounter = 0.0f;
+
+	//
 	// INIT
 	//
 
@@ -151,7 +159,7 @@ public class PlayerStateController : MonoBehaviour
 	}
 
 	public void onCollide(Collider2D source, Collider2D other) {
-		debug ("onCollide");
+		//debug ("onCollide");
 		
 		if (state != State.SLASH_ATTACK) {
 			//debug ("not in SLASH_ATTACK state");
@@ -244,8 +252,11 @@ public class PlayerStateController : MonoBehaviour
 		if (stateTime <= 0.0f) {
 			print ("p" + playerId + ": enter INVINCIBLE state");
 			state = State.INVINCIBLE;
+			setVisible(false);
+			invisibleBlinkCounter = invinsibleBlinkInterval;
 			stateTime = invincibleAfterSpawnTime;
-			statusProvider.setInvincibleStatus(true);
+			movementController.setMovementEnabled (true);
+			//statusProvider.setInvincibleStatus(true);
 		}
 	}
 
@@ -378,7 +389,15 @@ public class PlayerStateController : MonoBehaviour
 			print ("p" + playerId + ": enter IDLE state");
 			state = State.IDLE;
 
-			statusProvider.setInvincibleStatus(false);
+			//statusProvider.setInvincibleStatus(false);
+			setVisible (true);
+			return;
+		}
+
+		invisibleBlinkCounter -= Time.deltaTime;
+		if (invisibleBlinkCounter < 0.0f) {
+			invisibleBlinkCounter += invinsibleBlinkInterval;
+			setVisible (!visible);
 		}
 	}
 
@@ -393,7 +412,6 @@ public class PlayerStateController : MonoBehaviour
 
 	private void spawn()
 	{
-		setVisible(true);
 		statusProvider.setRespawnWarning ();
 
 		print ("p" + playerId + ": enter SPAWN state");
@@ -403,6 +421,8 @@ public class PlayerStateController : MonoBehaviour
 
 	private void slash()
 	{
+		setVisible (true); // dirty make sure sprite is visible if went out of invinsible
+
 		print ("p" + playerId + ": enter SLASH_ATTACK state");
 		state = State.SLASH_ATTACK;
 		stateTime = slashAttackTime;
@@ -479,9 +499,7 @@ public class PlayerStateController : MonoBehaviour
 
 		movementController.setMovementEnabled (false);
 		movementController.resetForces ();
-
-		setVisible (false);
-
+	
 		// notification
 		statusProvider.setDie ();
 	}
@@ -505,8 +523,11 @@ public class PlayerStateController : MonoBehaviour
 	}
 
 	private bool isSlashable() {
-		// TODO blink for INVINCIBLE_AFTER_SLASHED
-		return !isBond && state != State.KNOCKBACK && state != State.SLASHED; //&& state != State.INVINCIBLE_AFTER_SLASHED;
+		if (isBond) {
+			return false;
+		}
+	
+		return state == State.IDLE;
 	}
 
 	private bool isAimingOppositeDirection (PlayerStateController enemy)
@@ -524,9 +545,11 @@ public class PlayerStateController : MonoBehaviour
 	}
 
 	private void setVisible(bool visible) {
+		debug ("setVisible(" + visible + ")");
 		foreach(SpriteRenderer sprite in GetComponentsInChildren<SpriteRenderer>()) {
 			sprite.enabled = visible;
 		}
+		this.visible = visible;
 	}
 
 	//

@@ -110,7 +110,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PressStartScreen: {fileID: 8300000, guid: 5805c61015ad33d4db8afa585a7fbf31, type: 3}
-  CharacterSelect: {fileID: 8300000, guid: dce22c56e7238364a8e0896b7b85479c, type: 3}
+  CharacterSelect: {fileID: 8300000, guid: cefc718ddbf987e498b38a16f07c6be0, type: 3}
   StageSelect: {fileID: 8300000, guid: ad7ecd17a59254f4989b4fa73998aca0, type: 3}
   StageSpireHigh: {fileID: 8300000, guid: 36126628e5a1ccf42918c7440be366c2, type: 3}
   StagePipesOfAwakening: {fileID: 8300000, guid: 67cd81ec138e55c4c9a6013b2823a0ad,

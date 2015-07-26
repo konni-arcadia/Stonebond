@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 7a12ce4704e44de4e9af83c9f804522c
-timeCreated: 1437921627
+timeCreated: 1437925683
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -1094,7 +1094,7 @@ TextureImporter:
         width: 22
         height: 37
       alignment: 9
-      pivot: {x: .805403292, y: .00626187725}
+      pivot: {x: .680000007, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Shred_wall_jump_002
       rect:

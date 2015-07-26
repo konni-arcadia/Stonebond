@@ -589,6 +589,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StartButtonArea: {fileID: 659628813}
   menu: {fileID: 1581771753}
+  canvas: {fileID: 1554908634}
   playerTextSprites:
   - {fileID: 21300000, guid: edb2a67218988864eaf8565875dd15af, type: 3}
   - {fileID: 21300000, guid: 174a894eb1183ca4aac15765976ce738, type: 3}

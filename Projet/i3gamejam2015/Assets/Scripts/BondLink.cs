@@ -6,29 +6,21 @@ public class BondLink : MonoBehaviour {
 	public GameObject emitterA;
 	public GameObject emitterB;
 
-//	protected GameObject linkA;
-//	protected GameObject linkB;
 	protected GameObject linkMiddle;
 	protected Renderer rend;
 	protected float originalZ;
 
+    float originalWidth;
+
 	// Use this for initialization
 	void Start () {
 
-//		linkA = GameObject.Find ("link/particleChestBurn");
-//		linkB = GameObject.Instantiate (linkA);
-
-//		linkMiddle = GameObject.Find ("link/particleLinkMiddle");
 		linkMiddle = transform.Find ("testAnimLink01").gameObject;
 		rend = linkMiddle.GetComponent<Renderer> ();
 		originalZ = linkMiddle.transform.position.z;
-
-////		linkA.transform.parent = origin.transform;
-//		linkA.transform.parent = emitterA.transform;
-//		linkA.transform.localPosition = Vector3.zero + new Vector3(0,1,0);
-////		linkB.transform.parent = target.transform;
-//		linkB.transform.parent = emitterB.transform;
-//		linkB.transform.localPosition = Vector3.zero + new Vector3(0,1,0);
+        originalWidth = rend.bounds.size.x;
+        if (originalWidth == 0)
+            Debug.LogError("Link sprite has a width of 0 !!!");
 		
 	}
 	
@@ -46,19 +38,13 @@ public class BondLink : MonoBehaviour {
 
 		linkMiddle.transform.position = emitterA.transform.position + linkLine * 0.5f;
 
-//		link.transform.rotation.SetLookRotation (linkLine);
-//		link.transform.LookAt (origin.transform.position);
 		float angle = Mathf.Atan2(linkLine.y, linkLine.x) * Mathf.Rad2Deg;
 		linkMiddle.transform.rotation = Quaternion.AngleAxis (angle, Vector3.forward);
 
-//		emitterA.transform.rotation = Quaternion.AngleAxis ( angle - 90, Vector3.forward);
-//		emitterB.transform.rotation = Quaternion.AngleAxis ( angle + 90, Vector3.forward);
-
 		float linkWidth = linkLine.magnitude;
-//		print (linkWidth);
 		float currentWidth = rend.bounds.size.x;
 		Vector3 scale = linkMiddle.transform.localScale;
-		scale.x = linkWidth * scale.x / currentWidth;
+        scale.x = linkWidth / originalWidth;
 
 		linkMiddle.transform.localScale = scale;
 

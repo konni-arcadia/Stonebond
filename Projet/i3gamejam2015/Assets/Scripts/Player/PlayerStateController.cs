@@ -151,19 +151,23 @@ public class PlayerStateController : MonoBehaviour
 		switch (playerId) {
 		case 1:
 			// Shred
-			bodyRenderer.color = new Color32 (0xC6, 0xA4, 0x5F, 0xFF);
+			bodyRenderer.material.SetColor("_ChromaTexColor", Color.red);
+			bodyRenderer.material.SetColor("_Color", Color.Lerp(Color.white, Color.red, 0.3f));
 			break;
 		case 2:
 			// Wise
-			bodyRenderer.color = new Color32 (0x9C, 0x5E, 0x73, 0xFF);
+			bodyRenderer.material.SetColor("_ChromaTexColor", Color.green);
+			bodyRenderer.material.SetColor("_Color", Color.Lerp(Color.white, Color.green, 0.3f));
 			break;
 		case 3:
 			// Buddy
-			bodyRenderer.color = new Color32 (0x75, 0x73, 0x9A, 0xFF);
+			bodyRenderer.material.SetColor("_ChromaTexColor", Color.cyan);
+			bodyRenderer.material.SetColor("_Color", Color.Lerp(Color.white, Color.cyan, 0.3f));
 			break;
 		case 4:
 			// Dextrous
-			bodyRenderer.color = new Color32 (0x55, 0x91, 0x7D, 0xFF);
+			bodyRenderer.material.SetColor("_ChromaTexColor", Color.yellow);
+			bodyRenderer.material.SetColor("_Color", Color.Lerp(Color.white, Color.yellow, 0.3f));
 			break;
 		}
 		

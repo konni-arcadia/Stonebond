@@ -22,6 +22,8 @@ public class SoundManager : MonoBehaviour
     public AudioClip VOICEGameover;
     public AudioClip BoundStart;
     public AudioClip BoundBreak;
+    public AudioClip VictoryJingle;
+    public AudioClip AirDash;
     //public AudioClip SelectYourCharacter;
     //public AudioClip SelectYourStage;
     //public AudioClip Bound;
@@ -171,6 +173,15 @@ public class SoundManager : MonoBehaviour
     public void GAMEPLAY_BoundBreak()
     {
         audioSource.PlayOneShot(BoundBreak);
+    }
+    public void GAMEPLAY_Victory()
+    {
+        audioSource.Stop();
+        audioSource.PlayOneShot(VictoryJingle);
+    }
+    public void GAMEPLAY_Airdash()
+    {
+        audioSource.PlayOneShot(AirDash);
     }
     //public void SelectYourCharacter_Play()
     //{

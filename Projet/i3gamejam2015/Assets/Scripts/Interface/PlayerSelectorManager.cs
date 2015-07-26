@@ -16,9 +16,7 @@ public class PlayerSelectorManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        PlayerSelection.SetActive(false);
-        Name.enabled = false;
-        Ready.enabled = false;
+        
 	
 	}
 	
@@ -33,10 +31,7 @@ public class PlayerSelectorManager : MonoBehaviour {
         {
             if (!HasPressedStart && Input.GetButtonDown(InputManager.START + " P" + PlayerNumber))
             {
-                HasPressedStart = true;
-                PressStart.enabled = false;
-                Name.enabled = true;
-                PlayerSelection.SetActive(true);
+                SetChoosenState();
             }
             else if (HasPressedStart && Input.GetButtonDown(InputManager.A + " P" + PlayerNumber))
             {
@@ -44,5 +39,21 @@ public class PlayerSelectorManager : MonoBehaviour {
                 Ready.enabled = true;
             }
         }
+    }
+
+    public void SetChoosenState()
+    {
+        HasPressedStart = true;
+        PressStart.enabled = false;
+        Name.enabled = true;
+        PlayerSelection.SetActive(true);
+        Ready.enabled = false;
+    }
+
+    public void SetInitialState()
+    {
+        PlayerSelection.SetActive(false);
+        Name.enabled = false;
+        Ready.enabled = false;
     }
 }

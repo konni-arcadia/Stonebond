@@ -49,6 +49,11 @@ public class LevelSelectionManager : MonoBehaviour {
                     break;
             }
         }
+        else if (Input.GetButtonDown(InputManager.B + " P" + noControler))
+        {
+            Application.LoadLevelAdditiveAsync("SelectPlayers");
+            Destroy(gameObject);
+        }
 
         if (!wasPressed[noControler - 1] && Input.GetAxis(dpadVertical + noControler) < 0)
         {

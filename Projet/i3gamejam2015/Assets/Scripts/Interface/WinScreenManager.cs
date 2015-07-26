@@ -18,39 +18,46 @@ public class WinScreenManager : MonoBehaviour {
     private bool[] wasPressed = new bool[4];
 
     private bool isDisplayed = false;
-	private float displayedForSeconds = 0;
-    public Canvas menu;
-
+    public GameObject menu;
+	private float timeSinceStart = 0;
+	public Sprite[] playerTextSprites;
+	
+	// TEMP TODO refactor end of game jam alert
+	public static int IdOfWonP1 = 1, IdOfWonP2 = 2, IdOfLevelToRestartTo;
 
 	// Use this for initialization
 	void Start () {
         buttonList = StartButtonArea.GetComponentsInChildren<Outline>();
 
-        menu.enabled = false;
-	
+        menu.SetActive(false);
+		transform.Find("P1").GetComponent<Image>().sprite = playerTextSprites[IdOfWonP1 - 1];
+		transform.Find("P2").GetComponent<Image>().sprite = playerTextSprites[IdOfWonP2 - 1];
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		displayedForSeconds += Time.deltaTime;
+		timeSinceStart += Time.deltaTime;
         for (int i = 1; i < 5; i++ )
             CheckControlerStartMenu(i);
 	}
 
-    void CheckControlerStartMenu(int noControler)
-    {
-
-        if (isDisplayed)
-        {
-            if (Input.GetButtonDown(InputManager.A + " P" + noControler) && displayedForSeconds >= 1)
-            {
+	void CheckControlerStartMenu(int noControler) {
+		if (!isDisplayed) {
+			// First time: display the overlay
+			if (Input.GetButtonDown(InputManager.A + " P" + noControler) && timeSinceStart >= 1) {
+				showScreen();
+				return;
+			}
+		}
+        else {
+            if (Input.GetButtonDown(InputManager.A + " P" + noControler)) {
                 switch (menuSelectedItem)
                 {
 
                     case StartMenuItem.Quit: Application.Quit();
                         break;
 
-					case StartMenuItem.Restart: Application.LoadLevel(Application.loadedLevel);
+					case StartMenuItem.Restart: Application.LoadLevel(IdOfLevelToRestartTo);
                                                 break;
 
                     case StartMenuItem.LvlSelection: PlayerPrefs.SetInt("ComeFromLVL", 0); 
@@ -60,7 +67,6 @@ public class WinScreenManager : MonoBehaviour {
                     case StartMenuItem.MenuSelection: Application.LoadLevel("Menu");
                                                 break;
                 }
-                Time.timeScale = 1.0f;
                 SoundManager.Instance.Validate_Play();
 
             }
@@ -97,10 +103,8 @@ public class WinScreenManager : MonoBehaviour {
     }
 
 	// Call this when a player has won
-	public void showScreen() {
+	private void showScreen() {
 		isDisplayed = true;
-		menu.enabled = true;
-		Time.timeScale = 0.0f;
-		displayedForSeconds = 0;
+		menu.SetActive(true);
 	}
 }

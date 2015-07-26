@@ -16,11 +16,13 @@ public class LevelManager : MonoBehaviour {
 	private WinScreenManager WinScreenManager {
 		get { return FindObjectOfType<WinScreenManager>(); }
 	}
+	private bool hasAlreadyShownWinScreen;
 
 	// Requires the objects to have already been spawned (PlayerSpawner::Awake, which is executed before)
 	void Start () {
         //Load the pause menu
         Application.LoadLevelAdditive("Pause");
+		Application.LoadLevelAdditive("WinScreen");
 
 		// Build the list of players
 		var list = FindObjectsOfType<PlayerStateController>();
@@ -55,13 +57,16 @@ public class LevelManager : MonoBehaviour {
 
 				// A winner is designated
 				if (bondLinkGauge > 1) {
-					var p1 = bondLink.emitterA.GetComponent<PlayerStateController>();
-					var p2 = bondLink.emitterB.GetComponent<PlayerStateController>();
 					bondLinkGauge = 1;
-					WinScreenManager.IdOfWonP1 = p1.GetPlayerId();
-					WinScreenManager.IdOfWonP2 = p2.GetPlayerId();
-					WinScreenManager.IdOfLevelToRestartTo = Application.loadedLevel;
-					Application.LoadLevel("WinScreen");
+					if (!hasAlreadyShownWinScreen) {
+						var p1 = bondLink.emitterA.GetComponent<PlayerStateController>();
+						var p2 = bondLink.emitterB.GetComponent<PlayerStateController>();
+						WinScreenManager.IdOfWonP1 = p1.GetPlayerId();
+						WinScreenManager.IdOfWonP2 = p2.GetPlayerId();
+						WinScreenManager.IdOfLevelToRestartTo = Application.loadedLevel;
+						WinScreenManager.showScreen();
+						hasAlreadyShownWinScreen = true;
+					}
 				}
 			}
 		}

@@ -575,8 +575,9 @@ MonoBehaviour:
   slashAttackTime: .349999994
   slashAttackCooldownTime: .5
   slashAttackDashVelocityUp: 1200
-  slashAttackDashVelocityDown: 600
+  slashAttackDashVelocityDown: 2000
   slashAttackDashVelocityForward: 2000
+  slashAttackHorizDashGravity: 20
   slashAttackDashCurve:
     serializedVersion: 2
     m_Curve:
@@ -593,8 +594,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
   knockbackTime: .5
-  knockbackVelocityUp: 8000
-  knockbackVelocityDown: 4000
+  knockbackVelocityUp: 10000
+  knockbackVelocityDown: 16000
   knockbackVelocityForward: 16000
   knockbackCurve:
     serializedVersion: 2
@@ -707,6 +708,22 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: extensionJumpForce
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: slashAttackHorizDashGravity
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: slashAttackDashVelocityDown
+      value: 2000
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: knockbackVelocityDown
+      value: 16000
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: knockbackVelocityUp
+      value: 10000
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

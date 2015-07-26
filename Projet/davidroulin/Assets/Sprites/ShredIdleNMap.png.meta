@@ -1,0 +1,110 @@
+fileFormatVersion: 2
+guid: 67c774fffe45e4ca9b187bb718ed75ff
+timeCreated: 1437870627
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: Shred_IDLE_NRM00
+    21300002: Shred_IDLE_NRM01
+    21300004: Shred_IDLE_NRM02
+    21300006: Shred_IDLE_NRM03
+    21300008: Shred_IDLE_NRM04
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 1
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 1
+    externalNormalMap: 1
+    heightScale: .100000001
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 8
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -3
+  maxTextureSize: 512
+  textureSettings:
+    filterMode: 0
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 1
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  spriteMode: 0
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 15
+  alphaIsTransparency: 0
+  textureType: 1
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: Shred_IDLE_NRM00
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 5
+        width: 35
+        height: 41
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Shred_IDLE_NRM01
+      rect:
+        serializedVersion: 2
+        x: 113
+        y: 5
+        width: 35
+        height: 41
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Shred_IDLE_NRM02
+      rect:
+        serializedVersion: 2
+        x: 76
+        y: 5
+        width: 35
+        height: 41
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Shred_IDLE_NRM03
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 5
+        width: 35
+        height: 41
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Shred_IDLE_NRM04
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 5
+        width: 35
+        height: 41
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

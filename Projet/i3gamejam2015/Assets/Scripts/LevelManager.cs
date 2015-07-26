@@ -40,7 +40,6 @@ public class LevelManager : MonoBehaviour {
 			if (!player.IsSlashed())
 				activePlayers.Add(player);
 		}
-		Debug.Log("Active players: " + activePlayers.Count + " out of " + players.Length);
 
 		if (activePlayers.Count == 2 && !bondMode)
 			EnterBondMode(activePlayers);
@@ -50,11 +49,11 @@ public class LevelManager : MonoBehaviour {
 			gaugeInner.transform.localScale = new Vector3(bondLinkGauge, 1, 1);
 
 			var distance = Vector3.Distance(bondLink.emitterA.transform.position, bondLink.emitterB.transform.position);
-			bondLinkGauge -= distance * gaugeDecreaseFactor;
+			bondLinkGauge += distance * gaugeDecreaseFactor;
 
 			// A winner is designated
-			if (bondLinkGauge < 0) {
-				bondLinkGauge = 0;
+			if (bondLinkGauge > 1) {
+				bondLinkGauge = 1;
 				WinScreenManager.showScreen();
 			}
 		}
@@ -83,7 +82,7 @@ public class LevelManager : MonoBehaviour {
 		bondLink.emitterB = activePlayers[1].gameObject;
 		activePlayers[0].setBondLink(bondLink);
 		activePlayers[1].setBondLink(bondLink);
-		bondLinkGauge = 1;
+		bondLinkGauge = 0;
 	}
 
 	private void ExitBondMode(PlayerStateController p1, PlayerStateController p2) {

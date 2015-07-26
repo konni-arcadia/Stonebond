@@ -119,6 +119,7 @@ public class SoundManager : MonoBehaviour
                 break;
         }
         audioSource.loop = true;
+        audioSource.volume = 0.3f;
         audioSource.Play();
     }
     public void Stage_Stop()

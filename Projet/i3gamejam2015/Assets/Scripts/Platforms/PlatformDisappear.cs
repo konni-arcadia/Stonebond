@@ -6,23 +6,30 @@ public class PlatformDisappear : MonoBehaviour {
     public BoxCollider2D boxColliderToUnable;
     public BoxCollider2D boxColliderToUnable2;
 
-    public float waitBeforeFading = 8;
-    public float waitBeforeAppearing = 8;
+    public float timeBeforeFading = 8;
+    public float timeBeforeAppearing = 8;
 
     public bool isActiveAtStart = true;
 
+    void Awake()
+    {
+        if (isActiveAtStart)
+        {
+            StartCoroutine(WaitAndFade(timeBeforeFading));
+        }
+        else
+        {
+            DisableChildrenSprites();
+            boxColliderToUnable.enabled = false;
+            boxColliderToUnable2.enabled = false;
+            StartCoroutine(WaitAndAppear(timeBeforeAppearing));
+        }
+    }
 
 	// Use this for initialization
 	void Start () {
 
-        if (isActiveAtStart)
-        {
-            StartCoroutine(WaitAndFade(waitBeforeFading));
-        }
-        else
-        {
-            StartCoroutine(WaitAndFade(0));
-        }
+ 
 	
 	}
 	
@@ -31,27 +38,27 @@ public class PlatformDisappear : MonoBehaviour {
 	    
 	}
 
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Players"))
-        {
-            StartCoroutine(WaitAndFade(waitBeforeFading));
-        }
-    }
 
     IEnumerator WaitAndFade(float waitTime)
     {
  
-        yield return new WaitForSeconds(waitTime);
+        yield return new WaitForSeconds(waitTime-2);
 
+        for (int i = 0; i < 9; i++)
+        {
+            DisableChildrenSprites();
+            yield return new WaitForSeconds(0.1f);
+            EnableChildrenSprites();
+            yield return new WaitForSeconds(0.1f);
+        }
+
+        DisableChildrenSprites();
         //Unable the colliders
         boxColliderToUnable.enabled = false;
         boxColliderToUnable2.enabled = false;
-      //  boxTrigger.enabled = false;
-        DisableChildrenSprites();
 
         //Re-appear
-        StartCoroutine(WaitAndAppear(waitBeforeAppearing));
+        StartCoroutine(WaitAndAppear(timeBeforeAppearing));
 
     }
 
@@ -61,9 +68,8 @@ public class PlatformDisappear : MonoBehaviour {
         //Unable the colliders
         boxColliderToUnable.enabled = true;
         boxColliderToUnable2.enabled = true;
-       // boxTrigger.enabled = true;
         EnableChildrenSprites();
-        StartCoroutine(WaitAndFade(waitBeforeFading));
+        StartCoroutine(WaitAndFade(timeBeforeFading));
 
     }
 

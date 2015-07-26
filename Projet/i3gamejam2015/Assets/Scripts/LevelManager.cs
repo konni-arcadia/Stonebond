@@ -20,7 +20,6 @@ public class LevelManager : MonoBehaviour {
 	void Start () {
         //Load the pause menu
         Application.LoadLevelAdditive("Pause");
-		Application.LoadLevelAdditive("WinScreen");
 
 		// Build the list of players
 		var list = FindObjectsOfType<PlayerStateController>();
@@ -53,8 +52,13 @@ public class LevelManager : MonoBehaviour {
 
 			// A winner is designated
 			if (bondLinkGauge > 1) {
+				var p1 = bondLink.emitterA.GetComponent<PlayerStateController>();
+				var p2 = bondLink.emitterB.GetComponent<PlayerStateController>();
 				bondLinkGauge = 1;
-				WinScreenManager.showScreen();
+				WinScreenManager.IdOfWonP1 = p1.GetPlayerId();
+				WinScreenManager.IdOfWonP2 = p2.GetPlayerId();
+				WinScreenManager.IdOfLevelToRestartTo = Application.loadedLevel;
+				Application.LoadLevel("WinScreen");
 			}
 		}
 		else {

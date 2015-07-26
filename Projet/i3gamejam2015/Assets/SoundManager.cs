@@ -65,6 +65,7 @@ public class SoundManager : MonoBehaviour
     public void PressStart_Play()
     {
         audioSource.clip = PressStartScreen;
+        audioSource.loop = true;
         audioSource.Play();
     }
     public void PressStart_Stop()
@@ -74,6 +75,7 @@ public class SoundManager : MonoBehaviour
     public void CharacterSelect_Play()
     {
         audioSource.clip = CharacterSelect;
+        audioSource.loop = true;
         audioSource.Play();
     }
     public void CharacterSelect_Stop()
@@ -83,6 +85,7 @@ public class SoundManager : MonoBehaviour
     public void StageSelect_Play()
     {
         audioSource.clip = StageSelect;
+        audioSource.loop = true;
         audioSource.Play();
     }
     public void StageSelect_Stop()
@@ -106,6 +109,7 @@ public class SoundManager : MonoBehaviour
                 audioSource.clip = Stage4;
                 break;
         }
+        audioSource.loop = true;
         audioSource.Play();
     }
     public void Stage_Stop()

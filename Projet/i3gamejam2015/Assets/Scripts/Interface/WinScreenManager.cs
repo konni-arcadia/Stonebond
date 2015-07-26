@@ -17,9 +17,10 @@ public class WinScreenManager : MonoBehaviour {
 
     private bool[] wasPressed = new bool[4];
 
-    private bool isDisplayed = false;
+    private bool isMenuDisplayed = false, isSceneDisplayed = false;
     public GameObject menu;
-	private float timeSinceStart = 0;
+	public Canvas canvas;
+	private float timeSinceStart;
 	public Sprite[] playerTextSprites;
 	
 	// TEMP TODO refactor end of game jam alert
@@ -29,6 +30,7 @@ public class WinScreenManager : MonoBehaviour {
 	void Start () {
         buttonList = StartButtonArea.GetComponentsInChildren<Outline>();
 
+		canvas.enabled = false;
         menu.SetActive(false);
 		transform.Find("P1").GetComponent<Image>().sprite = playerTextSprites[IdOfWonP1 - 1];
 		transform.Find("P2").GetComponent<Image>().sprite = playerTextSprites[IdOfWonP2 - 1];
@@ -36,16 +38,18 @@ public class WinScreenManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if (!isSceneDisplayed) return;
 		timeSinceStart += Time.deltaTime;
         for (int i = 1; i < 5; i++ )
             CheckControlerStartMenu(i);
 	}
 
 	void CheckControlerStartMenu(int noControler) {
-		if (!isDisplayed) {
+		if (!isMenuDisplayed) {
 			// First time: display the overlay
 			if (Input.GetButtonDown(InputManager.A + " P" + noControler) && timeSinceStart >= 1) {
-				showScreen();
+				isMenuDisplayed = true;
+				menu.SetActive(true);
 				return;
 			}
 		}
@@ -103,8 +107,9 @@ public class WinScreenManager : MonoBehaviour {
     }
 
 	// Call this when a player has won
-	private void showScreen() {
-		isDisplayed = true;
-		menu.SetActive(true);
+	public void showScreen() {
+		canvas.enabled = true;
+		timeSinceStart = 0;
+		isSceneDisplayed = true;
 	}
 }

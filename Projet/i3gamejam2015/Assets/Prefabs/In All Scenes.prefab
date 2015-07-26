@@ -215,6 +215,7 @@ MonoBehaviour:
   gaugeInner: {fileID: 142138}
   gaugeFrame: {fileID: 127230}
   gaugeDecreaseFactor: .000250000012
+  increaseStartCooldownSecs: 2.5
 --- !u!212 &21200886
 SpriteRenderer:
   m_ObjectHideFlags: 1

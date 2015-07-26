@@ -44,19 +44,19 @@ public class LevelSelectionManager : MonoBehaviour {
             {
 
                 case LvlSelectionItem.Cathedrale: Application.LoadLevel("LevelCathedrale");
-                    SoundManager.Instance.Stage_Play(SoundManager.StageEnum.One);
+                    SoundManager.Instance.Stage_Play(SoundManager.StageEnum.RosetteOfTheWingedOnes);
                     break;
 
                 case LvlSelectionItem.Forest: Application.LoadLevel("LevelForest"); ;
-                    SoundManager.Instance.Stage_Play(SoundManager.StageEnum.Two);
+                    SoundManager.Instance.Stage_Play(SoundManager.StageEnum.CloisterOfTheSilence);
                     break;
 
                 case LvlSelectionItem.Pipes: Application.LoadLevel("LevelOrgan"); ;
-                    SoundManager.Instance.Stage_Play(SoundManager.StageEnum.Three);
+                    SoundManager.Instance.Stage_Play(SoundManager.StageEnum.PipesOfAwakening);
                     break;
 
                 case LvlSelectionItem.Spire: Application.LoadLevel("LevelRoof"); ;
-                    SoundManager.Instance.Stage_Play(SoundManager.StageEnum.Four);
+                    SoundManager.Instance.Stage_Play(SoundManager.StageEnum.SpireHigh);
                     break;
             }
         }

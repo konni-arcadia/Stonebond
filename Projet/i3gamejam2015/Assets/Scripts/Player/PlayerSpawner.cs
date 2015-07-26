@@ -7,7 +7,7 @@ public class PlayerSpawner : MonoBehaviour {
 	public GameObject playerPrefab;
 
 	// Use this for initialization
-	void Start () {
+	void Awake() {
 		GameObject obj = Instantiate<GameObject>(playerPrefab);
 		PlayerStateController controller = obj.GetComponent<PlayerStateController>();
 		obj.transform.position = transform.position;

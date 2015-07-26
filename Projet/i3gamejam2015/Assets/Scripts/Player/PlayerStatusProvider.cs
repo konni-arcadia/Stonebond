@@ -7,49 +7,49 @@ public class PlayerStatusProvider : MonoBehaviour {
     public event AxisHChangedAction OnAxisHChanged;
     public void setAxisHValue(float value)
     {
-        OnAxisHChanged(value);
+        if (OnAxisHChanged != null) OnAxisHChanged(value);
     }
 
     public delegate void VelocityYChangedAction(float velocityYValue);
     public event VelocityYChangedAction OnVelocityYChanged;
     public void setVelocityYValue(float velocityY)
     {
-        OnVelocityYChanged(velocityY);
+        if (OnVelocityYChanged != null) OnVelocityYChanged(velocityY);
     }
 
     public delegate void GroundedAction(bool isGrounded);
     public event GroundedAction OnGroundedStatusChanged;
     public void setGroundedStatus(bool isGrounded)
     {
-        OnGroundedStatusChanged(isGrounded);
+        if (OnGroundedStatusChanged != null) OnGroundedStatusChanged(isGrounded);
     }
 
     public delegate void OnWallAction(bool isOnWall);
     public event OnWallAction OnOnWallStatusChanged;
     public void setOnWallStatus(bool isOnWall)
     {
-        OnOnWallStatusChanged(isOnWall);
+        if (OnOnWallStatusChanged != null) OnOnWallStatusChanged(isOnWall);
     }
 
     public delegate void DashForwardAction();
     public event DashForwardAction OnDashForwardAction;
     public void setDashForward()
     {
-        OnDashForwardAction();
+        if (OnDashForwardAction != null) OnDashForwardAction();
     }
 
     public delegate void DashUpAction();
     public event DashUpAction OnDashUpAction;
     public void setDashUp()
     {
-        OnDashUpAction();
+        if (OnDashUpAction != null) OnDashUpAction();
     }
 
     public delegate void DashDownAction();
     public event DashDownAction OnDashDownAction;
     public void setDashDown()
     {
-        OnDashDownAction();
+        if (OnDashDownAction != null) OnDashDownAction();
     }
 
     public delegate void KnockBackAction();
@@ -60,31 +60,31 @@ public class PlayerStatusProvider : MonoBehaviour {
     }
 	public void setKnockBackDown()
 	{
-		OnKnockBackAction();
+		if (OnKnockBackAction != null) OnKnockBackAction();
 	}
 	public void setKnockBackForward()
 	{
-		OnKnockBackAction();
+		if (OnKnockBackAction != null) OnKnockBackAction();
 	}
 
     public delegate void DieAction();
     public event DieAction OnDieAction;
     public void setDie()
     {
-        OnDieAction();
+        if (OnDieAction != null) OnDieAction();
     }
 
     public delegate void RespawnWarningAction();
     public event RespawnWarningAction OnRespawnWarningAction;
     public void setRespawnWarning()
     {
-        OnRespawnWarningAction();
+        if (OnRespawnWarningAction != null) OnRespawnWarningAction();
     }
 
     public delegate void InvinsibleStateAction();
     public event InvinsibleStateAction OnInvinsibleChangedAction;
     public void setInvincibleStatus(bool isInvincible)
     {
-        OnInvinsibleChangedAction();
+		if (OnInvinsibleChangedAction != null) OnInvinsibleChangedAction();
     }
 }

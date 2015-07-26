@@ -73,6 +73,8 @@ public class LevelManager : MonoBehaviour {
 
 		MyLittlePoney.shake (1.0f, 1.0f, 2.0f, 2.0f);
 		Flash.flash (0.0f, 0.0f, 0.0f);
+
+		SoundManager.Instance.GAMEPLAY_BoundBreak ();
 	}
 
 	private void EnterBondMode(List<PlayerStateController> activePlayers) {
@@ -86,6 +88,8 @@ public class LevelManager : MonoBehaviour {
 		activePlayers[0].setBondLink(bondLink);
 		activePlayers[1].setBondLink(bondLink);
 		bondLinkGauge = 0;
+
+		SoundManager.Instance.GAMEPLAY_Bound_Play ();
 	}
 
 	private void ExitBondMode(PlayerStateController p1, PlayerStateController p2) {

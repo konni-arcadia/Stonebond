@@ -277,6 +277,18 @@ Prefab:
       value: 
       objectReference: {fileID: 21300000, guid: a3c919b26c0d3b34599478397b4fa134,
         type: 3}
+    - target: {fileID: 21298014, guid: 294137296027b2e479aede083fd94e21, type: 2}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 5461d5a89fedd7d4d93ce0e22b76a241, type: 2}
+    - target: {fileID: 424556, guid: 294137296027b2e479aede083fd94e21, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -8.36999989
+      objectReference: {fileID: 0}
+    - target: {fileID: 424556, guid: 294137296027b2e479aede083fd94e21, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 9.90999985
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 294137296027b2e479aede083fd94e21, type: 2}
   m_IsPrefabParent: 0
@@ -619,6 +631,10 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 2046462, guid: 2d7d3ceab25a4a847b0103a208449fd8, type: 2}
       propertyPath: m_BackGroundColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 156118, guid: 2d7d3ceab25a4a847b0103a208449fd8, type: 2}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

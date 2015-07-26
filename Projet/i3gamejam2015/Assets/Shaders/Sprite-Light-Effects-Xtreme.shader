@@ -31,13 +31,14 @@
 		{ 
 			"Queue"="Transparent" 
 			"IgnoreProjector"="True" 
-			"RenderType"="Transparent" 
+			//"RenderType"="Opaque" 
+			"RenderType"="Transparent"
 			"PreviewType"="Plane"
 			"CanUseSpriteAtlas"="True"
 		}
 
 		Cull Off
-		Lighting Off
+		Lighting Off // On
 		ZWrite Off
 		Blend One OneMinusSrcAlpha
 
@@ -74,7 +75,7 @@
 			#endif
 			
 			UNITY_INITIALIZE_OUTPUT(Input, o);
-			o.color = v.color * _Color;
+			o.color = v.color;
 		}
 
 		void surf (Input IN, inout SurfaceOutput o)
@@ -84,25 +85,44 @@
 			fixed4 altTex = tex2D(_AlternateTex, IN.uv_MainTex);
 			fixed4 altMsk = tex2D(_AlternateTexMask, screenUV);
 			
-			fixed4 chrTex = tex2D(_ChromaTex, screenUV);
+			fixed4 chrTex = tex2D(_ChromaTex, IN.uv_MainTex);
 			
-			fixed4 nmpTex = tex2D(_NormalMapTex, screenUV);
+			fixed4 nmpTex = tex2D(_NormalMapTex, IN.uv_BumpMap);
+			//fixed4 neutralNormalMap = (0.5,0.5,0.5,1);
+			//fixed4 neutralNormalMap = (1,1,1,1);
+			fixed4 neutralNormalMap = (0,0,0,0);
 			
 			fixed4 lmpTex = tex2D(_LightMap, screenUV);
 			
 			fixed4 srcTex = tex2D(_MainTex, IN.uv_MainTex) * IN.color;
 			
-			o.Albedo = srcTex.rgb * srcTex.a;
-			//o.Albedo = lerp( srcTex.rgb * srcTex.a, altTex.rgb * altTex.a, altMsk.rgb * _AlternateBlend );
+			float altMaskInfluence = altMsk.rgb * _AlternateBlend;
 			
-			o.Alpha = srcTex.a;
-			//o.Alpha = lerp( srcTex.a, altTex.a, altMsk.rgb * _AlternateBlend );
+			float tintBurn = 0.2;
 			
-			//o.Normal = UnpackNormal (tex2D (_NormalMapTex, IN.uv_BumpMap));
+			//o.Albedo = srcTex.rgb * srcTex.a;
+			//o.Albedo = ( srcTex.rgb * IN.color * srcTex.a )
+				//+ ( _ChromaTexColor * chrTex.a );
+			o.Albedo = lerp( srcTex.rgb * _Color.rgb * (1-tintBurn) * srcTex.a, altTex.rgb * altTex.a, altMaskInfluence )
+				+ (_Color.rgb * tintBurn * srcTex.a * _Color.a)
+				;
+				//;
+			
+			//o.Alpha = srcTex.a;
+			// + chrTex.a;
+			o.Alpha = lerp( srcTex.a, altTex.a, altMaskInfluence );
+			
+			o.Emission = _ChromaTexColor.rgb * chrTex.a * 0.75
+			 + srcTex.rgb * _Color.rgb * (1-tintBurn) * srcTex.a * .5;
+			
+			//o.Normal = UnpackNormal ( lerp( neutralNormalMap, nmpTex, 1 ) );
+			//o.Normal = UnpackNormal ( neutralNormalMap );
 			
 		}
 		ENDCG
 	}
 
-Fallback "Transparent/VertexLit"
+	//Fallback "Transparent/VertexLit"
+	Fallback "Diffuse"
+	
 }

@@ -97,4 +97,10 @@ public class PlayerAnimationStateVarsProvider : MonoBehaviour {
         if (myAnimator != null)
             myAnimator.SetTrigger("Respawn");
     }
+
+    public void OnInvincibleStatusChangedAction(bool isInvicible)
+    {
+        if (myAnimator != null)
+            myAnimator.SetBool("Invincible", isInvicible);
+    }
 }

@@ -180,6 +180,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 21250346, guid: 2d7d3ceab25a4a847b0103a208449fd8, type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2d7d3ceab25a4a847b0103a208449fd8, type: 2}
   m_IsPrefabParent: 0
@@ -246,6 +250,10 @@ Prefab:
     - target: {fileID: 454074, guid: 6e52ac8496a93dc45a8404968aa45226, type: 2}
       propertyPath: m_LocalPosition.x
       value: -7.94000006
+      objectReference: {fileID: 0}
+    - target: {fileID: 21212244, guid: 6e52ac8496a93dc45a8404968aa45226, type: 2}
+      propertyPath: m_SortingOrder
+      value: -2
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 11481390, guid: 6e52ac8496a93dc45a8404968aa45226, type: 2}
@@ -495,6 +503,10 @@ Prefab:
       propertyPath: m_LocalPosition.x
       value: 6.46000004
       objectReference: {fileID: 0}
+    - target: {fileID: 21212244, guid: 6e52ac8496a93dc45a8404968aa45226, type: 2}
+      propertyPath: m_SortingOrder
+      value: -2
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 11481390, guid: 6e52ac8496a93dc45a8404968aa45226, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 6e52ac8496a93dc45a8404968aa45226, type: 2}
@@ -663,6 +675,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 21212244, guid: 6e52ac8496a93dc45a8404968aa45226, type: 2}
+      propertyPath: m_SortingOrder
+      value: -2
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 11481390, guid: 6e52ac8496a93dc45a8404968aa45226, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 6e52ac8496a93dc45a8404968aa45226, type: 2}
@@ -755,6 +771,10 @@ Prefab:
     - target: {fileID: 454074, guid: 6e52ac8496a93dc45a8404968aa45226, type: 2}
       propertyPath: m_RootOrder
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 21212244, guid: 6e52ac8496a93dc45a8404968aa45226, type: 2}
+      propertyPath: m_SortingOrder
+      value: -2
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 11481390, guid: 6e52ac8496a93dc45a8404968aa45226, type: 2}

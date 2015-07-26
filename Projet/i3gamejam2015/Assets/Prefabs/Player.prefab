@@ -665,9 +665,9 @@ MonoBehaviour:
   slashAttackCooldownTime: .5
   slashAttackDashVelocityUp: 1200
   slashAttackDashVelocityDown: 2000
-  slashAttackDashVelocityForwardGround: 2000
-  slashAttackDashVelocityForwardAir: 2000
-  slashAttackHorizDashGravity: 20
+  slashAttackDashVelocityForwardGround: 3000
+  slashAttackDashVelocityForwardAir: 4000
+  slashAttackHorizDashGravity: 40
   slashAttackDashCurve:
     serializedVersion: 2
     m_Curve:
@@ -802,7 +802,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: slashAttackHorizDashGravity
-      value: 20
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: slashAttackDashVelocityDown
@@ -827,6 +827,14 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: spawnTime
       value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: slashAttackDashVelocityForwardGround
+      value: 3000
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: slashAttackDashVelocityForwardAir
+      value: 4000
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

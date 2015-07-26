@@ -106,6 +106,7 @@ public class SoundManager : MonoBehaviour
                 audioSource.clip = Stage4;
                 break;
         }
+        audioSource.loop = true;
         audioSource.Play();
     }
     public void Stage_Stop()

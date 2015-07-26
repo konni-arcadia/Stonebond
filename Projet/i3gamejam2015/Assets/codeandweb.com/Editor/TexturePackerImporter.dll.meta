@@ -1,7 +1,11 @@
 fileFormatVersion: 2
-guid: 68e97fe216a404e4e9c552873bcf2377
-timeCreated: 1437892877
-licenseType: Free
+guid: a707393767c5b493292665c823f95075
+labels:
+- Texture
+- Packer
+- TexturePacker
+timeCreated: 1430739127
+licenseType: Store
 PluginImporter:
   serializedVersion: 1
   iconMap: {}

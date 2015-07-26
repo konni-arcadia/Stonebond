@@ -64,11 +64,12 @@ public class PlatformDisappear : MonoBehaviour {
 
     IEnumerator WaitAndAppear(float waitTime)
     {
-        yield return new WaitForSeconds(waitTime);
+        yield return new WaitForSeconds(waitTime/2);
         //Unable the colliders
         boxColliderToUnable.enabled = true;
         boxColliderToUnable2.enabled = true;
         EnableChildrenSprites();
+        yield return new WaitForSeconds(waitTime/2);
         StartCoroutine(WaitAndFade(timeBeforeFading));
 
     }

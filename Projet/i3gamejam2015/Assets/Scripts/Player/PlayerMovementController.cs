@@ -116,7 +116,7 @@ public class PlayerMovementController : MonoBehaviour {
 
 		// If the player should jump...
 		if (wantJump || wantWallJump) {
-			AudioSource.PlayClipAtPoint(jumpClip, body.position);
+//			AudioSource.PlayClipAtPoint(jumpClip, body.position);
 
 			// Ensure that the current vy doesn't take in account
 			Vector2 vel = body.velocity;

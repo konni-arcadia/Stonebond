@@ -46,8 +46,12 @@ public class MenuManager : MonoBehaviour {
                 case StartMenuItem.GameStart: Application.LoadLevelAdditiveAsync("SelectPlayers");
                     SoundManager.Instance.PressStart_Stop();
                     break;
-            }
 
+                case StartMenuItem.Credits: Application.LoadLevelAdditiveAsync("Credits");
+                    SoundManager.Instance.PressStart_Stop();
+                    break;
+            }
+            SoundManager.Instance.Validate_Play();
             Destroy(gameObject);
             
         }
@@ -60,6 +64,7 @@ public class MenuManager : MonoBehaviour {
                 menuSelectedItem -= 1;
                 buttonList[(int)menuSelectedItem].effectColor = highlithed;
                 wasPressed[noControler - 1] = true;
+                SoundManager.Instance.Cursor_Play();
             }
             
         }
@@ -71,6 +76,7 @@ public class MenuManager : MonoBehaviour {
                 menuSelectedItem += 1;
                 buttonList[(int)menuSelectedItem].effectColor = highlithed;
                 wasPressed[noControler - 1] = true;
+                SoundManager.Instance.Cursor_Play();
             }
             
         }

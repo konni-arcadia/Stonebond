@@ -110,15 +110,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PressStartScreen: {fileID: 8300000, guid: 5805c61015ad33d4db8afa585a7fbf31, type: 3}
-  CharacterSelect: {fileID: 8300000, guid: dce22c56e7238364a8e0896b7b85479c, type: 3}
+  CharacterSelect: {fileID: 8300000, guid: cefc718ddbf987e498b38a16f07c6be0, type: 3}
   StageSelect: {fileID: 8300000, guid: ad7ecd17a59254f4989b4fa73998aca0, type: 3}
-  Stage1: {fileID: 8300000, guid: 36126628e5a1ccf42918c7440be366c2, type: 3}
-  Stage2: {fileID: 8300000, guid: 67cd81ec138e55c4c9a6013b2823a0ad, type: 3}
-  Stage3: {fileID: 8300000, guid: 36126628e5a1ccf42918c7440be366c2, type: 3}
-  Stage4: {fileID: 8300000, guid: 67cd81ec138e55c4c9a6013b2823a0ad, type: 3}
+  StageSpireHigh: {fileID: 8300000, guid: 36126628e5a1ccf42918c7440be366c2, type: 3}
+  StagePipesOfAwakening: {fileID: 8300000, guid: 67cd81ec138e55c4c9a6013b2823a0ad,
+    type: 3}
+  StageCloisterOfTheSilence: {fileID: 8300000, guid: 36126628e5a1ccf42918c7440be366c2,
+    type: 3}
+  StageRosetteOfTheWingedOnes: {fileID: 8300000, guid: 67cd81ec138e55c4c9a6013b2823a0ad,
+    type: 3}
   Cursor: {fileID: 8300000, guid: 77d371aa62af3ec42a02203e57c90929, type: 3}
   Validate: {fileID: 8300000, guid: 4b2e4d7018ba8de439a6badfe5729081, type: 3}
   Cancel: {fileID: 8300000, guid: 45d8095ab4cb69940881ea52e57914bf, type: 3}
+  VOICETitle: {fileID: 8300000, guid: 18808372bcdfebb4d8008da90274fc17, type: 3}
+  VOICECharacterSelect: {fileID: 8300000, guid: f6784856f3fedc844bd78c544302939d,
+    type: 3}
+  VOICEGetReady: {fileID: 8300000, guid: a8d9c197841657a4b9cf0b15986bbef7, type: 3}
+  VOICEFight: {fileID: 8300000, guid: 1c8e6ddce89247d49b8679457a47bdc2, type: 3}
+  VOICEGameover: {fileID: 8300000, guid: c7b0b560c9799df438b0a3a9835203a5, type: 3}
+  BoundStart: {fileID: 8300000, guid: 22db80cff9c560d488c54bba00044f91, type: 3}
+  BoundBreak: {fileID: 8300000, guid: 674fbb9bf26efa146a78ddaa6bf1aa90, type: 3}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

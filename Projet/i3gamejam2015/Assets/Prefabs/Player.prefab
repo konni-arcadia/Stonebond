@@ -561,10 +561,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Jump: {fileID: 8300000, guid: 3c4547c2416c227408cf4b8fe4380e0f, type: 3}
   Land: {fileID: 8300000, guid: cc6596ded8868ac4594dcbb4b9492679, type: 3}
-  WallSlide: {fileID: 0}
+  WallSlide: {fileID: 8300000, guid: 9fa53a91053a9ad4183671e80ff69987, type: 3}
   Death: {fileID: 8300000, guid: ffd27528108187046b48a4882b149e5b, type: 3}
   Rebirth: {fileID: 8300000, guid: 0971cce2bf5b1c54795d26542c3fe901, type: 3}
   Attack01: {fileID: 8300000, guid: 216984fced3b64648bc09fc5c00395b1, type: 3}
+  Attack02: {fileID: 8300000, guid: 12cf571515f0697418267f76549f0e63, type: 3}
+  BondStart: {fileID: 8300000, guid: 22db80cff9c560d488c54bba00044f91, type: 3}
+  Bond: {fileID: 8300000, guid: 7489db97604037345b3814e063713ea2, type: 3}
+  BondBreak: {fileID: 8300000, guid: 674fbb9bf26efa146a78ddaa6bf1aa90, type: 3}
+  Knockback: {fileID: 8300000, guid: 4e89648e259be3d4ead466f1a51f80d9, type: 3}
+  WallJump: {fileID: 8300000, guid: 9d94adc9b71c2b5409507877eb20bf1e, type: 3}
 --- !u!114 &11421360
 MonoBehaviour:
   m_ObjectHideFlags: 1

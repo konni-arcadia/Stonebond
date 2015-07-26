@@ -5,7 +5,7 @@ AnimationClip:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: flame00
+  m_Name: flamme00
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -19,12 +19,10 @@ AnimationClip:
   - curve:
     - time: 0
       value: {fileID: 21300000, guid: cdf8838fe160a59499635608855eb8f4, type: 3}
-    - time: .333333343
+    - time: .0833333358
       value: {fileID: 21300000, guid: 756b9e9307ab1c2449eee1d1bfcbea4e, type: 3}
-    - time: .666666687
+    - time: .166666672
       value: {fileID: 21300000, guid: 0c7a6b5d200f1ca42ade5e925137c449, type: 3}
-    - time: 1
-      value: {fileID: 21300000, guid: cdf8838fe160a59499635608855eb8f4, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -46,11 +44,10 @@ AnimationClip:
     - {fileID: 21300000, guid: cdf8838fe160a59499635608855eb8f4, type: 3}
     - {fileID: 21300000, guid: 756b9e9307ab1c2449eee1d1bfcbea4e, type: 3}
     - {fileID: 21300000, guid: 0c7a6b5d200f1ca42ade5e925137c449, type: 3}
-    - {fileID: 21300000, guid: cdf8838fe160a59499635608855eb8f4, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_StartTime: 0
-    m_StopTime: 1.08333337
+    m_StopTime: .25
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0

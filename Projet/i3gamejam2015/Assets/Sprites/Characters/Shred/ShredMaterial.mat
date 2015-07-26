@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: ShredMaterial
-  m_Shader: {fileID: 4800000, guid: 13506d47dbf734c23b58676a14eb47f6, type: 3}
+  m_Shader: {fileID: 4800000, guid: d1a8b42068602c441bb91a87dd5d3c1c, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 5
   m_CustomRenderQueue: -1
@@ -82,14 +82,14 @@ Material:
         first:
           name: _AlternateTex
         second:
-          m_Texture: {fileID: 2800000, guid: 4b0861f84a9584e9b96f8715ec99b567, type: 3}
+          m_Texture: {fileID: 2800000, guid: e6018298f4451f84e8194752d6ede733, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
         first:
           name: _MaskTex
         second:
-          m_Texture: {fileID: 2800000, guid: bd4f86e807b0b4a259bcf2b9efba176b, type: 3}
+          m_Texture: {fileID: 2800000, guid: cfce1e91129a06a478e6f5c869cef884, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:

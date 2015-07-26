@@ -7,7 +7,7 @@ public class PlayerAnimationStateVarsProvider : MonoBehaviour {
     Animator myAnimator;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
         myStatusProvider = GetComponent<PlayerStatusProvider>();
         myAnimator = GetComponentInChildren<Animator>();
         if(myStatusProvider == null)

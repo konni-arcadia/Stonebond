@@ -69,6 +69,10 @@ public class PlayerStatusProvider : MonoBehaviour {
 
     public delegate void DieAction(Vector2 deathVector);
     public event DieAction OnDieAction;
+    public void setDie()
+    {
+        setDie(Vector2.zero);
+    }
     public void setDie(Vector2 deathVector)
     {
         if (OnDieAction != null) OnDieAction(deathVector);

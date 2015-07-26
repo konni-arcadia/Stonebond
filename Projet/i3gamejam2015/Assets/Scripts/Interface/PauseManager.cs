@@ -60,6 +60,7 @@ public class PauseManager : MonoBehaviour {
                                                 break;
                 }
                 Time.timeScale = 1.0f;
+                SoundManager.Instance.Validate_Play();
 
             }
             else if (Input.GetButtonDown(InputManager.START + " P" + noControler))
@@ -77,6 +78,7 @@ public class PauseManager : MonoBehaviour {
                     menuSelectedItem -= 1;
                     buttonList[(int)menuSelectedItem].effectColor = highlithed;
                     wasPressed[noControler - 1] = true;
+                    SoundManager.Instance.Cursor_Play();
                 }
 
             }
@@ -88,6 +90,7 @@ public class PauseManager : MonoBehaviour {
                     menuSelectedItem += 1;
                     buttonList[(int)menuSelectedItem].effectColor = highlithed;
                     wasPressed[noControler - 1] = true;
+                    SoundManager.Instance.Cursor_Play();
                 }
 
             }

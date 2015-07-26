@@ -67,11 +67,11 @@ public class PlayerStatusProvider : MonoBehaviour {
 		if (OnKnockBackAction != null) OnKnockBackAction();
 	}
 
-    public delegate void DieAction();
+    public delegate void DieAction(Vector2 deathVector);
     public event DieAction OnDieAction;
-    public void setDie()
+    public void setDie(Vector2 deathVector)
     {
-        if (OnDieAction != null) OnDieAction();
+        if (OnDieAction != null) OnDieAction(deathVector);
     }
 
     public delegate void RespawnWarningAction();

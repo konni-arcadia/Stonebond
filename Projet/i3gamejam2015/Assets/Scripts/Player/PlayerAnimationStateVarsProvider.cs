@@ -86,7 +86,7 @@ public class PlayerAnimationStateVarsProvider : MonoBehaviour {
     }
 
 
-    public void DieAction()
+    public void DieAction(Vector2 deathVector)
     {
         if (myAnimator != null)
             myAnimator.SetTrigger("Die");

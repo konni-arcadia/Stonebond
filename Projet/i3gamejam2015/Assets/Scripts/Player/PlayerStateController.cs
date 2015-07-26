@@ -186,10 +186,17 @@ public class PlayerStateController : MonoBehaviour
 			if (enemy.isPerformingSlashAttack () && isAimingOppositeDirection (enemy)) {
 				enemy.knockback (aimDirection);
 				knockback (enemy.aimDirection);
-				//knockedBack = true;
-				//knockedBackDirection = enemy.aimDirection;
+
+				if(aimDirection == AimDirection.FORWARD) {
+					MyLittlePoney.shake (0.5f, 0.0f, 2.0f, 0.0f);
+				}
+				else {
+					MyLittlePoney.shake (0.0f, 0.5f, 0.0f, 2.0f);
+				}
 			} else if (enemy.isSlashable ()) {
 				enemy.hitWithSlash ();
+
+				MyLittlePoney.shake (0.5f, 0.5f, 2.0f, 2.0f);
 			}
 			return;
 		}

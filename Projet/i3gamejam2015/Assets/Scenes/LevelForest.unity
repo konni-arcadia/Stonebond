@@ -369,6 +369,10 @@ Prefab:
       propertyPath: waitBeforeAppearing
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 21275050, guid: c877b2da3f7b807468c365bc13e336b9, type: 2}
+      propertyPath: m_SortingOrder
+      value: -1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c877b2da3f7b807468c365bc13e336b9, type: 2}
   m_IsPrefabParent: 0
@@ -565,7 +569,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
-  m_SortingOrder: -1
+  m_SortingOrder: -3
   m_Sprite: {fileID: 21300000, guid: aae4921d2e4b113448cbb8eca52ce812, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &671472826
@@ -677,6 +681,10 @@ Prefab:
       propertyPath: waitBeforeAppearing
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 21275050, guid: c877b2da3f7b807468c365bc13e336b9, type: 2}
+      propertyPath: m_SortingOrder
+      value: -1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c877b2da3f7b807468c365bc13e336b9, type: 2}
   m_IsPrefabParent: 0
@@ -726,6 +734,10 @@ Prefab:
     - target: {fileID: 11419190, guid: c877b2da3f7b807468c365bc13e336b9, type: 2}
       propertyPath: isActiveAtStart
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 21275050, guid: c877b2da3f7b807468c365bc13e336b9, type: 2}
+      propertyPath: m_SortingOrder
+      value: -1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c877b2da3f7b807468c365bc13e336b9, type: 2}
@@ -815,7 +827,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_Sprite: {fileID: 21300000, guid: febbede0cce3aa9469c1dc499b87d892, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!4 &778216763
@@ -1078,6 +1090,10 @@ Prefab:
       propertyPath: isActiveAtStart
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 21283394, guid: 4cd0922c3a5909c4288241bcbab4dc46, type: 2}
+      propertyPath: m_SortingOrder
+      value: -1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4cd0922c3a5909c4288241bcbab4dc46, type: 2}
   m_IsPrefabParent: 0
@@ -1190,6 +1206,10 @@ Prefab:
       propertyPath: waitBeforeAppearing
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 21275050, guid: c877b2da3f7b807468c365bc13e336b9, type: 2}
+      propertyPath: m_SortingOrder
+      value: -1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c877b2da3f7b807468c365bc13e336b9, type: 2}
   m_IsPrefabParent: 0
@@ -1251,6 +1271,10 @@ Prefab:
     - target: {fileID: 11419190, guid: c877b2da3f7b807468c365bc13e336b9, type: 2}
       propertyPath: isActiveAtStart
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 21275050, guid: c877b2da3f7b807468c365bc13e336b9, type: 2}
+      propertyPath: m_SortingOrder
+      value: -1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c877b2da3f7b807468c365bc13e336b9, type: 2}
@@ -1360,6 +1384,10 @@ Prefab:
       propertyPath: isActiveAtStart
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 21283394, guid: 4cd0922c3a5909c4288241bcbab4dc46, type: 2}
+      propertyPath: m_SortingOrder
+      value: -1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4cd0922c3a5909c4288241bcbab4dc46, type: 2}
   m_IsPrefabParent: 0
@@ -1417,6 +1445,10 @@ Prefab:
     - target: {fileID: 11419190, guid: c877b2da3f7b807468c365bc13e336b9, type: 2}
       propertyPath: waitBeforeAppearing
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 21275050, guid: c877b2da3f7b807468c365bc13e336b9, type: 2}
+      propertyPath: m_SortingOrder
+      value: -1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c877b2da3f7b807468c365bc13e336b9, type: 2}
@@ -1650,6 +1682,10 @@ Prefab:
       propertyPath: waitBeforeAppearing
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 21275050, guid: c877b2da3f7b807468c365bc13e336b9, type: 2}
+      propertyPath: m_SortingOrder
+      value: -1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c877b2da3f7b807468c365bc13e336b9, type: 2}
   m_IsPrefabParent: 0
@@ -1707,6 +1743,10 @@ Prefab:
     - target: {fileID: 11419190, guid: c877b2da3f7b807468c365bc13e336b9, type: 2}
       propertyPath: waitBeforeAppearing
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 21275050, guid: c877b2da3f7b807468c365bc13e336b9, type: 2}
+      propertyPath: m_SortingOrder
+      value: -1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c877b2da3f7b807468c365bc13e336b9, type: 2}
@@ -1885,6 +1925,10 @@ Prefab:
     - target: {fileID: 11419190, guid: c877b2da3f7b807468c365bc13e336b9, type: 2}
       propertyPath: waitBeforeAppearing
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 21275050, guid: c877b2da3f7b807468c365bc13e336b9, type: 2}
+      propertyPath: m_SortingOrder
+      value: -1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c877b2da3f7b807468c365bc13e336b9, type: 2}
@@ -2505,6 +2549,10 @@ Prefab:
     - target: {fileID: 11419190, guid: c877b2da3f7b807468c365bc13e336b9, type: 2}
       propertyPath: waitBeforeAppearing
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 21275050, guid: c877b2da3f7b807468c365bc13e336b9, type: 2}
+      propertyPath: m_SortingOrder
+      value: -1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c877b2da3f7b807468c365bc13e336b9, type: 2}

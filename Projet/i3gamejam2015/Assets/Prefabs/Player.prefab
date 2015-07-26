@@ -660,7 +660,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerId: 1
   VerticalAimThresholdDegree: 90
-  spawnTime: 2
+  spawnTime: 2.5
   slashAttackTime: .349999994
   slashAttackCooldownTime: .5
   slashAttackDashVelocityUp: 1200
@@ -703,7 +703,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
   slashedTime: 2
-  invincibleAfterSpawnTime: 5
+  invincibleAfterSpawnTime: 3
+  invinsibleBlinkInterval: .100000001
 --- !u!212 &21232852
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -814,6 +815,18 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: knockbackVelocityUp
       value: 10000
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: invincibleAfterSpawnTime
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: invinsibleBlinkInterval
+      value: .100000001
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: spawnTime
+      value: 2.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

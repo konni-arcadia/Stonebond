@@ -62,6 +62,7 @@ public class PlayerStateController : MonoBehaviour
 	//
 
 	public float spawnTime = 2.0f;
+	private bool firstSpawn = true;
 
 	//
 	// SLASH ATTACK
@@ -144,6 +145,28 @@ public class PlayerStateController : MonoBehaviour
 		// start in spawn state
 		movementController.setMovementEnabled (false);
 		spawn ();
+
+		SpriteRenderer bodyRenderer = transform.Find ("CharacterSprites").Find ("Body").GetComponent<SpriteRenderer> ();
+
+		switch (playerId) {
+		case 1:
+			// Shred
+			bodyRenderer.color = new Color32 (0xC6, 0xA4, 0x5F, 0xFF);
+			break;
+		case 2:
+			// Wise
+			bodyRenderer.color = new Color32 (0x9C, 0x5E, 0x73, 0xFF);
+			break;
+		case 3:
+			// Buddy
+			bodyRenderer.color = new Color32 (0x75, 0x73, 0x9A, 0xFF);
+			break;
+		case 4:
+			// Dextrous
+			bodyRenderer.color = new Color32 (0x55, 0x91, 0x7D, 0xFF);
+			break;
+		}
+		
 	}
 
 	//
@@ -255,13 +278,22 @@ public class PlayerStateController : MonoBehaviour
 	{
 		stateTime -= Time.deltaTime;
 		if (stateTime <= 0.0f) {
-			print ("p" + playerId + ": enter INVINCIBLE state");
-			state = State.INVINCIBLE;
-			setVisible(false);
-			invisibleBlinkCounter = invinsibleBlinkInterval;
-			stateTime = invincibleAfterSpawnTime;
-			movementController.setMovementEnabled (true);
-			//statusProvider.setInvincibleStatus(true);
+			if(firstSpawn) {
+				// prout
+				print ("p" + playerId + ": enter IDLE state");
+				state = State.IDLE;
+
+				firstSpawn = false;
+			}
+			else {
+				print ("p" + playerId + ": enter INVINCIBLE state");
+				state = State.INVINCIBLE;
+				setVisible(false);
+				invisibleBlinkCounter = invinsibleBlinkInterval;
+				stateTime = invincibleAfterSpawnTime;
+				movementController.setMovementEnabled (true);
+				//statusProvider.setInvincibleStatus(true);
+			}
 		}
 	}
 

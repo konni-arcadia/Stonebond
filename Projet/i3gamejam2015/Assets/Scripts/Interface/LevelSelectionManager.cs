@@ -72,6 +72,7 @@ public class LevelSelectionManager : MonoBehaviour {
         {
             if (menuSelectedItem != (LvlSelectionItem)0)
             {
+                SoundManager.Instance.Cursor_Play();
                 menuSelectedItem -= 1;
                 selectedLevelImage.sprite = levelList[(int)menuSelectedItem];
                 wasPressed[noControler - 1] = true;
@@ -82,6 +83,7 @@ public class LevelSelectionManager : MonoBehaviour {
         {
             if (menuSelectedItem != LvlSelectionItem.Cathedrale)
             {
+                SoundManager.Instance.Cursor_Play();
                 menuSelectedItem += 1;
                 selectedLevelImage.sprite = levelList[(int)menuSelectedItem];
                 wasPressed[noControler - 1] = true;

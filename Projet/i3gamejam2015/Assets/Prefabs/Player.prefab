@@ -665,8 +665,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerId: 1
-  VerticalAimThresholdDegree: 90
-  spawnTime: 2.5
+  VerticalAimThresholdDegree: 100
+  spawnTime: 2.29999995
   slashAttackTime: .349999994
   slashAttackCooldownTime: .5
   slashAttackDashVelocityUp: 1200
@@ -832,7 +832,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: spawnTime
-      value: 2.5
+      value: 2.29999995
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: slashAttackDashVelocityForwardGround
@@ -841,6 +841,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: slashAttackDashVelocityForwardAir
       value: 4000
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: VerticalAimThresholdDegree
+      value: 100
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

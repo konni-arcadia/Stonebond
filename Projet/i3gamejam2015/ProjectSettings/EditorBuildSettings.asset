@@ -6,6 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Menu/Menu.unity
+  - enabled: 1
     path: Assets/Scenes/LevelForest.unity
-  - enabled: 0
-    path: Assets/Scenes/LevelQui.unity
+  - enabled: 1
+    path: Assets/Scenes/Menu/SelectLvl.unity
+  - enabled: 1
+    path: Assets/Scenes/Menu/SelectOption.unity
+  - enabled: 1
+    path: Assets/Scenes/Menu/SelectPlayers.unity

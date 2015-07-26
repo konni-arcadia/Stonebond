@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class MenuManager : MonoBehaviour {
 
-    enum StartMenuItem { GameStart, HowTo, Quit };
+    enum StartMenuItem { GameStart, HowTo, Credits, Quit };
     private string dpadHorizontal = "Horizontal";
     private string dpadVertical = "Vertical";
     private Color32 highlithed = new Color32(107, 107, 107, 255);
@@ -21,6 +21,8 @@ public class MenuManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         buttonList = StartButtonArea.GetComponentsInChildren<Outline>();
+
+        PlayerPrefs.DeleteAll();
 
 	
 	}

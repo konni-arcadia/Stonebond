@@ -8,23 +8,30 @@ public class SoundManager : MonoBehaviour
     public AudioClip PressStartScreen;
     public AudioClip CharacterSelect;
     public AudioClip StageSelect;
-    public AudioClip Stage1;
-    public AudioClip Stage2;
-    public AudioClip Stage3;
-    public AudioClip Stage4;
+    public AudioClip StageSpireHigh;
+    public AudioClip StagePipesOfAwakening;
+    public AudioClip StageCloisterOfTheSilence;
+    public AudioClip StageRosetteOfTheWingedOnes;
     public AudioClip Cursor;
     public AudioClip Validate;
     public AudioClip Cancel;
+    public AudioClip VOICETitle;
+    public AudioClip VOICECharacterSelect;
+    public AudioClip VOICEGetReady;
+    public AudioClip VOICEFight;
+    public AudioClip VOICEGameover;
+    public AudioClip BoundStart;
+    public AudioClip BoundBreak;
     //public AudioClip SelectYourCharacter;
     //public AudioClip SelectYourStage;
     //public AudioClip Bound;
 
     public enum StageEnum
     {
-        One,
-        Two,
-        Three,
-        Four,
+        PipesOfAwakening,
+        SpireHigh,
+        CloisterOfTheSilence,
+        RosetteOfTheWingedOnes,
     }
 
     //public AudioMixerSnapshot outOfCombat;
@@ -96,17 +103,17 @@ public class SoundManager : MonoBehaviour
     {
         switch (_stage)
         {
-            case StageEnum.One:
-                audioSource.clip = Stage1;
+            case StageEnum.PipesOfAwakening:
+                audioSource.clip = StageSpireHigh;
                 break;
-            case StageEnum.Two:
-                audioSource.clip = Stage2;
+            case StageEnum.SpireHigh:
+                audioSource.clip = StagePipesOfAwakening;
                 break;
-            case StageEnum.Three:
-                audioSource.clip = Stage3;
+            case StageEnum.CloisterOfTheSilence:
+                audioSource.clip = StageCloisterOfTheSilence;
                 break;
-            case StageEnum.Four:
-                audioSource.clip = Stage4;
+            case StageEnum.RosetteOfTheWingedOnes:
+                audioSource.clip = StageRosetteOfTheWingedOnes;
                 break;
         }
         audioSource.loop = true;
@@ -135,6 +142,35 @@ public class SoundManager : MonoBehaviour
     public void Cancel_Play()
     {
         audioSource.PlayOneShot(Cancel);
+    }
+
+    public void VOICE_Title_Play()
+    {
+        audioSource.PlayOneShot(VOICETitle);
+    }
+    public void VOICE_SelectCharacter_Play()
+    {
+        audioSource.PlayOneShot(VOICECharacterSelect);
+    }
+    public void VOICE_GetReady_Play()
+    {
+        audioSource.PlayOneShot(VOICEGetReady);
+    }
+    public void VOICE_Fight_Play()
+    {
+        audioSource.PlayOneShot(VOICEFight);
+    }
+    public void VOICE_Gameover_Play()
+    {
+        audioSource.PlayOneShot(VOICEGameover);
+    }
+    public void GAMEPLAY_Bound_Play()
+    {
+        audioSource.PlayOneShot(BoundStart);
+    }
+    public void GAMEPLAY_BoundBreak()
+    {
+        audioSource.PlayOneShot(BoundBreak);
     }
     //public void SelectYourCharacter_Play()
     //{

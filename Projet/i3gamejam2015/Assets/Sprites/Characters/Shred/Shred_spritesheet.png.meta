@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 7a12ce4704e44de4e9af83c9f804522c
-timeCreated: 1437913205
+timeCreated: 1437921627
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -187,6 +187,40 @@ TextureImporter:
     21300360: shred_death_007
     21300362: shred_death_008
     21300364: shred_death_009
+    21300366: Shred_clash_001
+    21300368: Shred_clash_002
+    21300370: Shred_clash_003
+    21300372: Shred_clash_004
+    21300374: Shred_clash_005
+    21300376: Shred_clash_006
+    21300378: Shred_dash_001
+    21300380: Shred_dash_002
+    21300382: Shred_dash_003
+    21300384: Shred_dash_004
+    21300386: Shred_dash_005
+    21300388: Shred_dash_006
+    21300390: Shred_dash_007
+    21300392: Shred_dash_008
+    21300394: Shred_dash_009
+    21300396: Shred_dash_010
+    21300398: Shred_dash_011
+    21300400: Shred_landing_001
+    21300402: Shred_landing_002
+    21300404: Shred_landing_003
+    21300406: Shred_landing_004
+    21300408: Shred_run_jump_001
+    21300410: Shred_run_jump_002
+    21300412: Shred_run_jump_003
+    21300414: Shred_run_jump_004
+    21300416: Shred_run_jump_005
+    21300418: Shred_run_jump_006
+    21300420: Shred_run_jump_007
+    21300422: Shred_wall_jump_001
+    21300424: Shred_wall_jump_002
+    21300426: Shred_wall_jump_003
+    21300428: death_crystal006
+    21300430: death_crystal007
+    21300432: death_crystal008
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -239,8 +273,8 @@ TextureImporter:
         y: 466
         width: 44
         height: 44
-      alignment: 9
-      pivot: {x: .545454562, y: -.113636367}
+      alignment: 7
+      pivot: {x: .5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Shred_attack_down_002
       rect:
@@ -249,8 +283,8 @@ TextureImporter:
         y: 465
         width: 43
         height: 45
-      alignment: 9
-      pivot: {x: .581395328, y: -.088888891}
+      alignment: 7
+      pivot: {x: .5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Shred_attack_down_003
       rect:
@@ -259,8 +293,8 @@ TextureImporter:
         y: 467
         width: 59
         height: 43
-      alignment: 9
-      pivot: {x: .508474588, y: -.0930232555}
+      alignment: 7
+      pivot: {x: .5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Shred_attack_down_004
       rect:
@@ -269,8 +303,8 @@ TextureImporter:
         y: 475
         width: 59
         height: 35
-      alignment: 9
-      pivot: {x: .491525412, y: -.314285725}
+      alignment: 7
+      pivot: {x: .5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Shred_attack_side_001
       rect:
@@ -279,8 +313,8 @@ TextureImporter:
         y: 468
         width: 38
         height: 42
-      alignment: 9
-      pivot: {x: .473684222, y: -.238095239}
+      alignment: 7
+      pivot: {x: .5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Shred_attack_side_002
       rect:
@@ -289,8 +323,8 @@ TextureImporter:
         y: 473
         width: 38
         height: 37
-      alignment: 9
-      pivot: {x: .5, y: -.351351351}
+      alignment: 7
+      pivot: {x: .5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Shred_attack_side_003
       rect:
@@ -299,8 +333,8 @@ TextureImporter:
         y: 476
         width: 31
         height: 34
-      alignment: 9
-      pivot: {x: .580645144, y: -.411764711}
+      alignment: 7
+      pivot: {x: .5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Shred_attack_up_001
       rect:
@@ -309,8 +343,8 @@ TextureImporter:
         y: 479
         width: 38
         height: 31
-      alignment: 9
-      pivot: {x: .526315808, y: -.0967741907}
+      alignment: 7
+      pivot: {x: .5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Shred_attack_up_002
       rect:
@@ -319,8 +353,8 @@ TextureImporter:
         y: 466
         width: 37
         height: 44
-      alignment: 9
-      pivot: {x: .540540516, y: -.0681818202}
+      alignment: 7
+      pivot: {x: .5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Shred_attack_up_003
       rect:
@@ -329,8 +363,8 @@ TextureImporter:
         y: 464
         width: 36
         height: 46
-      alignment: 9
-      pivot: {x: .527777791, y: -.0652173907}
+      alignment: 7
+      pivot: {x: .5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Shred_attack_up_004
       rect:
@@ -339,8 +373,8 @@ TextureImporter:
         y: 465
         width: 33
         height: 45
-      alignment: 9
-      pivot: {x: .484848499, y: -.0444444455}
+      alignment: 7
+      pivot: {x: .5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Shred_attack_up_005
       rect:
@@ -349,8 +383,8 @@ TextureImporter:
         y: 415
         width: 32
         height: 47
-      alignment: 9
-      pivot: {x: .59375, y: -.106382981}
+      alignment: 7
+      pivot: {x: .5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Shred_attack_up_006
       rect:
@@ -359,8 +393,8 @@ TextureImporter:
         y: 415
         width: 29
         height: 47
-      alignment: 9
-      pivot: {x: .655172408, y: -.170212761}
+      alignment: 7
+      pivot: {x: .5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Shred_attack_up_007
       rect:
@@ -369,8 +403,8 @@ TextureImporter:
         y: 418
         width: 30
         height: 44
-      alignment: 9
-      pivot: {x: .633333325, y: -.272727281}
+      alignment: 7
+      pivot: {x: .5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Shred_attack_up_008
       rect:
@@ -379,8 +413,8 @@ TextureImporter:
         y: 430
         width: 33
         height: 32
-      alignment: 9
-      pivot: {x: .545454562, y: -.4375}
+      alignment: 7
+      pivot: {x: .5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Shred_attack_up_009
       rect:
@@ -392,31 +426,201 @@ TextureImporter:
       alignment: 9
       pivot: {x: .545454562, y: -.4375}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Shred_falling_001
+    - name: Shred_clash_001
       rect:
         serializedVersion: 2
         x: 169
-        y: 427
+        y: 413
+        width: 85
+        height: 49
+      alignment: 9
+      pivot: {x: .300765634, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Shred_clash_002
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 413
+        width: 85
+        height: 49
+      alignment: 9
+      pivot: {x: .300765604, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Shred_clash_003
+      rect:
+        serializedVersion: 2
+        x: 343
+        y: 428
+        width: 30
+        height: 34
+      alignment: 7
+      pivot: {x: .5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Shred_clash_004
+      rect:
+        serializedVersion: 2
+        x: 375
+        y: 430
+        width: 38
+        height: 32
+      alignment: 7
+      pivot: {x: .5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Shred_clash_005
+      rect:
+        serializedVersion: 2
+        x: 415
+        y: 435
+        width: 44
+        height: 27
+      alignment: 7
+      pivot: {x: .5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Shred_clash_006
+      rect:
+        serializedVersion: 2
+        x: 461
+        y: 428
+        width: 41
+        height: 34
+      alignment: 9
+      pivot: {x: .631256104, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Shred_dash_001
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 370
+        width: 40
+        height: 41
+      alignment: 7
+      pivot: {x: .5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Shred_dash_002
+      rect:
+        serializedVersion: 2
+        x: 44
+        y: 371
+        width: 32
+        height: 40
+      alignment: 7
+      pivot: {x: .5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Shred_dash_003
+      rect:
+        serializedVersion: 2
+        x: 78
+        y: 380
+        width: 65
+        height: 31
+      alignment: 9
+      pivot: {x: .507662952, y: -.224942118}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Shred_dash_004
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 384
+        width: 59
+        height: 27
+      alignment: 9
+      pivot: {x: .508442223, y: -.295161486}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Shred_dash_005
+      rect:
+        serializedVersion: 2
+        x: 206
+        y: 391
+        width: 66
+        height: 20
+      alignment: 9
+      pivot: {x: .507546842, y: -.448277295}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Shred_dash_006
+      rect:
+        serializedVersion: 2
+        x: 274
+        y: 385
+        width: 61
+        height: 26
+      alignment: 9
+      pivot: {x: .532661796, y: -.287357032}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Shred_dash_007
+      rect:
+        serializedVersion: 2
+        x: 337
+        y: 368
+        width: 45
+        height: 43
+      alignment: 7
+      pivot: {x: .5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Shred_dash_008
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 368
+        width: 44
+        height: 43
+      alignment: 7
+      pivot: {x: .5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Shred_dash_009
+      rect:
+        serializedVersion: 2
+        x: 430
+        y: 368
+        width: 42
+        height: 43
+      alignment: 7
+      pivot: {x: .5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Shred_dash_010
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 326
+        width: 39
+        height: 40
+      alignment: 9
+      pivot: {x: .487179488, y: -.174999997}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Shred_dash_011
+      rect:
+        serializedVersion: 2
+        x: 43
+        y: 332
+        width: 30
+        height: 34
+      alignment: 9
+      pivot: {x: .800000012, y: -.117647059}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Shred_falling_001
+      rect:
+        serializedVersion: 2
+        x: 75
+        y: 331
         width: 45
         height: 35
-      alignment: 9
-      pivot: {x: .51111114, y: -.257142872}
+      alignment: 7
+      pivot: {x: .5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Shred_falling_002
       rect:
         serializedVersion: 2
-        x: 216
-        y: 428
+        x: 122
+        y: 332
         width: 45
         height: 34
-      alignment: 9
-      pivot: {x: .51111114, y: -.235294119}
+      alignment: 7
+      pivot: {x: .5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Shred_falling_003
       rect:
         serializedVersion: 2
-        x: 263
-        y: 428
+        x: 169
+        y: 332
         width: 45
         height: 34
       alignment: 9
@@ -425,178 +629,218 @@ TextureImporter:
     - name: Shred_falling_004
       rect:
         serializedVersion: 2
-        x: 310
-        y: 427
+        x: 216
+        y: 331
         width: 45
         height: 35
-      alignment: 9
-      pivot: {x: .51111114, y: -.257142872}
+      alignment: 7
+      pivot: {x: .5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Shred_idle_001
       rect:
         serializedVersion: 2
-        x: 357
-        y: 428
+        x: 263
+        y: 332
         width: 29
         height: 34
-      alignment: 9
-      pivot: {x: .534482777, y: -.0882352963}
+      alignment: 7
+      pivot: {x: .5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Shred_idle_002
       rect:
         serializedVersion: 2
-        x: 388
-        y: 427
+        x: 294
+        y: 331
         width: 31
         height: 35
-      alignment: 9
-      pivot: {x: .532258093, y: -.0857142881}
+      alignment: 7
+      pivot: {x: .5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Shred_idle_003
       rect:
         serializedVersion: 2
-        x: 421
-        y: 428
+        x: 327
+        y: 332
         width: 33
         height: 34
-      alignment: 9
-      pivot: {x: .5, y: -.0882352963}
+      alignment: 7
+      pivot: {x: .5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Shred_idle_004
       rect:
         serializedVersion: 2
-        x: 456
-        y: 429
+        x: 362
+        y: 333
         width: 30
         height: 33
-      alignment: 9
-      pivot: {x: .516666651, y: -.0909090936}
+      alignment: 7
+      pivot: {x: .5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Shred_idle_005
       rect:
         serializedVersion: 2
-        x: 2
-        y: 380
+        x: 394
+        y: 333
         width: 27
         height: 33
-      alignment: 9
-      pivot: {x: .537037015, y: -.0909090936}
+      alignment: 7
+      pivot: {x: .5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Shred_idle_to_run
       rect:
         serializedVersion: 2
-        x: 31
-        y: 379
+        x: 423
+        y: 332
         width: 30
         height: 34
-      alignment: 9
-      pivot: {x: .633333325, y: -.117647059}
+      alignment: 7
+      pivot: {x: .5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Shred_jump_001
       rect:
         serializedVersion: 2
-        x: 63
-        y: 379
+        x: 455
+        y: 332
         width: 30
         height: 34
-      alignment: 9
-      pivot: {x: .466666669, y: -.0882352963}
+      alignment: 7
+      pivot: {x: .5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Shred_jump_002
       rect:
         serializedVersion: 2
-        x: 95
-        y: 378
+        x: 2
+        y: 289
         width: 38
         height: 35
-      alignment: 9
-      pivot: {x: .473684222, y: -.0857142881}
+      alignment: 7
+      pivot: {x: .5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Shred_jump_003
       rect:
         serializedVersion: 2
-        x: 135
-        y: 380
+        x: 42
+        y: 291
         width: 55
         height: 33
-      alignment: 9
-      pivot: {x: .5090909, y: -.0909090936}
+      alignment: 7
+      pivot: {x: .5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Shred_jump_004
       rect:
         serializedVersion: 2
-        x: 192
-        y: 377
+        x: 99
+        y: 288
         width: 40
         height: 36
-      alignment: 9
-      pivot: {x: .524999976, y: -.25}
+      alignment: 7
+      pivot: {x: .5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Shred_jump_005
       rect:
         serializedVersion: 2
-        x: 234
-        y: 371
+        x: 141
+        y: 282
         width: 30
         height: 42
       alignment: 9
-      pivot: {x: .533333361, y: -.214285716}
+      pivot: {x: .521140337, y: .226504371}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Shred_jump_006
       rect:
         serializedVersion: 2
-        x: 266
-        y: 375
+        x: 173
+        y: 286
         width: 31
         height: 38
-      alignment: 9
-      pivot: {x: .54838711, y: -.552631557}
+      alignment: 7
+      pivot: {x: .5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Shred_jump_007
       rect:
         serializedVersion: 2
-        x: 299
-        y: 372
+        x: 206
+        y: 283
         width: 40
         height: 41
-      alignment: 9
-      pivot: {x: .524999976, y: -.536585391}
+      alignment: 7
+      pivot: {x: .5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Shred_jump_008
       rect:
         serializedVersion: 2
-        x: 341
-        y: 367
+        x: 248
+        y: 278
         width: 55
         height: 46
       alignment: 9
-      pivot: {x: .5090909, y: -.0652173907}
+      pivot: {x: .5, y: .159394637}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Shred_jump_009
       rect:
         serializedVersion: 2
-        x: 398
-        y: 381
+        x: 305
+        y: 292
+        width: 40
+        height: 32
+      alignment: 9
+      pivot: {x: .529999971, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Shred_jump_010
+      rect:
+        serializedVersion: 2
+        x: 347
+        y: 293
+        width: 32
+        height: 31
+      alignment: 7
+      pivot: {x: .5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Shred_jump_011
+      rect:
+        serializedVersion: 2
+        x: 381
+        y: 290
+        width: 30
+        height: 34
+      alignment: 7
+      pivot: {x: .5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Shred_landing_001
+      rect:
+        serializedVersion: 2
+        x: 413
+        y: 292
         width: 40
         height: 32
       alignment: 9
       pivot: {x: .524999976, y: -.09375}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Shred_jump_010
+    - name: Shred_landing_002
       rect:
         serializedVersion: 2
-        x: 440
-        y: 382
+        x: 455
+        y: 293
         width: 32
         height: 31
       alignment: 9
       pivot: {x: .5, y: -.0967741907}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Shred_jump_011
+    - name: Shred_landing_003
       rect:
         serializedVersion: 2
-        x: 474
-        y: 379
+        x: 2
+        y: 242
+        width: 30
+        height: 34
+      alignment: 9
+      pivot: {x: .466666669, y: -.0882352963}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Shred_landing_004
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 242
         width: 30
         height: 34
       alignment: 9
@@ -605,48 +849,48 @@ TextureImporter:
     - name: Shred_run_001
       rect:
         serializedVersion: 2
-        x: 2
-        y: 336
+        x: 66
+        y: 247
         width: 39
         height: 29
-      alignment: 9
-      pivot: {x: .538461566, y: -.137931034}
+      alignment: 7
+      pivot: {x: .5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Shred_run_002
       rect:
         serializedVersion: 2
-        x: 43
-        y: 337
+        x: 107
+        y: 248
         width: 40
         height: 28
-      alignment: 9
-      pivot: {x: .524999976, y: -.142857149}
+      alignment: 7
+      pivot: {x: .5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Shred_run_003
       rect:
         serializedVersion: 2
-        x: 85
-        y: 336
+        x: 149
+        y: 247
         width: 39
         height: 29
-      alignment: 9
-      pivot: {x: .512820542, y: -.172413796}
+      alignment: 7
+      pivot: {x: .5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Shred_run_004
       rect:
         serializedVersion: 2
-        x: 126
-        y: 332
+        x: 190
+        y: 243
         width: 39
         height: 33
-      alignment: 9
-      pivot: {x: .538461566, y: -.0303030312}
+      alignment: 7
+      pivot: {x: .5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Shred_run_005
       rect:
         serializedVersion: 2
-        x: 167
-        y: 333
+        x: 231
+        y: 244
         width: 41
         height: 32
       alignment: 9
@@ -655,68 +899,138 @@ TextureImporter:
     - name: Shred_run_006
       rect:
         serializedVersion: 2
-        x: 210
-        y: 336
+        x: 274
+        y: 247
         width: 39
         height: 29
-      alignment: 9
-      pivot: {x: .56410259, y: -.137931034}
+      alignment: 7
+      pivot: {x: .5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Shred_run_007
       rect:
         serializedVersion: 2
-        x: 251
-        y: 338
+        x: 315
+        y: 249
         width: 39
         height: 27
-      alignment: 9
-      pivot: {x: .538461566, y: -.185185179}
+      alignment: 7
+      pivot: {x: .5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Shred_run_008
       rect:
         serializedVersion: 2
-        x: 292
-        y: 336
+        x: 356
+        y: 247
         width: 40
         height: 29
-      alignment: 9
-      pivot: {x: .524999976, y: -.172413796}
+      alignment: 7
+      pivot: {x: .5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Shred_run_009
       rect:
         serializedVersion: 2
-        x: 334
-        y: 332
+        x: 398
+        y: 243
         width: 40
         height: 33
-      alignment: 9
-      pivot: {x: .524999976, y: -.0303030312}
+      alignment: 7
+      pivot: {x: .5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Shred_run_010
       rect:
         serializedVersion: 2
-        x: 376
-        y: 333
+        x: 440
+        y: 244
         width: 39
         height: 32
+      alignment: 7
+      pivot: {x: .5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Shred_run_jump_001
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 207
+        width: 39
+        height: 33
+      alignment: 7
+      pivot: {x: .5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Shred_run_jump_002
+      rect:
+        serializedVersion: 2
+        x: 43
+        y: 201
+        width: 32
+        height: 39
       alignment: 9
-      pivot: {x: .538461566, y: -.03125}
+      pivot: {x: .49951005, y: .194922417}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Shred_run_jump_003
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 211
+        width: 38
+        height: 29
+      alignment: 7
+      pivot: {x: .5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Shred_run_jump_004
+      rect:
+        serializedVersion: 2
+        x: 117
+        y: 213
+        width: 33
+        height: 27
+      alignment: 7
+      pivot: {x: .5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Shred_run_jump_005
+      rect:
+        serializedVersion: 2
+        x: 152
+        y: 208
+        width: 30
+        height: 32
+      alignment: 7
+      pivot: {x: .5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Shred_run_jump_006
+      rect:
+        serializedVersion: 2
+        x: 184
+        y: 205
+        width: 37
+        height: 35
+      alignment: 7
+      pivot: {x: .5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Shred_run_jump_007
+      rect:
+        serializedVersion: 2
+        x: 223
+        y: 204
+        width: 40
+        height: 36
+      alignment: 9
+      pivot: {x: .5, y: -.0900000036}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Shred_run_to_idle
       rect:
         serializedVersion: 2
-        x: 417
-        y: 329
+        x: 265
+        y: 204
         width: 37
         height: 36
-      alignment: 9
-      pivot: {x: .513513505, y: -.055555556}
+      alignment: 7
+      pivot: {x: .5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Shred_start_001
       rect:
         serializedVersion: 2
-        x: 456
-        y: 323
+        x: 304
+        y: 198
         width: 51
         height: 42
       alignment: 9
@@ -725,8 +1039,8 @@ TextureImporter:
     - name: Shred_start_002
       rect:
         serializedVersion: 2
-        x: 2
-        y: 277
+        x: 357
+        y: 196
         width: 50
         height: 44
       alignment: 9
@@ -735,18 +1049,18 @@ TextureImporter:
     - name: Shred_start_003
       rect:
         serializedVersion: 2
-        x: 54
-        y: 287
+        x: 409
+        y: 206
         width: 43
         height: 34
-      alignment: 9
-      pivot: {x: .651162803, y: -.0588235296}
+      alignment: 7
+      pivot: {x: .5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Shred_start_004
       rect:
         serializedVersion: 2
-        x: 99
-        y: 288
+        x: 2
+        y: 161
         width: 58
         height: 33
       alignment: 9
@@ -755,8 +1069,8 @@ TextureImporter:
     - name: Shred_start_005
       rect:
         serializedVersion: 2
-        x: 159
-        y: 288
+        x: 62
+        y: 161
         width: 56
         height: 33
       alignment: 9
@@ -765,48 +1079,98 @@ TextureImporter:
     - name: Shred_start_006
       rect:
         serializedVersion: 2
-        x: 217
-        y: 285
+        x: 120
+        y: 158
         width: 58
         height: 36
       alignment: 9
       pivot: {x: .344827592, y: -.111111112}
       border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Shred_wall_jump_001
+      rect:
+        serializedVersion: 2
+        x: 180
+        y: 157
+        width: 22
+        height: 37
+      alignment: 9
+      pivot: {x: .805403292, y: .00626187725}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Shred_wall_jump_002
+      rect:
+        serializedVersion: 2
+        x: 204
+        y: 162
+        width: 41
+        height: 32
+      alignment: 7
+      pivot: {x: .5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
     - name: Shred_wall_slide_001
       rect:
         serializedVersion: 2
-        x: 277
-        y: 272
+        x: 247
+        y: 145
         width: 21
         height: 49
       alignment: 9
-      pivot: {x: .428571433, y: -.0612244904}
+      pivot: {x: .699999988, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Shred_wall_slide_002
       rect:
         serializedVersion: 2
-        x: 300
-        y: 272
+        x: 270
+        y: 145
         width: 21
         height: 49
       alignment: 9
-      pivot: {x: .428571433, y: -.0612244904}
+      pivot: {x: .699999988, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Shred_wall_slide_003
       rect:
         serializedVersion: 2
-        x: 323
-        y: 272
+        x: 293
+        y: 145
         width: 22
         height: 49
       alignment: 9
-      pivot: {x: .454545468, y: -.0612244904}
+      pivot: {x: .699999988, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: death_crystal006
+      rect:
+        serializedVersion: 2
+        x: 317
+        y: 155
+        width: 48
+        height: 39
+      alignment: 9
+      pivot: {x: .479166657, y: -.025641026}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: death_crystal007
+      rect:
+        serializedVersion: 2
+        x: 367
+        y: 154
+        width: 48
+        height: 40
+      alignment: 9
+      pivot: {x: .479166657, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: death_crystal008
+      rect:
+        serializedVersion: 2
+        x: 417
+        y: 183
+        width: 7
+        height: 11
+      alignment: 9
+      pivot: {x: .428571433, y: -.272727281}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: respawn_001
       rect:
         serializedVersion: 2
-        x: 347
-        y: 310
+        x: 426
+        y: 183
         width: 7
         height: 11
       alignment: 9
@@ -815,8 +1179,8 @@ TextureImporter:
     - name: respawn_002
       rect:
         serializedVersion: 2
-        x: 356
-        y: 291
+        x: 435
+        y: 164
         width: 48
         height: 30
       alignment: 9
@@ -825,8 +1189,8 @@ TextureImporter:
     - name: respawn_003
       rect:
         serializedVersion: 2
-        x: 406
-        y: 282
+        x: 2
+        y: 104
         width: 48
         height: 39
       alignment: 9
@@ -835,8 +1199,8 @@ TextureImporter:
     - name: respawn_004
       rect:
         serializedVersion: 2
-        x: 456
-        y: 284
+        x: 52
+        y: 106
         width: 48
         height: 37
       alignment: 9
@@ -845,8 +1209,8 @@ TextureImporter:
     - name: respawn_005
       rect:
         serializedVersion: 2
-        x: 2
-        y: 234
+        x: 102
+        y: 107
         width: 48
         height: 36
       alignment: 9
@@ -855,8 +1219,8 @@ TextureImporter:
     - name: respawn_006
       rect:
         serializedVersion: 2
-        x: 52
-        y: 232
+        x: 152
+        y: 105
         width: 48
         height: 38
       alignment: 9
@@ -865,8 +1229,8 @@ TextureImporter:
     - name: respawn_007
       rect:
         serializedVersion: 2
-        x: 102
-        y: 231
+        x: 202
+        y: 104
         width: 48
         height: 39
       alignment: 9
@@ -875,8 +1239,8 @@ TextureImporter:
     - name: respawn_008
       rect:
         serializedVersion: 2
-        x: 152
-        y: 231
+        x: 252
+        y: 104
         width: 48
         height: 39
       alignment: 9
@@ -885,8 +1249,8 @@ TextureImporter:
     - name: respawn_009
       rect:
         serializedVersion: 2
-        x: 202
-        y: 231
+        x: 302
+        y: 104
         width: 48
         height: 39
       alignment: 9
@@ -895,8 +1259,8 @@ TextureImporter:
     - name: respawn_010
       rect:
         serializedVersion: 2
-        x: 252
-        y: 231
+        x: 352
+        y: 104
         width: 48
         height: 39
       alignment: 9
@@ -905,8 +1269,8 @@ TextureImporter:
     - name: respawn_011
       rect:
         serializedVersion: 2
-        x: 302
-        y: 231
+        x: 402
+        y: 104
         width: 48
         height: 39
       alignment: 9
@@ -915,8 +1279,8 @@ TextureImporter:
     - name: respawn_012
       rect:
         serializedVersion: 2
-        x: 352
-        y: 231
+        x: 452
+        y: 104
         width: 48
         height: 39
       alignment: 9
@@ -925,8 +1289,8 @@ TextureImporter:
     - name: respawn_013
       rect:
         serializedVersion: 2
-        x: 402
-        y: 231
+        x: 2
+        y: 63
         width: 48
         height: 39
       alignment: 9
@@ -935,8 +1299,8 @@ TextureImporter:
     - name: respawn_014
       rect:
         serializedVersion: 2
-        x: 452
-        y: 231
+        x: 52
+        y: 63
         width: 48
         height: 39
       alignment: 9
@@ -945,8 +1309,8 @@ TextureImporter:
     - name: respawn_015
       rect:
         serializedVersion: 2
-        x: 2
-        y: 190
+        x: 102
+        y: 63
         width: 48
         height: 39
       alignment: 9
@@ -955,8 +1319,8 @@ TextureImporter:
     - name: respawn_016
       rect:
         serializedVersion: 2
-        x: 52
-        y: 190
+        x: 152
+        y: 63
         width: 48
         height: 39
       alignment: 9
@@ -965,8 +1329,8 @@ TextureImporter:
     - name: respawn_017
       rect:
         serializedVersion: 2
-        x: 102
-        y: 190
+        x: 202
+        y: 63
         width: 48
         height: 39
       alignment: 9
@@ -975,8 +1339,8 @@ TextureImporter:
     - name: respawn_018
       rect:
         serializedVersion: 2
-        x: 152
-        y: 190
+        x: 252
+        y: 63
         width: 48
         height: 39
       alignment: 9
@@ -985,8 +1349,8 @@ TextureImporter:
     - name: respawn_019
       rect:
         serializedVersion: 2
-        x: 202
-        y: 189
+        x: 302
+        y: 62
         width: 54
         height: 40
       alignment: 7
@@ -995,8 +1359,8 @@ TextureImporter:
     - name: respawn_020
       rect:
         serializedVersion: 2
-        x: 258
-        y: 189
+        x: 358
+        y: 62
         width: 54
         height: 40
       alignment: 7
@@ -1005,8 +1369,8 @@ TextureImporter:
     - name: respawn_021
       rect:
         serializedVersion: 2
-        x: 314
-        y: 189
+        x: 414
+        y: 62
         width: 54
         height: 40
       alignment: 7
@@ -1015,8 +1379,8 @@ TextureImporter:
     - name: respawn_022
       rect:
         serializedVersion: 2
-        x: 370
-        y: 189
+        x: 2
+        y: 20
         width: 54
         height: 40
       alignment: 7
@@ -1025,8 +1389,8 @@ TextureImporter:
     - name: respawn_023
       rect:
         serializedVersion: 2
-        x: 426
-        y: 189
+        x: 58
+        y: 20
         width: 54
         height: 40
       alignment: 7
@@ -1035,18 +1399,18 @@ TextureImporter:
     - name: shred_death_001
       rect:
         serializedVersion: 2
-        x: 2
-        y: 153
+        x: 114
+        y: 26
         width: 29
         height: 34
-      alignment: 9
-      pivot: {x: .482758611, y: -.0882352963}
+      alignment: 7
+      pivot: {x: .5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: shred_death_002
       rect:
         serializedVersion: 2
-        x: 33
-        y: 147
+        x: 145
+        y: 20
         width: 54
         height: 40
       alignment: 7
@@ -1055,18 +1419,18 @@ TextureImporter:
     - name: shred_death_003
       rect:
         serializedVersion: 2
-        x: 89
-        y: 153
+        x: 201
+        y: 26
         width: 29
         height: 34
-      alignment: 9
-      pivot: {x: .482758611, y: -.0882352963}
+      alignment: 7
+      pivot: {x: .5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: shred_death_004
       rect:
         serializedVersion: 2
-        x: 120
-        y: 147
+        x: 232
+        y: 20
         width: 54
         height: 40
       alignment: 7
@@ -1075,8 +1439,8 @@ TextureImporter:
     - name: shred_death_005
       rect:
         serializedVersion: 2
-        x: 176
-        y: 147
+        x: 288
+        y: 20
         width: 54
         height: 40
       alignment: 7
@@ -1085,62 +1449,32 @@ TextureImporter:
     - name: shred_death_006
       rect:
         serializedVersion: 2
-        x: 232
-        y: 147
+        x: 344
+        y: 20
         width: 54
         height: 40
       alignment: 7
       pivot: {x: .5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: shred_death_007
-      rect:
-        serializedVersion: 2
-        x: 288
-        y: 148
-        width: 48
-        height: 39
-      alignment: 9
-      pivot: {x: .479166657, y: -.025641026}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: shred_death_008
-      rect:
-        serializedVersion: 2
-        x: 338
-        y: 151
-        width: 48
-        height: 36
-      alignment: 9
-      pivot: {x: .479166657, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: shred_death_009
-      rect:
-        serializedVersion: 2
-        x: 388
-        y: 176
-        width: 7
-        height: 11
-      alignment: 9
-      pivot: {x: .428571433, y: -.272727281}
-      border: {x: 0, y: 0, z: 0, w: 0}
     - name: shred_respawn_001
       rect:
         serializedVersion: 2
-        x: 397
-        y: 153
+        x: 400
+        y: 26
         width: 39
         height: 34
       alignment: 9
-      pivot: {x: .461538464, y: -.0882352963}
+      pivot: {x: .439999998, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: shred_respawn_002
       rect:
         serializedVersion: 2
-        x: 438
-        y: 153
+        x: 441
+        y: 26
         width: 29
         height: 34
       alignment: 9
-      pivot: {x: .482758611, y: -.0882352963}
+      pivot: {x: .469999999, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 

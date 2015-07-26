@@ -1,20 +1,21 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class LevelSelectionManager : MonoBehaviour {
 
-    enum LvlSelectionItem { Cathedrale, Foret};
+    enum LvlSelectionItem { Spire, Forest, Pipes, Cathedrale};
 
     private string dpadHorizontal = "Horizontal";
     private string dpadVertical = "Vertical";
     private Color32 highlithed = new Color32(152, 152, 152, 255);
     private Color32 normal = new Color32(0, 0, 0, 0);
 
-    public GameObject StartButtonArea;
-    private Outline[] buttonList;
+    public Image selectedLevelImage;
+    public List<Sprite> levelList;
 
-    private LvlSelectionItem menuSelectedItem = LvlSelectionItem.Cathedrale;
+    private LvlSelectionItem menuSelectedItem = LvlSelectionItem.Spire;
 
     private bool[] wasPressed = new bool[4];
 
@@ -22,8 +23,7 @@ public class LevelSelectionManager : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-        buttonList = StartButtonArea.GetComponentsInChildren<Outline>();
-        SoundManager.Instance.StageSelect_Play();
+        //SoundManager.Instance.StageSelect_Play();
 
     }
 
@@ -44,11 +44,19 @@ public class LevelSelectionManager : MonoBehaviour {
             {
 
                 case LvlSelectionItem.Cathedrale: Application.LoadLevel("LevelCathedrale");
-                    SoundManager.Instance.Stage_Play(SoundManager.StageEnum.One);
+                    SoundManager.Instance.Stage_Play(SoundManager.StageEnum.RosetteOfTheWingedOnes);
                     break;
 
-                case LvlSelectionItem.Foret: Application.LoadLevel("LevelForest"); ;
-                    SoundManager.Instance.Stage_Play(SoundManager.StageEnum.Two);
+                case LvlSelectionItem.Forest: Application.LoadLevel("LevelForest"); ;
+                    SoundManager.Instance.Stage_Play(SoundManager.StageEnum.CloisterOfTheSilence);
+                    break;
+
+                case LvlSelectionItem.Pipes: Application.LoadLevel("LevelOrgan"); ;
+                    SoundManager.Instance.Stage_Play(SoundManager.StageEnum.PipesOfAwakening);
+                    break;
+
+                case LvlSelectionItem.Spire: Application.LoadLevel("LevelRoof"); ;
+                    SoundManager.Instance.Stage_Play(SoundManager.StageEnum.SpireHigh);
                     break;
             }
         }
@@ -56,6 +64,7 @@ public class LevelSelectionManager : MonoBehaviour {
         {
             Application.LoadLevelAdditiveAsync("SelectPlayers");
             SoundManager.Instance.StageSelect_Stop();
+            SoundManager.Instance.Cancel_Play();
             Destroy(gameObject);
         }
 
@@ -63,20 +72,18 @@ public class LevelSelectionManager : MonoBehaviour {
         {
             if (menuSelectedItem != (LvlSelectionItem)0)
             {
-                buttonList[(int)menuSelectedItem].effectColor = normal;
                 menuSelectedItem -= 1;
-                buttonList[(int)menuSelectedItem].effectColor = highlithed;
+                selectedLevelImage.sprite = levelList[(int)menuSelectedItem];
                 wasPressed[noControler - 1] = true;
             }
 
         }
         else if (!wasPressed[noControler - 1] && Input.GetAxis(dpadVertical + noControler) > 0)
         {
-            if (menuSelectedItem != LvlSelectionItem.Foret)
+            if (menuSelectedItem != LvlSelectionItem.Cathedrale)
             {
-                buttonList[(int)menuSelectedItem].effectColor = normal;
                 menuSelectedItem += 1;
-                buttonList[(int)menuSelectedItem].effectColor = highlithed;
+                selectedLevelImage.sprite = levelList[(int)menuSelectedItem];
                 wasPressed[noControler - 1] = true;
             }
 

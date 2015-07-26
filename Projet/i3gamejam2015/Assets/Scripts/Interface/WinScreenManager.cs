@@ -18,6 +18,7 @@ public class WinScreenManager : MonoBehaviour {
     private bool[] wasPressed = new bool[4];
 
     private bool isDisplayed = false;
+	private float displayedForSeconds = 0;
     public Canvas menu;
 
 
@@ -31,6 +32,7 @@ public class WinScreenManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		displayedForSeconds += Time.deltaTime;
         for (int i = 1; i < 5; i++ )
             CheckControlerStartMenu(i);
 	}
@@ -40,7 +42,7 @@ public class WinScreenManager : MonoBehaviour {
 
         if (isDisplayed)
         {
-            if (Input.GetButtonDown(InputManager.A + " P" + noControler))
+            if (Input.GetButtonDown(InputManager.A + " P" + noControler) && displayedForSeconds >= 1)
             {
                 switch (menuSelectedItem)
                 {
@@ -59,6 +61,7 @@ public class WinScreenManager : MonoBehaviour {
                                                 break;
                 }
                 Time.timeScale = 1.0f;
+                SoundManager.Instance.Validate_Play();
 
             }
 
@@ -70,6 +73,7 @@ public class WinScreenManager : MonoBehaviour {
                     menuSelectedItem -= 1;
                     buttonList[(int)menuSelectedItem].effectColor = highlithed;
                     wasPressed[noControler - 1] = true;
+                    SoundManager.Instance.Cursor_Play();
                 }
 
             }
@@ -81,6 +85,7 @@ public class WinScreenManager : MonoBehaviour {
                     menuSelectedItem += 1;
                     buttonList[(int)menuSelectedItem].effectColor = highlithed;
                     wasPressed[noControler - 1] = true;
+                    SoundManager.Instance.Cursor_Play();
                 }
 
             }
@@ -96,5 +101,6 @@ public class WinScreenManager : MonoBehaviour {
 		isDisplayed = true;
 		menu.enabled = true;
 		Time.timeScale = 0.0f;
+		displayedForSeconds = 0;
 	}
 }

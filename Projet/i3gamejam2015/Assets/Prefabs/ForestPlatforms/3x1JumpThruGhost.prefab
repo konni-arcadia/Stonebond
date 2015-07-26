@@ -43,7 +43,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 153802}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.5117569, y: 4.25, z: 0}
+  m_LocalPosition: {x: 7.76999998, y: -.109999999, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 480972}
@@ -113,8 +113,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   boxColliderToUnable: {fileID: 6132572}
   boxColliderToUnable2: {fileID: 6102676}
-  waitBeforeFading: 8
-  waitBeforeAppearing: 8
+  timeBeforeFading: 8
+  timeBeforeAppearing: 8
   isActiveAtStart: 0
 --- !u!212 &21275050
 SpriteRenderer:
@@ -140,7 +140,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: b0aa8229b7b6ad44fb31fcb7a3ae3b1f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 208813a10e6f5a04990101e5dc86018c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!251 &25177714
 PlatformEffector2D:

@@ -15,6 +15,11 @@ public class SoundManager : MonoBehaviour
     public AudioClip Cursor;
     public AudioClip Validate;
     public AudioClip Cancel;
+    public AudioClip VOICETitle;
+    public AudioClip VOICECharacterSelect;
+    public AudioClip VOICEGetReady;
+    public AudioClip VOICEFight;
+    public AudioClip VOICEGameover;
     //public AudioClip SelectYourCharacter;
     //public AudioClip SelectYourStage;
     //public AudioClip Bound;
@@ -135,6 +140,27 @@ public class SoundManager : MonoBehaviour
     public void Cancel_Play()
     {
         audioSource.PlayOneShot(Cancel);
+    }
+
+    public void VOICE_Title_Play()
+    {
+        audioSource.PlayOneShot(VOICETitle);
+    }
+    public void VOICE_SelectCharacter_Play()
+    {
+        audioSource.PlayOneShot(VOICECharacterSelect);
+    }
+    public void VOICE_GetReady_Play()
+    {
+        audioSource.PlayOneShot(VOICEGetReady);
+    }
+    public void VOICE_Fight_Play()
+    {
+        audioSource.PlayOneShot(VOICEFight);
+    }
+    public void VOICE_Gameover_Play()
+    {
+        audioSource.PlayOneShot(VOICEGameover);
     }
     //public void SelectYourCharacter_Play()
     //{

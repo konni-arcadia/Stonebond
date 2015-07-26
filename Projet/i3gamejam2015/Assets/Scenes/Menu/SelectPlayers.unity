@@ -929,7 +929,7 @@ MonoBehaviour:
   Name: {fileID: 1485254914}
   PressStart: {fileID: 1690467869}
   Player: {fileID: 29814837}
-  Ready: {fileID: 0}
+  Ready: {fileID: 622941872}
   HasChoosen: 0
   HasPressedStart: 0
 --- !u!1 &1237846756

@@ -3,9 +3,9 @@ using System.Collections;
 
 public class MoveLight : MonoBehaviour {
 
-	float minX = -12.0f; // -2.0f; 
-	float maxX = 5.0f; // 2.0f;
-	Vector3 iterationVectorX = new Vector3( 3.0f, 0, 0 );
+	public float minX = -12.0f; // -2.0f; 
+	public float maxX = 5.0f; // 2.0f;
+	public Vector3 iterationVectorX = new Vector3( 3.0f, 0, 0 );
 	Vector3 iterateX;
 
 	float minZ = -10.0f;

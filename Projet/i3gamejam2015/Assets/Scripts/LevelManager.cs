@@ -114,5 +114,6 @@ public class LevelManager : MonoBehaviour {
 		p2.setBondLink(null);
 		Debug.Log("Leaving bond mode");
 		bondMode = false;
+		allowsCreateBond = false;
 	}
 }

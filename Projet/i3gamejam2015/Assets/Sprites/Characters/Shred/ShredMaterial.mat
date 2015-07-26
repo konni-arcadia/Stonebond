@@ -82,7 +82,7 @@ Material:
         first:
           name: _AlternateTex
         second:
-          m_Texture: {fileID: 0}
+          m_Texture: {fileID: 2800000, guid: e6018298f4451f84e8194752d6ede733, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
@@ -103,14 +103,14 @@ Material:
         first:
           name: _AlternateTexMask
         second:
-          m_Texture: {fileID: 0}
+          m_Texture: {fileID: 2800000, guid: cfce1e91129a06a478e6f5c869cef884, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
         first:
           name: _ChromaTex
         second:
-          m_Texture: {fileID: 0}
+          m_Texture: {fileID: 2800000, guid: 293f99391cb5e4e77a6792911025d929, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
@@ -189,7 +189,7 @@ Material:
       data:
         first:
           name: _Color
-        second: {r: 1, g: 1, b: 1, a: 1}
+        second: {r: .742647052, g: .618445754, b: .212964952, a: 1}
       data:
         first:
           name: _Emission
@@ -197,4 +197,4 @@ Material:
       data:
         first:
           name: _ChromaTexColor
-        second: {r: 1, g: 1, b: 1, a: 1}
+        second: {r: 1, g: .889655113, b: 0, a: .483999997}

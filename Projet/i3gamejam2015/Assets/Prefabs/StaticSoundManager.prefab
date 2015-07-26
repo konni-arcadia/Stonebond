@@ -131,7 +131,10 @@ MonoBehaviour:
   BoundStart: {fileID: 8300000, guid: 22db80cff9c560d488c54bba00044f91, type: 3}
   BoundBreak: {fileID: 8300000, guid: 674fbb9bf26efa146a78ddaa6bf1aa90, type: 3}
   VictoryJingle: {fileID: 8300000, guid: 3b674da562936c040906a3045c8d8fe5, type: 3}
-  AirDash: {fileID: 8300000, guid: 2393c04562370324ba0374537d7e0112, type: 3}
+  Jump: {fileID: 8300000, guid: 3c4547c2416c227408cf4b8fe4380e0f, type: 3}
+  WallJump: {fileID: 8300000, guid: 9d94adc9b71c2b5409507877eb20bf1e, type: 3}
+  Attack: {fileID: 8300000, guid: 216984fced3b64648bc09fc5c00395b1, type: 3}
+  Knockback: {fileID: 8300000, guid: 4e89648e259be3d4ead466f1a51f80d9, type: 3}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

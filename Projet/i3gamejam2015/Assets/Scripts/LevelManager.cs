@@ -15,6 +15,10 @@ public class LevelManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+
+        //Load the pause menu
+        Application.LoadLevelAdditive("Pause");
+
 		// Build the list of players
 		var list = FindObjectsOfType<PlayerStateController>();
 		players = new PlayerStateController[list.Length];

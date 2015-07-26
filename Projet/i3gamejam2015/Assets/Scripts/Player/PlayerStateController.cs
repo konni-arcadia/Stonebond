@@ -238,6 +238,7 @@ public class PlayerStateController : MonoBehaviour
 			print ("p" + playerId + ": enter INVINCIBLE state");
 			state = State.INVINCIBLE;
 			stateTime = invincibleAfterSpawnTime;
+			statusProvider.setInvincibleStatus(true);
 		}
 	}
 
@@ -370,7 +371,7 @@ public class PlayerStateController : MonoBehaviour
 			print ("p" + playerId + ": enter IDLE state");
 			state = State.IDLE;
 
-			// TODO notification
+			statusProvider.setInvincibleStatus(false);
 		}
 	}
 

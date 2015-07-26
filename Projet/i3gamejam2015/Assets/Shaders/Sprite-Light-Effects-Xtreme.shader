@@ -89,8 +89,14 @@
 			
 			fixed4 nmpTex = tex2D(_NormalMapTex, IN.uv_BumpMap);
 			//fixed4 neutralNormalMap = (0.5,0.5,0.5,1);
-			//fixed4 neutralNormalMap = (1,1,1,1);
+			
+			fixed4 white = (1,1,1,1);
+			
 			fixed4 neutralNormalMap = (0,0,0,0);
+			
+			fixed4 selfEmission = white * 0.4;
+			selfEmission.a = 1;
+			
 			
 			fixed4 lmpTex = tex2D(_LightMap, screenUV);
 			
@@ -111,6 +117,7 @@
 			//o.Alpha = srcTex.a;
 			// + chrTex.a;
 			o.Alpha = lerp( srcTex.a, altTex.a, altMaskInfluence );
+			
 			
 			o.Emission = _ChromaTexColor.rgb * chrTex.a * 0.75
 			 + srcTex.rgb * _Color.rgb * (1-tintBurn) * srcTex.a * .5;

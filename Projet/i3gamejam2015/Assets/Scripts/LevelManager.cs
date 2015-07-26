@@ -31,7 +31,7 @@ public class LevelManager : MonoBehaviour {
 				activePlayers.Add(player);
 		}
 
-		if (/*activePlayers.Count == 2 && */!bondMode) {
+		if (activePlayers.Count == 2 && !bondMode) {
 			Debug.Log("Entering bond mode");
 			bondMode = true;
 			// Create a bond object linking the two players
@@ -44,9 +44,17 @@ public class LevelManager : MonoBehaviour {
 		}
 	}
 
-	public void bondHasBeenSlashed() {
+	public void bondHasBeenSlashedBy(PlayerStateController player) {
+		var p1 = bondLink.emitterA.GetComponent<PlayerStateController>();
+		var p2 = bondLink.emitterB.GetComponent<PlayerStateController>();
+		if (p1 == player || p2 == player) {
+			Debug.Log("Discarding slash by bonded player");
+			return;
+		}
 		Destroy(bondLink.gameObject);
-		bondLink.emitterA.GetComponent<PlayerStateController>().setBondLink(null);
-		bondLink.emitterB.GetComponent<PlayerStateController>().setBondLink(null);
+		p1.setBondLink(null);
+		p2.setBondLink(null);
+		Debug.Log("Leaving bond mode");
+		bondMode = false;
 	}
 }

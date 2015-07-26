@@ -23,7 +23,13 @@ public class SoundManager : MonoBehaviour
     public AudioClip BoundStart;
     public AudioClip BoundBreak;
     public AudioClip VictoryJingle;
-    public AudioClip AirDash;
+
+    public AudioClip Jump;
+    public AudioClip WallJump;
+    public AudioClip Attack;
+    public AudioClip Knockback;
+
+
     //public AudioClip SelectYourCharacter;
     //public AudioClip SelectYourStage;
     //public AudioClip Bound;
@@ -180,9 +186,27 @@ public class SoundManager : MonoBehaviour
         audioSource.Stop();
         audioSource.PlayOneShot(VictoryJingle);
     }
-    public void GAMEPLAY_Airdash()
+    //public void GAMEPLAY_Airdash()
+    //{
+    //    audioSource.PlayOneShot(AirDash);
+    //}
+
+
+    public void GAMEPLAY_Jump()
     {
-        audioSource.PlayOneShot(AirDash);
+        audioSource.PlayOneShot(Jump);
+    }
+    public void GAMEPLAY_Walljump()
+    {
+        audioSource.PlayOneShot(WallJump);
+    }
+    public void GAMEPLAY_Attack()
+    {
+        audioSource.PlayOneShot(Attack);
+    }
+    public void GAMEPLAY_Knockback()
+    {
+        audioSource.PlayOneShot(Knockback);
     }
     //public void SelectYourCharacter_Play()
     //{

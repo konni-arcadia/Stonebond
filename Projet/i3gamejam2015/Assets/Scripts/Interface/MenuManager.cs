@@ -46,6 +46,10 @@ public class MenuManager : MonoBehaviour {
                 case StartMenuItem.GameStart: Application.LoadLevelAdditiveAsync("SelectPlayers");
                     SoundManager.Instance.PressStart_Stop();
                     break;
+
+                case StartMenuItem.Credits: Application.LoadLevelAdditiveAsync("Credits");
+                    SoundManager.Instance.PressStart_Stop();
+                    break;
             }
             SoundManager.Instance.Validate_Play();
             Destroy(gameObject);

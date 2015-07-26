@@ -12,11 +12,15 @@ public class LevelManager : MonoBehaviour {
 	public float gaugeDecreaseFactor;
 	private BondLink bondLink;
 	private float bondLinkGauge;
+	private WinScreenManager WinScreenManager {
+		get { return FindObjectOfType<WinScreenManager>(); }
+	}
 
 	// Requires the objects to have already been spawned (PlayerSpawner::Awake, which is executed before)
 	void Start () {
         //Load the pause menu
         Application.LoadLevelAdditive("Pause");
+		Application.LoadLevelAdditive("WinScreen");
 
 		// Build the list of players
 		var list = FindObjectsOfType<PlayerStateController>();
@@ -46,7 +50,13 @@ public class LevelManager : MonoBehaviour {
 			gaugeInner.transform.localScale = new Vector3(bondLinkGauge, 1, 1);
 
 			var distance = Vector3.Distance(bondLink.emitterA.transform.position, bondLink.emitterB.transform.position);
-			bondLinkGauge = Mathf.Max(0, bondLinkGauge - distance * gaugeDecreaseFactor);
+			bondLinkGauge -= distance * gaugeDecreaseFactor;
+
+			// A winner is designated
+			if (bondLinkGauge < 0) {
+				bondLinkGauge = 0;
+				WinScreenManager.showScreen();
+			}
 		}
 		else {
 			gaugeFrame.active = gaugeInner.active = false;

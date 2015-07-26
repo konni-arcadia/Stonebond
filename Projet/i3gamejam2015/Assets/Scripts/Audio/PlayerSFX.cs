@@ -19,6 +19,7 @@ namespace Completed
         public AudioClip BondBreak;
         public AudioClip Knockback;
         public AudioClip WallJump;
+        public AudioClip AirDash;
 
 
         public void Start()
@@ -28,6 +29,7 @@ namespace Completed
 
         private void PlayOneShot(AudioClip _clip)
         {
+            print("PLAYING SOUND --------------------: " + _clip.name);
             playerAudioSource.PlayOneShot(_clip);
         }
 
@@ -63,5 +65,8 @@ namespace Completed
 
         public void WallJump_Play()
         { PlayOneShot(WallJump); }
+
+        public void AirDash_Play()
+        { PlayOneShot(AirDash); }
     }
 }

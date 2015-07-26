@@ -502,7 +502,7 @@ public class PlayerStateController : MonoBehaviour
 	
 		// notification
 		statusProvider.setDie(); // TODO remove
-		Vector3 directionVector = new Vector3 ();
+		Vector2 directionVector = new Vector3 ();
 		switch (dir) {
 		case AimDirection.UP:
 			directionVector.Set(0.0f, 1.0f);

@@ -190,11 +190,19 @@
         </struct>
         <key>fileList</key>
         <array>
+            <filename>../../../../../../../../Google Drive/SUNNYSIDE/PROJETS/I3 Game jam/ART/ANIM/Characters/SEQUENCES PNG/RESPAWN</filename>
+            <filename>../../../../../../../../Google Drive/SUNNYSIDE/PROJETS/I3 Game jam/ART/ANIM/Characters/SEQUENCES PNG/SHRED ATK UP</filename>
             <filename>../../../../../../../../Google Drive/SUNNYSIDE/PROJETS/I3 Game jam/ART/ANIM/Characters/SEQUENCES PNG/SHRED FALL</filename>
             <filename>../../../../../../../../Google Drive/SUNNYSIDE/PROJETS/I3 Game jam/ART/ANIM/Characters/SEQUENCES PNG/SHRED IDLE</filename>
             <filename>../../../../../../../../Google Drive/SUNNYSIDE/PROJETS/I3 Game jam/ART/ANIM/Characters/SEQUENCES PNG/SHRED JUMP</filename>
-            <filename>../../../../../../../../Google Drive/SUNNYSIDE/PROJETS/I3 Game jam/ART/ANIM/Characters/SEQUENCES PNG/SHRED RUN</filename>
             <filename>../../../../../../../../Google Drive/SUNNYSIDE/PROJETS/I3 Game jam/ART/ANIM/Characters/SEQUENCES PNG/SHRED START</filename>
+            <filename>../../../../../../../../Google Drive/SUNNYSIDE/PROJETS/I3 Game jam/ART/ANIM/Characters/SEQUENCES PNG/SHRED_RESPAWN</filename>
+            <filename>../../../../../../../../Google Drive/SUNNYSIDE/PROJETS/I3 Game jam/ART/ANIM/Characters/SEQUENCES PNG/SHRED_TRANSITIONS</filename>
+            <filename>../../../../../../../../Google Drive/SUNNYSIDE/PROJETS/I3 Game jam/ART/ANIM/Characters/SEQUENCES PNG/SHRED_RUN</filename>
+            <filename>../../../../../../../../Google Drive/SUNNYSIDE/PROJETS/I3 Game jam/ART/ANIM/Characters/SEQUENCES PNG/SHRED SIDE ATTACK</filename>
+            <filename>../../../../../../../../Google Drive/SUNNYSIDE/PROJETS/I3 Game jam/ART/ANIM/Characters/SEQUENCES PNG/SHRED ATK DOWN</filename>
+            <filename>../../../../../../../../Google Drive/SUNNYSIDE/PROJETS/I3 Game jam/ART/ANIM/Characters/SEQUENCES PNG/SHRED WALL SLIDE</filename>
+            <filename>../../../../../../../../Google Drive/SUNNYSIDE/PROJETS/I3 Game jam/ART/ANIM/Characters/SEQUENCES PNG/SHRED_DEATH</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

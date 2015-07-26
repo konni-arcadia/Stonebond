@@ -64,6 +64,7 @@ public class PlayerStateController : MonoBehaviour
 	public float slashAttackDashVelocityUp = 1000.0f;
 	public float slashAttackDashVelocityDown = 1000.0f;
 	public float slashAttackDashVelocityForward = 2000.0f;
+	public float slashAttackHorizDashGravity = 20.0f;
 	public AnimationCurve slashAttackDashCurve;
 
 	//
@@ -225,7 +226,7 @@ public class PlayerStateController : MonoBehaviour
 			break;
 		case AimDirection.FORWARD:
 			float force = movementController.isFacingRight() ? slashAttackDashVelocityForward : -slashAttackDashVelocityForward;
-			movementController.setVelocity (new Vector2(dashVelocityPct * Time.deltaTime * force, 0.0f));
+			movementController.setVelocity (new Vector2(dashVelocityPct * Time.deltaTime * force, -slashAttackHorizDashGravity));
 			break;
 		}
 

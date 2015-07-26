@@ -50,6 +50,7 @@ public class PauseManager : MonoBehaviour {
 
                     case StartMenuItem.Resume: isDisplayed = false;
                                                 menu.enabled = false;
+                                                Time.timeScale = 1.0f;
                                                 break;
 
                     case StartMenuItem.LvlSelection: PlayerPrefs.SetInt("ComeFromLVL", 0); 
@@ -95,6 +96,7 @@ public class PauseManager : MonoBehaviour {
             {
                 isDisplayed = true;
                 menu.enabled = true;
+                Time.timeScale = 0.0f;
             }
         }
     }

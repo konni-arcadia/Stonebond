@@ -8,10 +8,20 @@ public class LevelManager : MonoBehaviour {
 	private PlayerStateController[] players;
 	private bool bondMode = false;
 	public GameObject bondLinkPrefab;
+	public GameObject gaugeInner, gaugeFrame;
+	public float gaugeDecreaseFactor;
 	private BondLink bondLink;
+	private float bondLinkGauge;
+	private WinScreenManager WinScreenManager {
+		get { return FindObjectOfType<WinScreenManager>(); }
+	}
 
-	// Use this for initialization
+	// Requires the objects to have already been spawned (PlayerSpawner::Awake, which is executed before)
 	void Start () {
+        //Load the pause menu
+        Application.LoadLevelAdditive("Pause");
+		Application.LoadLevelAdditive("WinScreen");
+
 		// Build the list of players
 		var list = FindObjectsOfType<PlayerStateController>();
 		players = new PlayerStateController[list.Length];
@@ -30,17 +40,26 @@ public class LevelManager : MonoBehaviour {
 			if (!player.IsSlashed())
 				activePlayers.Add(player);
 		}
+		Debug.Log("Active players: " + activePlayers.Count + " out of " + players.Length);
 
-		if (activePlayers.Count == 2 && !bondMode) {
-			Debug.Log("Entering bond mode");
-			bondMode = true;
-			// Create a bond object linking the two players
-			GameObject obj = Instantiate(bondLinkPrefab);
-			bondLink = obj.GetComponent<BondLink>();
-			bondLink.emitterA = activePlayers[0].gameObject;
-			bondLink.emitterB = activePlayers[1].gameObject;
-			activePlayers[0].setBondLink(bondLink);
-			activePlayers[1].setBondLink(bondLink);
+		if (activePlayers.Count == 2 && !bondMode)
+			EnterBondMode(activePlayers);
+
+		if (bondMode) {
+			gaugeFrame.active = gaugeInner.active = true;
+			gaugeInner.transform.localScale = new Vector3(bondLinkGauge, 1, 1);
+
+			var distance = Vector3.Distance(bondLink.emitterA.transform.position, bondLink.emitterB.transform.position);
+			bondLinkGauge -= distance * gaugeDecreaseFactor;
+
+			// A winner is designated
+			if (bondLinkGauge < 0) {
+				bondLinkGauge = 0;
+				WinScreenManager.showScreen();
+			}
+		}
+		else {
+			gaugeFrame.active = gaugeInner.active = false;
 		}
 	}
 
@@ -51,6 +70,23 @@ public class LevelManager : MonoBehaviour {
 			Debug.Log("Discarding slash by bonded player");
 			return;
 		}
+		ExitBondMode(p1, p2);
+	}
+
+	private void EnterBondMode(List<PlayerStateController> activePlayers) {
+		Debug.Log("Entering bond mode");
+		bondMode = true;
+		// Create a bond object linking the two players
+		GameObject obj = Instantiate(bondLinkPrefab);
+		bondLink = obj.GetComponent<BondLink>();
+		bondLink.emitterA = activePlayers[0].gameObject;
+		bondLink.emitterB = activePlayers[1].gameObject;
+		activePlayers[0].setBondLink(bondLink);
+		activePlayers[1].setBondLink(bondLink);
+		bondLinkGauge = 1;
+	}
+
+	private void ExitBondMode(PlayerStateController p1, PlayerStateController p2) {
 		Destroy(bondLink.gameObject);
 		p1.setBondLink(null);
 		p2.setBondLink(null);

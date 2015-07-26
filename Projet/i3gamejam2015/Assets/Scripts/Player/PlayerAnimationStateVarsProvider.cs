@@ -7,7 +7,7 @@ public class PlayerAnimationStateVarsProvider : MonoBehaviour {
     Animator myAnimator;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
         myStatusProvider = GetComponent<PlayerStatusProvider>();
         myAnimator = GetComponentInChildren<Animator>();
         if(myStatusProvider == null)
@@ -96,5 +96,11 @@ public class PlayerAnimationStateVarsProvider : MonoBehaviour {
     {
         if (myAnimator != null)
             myAnimator.SetTrigger("Respawn");
+    }
+
+    public void OnInvincibleStatusChangedAction(bool isInvicible)
+    {
+        if (myAnimator != null)
+            myAnimator.SetBool("Invincible", isInvicible);
     }
 }

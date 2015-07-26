@@ -1,0 +1,15 @@
+#
+# Sprite sheet data for Unity.
+#
+# To import these sprites into your Unity project, download "TexturePackerImporter":
+# http://www.codeandweb.com/texturepacker/unity
+#
+# Sprite sheet: ShredIdle.png (188 x 48)
+# $TexturePacker:SmartUpdate:bff99c724a70aa3bd05d1c34a5b72030:81015ed1c8fd85d196fac39b6e8df2fd:3225cf2405317531b15943c1c187c666$
+#
+
+Shred_IDLE00;150;5;35;41;0.5;0.5
+Shred_IDLE01;113;5;35;41;0.5;0.5
+Shred_IDLE02;76;5;35;41;0.5;0.5
+Shred_IDLE03;39;5;35;41;0.5;0.5
+Shred_IDLE04;2;5;35;41;0.5;0.5

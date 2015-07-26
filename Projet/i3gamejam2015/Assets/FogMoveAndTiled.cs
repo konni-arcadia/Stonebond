@@ -17,7 +17,7 @@ public class FogMoveAndTiled : MonoBehaviour {
 
         if (GetComponent<Transform>().position.x > 40.93333333333f)
         {
-            GetComponent<Transform>().position = new Vector3(-40.93333333333f, 0.0f, 0.0f);
+            GetComponent<Transform>().position = new Vector3(-40.93333333333f, -3.84f, 0.0f);
         }
 	}
 }

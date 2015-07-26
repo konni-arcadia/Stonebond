@@ -14,7 +14,7 @@ public class PlayersSelectorManager : MonoBehaviour {
         listPlayerSelector = GetComponentsInChildren<PlayerSelectorManager>();
 
         InitializePlayerSelection();
-	
+        SoundManager.Instance.CharacterSelect_Play();
 	}
 	
 	// Update is called once per frame
@@ -54,6 +54,7 @@ public class PlayersSelectorManager : MonoBehaviour {
 
             PlayerPrefs.SetString(PlayerSeleted, playerReadyString);
             Application.LoadLevelAdditiveAsync("SelectLvl");
+            SoundManager.Instance.PressStart_Stop();
             Destroy(gameObject);
         }
 	
@@ -64,6 +65,7 @@ public class PlayersSelectorManager : MonoBehaviour {
         if (Input.GetButtonDown(InputManager.B + " P" + noControler))
         {
             Application.LoadLevelAdditiveAsync("SelectOption");
+            SoundManager.Instance.PressStart_Stop();
             Destroy(gameObject);
         }
     }

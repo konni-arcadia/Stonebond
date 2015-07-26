@@ -23,7 +23,7 @@ public class MenuManager : MonoBehaviour {
         buttonList = StartButtonArea.GetComponentsInChildren<Outline>();
 
         PlayerPrefs.DeleteAll();
-
+        SoundManager.Instance.PressStart_Play();
 	
 	}
 	
@@ -44,6 +44,7 @@ public class MenuManager : MonoBehaviour {
                     break;
 
                 case StartMenuItem.GameStart: Application.LoadLevelAdditiveAsync("SelectPlayers");
+                    SoundManager.Instance.PressStart_Stop();
                     break;
             }
 

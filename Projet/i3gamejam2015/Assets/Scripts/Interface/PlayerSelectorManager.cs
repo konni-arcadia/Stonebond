@@ -43,6 +43,7 @@ public class PlayerSelectorManager : MonoBehaviour {
 
     public void SetChoosenState()
     {
+        SoundManager.Instance.Validate_Play();
         HasPressedStart = true;
         PressStart.enabled = false;
         Name.enabled = true;
@@ -52,6 +53,7 @@ public class PlayerSelectorManager : MonoBehaviour {
 
     public void SetInitialState()
     {
+        SoundManager.Instance.Validate_Play();
         PlayerSelection.SetActive(false);
         Name.enabled = false;
         Ready.enabled = false;

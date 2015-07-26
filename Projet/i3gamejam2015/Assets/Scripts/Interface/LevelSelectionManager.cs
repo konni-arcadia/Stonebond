@@ -50,6 +50,14 @@ public class LevelSelectionManager : MonoBehaviour {
                 case LvlSelectionItem.Forest: Application.LoadLevel("LevelForest"); ;
                     SoundManager.Instance.Stage_Play(SoundManager.StageEnum.Two);
                     break;
+
+                case LvlSelectionItem.Pipes: Application.LoadLevel("LevelOrgan"); ;
+                    SoundManager.Instance.Stage_Play(SoundManager.StageEnum.Three);
+                    break;
+
+                case LvlSelectionItem.Spire: Application.LoadLevel("LevelRoof"); ;
+                    SoundManager.Instance.Stage_Play(SoundManager.StageEnum.Four);
+                    break;
             }
         }
         else if (Input.GetButtonDown(InputManager.B + " P" + noControler))

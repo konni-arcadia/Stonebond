@@ -202,7 +202,7 @@ public class PlayerStateController : MonoBehaviour
 					MyLittlePoney.shake (0.0f, 0.5f, 0.0f, 2.0f);
 				}
 			} else if (enemy.isSlashable ()) {
-				enemy.hitWithSlash ();
+				enemy.hitWithSlash (aimDirection);
 
 				MyLittlePoney.shake (0.5f, 0.5f, 2.0f, 2.0f);
 			}
@@ -491,7 +491,7 @@ public class PlayerStateController : MonoBehaviour
 		}
 	}
 	
-	private void hitWithSlash ()
+	private void hitWithSlash (AimDirection dir)
 	{
 		print ("p" + playerId + ": enter SLASHED state");
 		state = State.SLASHED;
@@ -501,7 +501,22 @@ public class PlayerStateController : MonoBehaviour
 		movementController.resetForces ();
 	
 		// notification
-		statusProvider.setDie ();
+		statusProvider.setDie(); // TODO remove
+		Vector3 directionVector = new Vector3 ();
+		switch (dir) {
+		case AimDirection.UP:
+			directionVector.Set(0.0f, 1.0f);
+			break;
+		case AimDirection.DOWN:
+			directionVector.Set(0.0f, -1.0f);
+			break;
+		case AimDirection.FORWARD:
+			directionVector.Set(movementController.isFacingRight() ? 1.0f : -1.0f, 0.0f);
+			break;
+		}
+		// TODO statusProvider.setDie (transform.position, directionVector);
+
+		Flash.flash ();
 	}
 
 	//

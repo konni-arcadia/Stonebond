@@ -319,7 +319,7 @@ public class PlayerStateController : MonoBehaviour
 		BondLink bondLink = other.GetComponentInParent<BondLink> ();
 		if (bondLink != null) {
 			LevelManager levelManager = FindObjectOfType<LevelManager>();
-			levelManager.bondHasBeenSlashed();
+			levelManager.bondHasBeenSlashedBy(this);
 		}
 
 		debug ("WARNING unexpected collision");

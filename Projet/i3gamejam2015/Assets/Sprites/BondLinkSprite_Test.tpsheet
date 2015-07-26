@@ -1,0 +1,18 @@
+#
+# Sprite sheet data for Unity.
+#
+# To import these sprites into your Unity project, download "TexturePackerImporter":
+# http://www.codeandweb.com/texturepacker/unity
+#
+# Sprite sheet: BondLinkSprite_Test.png (472 x 100)
+# $TexturePacker:SmartUpdate:ee134b6073f1463cf06d2571da25a841:06ae40c5997c2a1e334f470d0dd1e4a7:94f8ee8ba54e4d846f8168117a1c0d08$
+#
+
+LinkShred_JW0 (1);158;4;154;30;0.5;0.5
+LinkShred_JW1 (1);314;36;154;30;0.5;0.5
+LinkShred_JW2 (1);158;36;154;30;0.5;0.5
+LinkShred_JW3 (1);314;68;154;30;0.5;0.5
+LinkShred_JW4 (1);158;68;154;30;0.5;0.5
+LinkShred_JW5;2;4;154;30;0.5;0.5
+LinkShred_JW6;2;36;154;30;0.5;0.5
+LinkShred_JW7;2;68;154;30;0.5;0.5

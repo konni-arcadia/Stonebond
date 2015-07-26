@@ -369,6 +369,7 @@ GameObject:
   - 223: {fileID: 940891849}
   - 114: {fileID: 940891848}
   - 114: {fileID: 940891847}
+  - 114: {fileID: 940891850}
   m_Layer: 0
   m_Name: Menu
   m_TagString: Untagged
@@ -449,6 +450,18 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
+--- !u!114 &940891850
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 940891845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcce145b8e7ef0b43a06fda66cd8ad1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StartButtonArea: {fileID: 2099288517}
 --- !u!1 &1621587686
 GameObject:
   m_ObjectHideFlags: 0
@@ -585,7 +598,6 @@ GameObject:
   m_Component:
   - 224: {fileID: 2099288518}
   - 222: {fileID: 2099288519}
-  - 114: {fileID: 2099288520}
   m_Layer: 5
   m_Name: Lvl List
   m_TagString: Untagged
@@ -618,18 +630,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2099288517}
---- !u!114 &2099288520
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2099288517}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bcce145b8e7ef0b43a06fda66cd8ad1e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  StartButtonArea: {fileID: 2099288517}
 --- !u!1 &2136679288
 GameObject:
   m_ObjectHideFlags: 0

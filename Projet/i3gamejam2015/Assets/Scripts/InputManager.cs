@@ -7,6 +7,7 @@ public class InputManager : MonoBehaviour {
 	public const string A = "Jump";
     public const string START = "START";
 	public const string BUTTON_ATTACK = "Attack";
+    public const string B = "Cancel";
 
 	// Axis
 	public const string Horizontal = "Horizontal";

@@ -17,3 +17,7 @@ EditorBuildSettings:
     path: Assets/Scenes/LevelCathedrale.unity
   - enabled: 1
     path: Assets/Scenes/LevelForest.unity
+  - enabled: 1
+    path: Assets/Scenes/Menu/Pause.unity
+  - enabled: 1
+    path: Assets/Scenes/Menu/WinScreen.unity

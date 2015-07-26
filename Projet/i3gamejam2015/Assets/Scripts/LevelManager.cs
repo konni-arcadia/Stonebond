@@ -10,8 +10,9 @@ public class LevelManager : MonoBehaviour {
 	public GameObject bondLinkPrefab;
 	public GameObject gaugeInner, gaugeFrame;
 	public float gaugeDecreaseFactor;
+	public float increaseStartCooldownSecs = 2;
 	private BondLink bondLink;
-	private float bondLinkGauge;
+	private float bondLinkGauge, appearedSinceSec;
 	private WinScreenManager WinScreenManager {
 		get { return FindObjectOfType<WinScreenManager>(); }
 	}
@@ -46,19 +47,22 @@ public class LevelManager : MonoBehaviour {
 		if (bondMode) {
 			gaugeFrame.active = gaugeInner.active = true;
 			gaugeInner.transform.localScale = new Vector3(bondLinkGauge, 1, 1);
+			appearedSinceSec += Time.deltaTime;
 
-			var distance = Vector3.Distance(bondLink.emitterA.transform.position, bondLink.emitterB.transform.position);
-			bondLinkGauge += distance * gaugeDecreaseFactor;
+			if (appearedSinceSec >= increaseStartCooldownSecs) {
+				var distance = Vector3.Distance(bondLink.emitterA.transform.position, bondLink.emitterB.transform.position);
+				bondLinkGauge += distance * gaugeDecreaseFactor;
 
-			// A winner is designated
-			if (bondLinkGauge > 1) {
-				var p1 = bondLink.emitterA.GetComponent<PlayerStateController>();
-				var p2 = bondLink.emitterB.GetComponent<PlayerStateController>();
-				bondLinkGauge = 1;
-				WinScreenManager.IdOfWonP1 = p1.GetPlayerId();
-				WinScreenManager.IdOfWonP2 = p2.GetPlayerId();
-				WinScreenManager.IdOfLevelToRestartTo = Application.loadedLevel;
-				Application.LoadLevel("WinScreen");
+				// A winner is designated
+				if (bondLinkGauge > 1) {
+					var p1 = bondLink.emitterA.GetComponent<PlayerStateController>();
+					var p2 = bondLink.emitterB.GetComponent<PlayerStateController>();
+					bondLinkGauge = 1;
+					WinScreenManager.IdOfWonP1 = p1.GetPlayerId();
+					WinScreenManager.IdOfWonP2 = p2.GetPlayerId();
+					WinScreenManager.IdOfLevelToRestartTo = Application.loadedLevel;
+					Application.LoadLevel("WinScreen");
+				}
 			}
 		}
 		else {
@@ -92,6 +96,7 @@ public class LevelManager : MonoBehaviour {
 		activePlayers[0].setBondLink(bondLink);
 		activePlayers[1].setBondLink(bondLink);
 		bondLinkGauge = 0;
+		appearedSinceSec = 0;
 
 		SoundManager.Instance.GAMEPLAY_Bound_Play ();
 	}

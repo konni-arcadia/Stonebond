@@ -6,7 +6,7 @@ public class PlayerSelectorManager : MonoBehaviour {
 
     public int PlayerNumber = 1;
     public GameObject PlayerSelection;
-    public Text Name;
+    //public Text Name;
     public Text PressStart;
     public SpriteRenderer Player;
     public Text Ready;
@@ -46,7 +46,7 @@ public class PlayerSelectorManager : MonoBehaviour {
         SoundManager.Instance.Validate_Play();
         HasPressedStart = true;
         PressStart.enabled = false;
-        Name.enabled = true;
+        //Name.enabled = true;
         PlayerSelection.SetActive(true);
         Ready.enabled = false;
     }
@@ -55,7 +55,7 @@ public class PlayerSelectorManager : MonoBehaviour {
     {
         SoundManager.Instance.Validate_Play();
         PlayerSelection.SetActive(false);
-        Name.enabled = false;
+        //Name.enabled = false;
         Ready.enabled = false;
     }
 }

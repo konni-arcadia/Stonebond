@@ -54,7 +54,7 @@ public class PlayersSelectorManager : MonoBehaviour {
 
             PlayerPrefs.SetString(PlayerSeleted, playerReadyString);
             Application.LoadLevelAdditiveAsync("SelectLvl");
-            SoundManager.Instance.PressStart_Stop();
+            
             Destroy(gameObject);
         }
 	
@@ -65,7 +65,7 @@ public class PlayersSelectorManager : MonoBehaviour {
         if (Input.GetButtonDown(InputManager.B + " P" + noControler))
         {
             Application.LoadLevelAdditiveAsync("SelectOption");
-            SoundManager.Instance.PressStart_Stop();
+            SoundManager.Instance.Cancel_Play();
             Destroy(gameObject);
         }
     }

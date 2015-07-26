@@ -13,9 +13,8 @@ public class LevelManager : MonoBehaviour {
 	private BondLink bondLink;
 	private float bondLinkGauge;
 
-	// Use this for initialization
+	// Requires the objects to have already been spawned (PlayerSpawner::Awake, which is executed before)
 	void Start () {
-
         //Load the pause menu
         Application.LoadLevelAdditive("Pause");
 
@@ -37,6 +36,7 @@ public class LevelManager : MonoBehaviour {
 			if (!player.IsSlashed())
 				activePlayers.Add(player);
 		}
+		Debug.Log("Active players: " + activePlayers.Count + " out of " + players.Length);
 
 		if (activePlayers.Count == 2 && !bondMode)
 			EnterBondMode(activePlayers);

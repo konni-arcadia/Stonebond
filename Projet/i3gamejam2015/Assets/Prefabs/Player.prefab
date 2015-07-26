@@ -576,6 +576,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
   slashedTime: 2
+  invincibleAfterSlahsedTime: 5
 --- !u!212 &21232852
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -666,6 +667,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_Layer
       value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: extensionJumpForce
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

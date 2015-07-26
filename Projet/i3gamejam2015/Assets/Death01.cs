@@ -53,14 +53,14 @@ public class Death01 : MonoBehaviour {
 			}
 		}
 		
-		if (false && explose && !desactive && timerTest>4.0f) {
+		if (explose && !desactive && timerTest>4.0f) {
 			desactive = true;
 			for (int i = 0; i < rigidBodies.Length; i++) {
 				rigidBodies [i].isKinematic = true;
 			}
 		}
 
-		if (false && explose && desactive && !bouge && timerTest>6.0f) {
+		if (explose && desactive && !bouge && timerTest>6.0f) {
 			bouge = true;
 			for (int i = 0; i < rigidBodies.Length; i++) {
 				rigidBodies [i].transform.localPosition = Vector3.zero;

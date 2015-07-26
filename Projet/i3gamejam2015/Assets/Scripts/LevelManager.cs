@@ -43,7 +43,7 @@ public class LevelManager : MonoBehaviour {
 				activePlayers.Add(player);
 		}
 		// Only allows the creation of the bond if all players have been active since the last cut
-		allowsCreateBond |= activePlayers.Count == players.Length;
+		allowsCreateBond |= activePlayers.Count == players.Length && !bondMode;
 
 		if (activePlayers.Count == 2 && !bondMode && allowsCreateBond)
 			EnterBondMode(activePlayers);

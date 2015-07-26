@@ -80,4 +80,11 @@ public class PlayerStatusProvider : MonoBehaviour {
     {
         OnRespawnWarningAction();
     }
+
+    public delegate void InvinsibleStateAction();
+    public event InvinsibleStateAction OnInvinsibleChangedAction;
+    public void setInvincibleStatus(bool isInvincible)
+    {
+        OnInvinsibleChangedAction();
+    }
 }

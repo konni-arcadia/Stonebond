@@ -54,7 +54,7 @@ public class PlayerStateController : MonoBehaviour
 	}
 
 	private AimDirection aimDirection = AimDirection.FORWARD;
-	public float verticalAimThreshold = 0.85f;
+    public float VerticalAimThresholdDegree = 90f;
 
 	//
 	// SPAWN
@@ -253,17 +253,24 @@ public class PlayerStateController : MonoBehaviour
 	{
 		movementController.setMovementEnabled (true);
 
-		// aim direction
-		float v = inputManager.AxisValue (playerId, InputManager.Vertical);
-		if (v <= -verticalAimThreshold) {
-			aimDirection = AimDirection.UP;
-		} else if (v >= verticalAimThreshold) {
-			aimDirection = AimDirection.DOWN;
-		} else {
-			aimDirection = AimDirection.FORWARD;
-		}
+        //Aim direction vector based:
+        float x = inputManager.AxisValue(playerId, InputManager.Horizontal);
+        float y = inputManager.AxisValue(playerId, InputManager.Vertical);
+        Vector2 v = new Vector2(x, y);                      //set a Vector2 based on controller tilt.
+        float angleRadians = Mathf.Atan2(v.y, v.x);         //Get the angle of the vector (radian)
+        float angleDegrees = angleRadians * Mathf.Rad2Deg;  //Convert to degree
+        //angleDegrees will be in the range [-180,180], convert to [0,360] 'cause I'm human... Ho and 0 Degree = straight right.
+        if (angleDegrees < 0)
+            angleDegrees += 360;
 
-		//print (" v=" + v + " aim=" + aimDirection);
+        if (angleDegrees > 270 - (VerticalAimThresholdDegree / 2f) && angleDegrees < 270 + (VerticalAimThresholdDegree / 2f))
+        { aimDirection = AimDirection.UP; }
+        else if (angleDegrees > 90 - (VerticalAimThresholdDegree / 2f) && angleDegrees < 90 + (VerticalAimThresholdDegree / 2f))
+        { aimDirection = AimDirection.DOWN; }
+        else
+        { aimDirection = AimDirection.FORWARD; }
+        //if (angleDegrees != 0) //don't take "empty" pads into account.
+        //    print("Joystick angle: " + angleDegrees + " Direction is: " + aimDirection); //DEBUG THIS SHIT NIGGA
 
 		// slash attack
 		if (inputManager.WasPressed (playerId, InputManager.BUTTON_ATTACK)) {

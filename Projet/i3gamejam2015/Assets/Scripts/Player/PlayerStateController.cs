@@ -21,16 +21,18 @@ public class PlayerStateController : MonoBehaviour
 
 	private enum State
 	{
+		SPAWN,
 		IDLE,
 		SLASH_ATTACK,
 		KNOCKBACK,
 		SLASHED,
-		INVINCIBLE_AFTER_SLASHED
+		INVINCIBLE
 	}
 
-	private State state = State.IDLE;
+	private State state = State.SPAWN;
 	private float stateTime = 0.0f;
 	private bool isBond = false;
+	private bool visible = true;
 
 	//
 	// COLLIDERS
@@ -53,7 +55,13 @@ public class PlayerStateController : MonoBehaviour
 	}
 
 	private AimDirection aimDirection = AimDirection.FORWARD;
-	public float verticalAimThreshold = 0.85f;
+    public float VerticalAimThresholdDegree = 90f;
+
+	//
+	// SPAWN
+	//
+
+	public float spawnTime = 2.0f;
 
 	//
 	// SLASH ATTACK
@@ -63,9 +71,11 @@ public class PlayerStateController : MonoBehaviour
 	public float slashAttackCooldownTime = 4.0f;
 	public float slashAttackDashVelocityUp = 1000.0f;
 	public float slashAttackDashVelocityDown = 1000.0f;
-	public float slashAttackDashVelocityForward = 2000.0f;
+	public float slashAttackDashVelocityForwardGround = 2000.0f;
+	public float slashAttackDashVelocityForwardAir = 2000.0f;
 	public float slashAttackHorizDashGravity = 20.0f;
 	public AnimationCurve slashAttackDashCurve;
+	private bool airDash = false;
 
 	//
 	// KNOCKBACK
@@ -85,7 +95,16 @@ public class PlayerStateController : MonoBehaviour
 	//
 
 	public float slashedTime = 2.0f;
-	public float invincibleAfterSlahsedTime = 5.0f;
+	public float invincibleAfterSpawnTime = 5.0f;
+	private GameObject crystal = null;
+
+	//
+	// SLASHED
+	//
+
+	public float invinsibleBlinkInterval = 0.2f;
+	private float invisibleBlinkCounter = 0.0f;
+
 	//
 	// INIT
 	//
@@ -122,8 +141,9 @@ public class PlayerStateController : MonoBehaviour
 			}
 		}
 
-        //Tout le monde commence par spawner
-        statusProvider.setRespawnWarning();
+		// start in spawn state
+		movementController.setMovementEnabled (false);
+		spawn ();
 	}
 
 	//
@@ -138,143 +158,9 @@ public class PlayerStateController : MonoBehaviour
 		isBond = bondLink != null;
 	}
 
-	//
-	// STATE MACHINE
-	//
-
-	void Update ()
-	{
-		switch (state) {
-		case State.IDLE:
-			updateIdle ();
-			break;
-		case State.SLASH_ATTACK:
-			updateSlashAttack ();
-			break;
-		case State.KNOCKBACK:
-			updateKnockback ();
-			break;
-		case State.SLASHED:
-			updateSlashed ();
-			break;
-		case State.INVINCIBLE_AFTER_SLASHED:
-			updateInvincibleAfterSlashed ();
-			break;
-		}
-	}
-
-	private void updateIdle ()
-	{
-		movementController.setMovementEnabled (true);
-
-		// aim direction
-		float v = inputManager.AxisValue (playerId, InputManager.Vertical);
-		if (v <= -verticalAimThreshold) {
-			aimDirection = AimDirection.UP;
-		} else if (v >= verticalAimThreshold) {
-			aimDirection = AimDirection.DOWN;
-		} else {
-			aimDirection = AimDirection.FORWARD;
-		}
-
-		//print (" v=" + v + " aim=" + aimDirection);
-
-		// slash attack
-		if (inputManager.WasPressed (playerId, InputManager.BUTTON_ATTACK)) {
-			if (slashAttackCooldown == 0.0f) {
-				slash ();
-			} else {
-				print ("p" + playerId + ": slash attack on CD");
-			}
-		}
-
-		// slash attack cooldown
-		if (slashAttackCooldown > 0.0f) {
-			slashAttackCooldown -= Time.deltaTime;
-			if (slashAttackCooldown < 0.0f) {
-				slashAttackCooldown = 0.0f;
-			}
-		}
-	}
-	
-	private void updateSlashAttack ()
-	{
-		stateTime -= Time.deltaTime;
-		if (stateTime <= 0.0f) {
-			print ("p" + playerId + ": enter IDLE state");
-			state = State.IDLE;
-			slashAttackCooldown = slashAttackCooldownTime;
-
-			slashAttackColliderUp.enabled = false;
-			slashAttackColliderDown.enabled = false;
-			slashAttackColliderForward.enabled = false;
-
-			return;
-		}
-
-		// dash
-
-		float slashPct = 1.0f - stateTime / slashAttackTime;
-		float dashVelocityPct = slashAttackDashCurve.Evaluate (slashPct);
-
-		switch (aimDirection) {
-		case AimDirection.UP:
-			movementController.setVelocity (new Vector2(0.0f, dashVelocityPct * Time.deltaTime * slashAttackDashVelocityUp));
-			break;
-		case AimDirection.DOWN:
-			movementController.setVelocity (new Vector2(0.0f, dashVelocityPct * Time.deltaTime * -slashAttackDashVelocityDown));
-			break;
-		case AimDirection.FORWARD:
-			float force = movementController.isFacingRight() ? slashAttackDashVelocityForward : -slashAttackDashVelocityForward;
-			movementController.setVelocity (new Vector2(dashVelocityPct * Time.deltaTime * force, -slashAttackHorizDashGravity));
-			break;
-		}
-
-		// collision
-
-//		bool knockedBack = false;
-//		AimDirection knockedBackDirection = AimDirection.FORWARD;
-//
-//		Collider2D collider = null;
-//		switch (aimDirection) {
-//		case AimDirection.UP:
-//			collider = slashAttackColliderUp;
-//			break;
-//		case AimDirection.DOWN:
-//			collider = slashAttackColliderDown;
-//			break;
-//		case AimDirection.FORWARD:
-//			collider = slashAttackColliderForward;
-//			break;
-//		}
-//
-//		for (int i = 0; i < enemies.Count; ++i) {
-//			PlayerStateController enemy = enemies [i];
-//
-//			//print ("p" + playerId + ": testing " + collider + " against " + enemy.bodyCollider);
-//			if (collider.IsTouching (enemy.bodyCollider)) {
-//
-//				print ("enemy.isAttack=" + enemy.isPerformingSlashAttack() + " isAimingOpposite=" + isAimingOppositeDirection (enemy));
-//				print ("dir=" + aimDirection + " enemy.dir=" + enemy.aimDirection);
-//
-//				if (enemy.isPerformingSlashAttack () && isAimingOppositeDirection (enemy)) {
-//					enemy.knockback (aimDirection);
-//					knockedBack = true;
-//					knockedBackDirection = enemy.aimDirection;
-//				} else if (enemy.isSlashable ()) {
-//					enemy.hitWithSlash ();
-//				}
-//			}
-//		}
-//		
-//		if (knockedBack) {
-//			knockback (knockedBackDirection);
-//		}
-	}
-
 	public void onCollide(Collider2D source, Collider2D other) {
-		debug ("onCollide");
-
+		//debug ("onCollide");
+		
 		if (state != State.SLASH_ATTACK) {
 			//debug ("not in SLASH_ATTACK state");
 			return;
@@ -300,7 +186,7 @@ public class PlayerStateController : MonoBehaviour
 			}
 			break;
 		}
-	
+		
 		//debug ("collide");
 		PlayerStateController enemy = other.GetComponentInParent<PlayerStateController> ();
 		if (enemy != null) {
@@ -308,21 +194,164 @@ public class PlayerStateController : MonoBehaviour
 			if (enemy.isPerformingSlashAttack () && isAimingOppositeDirection (enemy)) {
 				enemy.knockback (aimDirection);
 				knockback (enemy.aimDirection);
-				//knockedBack = true;
-				//knockedBackDirection = enemy.aimDirection;
+
+				if(aimDirection == AimDirection.FORWARD) {
+					MyLittlePoney.shake (0.5f, 0.0f, 2.0f, 0.0f);
+				}
+				else {
+					MyLittlePoney.shake (0.0f, 0.5f, 0.0f, 2.0f);
+				}
 			} else if (enemy.isSlashable ()) {
 				enemy.hitWithSlash ();
+
+				MyLittlePoney.shake (0.5f, 0.5f, 2.0f, 2.0f);
 			}
 			return;
 		}
-
+		
 		BondLink bondLink = other.GetComponentInParent<BondLink> ();
 		if (bondLink != null) {
 			LevelManager levelManager = FindObjectOfType<LevelManager>();
 			levelManager.bondHasBeenSlashedBy(this);
 		}
-
+		
 		debug ("WARNING unexpected collision");
+	}
+
+	//
+	// STATE MACHINE
+	//
+
+	void Update ()
+	{
+		switch (state) {
+		case State.SPAWN:
+			updateSpawn ();
+			break;
+		case State.IDLE:
+			updateIdle ();
+			break;
+		case State.SLASH_ATTACK:
+			updateSlashAttack ();
+			break;
+		case State.KNOCKBACK:
+			updateKnockback ();
+			break;
+		case State.SLASHED:
+			updateSlashed ();
+			break;
+		case State.INVINCIBLE:
+			updateInvincible ();
+			break;
+		}
+	}
+
+	private void updateSpawn ()
+	{
+		stateTime -= Time.deltaTime;
+		if (stateTime <= 0.0f) {
+			print ("p" + playerId + ": enter INVINCIBLE state");
+			state = State.INVINCIBLE;
+			setVisible(false);
+			invisibleBlinkCounter = invinsibleBlinkInterval;
+			stateTime = invincibleAfterSpawnTime;
+			movementController.setMovementEnabled (true);
+			//statusProvider.setInvincibleStatus(true);
+		}
+	}
+
+	private void updateSlashed ()
+	{
+		stateTime -= Time.deltaTime;
+		if (stateTime <= 0.0f) {
+			spawn ();
+		}
+	}
+
+	private void updateIdle ()
+	{
+		movementController.setMovementEnabled (true);
+
+        //Aim direction vector based:
+        float x = inputManager.AxisValue(playerId, InputManager.Horizontal);
+        float y = inputManager.AxisValue(playerId, InputManager.Vertical);
+        Vector2 v = new Vector2(x, y);                      //set a Vector2 based on controller tilt.
+        float angleRadians = Mathf.Atan2(v.y, v.x);         //Get the angle of the vector (radian)
+        float angleDegrees = angleRadians * Mathf.Rad2Deg;  //Convert to degree
+        //angleDegrees will be in the range [-180,180], convert to [0,360] 'cause I'm human... Ho and 0 Degree = straight right.
+        if (angleDegrees < 0)
+            angleDegrees += 360;
+
+        if (angleDegrees > 270 - (VerticalAimThresholdDegree / 2f) && angleDegrees < 270 + (VerticalAimThresholdDegree / 2f))
+        { aimDirection = AimDirection.UP; }
+        else if (angleDegrees > 90 - (VerticalAimThresholdDegree / 2f) && angleDegrees < 90 + (VerticalAimThresholdDegree / 2f))
+        { aimDirection = AimDirection.DOWN; }
+        else
+        { aimDirection = AimDirection.FORWARD; }
+        //if (angleDegrees != 0) //don't take "empty" pads into account.
+        //    print("Joystick angle: " + angleDegrees + " Direction is: " + aimDirection); //DEBUG THIS SHIT NIGGA
+
+		// slash attack
+		if (inputManager.WasPressed (playerId, InputManager.BUTTON_ATTACK)) {
+			if (slashAttackCooldown == 0.0f) {
+				slash ();
+			} else {
+				print ("p" + playerId + ": slash attack on CD");
+			}
+		}
+
+		// slash attack cooldown
+		if (slashAttackCooldown > 0.0f) {
+			slashAttackCooldown -= Time.deltaTime;
+			if (slashAttackCooldown < 0.0f) {
+				slashAttackCooldown = 0.0f;
+			}
+		}
+	}
+	
+	private void updateSlashAttack ()
+	{
+		stateTime -= Time.deltaTime;
+		if (stateTime <= 0.0f) {
+			slashAttackCooldown = slashAttackCooldownTime;
+			setIdleState ();
+			return;
+		}
+
+		// dash
+
+		float slashPct = 1.0f - stateTime / slashAttackTime;
+		float dashVelocityPct = slashAttackDashCurve.Evaluate (slashPct);
+
+		switch (aimDirection) {
+		case AimDirection.UP:
+			movementController.setVelocity (new Vector2(0.0f, dashVelocityPct * Time.deltaTime * slashAttackDashVelocityUp));
+			break;
+		case AimDirection.DOWN:
+			movementController.setVelocity (new Vector2(0.0f, dashVelocityPct * Time.deltaTime * -slashAttackDashVelocityDown));
+			break;
+		case AimDirection.FORWARD:
+			// TODO check if ground
+			float velocity;
+			if(airDash) {
+				velocity = slashAttackDashVelocityForwardAir;
+				if(movementController.isGrounded ()) {
+					// cancel the air dash
+					slashAttackCooldown = slashAttackCooldownTime;
+					setIdleState ();
+					return;
+				}
+			}
+			else {
+				velocity = slashAttackDashVelocityForwardGround;
+			}
+
+			if(!movementController.isFacingRight()) {
+				velocity = -velocity;
+			}
+			movementController.setVelocity (new Vector2(dashVelocityPct * Time.deltaTime * velocity, -slashAttackHorizDashGravity));
+			break;
+		}
 	}
 	
 	private void updateKnockback ()
@@ -351,21 +380,7 @@ public class PlayerStateController : MonoBehaviour
 		}
 	}
 
-	private void updateSlashed ()
-	{
-		stateTime -= Time.deltaTime;
-		if (stateTime <= 0.0f) {
-			print ("p" + playerId + ": enter INVINCIBLE_AFTER_SLASHED state");
-			state = State.INVINCIBLE_AFTER_SLASHED;
-			stateTime = invincibleAfterSlahsedTime;
-
-			// FIXME to be called a bit before...
-			// notification
-			statusProvider.setRespawnWarning();
-		}
-	}
-
-	private void updateInvincibleAfterSlashed ()
+	private void updateInvincible()
 	{
 		updateIdle ();
 
@@ -374,12 +389,40 @@ public class PlayerStateController : MonoBehaviour
 			print ("p" + playerId + ": enter IDLE state");
 			state = State.IDLE;
 
-			// TODO notification
+			//statusProvider.setInvincibleStatus(false);
+			setVisible (true);
+			return;
 		}
+
+		invisibleBlinkCounter -= Time.deltaTime;
+		if (invisibleBlinkCounter < 0.0f) {
+			invisibleBlinkCounter += invinsibleBlinkInterval;
+			setVisible (!visible);
+		}
+	}
+
+	private void setIdleState() {
+		print ("p" + playerId + ": enter IDLE state");
+		state = State.IDLE;
+		
+		slashAttackColliderUp.enabled = false;
+		slashAttackColliderDown.enabled = false;
+		slashAttackColliderForward.enabled = false;
+	}
+
+	private void spawn()
+	{
+		statusProvider.setRespawnWarning ();
+
+		print ("p" + playerId + ": enter SPAWN state");
+		state = State.SPAWN;
+		stateTime = spawnTime;
 	}
 
 	private void slash()
 	{
+		setVisible (true); // dirty make sure sprite is visible if went out of invinsible
+
 		print ("p" + playerId + ": enter SLASH_ATTACK state");
 		state = State.SLASH_ATTACK;
 		stateTime = slashAttackTime;
@@ -456,7 +499,7 @@ public class PlayerStateController : MonoBehaviour
 
 		movementController.setMovementEnabled (false);
 		movementController.resetForces ();
-
+	
 		// notification
 		statusProvider.setDie ();
 	}
@@ -480,8 +523,11 @@ public class PlayerStateController : MonoBehaviour
 	}
 
 	private bool isSlashable() {
-		// TODO blink for INVINCIBLE_AFTER_SLASHED
-		return !isBond && state != State.KNOCKBACK && state != State.SLASHED; //&& state != State.INVINCIBLE_AFTER_SLASHED;
+		if (isBond) {
+			return false;
+		}
+	
+		return state == State.IDLE;
 	}
 
 	private bool isAimingOppositeDirection (PlayerStateController enemy)
@@ -496,6 +542,14 @@ public class PlayerStateController : MonoBehaviour
 			return movementController.isFacingRight () != enemy.movementController.isFacingRight ();
 
 		return false;
+	}
+
+	private void setVisible(bool visible) {
+		debug ("setVisible(" + visible + ")");
+		foreach(SpriteRenderer sprite in GetComponentsInChildren<SpriteRenderer>()) {
+			sprite.enabled = visible;
+		}
+		this.visible = visible;
 	}
 
 	//
@@ -541,7 +595,7 @@ public class PlayerStateController : MonoBehaviour
 		case State.SLASHED:
 			drawColliderRect (bodyCollider, Color.blue);
 			break;
-		case State.INVINCIBLE_AFTER_SLASHED:
+		case State.INVINCIBLE:
 			drawColliderRect (bodyCollider, Color.yellow);
 			break;
 		}

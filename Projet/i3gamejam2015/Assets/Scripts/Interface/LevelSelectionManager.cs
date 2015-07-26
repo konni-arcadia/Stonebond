@@ -23,7 +23,7 @@ public class LevelSelectionManager : MonoBehaviour {
     void Start()
     {
         buttonList = StartButtonArea.GetComponentsInChildren<Outline>();
-
+        SoundManager.Instance.StageSelect_Play();
 
     }
 
@@ -39,15 +39,24 @@ public class LevelSelectionManager : MonoBehaviour {
 
         if (Input.GetButtonDown(InputManager.A + " P" + noControler))
         {
+            SoundManager.Instance.StageSelect_Stop();
             switch (menuSelectedItem)
             {
 
                 case LvlSelectionItem.Cathedrale: Application.LoadLevel("LevelCathedrale");
+                    SoundManager.Instance.Stage_Play(SoundManager.StageEnum.One);
                     break;
 
                 case LvlSelectionItem.Foret: Application.LoadLevel("LevelForest"); ;
+                    SoundManager.Instance.Stage_Play(SoundManager.StageEnum.Two);
                     break;
             }
+        }
+        else if (Input.GetButtonDown(InputManager.B + " P" + noControler))
+        {
+            Application.LoadLevelAdditiveAsync("SelectPlayers");
+            SoundManager.Instance.StageSelect_Stop();
+            Destroy(gameObject);
         }
 
         if (!wasPressed[noControler - 1] && Input.GetAxis(dpadVertical + noControler) < 0)

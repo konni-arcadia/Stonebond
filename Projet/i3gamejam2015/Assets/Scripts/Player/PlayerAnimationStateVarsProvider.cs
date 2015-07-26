@@ -86,7 +86,7 @@ public class PlayerAnimationStateVarsProvider : MonoBehaviour {
     }
 
 
-    public void DieAction()
+    public void DieAction(Vector2 deathVector)
     {
         if (myAnimator != null)
             myAnimator.SetTrigger("Die");
@@ -96,5 +96,11 @@ public class PlayerAnimationStateVarsProvider : MonoBehaviour {
     {
         if (myAnimator != null)
             myAnimator.SetTrigger("Respawn");
+    }
+
+    public void OnInvincibleStatusChangedAction(bool isInvicible)
+    {
+        if (myAnimator != null)
+            myAnimator.SetBool("Invincible", isInvicible);
     }
 }

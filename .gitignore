@@ -11,3 +11,4 @@ UnityVS
 UnityVS.meta
 .vs
 **/*.userprefs
+*EditorBuildSettings.asset

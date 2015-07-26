@@ -161,6 +161,10 @@ public class PlayerMovementController : MonoBehaviour {
 		return transform.localScale.x > 0;
 	}
 
+	public bool isGrounded() {
+		return grounded;
+	}
+
 	// Freezes the player until an applyForce is called
 	public void resetForces() {
 		body.velocity = new Vector2(0, 0);

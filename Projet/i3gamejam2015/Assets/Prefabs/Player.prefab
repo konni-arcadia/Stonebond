@@ -55,6 +55,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 476360}
   - 61: {fileID: 6147806}
+  - 114: {fileID: 11438052}
   m_Layer: 11
   m_Name: slashAttackColliderForward
   m_TagString: Untagged
@@ -164,6 +165,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 430852}
   - 61: {fileID: 6103116}
+  - 114: {fileID: 11443848}
   m_Layer: 11
   m_Name: slashAttackColliderDown
   m_TagString: Untagged
@@ -201,6 +203,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 442656}
   - 61: {fileID: 6124196}
+  - 114: {fileID: 11462366}
   m_Layer: 11
   m_Name: slashAttackColliderUp
   m_TagString: Untagged
@@ -512,6 +515,39 @@ MonoBehaviour:
   startsFacingRight: 1
   jumpClip: {fileID: 8300000, guid: 723aa24e67c6988479ddf99a6f1192cd, type: 3}
   landClip: {fileID: 8300000, guid: 799ec483160f49a488b58f01f729bb65, type: 3}
+--- !u!114 &11438052
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 109892}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7accde2a362128a468cd9c62fbb1309b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &11443848
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 155684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7accde2a362128a468cd9c62fbb1309b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &11462366
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 179726}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7accde2a362128a468cd9c62fbb1309b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11492586
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -539,8 +575,9 @@ MonoBehaviour:
   slashAttackTime: .349999994
   slashAttackCooldownTime: .5
   slashAttackDashVelocityUp: 1200
-  slashAttackDashVelocityDown: 600
+  slashAttackDashVelocityDown: 2000
   slashAttackDashVelocityForward: 2000
+  slashAttackHorizDashGravity: 20
   slashAttackDashCurve:
     serializedVersion: 2
     m_Curve:
@@ -557,8 +594,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
   knockbackTime: .5
-  knockbackVelocityUp: 8000
-  knockbackVelocityDown: 4000
+  knockbackVelocityUp: 10000
+  knockbackVelocityDown: 16000
   knockbackVelocityForward: 16000
   knockbackCurve:
     serializedVersion: 2
@@ -576,6 +613,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
   slashedTime: 2
+  invincibleAfterSlahsedTime: 5
 --- !u!212 &21232852
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -666,6 +704,26 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_Layer
       value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: extensionJumpForce
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: slashAttackHorizDashGravity
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: slashAttackDashVelocityDown
+      value: 2000
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: knockbackVelocityDown
+      value: 16000
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: knockbackVelocityUp
+      value: 10000
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

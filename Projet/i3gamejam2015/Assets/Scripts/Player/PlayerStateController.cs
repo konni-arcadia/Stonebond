@@ -272,7 +272,7 @@ public class PlayerStateController : MonoBehaviour
 	}
 
 	public void onCollide(Collider2D source, Collider2D other) {
-		//debug ("onCollide");
+		debug ("onCollide");
 
 		if (state != State.SLASH_ATTACK) {
 			//debug ("not in SLASH_ATTACK state");

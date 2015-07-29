@@ -492,7 +492,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fogMoveSpeed: .0299999993
   rightOffset: 40.9333344
-  yPos: -3.83999991
+  yPos: 0
   xPos: -40.9333344
 --- !u!212 &638584393
 SpriteRenderer:
@@ -692,7 +692,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fogMoveSpeed: .0299999993
   rightOffset: 40.9333344
-  yPos: -3.83999991
+  yPos: 0
   xPos: -40.9333344
 --- !u!1 &894275908
 GameObject:

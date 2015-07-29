@@ -61,8 +61,9 @@ public class PlayerStateController : MonoBehaviour
 	// SPAWN
 	//
 
-	public float spawnTime = 2.0f;
-	private bool firstSpawn = true;
+	public float initialSpawnTime = 1.6f;
+	public float respawnTime = 1.3f;
+	private bool initialSpawn = true;
 
 	//
 	// SLASH ATTACK
@@ -110,7 +111,7 @@ public class PlayerStateController : MonoBehaviour
 	// INIT
 	//
 
-	private bool initialized = false;
+	private bool awake = false;
 
 	void Awake ()
 	{
@@ -129,7 +130,7 @@ public class PlayerStateController : MonoBehaviour
 		movementController = GetComponent<PlayerMovementController>();
 		statusProvider = GetComponent<PlayerStatusProvider> ();
 
-		initialized = true;
+		awake = true;
 	}
 
 	void Start ()
@@ -146,6 +147,7 @@ public class PlayerStateController : MonoBehaviour
 		movementController.setMovementEnabled (false);
 		spawn ();
 
+		// FIXME move this somewhere else, doesn't belong to player logic...
 		SpriteRenderer bodyRenderer = transform.Find ("CharacterSprites").Find ("Body").GetComponent<SpriteRenderer> ();
 
 		switch (playerId) {
@@ -282,17 +284,16 @@ public class PlayerStateController : MonoBehaviour
 	{
 		stateTime -= Time.deltaTime;
 		if (stateTime <= 0.0f) {
-			if(firstSpawn) {
+			if(initialSpawn) {
 				// prout
 				print ("p" + playerId + ": enter IDLE state");
 				state = State.IDLE;
 
-				firstSpawn = false;
+				initialSpawn = false;
 			}
 			else {
 				print ("p" + playerId + ": enter INVINCIBLE state");
 				state = State.INVINCIBLE;
-				setVisible(false);
 				invisibleBlinkCounter = invinsibleBlinkInterval;
 				stateTime = invincibleAfterSpawnTime;
 				movementController.setMovementEnabled (true);
@@ -453,11 +454,12 @@ public class PlayerStateController : MonoBehaviour
 
 	private void spawn()
 	{
+		// FIXME have to events: initalSpawn and respawn
 		statusProvider.setRespawnWarning ();
 
 		print ("p" + playerId + ": enter SPAWN state");
 		state = State.SPAWN;
-		stateTime = spawnTime;
+		stateTime = initialSpawn ? initialSpawnTime : respawnTime;
 	}
 
 	private void slash()
@@ -617,7 +619,7 @@ public class PlayerStateController : MonoBehaviour
 
 	public void OnDrawGizmos ()
 	{
-		if (!initialized) {
+		if (!awake) {
 			return;
 		}
 

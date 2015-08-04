@@ -71,7 +71,9 @@ public class WinScreenManager : MonoBehaviour {
                     case StartMenuItem.MenuSelection: Application.LoadLevel("Menu");
                                                 break;
                 }
+                Time.timeScale = 1.0f;
                 SoundManager.Instance.Validate_Play();
+
 
             }
 
@@ -111,5 +113,6 @@ public class WinScreenManager : MonoBehaviour {
 		canvas.enabled = true;
 		timeSinceStart = 0;
 		isSceneDisplayed = true;
+        Time.timeScale = 0.0f;
 	}
 }

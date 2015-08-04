@@ -328,7 +328,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 170380}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -19.0200005, y: 4.51900005, z: 0}
+  m_LocalPosition: {x: -17.8700008, y: 2.45000005, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 477898}
@@ -667,7 +667,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerId: 1
   VerticalAimThresholdDegree: 100
-  spawnTime: 2.29999995
+  initialSpawnTime: 1.79999995
+  respawnTime: 1.20000005
   slashAttackTime: .349999994
   slashAttackCooldownTime: .5
   slashAttackDashVelocityUp: 1200
@@ -711,7 +712,7 @@ MonoBehaviour:
     m_PostInfinity: 2
   slashedTime: 2
   invincibleAfterSpawnTime: 3
-  invinsibleBlinkInterval: .100000001
+  invinsibleBlinkInterval: .119999997
 --- !u!212 &21232852
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -748,7 +749,7 @@ SpriteRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000e000000000000000, type: 0}
+  - {fileID: 2100000, guid: 5461d5a89fedd7d4d93ce0e22b76a241, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -829,11 +830,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: invinsibleBlinkInterval
-      value: .100000001
+      value: .119999997
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: spawnTime
-      value: 2.29999995
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: slashAttackDashVelocityForwardGround
@@ -846,6 +847,14 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: VerticalAimThresholdDegree
       value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: respawnTime
+      value: 1.20000005
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: initialSpawnTime
+      value: 1.79999995
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

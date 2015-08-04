@@ -16,13 +16,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Menu/Credits.unity
   - enabled: 1
-    path: Assets/Scenes/LevelCathedrale.unity
+    path: Assets/Scenes/Levels/LevelCathedrale.unity
   - enabled: 1
-    path: Assets/Scenes/LevelForest.unity
+    path: Assets/Scenes/Levels/LevelForest.unity
   - enabled: 1
-    path: Assets/Scenes/LevelOrgan.unity
+    path: Assets/Scenes/Levels/LevelOrgan.unity
   - enabled: 1
-    path: Assets/Scenes/LevelRoof.unity
+    path: Assets/Scenes/Levels/LevelRoof.unity
   - enabled: 1
     path: Assets/Scenes/Menu/Pause.unity
   - enabled: 1

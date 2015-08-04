@@ -40,7 +40,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 447376}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -126,7 +126,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: .197766304}
   serializedVersion: 2
-  m_Size: {x: 1, y: 19.2743397}
+  m_Size: {x: 1, y: 28.3799992}
 --- !u!61 &6141274
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -139,7 +139,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: -15.4500008, y: .0414237976}
   serializedVersion: 2
-  m_Size: {x: 1, y: 18.9508476}
+  m_Size: {x: 1, y: 28.3799992}
 --- !u!61 &6186322
 BoxCollider2D:
   m_ObjectHideFlags: 1

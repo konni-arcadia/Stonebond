@@ -1,10 +1,33 @@
 fileFormatVersion: 2
-guid: 5a6ad270293c5674691bf11fcca5a4d5
-timeCreated: 1448720418
+guid: d8ea1d4a3128e3f46a67babbcd7e6e38
+timeCreated: 1448707111
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - PressStartScreen: {instanceID: 0}
+  - CharacterSelect: {instanceID: 0}
+  - StageSelect: {instanceID: 0}
+  - StageSpireHigh: {instanceID: 0}
+  - StagePipesOfAwakening: {instanceID: 0}
+  - StageCloisterOfTheSilence: {instanceID: 0}
+  - StageRosetteOfTheWingedOnes: {instanceID: 0}
+  - Cursor: {instanceID: 0}
+  - Validate: {instanceID: 0}
+  - Cancel: {instanceID: 0}
+  - VOICETitle: {instanceID: 0}
+  - VOICECharacterSelect: {instanceID: 0}
+  - VOICEGetReady: {instanceID: 0}
+  - VOICEFight: {instanceID: 0}
+  - VOICEGameover: {instanceID: 0}
+  - BoundStart: {instanceID: 0}
+  - BoundBreak: {instanceID: 0}
+  - VictoryJingle: {instanceID: 0}
+  - Jump: {fileID: 8300000, guid: 723aa24e67c6988479ddf99a6f1192cd, type: 3}
+  - WallJump: {instanceID: 0}
+  - Attack: {instanceID: 0}
+  - Knockback: {instanceID: 0}
+  - Land: {fileID: 8300000, guid: cc6596ded8868ac4594dcbb4b9492679, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

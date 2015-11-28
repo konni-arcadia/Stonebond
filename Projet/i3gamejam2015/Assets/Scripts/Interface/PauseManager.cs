@@ -44,6 +44,7 @@ public class PauseManager : MonoBehaviour {
         {
 			if (inputManager.WasPressedCtrl(noControler, InputManager.A))
             {
+				GameObject InControlObject = GameObject.Find("InControl");
                 switch (menuSelectedItem)
                 {
 
@@ -52,13 +53,18 @@ public class PauseManager : MonoBehaviour {
 
                     case StartMenuItem.Resume: isDisplayed = false;
                                                 menu.enabled = false;
+
                                                 break;
 
                     case StartMenuItem.LvlSelection: PlayerPrefs.SetInt("ComeFromLVL", 0); 
                                                 Application.LoadLevel("Menu");
+												if(InControlObject != null)
+													Destroy(InControlObject);
                                                 break;
 
                     case StartMenuItem.MenuSelection: Application.LoadLevel("Menu");
+												if(InControlObject != null)
+													Destroy(InControlObject);
                                                 break;
                 }
                 Time.timeScale = 1.0f;

@@ -5,6 +5,7 @@ public class PlayersSelectorManager : MonoBehaviour {
 
     private PlayerSelectorManager[] listPlayerSelector;
     public int minPlayerNeeded = 3;
+	public int alreadySelectedPlayers = 0;
 
     public const string PlayerSeleted = "PlayerSelected";
 
@@ -19,6 +20,7 @@ public class PlayersSelectorManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		// Check sub-players controllers
 
         
 

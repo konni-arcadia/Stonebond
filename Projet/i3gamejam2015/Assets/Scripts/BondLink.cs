@@ -36,7 +36,7 @@ public class BondLink : MonoBehaviour {
 	}
 
 	public void OnBond() {
-		ParticleSystem particles
+//		ParticleSystem particles
 	}
 	
 	Vector3 castLine() {
@@ -67,7 +67,7 @@ public class BondLink : MonoBehaviour {
 		emitterAlinkMiddle.transform.rotation = Quaternion.AngleAxis (angle, Vector3.forward);
 
 
-		magicalParticlesA.transform.position = linkLineQuarterLengthPoint;
+		magicalParticlesAcontainer .transform.position = linkLineQuarterLengthPoint;
 
 //		emitterBlinkMiddle.transform.position = linkLineMiddlePoint;
 

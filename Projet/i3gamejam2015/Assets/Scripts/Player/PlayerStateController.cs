@@ -73,11 +73,13 @@ public class PlayerStateController : MonoBehaviour
 	public float attackCooldownTime = 4.0f;
 	public float attackVelocityUp = 1000.0f;
 	public float attackVelocityDown = 1000.0f;
-	public float attackVelocityForwardGround = 2000.0f;
-	public float attackVelocityForwardAir = 2000.0f;
+	public float attackVelocityForward = 2000.0f;
 	public float attackHorizGravity = 20.0f;
 	public AnimationCurve attackCurve;
-	private bool airDash = false;
+	public float attackUpHorizControl = 0.5f;
+	public float attackDownHorizControl = 0.5f;
+
+	//private bool airDash = false;
 
 	//
 	// KNOCKBACK
@@ -145,6 +147,7 @@ public class PlayerStateController : MonoBehaviour
 
 		// start in spawn state
 		movementController.setMovementEnabled (false);
+		movementController.setFrictionEnabled (true);
 		spawn ();
 
 		// FIXME move this somewhere else, doesn't belong to player logic...
@@ -275,6 +278,7 @@ public class PlayerStateController : MonoBehaviour
 				invisibleBlinkCounter = invinsibleBlinkInterval;
 				stateTime = invincibleAfterSpawnTime;
 				movementController.setMovementEnabled (true);
+				movementController.setFrictionEnabled (true);
 				//statusProvider.setInvincibleStatus(true);
 			}
 		}
@@ -291,6 +295,7 @@ public class PlayerStateController : MonoBehaviour
 	private void updateIdle ()
 	{
 		movementController.setMovementEnabled (true);
+		movementController.setFrictionEnabled (true);
 
         //Aim direction vector based:
         float x = inputManager.AxisValue(playerId, InputManager.Horizontal);
@@ -338,38 +343,28 @@ public class PlayerStateController : MonoBehaviour
 			return;
 		}
 
-		// dash
-
 		float attackPct = 1.0f - stateTime / attackTime;
-		float dashVelocityPct = attackCurve.Evaluate (attackPct);
+		float attackVelocityPct = attackCurve.Evaluate (attackPct);
 
 		switch (aimDirection) {
-		case AimDirection.UP:
-			movementController.setVelocity (new Vector2(0.0f, dashVelocityPct * Time.deltaTime * attackVelocityUp));
+		case AimDirection.UP: {
+			float vx = inputManager.AxisValue (playerId, InputManager.Horizontal) * attackUpHorizControl;
+			float vy = attackVelocityPct * Time.deltaTime * attackVelocityUp;
+			movementController.setVelocity (new Vector2(vx, vy));
 			break;
-		case AimDirection.DOWN:
-			movementController.setVelocity (new Vector2(0.0f, dashVelocityPct * Time.deltaTime * -attackVelocityDown));
+		}
+		case AimDirection.DOWN: {
+			float vx = inputManager.AxisValue (playerId, InputManager.Horizontal) * attackDownHorizControl;
+			float vy = attackVelocityPct * Time.deltaTime * -attackVelocityDown;
+			movementController.setVelocity (new Vector2(vx, vy));
 			break;
+		}
 		case AimDirection.FORWARD:
-			// TODO check if ground
-			float velocity;
-			if(airDash) {
-				velocity = attackVelocityForwardAir;
-				if(movementController.isGrounded ()) {
-					// cancel the air dash
-					attackCooldown = attackCooldownTime;
-					setIdleState ();
-					return;
-				}
-			}
-			else {
-				velocity = attackVelocityForwardGround;
-			}
-
+			float velocity = attackVelocityForward;
 			if(!movementController.isFacingRight()) {
 				velocity = -velocity;
 			}
-			movementController.setVelocity (new Vector2(dashVelocityPct * Time.deltaTime * velocity, -attackHorizGravity));
+			movementController.setVelocity (new Vector2(attackVelocityPct * Time.deltaTime * velocity, -attackHorizGravity));
 			break;
 		}
 	}
@@ -446,7 +441,8 @@ public class PlayerStateController : MonoBehaviour
 		state = State.ATTACK;
 		stateTime = attackTime;
 		
-		movementController.setMovementEnabled(false);
+		movementController.setMovementEnabled (false);
+		movementController.setFrictionEnabled (false);
 		movementController.resetForces ();
 
 		// notification
@@ -490,6 +486,7 @@ public class PlayerStateController : MonoBehaviour
 		this.knockbackDirection = knockbackDirection;
 
 		movementController.setMovementEnabled (false);
+		movementController.setFrictionEnabled (false);
 		movementController.resetForces ();
 
 		attackColliderUp.enabled = false;
@@ -517,6 +514,7 @@ public class PlayerStateController : MonoBehaviour
 		stateTime = crystaledTime;
 
 		movementController.setMovementEnabled (false);
+		movementController.setFrictionEnabled (true);
 		movementController.resetForces ();
 	
 		// notification
@@ -536,6 +534,7 @@ public class PlayerStateController : MonoBehaviour
 		// TODO statusProvider.setDie (transform.position, directionVector);
 
 		Flash.flash ();
+		MyLittlePoney.slowMotion ();
 	}
 
 	//

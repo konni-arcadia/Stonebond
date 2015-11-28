@@ -112,4 +112,11 @@ public class PlayerStatusProvider : MonoBehaviour {
     {
 		if (OnInvinsibleChangedAction != null) OnInvinsibleChangedAction();
     }
+
+	public delegate void BoundStateAction(bool isBounded);
+	public event BoundStateAction OnBoundChangedAction;
+	public void setBoundStatus(bool isBounded)
+	{
+		if (OnBoundChangedAction != null) OnBoundChangedAction(isBounded);
+	}
 }

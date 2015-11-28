@@ -58,13 +58,13 @@ public class GameState : Singleton<GameState> {
 	//
 	private List<PlayerInfo> players = new List<PlayerInfo>();
 	private readonly Color[] predefinedPlayerColors = {
-		// Shred
-		Color.red,
-		// Wise
-		Color.green,
-		// Buddy
-		Color.cyan,
-		// Dextrous
-		Color.yellow
+		// Shred (red) 0xB3123B
+		new Color(0.701f, 0.070f, 0.231f),
+		// Buddy (blue) 0x00ACB4
+		new Color(0, 0.67f, 0.71f),
+		// Wise (green) 0x0B9300
+		new Color(0.04f, 0.58f, 0f),
+		// Dextrous (yellow) 0xBBAD00
+		new Color(0.73f, 0.68f, 0f),
 	};
 }

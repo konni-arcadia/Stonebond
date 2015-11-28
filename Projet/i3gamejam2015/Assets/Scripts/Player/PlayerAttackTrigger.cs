@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class PlayerSlashTrigger : MonoBehaviour {
+public class PlayerAttackTrigger : MonoBehaviour {
 
 	private PlayerStateController playerState;
 	private Collider2D collider;

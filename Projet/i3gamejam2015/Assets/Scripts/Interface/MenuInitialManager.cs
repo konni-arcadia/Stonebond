@@ -12,6 +12,8 @@ public class MenuInitialManager : MonoBehaviour {
         }
         else
         {
+            if (GameState.Instance != null)
+                GameState.Instance.ClearScores();
             Application.LoadLevelAdditiveAsync("SelectOption");
         }
 

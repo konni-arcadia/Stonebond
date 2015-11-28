@@ -8,10 +8,10 @@ public class PlayersSelectorManager : MonoBehaviour {
 	public int alreadySelectedPlayers = 0;
 
     public const string PlayerSeleted = "PlayerSelected";
-
+	private InputManager inputManager;
 	// Use this for initialization
 	void Start () {
-
+		inputManager = GetComponent<InputManager> ();
         listPlayerSelector = GetComponentsInChildren<PlayerSelectorManager>();
 
         InitializePlayerSelection();
@@ -64,7 +64,7 @@ public class PlayersSelectorManager : MonoBehaviour {
 
     void CheckControlerStartMenu(int noControler)
     {
-        if (Input.GetButtonDown(InputManager.B + " P" + noControler))
+		if (inputManager.WasPressedCtrl(noControler, InputManager.B))
         {
             Application.LoadLevelAdditiveAsync("SelectOption");
             SoundManager.Instance.Cancel_Play();

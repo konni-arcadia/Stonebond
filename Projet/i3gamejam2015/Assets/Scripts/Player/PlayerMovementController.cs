@@ -169,6 +169,10 @@ public class PlayerMovementController : MonoBehaviour
 	public void setFrictionEnabled(bool enabled)
 	{
 		isFrictionEnabled = enabled;
+		if (body != null) {
+			// WARNING cryptic value inside!
+			body.gravityScale = enabled ? 2.0f : 0.0f;
+		}
 	}
 
     public void applyForce(Vector2 force)

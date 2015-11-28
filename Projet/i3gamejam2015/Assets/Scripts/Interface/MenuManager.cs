@@ -36,7 +36,7 @@ public class MenuManager : MonoBehaviour {
     void CheckControlerStartMenu(int noControler)
     {
 
-        if (Input.GetButtonDown(InputManager.A + " P" + noControler))
+        if (Input.GetButtonDown(InputManager.A + " P" + noControler) || Input.GetButtonDown(InputManager.START + " P" + noControler))
         {
             switch (menuSelectedItem){
             

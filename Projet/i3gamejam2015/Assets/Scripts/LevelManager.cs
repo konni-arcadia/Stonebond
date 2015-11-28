@@ -52,6 +52,8 @@ public class LevelManager : MonoBehaviour {
 				var distance = Vector3.Distance(bondLink.playerA.transform.position, bondLink.playerB.transform.position);
 				bondLinkGauge += distance * gaugeDecreaseFactor;
 
+				bondLink.completion = bondLinkGauge;
+
 				// A winner is designated
 				if (bondLinkGauge > 1) {
 					bondLinkGauge = 1;

@@ -3,6 +3,10 @@ using System.Collections;
 
 public class BondLink : MonoBehaviour {
 
+	public float completion; // should be between 0.0f and 1.0f
+
+	public GameObject middleAnimation;
+
 	public GameObject playerA;
 	public GameObject playerB;
 
@@ -146,6 +150,14 @@ public class BondLink : MonoBehaviour {
 		// Met à jour les particules
 		// --------------------------
 
+
+		//
+		// middle animation (energy sphere)
+
+		middleAnimation.transform.position = linkLineMiddlePoint;
+
+
+
 		//
 		// forward particles
 
@@ -174,7 +186,7 @@ public class BondLink : MonoBehaviour {
 		//    pour dire que le lien est à 100%, mettre la local position Y du backwardCollider à 0
 		//    pour dire que le lien est à 0%, mettre la local position Y du backwardCollider à <LONGUEUR DU DEMI-LIEN>
 		//    formule = position locale du backwardCollider . Y = ( 1 - <PERCENT_COMPLETE (0.00-1.00)> ) * <LONGUEUR DU DEMI-LIEN>
-		float fuckingY = (1 - 0.75f) * linkLine.x * 0.5f;
+		float fuckingY = (1 - 0.25f) * Mathf.Abs(linkLine.x) * 0.5f;
 		Vector3 fuckingLocalPos = new Vector3(0, fuckingY, 0);
 
 		// -- A

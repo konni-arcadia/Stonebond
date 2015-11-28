@@ -766,7 +766,7 @@ Transform:
   - {fileID: 446516}
   - {fileID: 457682}
   m_Father: {fileID: 489292}
-  m_RootOrder: 0
+  m_RootOrder: 1
 --- !u!4 &438214
 Transform:
   m_ObjectHideFlags: 1
@@ -906,7 +906,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 489292}
-  m_RootOrder: 1
+  m_RootOrder: 0
 --- !u!4 &464680
 Transform:
   m_ObjectHideFlags: 1
@@ -1013,8 +1013,8 @@ Transform:
   m_LocalPosition: {x: -4.50000095, y: -2.56000137, z: 2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 435052}
   - {fileID: 463794}
+  - {fileID: 435052}
   - {fileID: 423810}
   m_Father: {fileID: 492484}
   m_RootOrder: 0
@@ -1146,6 +1146,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02eedf4ba68e35c40900accfb2ac2335, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  completion: 0
+  middleAnimation: {fileID: 125126}
   playerA: {fileID: 0}
   playerB: {fileID: 0}
   playerAStateController: {fileID: 0}

@@ -122,9 +122,12 @@ public class PlayerMovementController : MonoBehaviour
         // If the player should jump...
         if (wantJump || wantWallJump)
         {
-            //			AudioSource.PlayClipAtPoint(jumpClip, body.position);
-            //SoundManager.Instance.GAMEPLAY_Jump();
-			// TODO mystatusProvider
+			if(wantWallJump) {
+				myStatusProvider.setWallJump();
+			}
+			else {
+				myStatusProvider.setJump ();
+			}
 
             // Ensure that the current vy doesn't take in account
             Vector2 vel = body.velocity;
@@ -149,7 +152,6 @@ public class PlayerMovementController : MonoBehaviour
         else if (wantJumpExtension)
         {
             body.AddForce(new Vector2(0, extensionJumpForce * Time.fixedDeltaTime));
-            // TODO event SoundManager.Instance.GAMEPLAY_Walljump();
         }
 
         //Update Y velocity in player status component

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;
 
 public class WinScreenManager : MonoBehaviour {
@@ -9,7 +10,7 @@ public class WinScreenManager : MonoBehaviour {
     private string dpadVertical = "Vertical";
     private Color32 highlithed = new Color32(107, 107, 107, 255);
     private Color32 normal = new Color32(0, 0, 0, 255);
-    
+
     public GameObject StartButtonArea;
     private Outline[] buttonList;
 
@@ -25,18 +26,30 @@ public class WinScreenManager : MonoBehaviour {
 
 	private InputManager inputManager ;
 
+    public Image Winner1;
+    public Image Winner2;
+    public Image Looser3;
+    public Image Looser4;
+
+    public List<Text> Scores;
+
 	// TEMP TODO refactor end of game jam alert
-	public static int IdOfWonP1 = 1, IdOfWonP2 = 2, IdOfLevelToRestartTo;
+	public int IdOfWonP1 = 1, IdOfWonP2 = 2, IdOfLevelToRestartTo;
 
 	// Use this for initialization
 	void Start () {
+
 		inputManager = GetComponent<InputManager> ();
 		// NOTE: instantiated at the very beginning of the game
+
         buttonList = StartButtonArea.GetComponentsInChildren<Outline>();
+
 		canvas.enabled = false;
         menu.SetActive(false);
+		//transform.Find("P1").GetComponent<Image>().sprite = playerTextSprites[IdOfWonP1 - 1];
+		//transform.Find("P2").GetComponent<Image>().sprite = playerTextSprites[IdOfWonP2 - 1];
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 		if (!isSceneDisplayed) return;
@@ -65,7 +78,7 @@ public class WinScreenManager : MonoBehaviour {
 					case StartMenuItem.Restart: Application.LoadLevel(IdOfLevelToRestartTo);
                                                 break;
 
-                    case StartMenuItem.LvlSelection: PlayerPrefs.SetInt("ComeFromLVL", 0); 
+                    case StartMenuItem.LvlSelection: PlayerPrefs.SetInt("ComeFromLVL", 0);
                                                 Application.LoadLevel("Menu");
                                                 break;
 
@@ -119,11 +132,24 @@ public class WinScreenManager : MonoBehaviour {
             pauseMenu.RemovePauseScreen();
         }
 
-		transform.Find("P1").GetComponent<Image>().sprite = playerTextSprites[IdOfWonP1 - 1];
-		transform.Find("P2").GetComponent<Image>().sprite = playerTextSprites[IdOfWonP2 - 1];
 		canvas.enabled = true;
 		timeSinceStart = 0;
 		isSceneDisplayed = true;
         Time.timeScale = 0.0f;
-	}
+
+        Winner1.sprite = playerTextSprites[IdOfWonP1 - 1];
+        Scores[0].text = GameState.Instance.Player(IdOfWonP1).TotalScore.ToString() ;
+        Winner2.sprite = playerTextSprites[IdOfWonP2 - 1];
+        Scores[1].text = GameState.Instance.Player(IdOfWonP2).TotalScore.ToString();
+
+        List<int> idList = new List<int>(new int[] { 1, 2, 3, 4 });
+
+        idList.Remove(IdOfWonP1);
+        idList.Remove(IdOfWonP2);
+
+        Looser3.sprite = playerTextSprites[idList[0] - 1];
+        Scores[2].text = GameState.Instance.Player(idList[0]).TotalScore.ToString();
+        Looser4.sprite = playerTextSprites[idList[1] - 1];
+        Scores[3].text = GameState.Instance.Player(idList[1]).TotalScore.ToString();
+    }
 }

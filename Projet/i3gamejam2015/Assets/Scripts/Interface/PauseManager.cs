@@ -51,7 +51,7 @@ public class PauseManager : MonoBehaviour {
                 {
 
                     case StartMenuItem.Quit: 
-						OnGameExitedAction();
+						if(OnGameExitedAction != null) OnGameExitedAction();
 						Application.Quit();
                         break;
 
@@ -61,7 +61,7 @@ public class PauseManager : MonoBehaviour {
                                                 break;
 
                     case StartMenuItem.LvlSelection: 
-						OnGameExitedAction();
+						if(OnGameExitedAction != null) OnGameExitedAction();
 						PlayerPrefs.SetInt("ComeFromLVL", 0); 
                                                 Application.LoadLevel("Menu");
 												if(InControlObject != null)
@@ -69,7 +69,7 @@ public class PauseManager : MonoBehaviour {
                                                 break;
 
                     case StartMenuItem.MenuSelection:
-						OnGameExitedAction();
+						if(OnGameExitedAction != null) OnGameExitedAction();
 						Application.LoadLevel("Menu");
 												if(InControlObject != null)
 													Destroy(InControlObject);

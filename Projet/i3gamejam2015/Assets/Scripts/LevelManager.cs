@@ -59,7 +59,7 @@ public class LevelManager : MonoBehaviour {
 				if (bondLinkGauge > 1) {
 					bondLinkGauge = 1;
 					if (!hasAlreadyShownWinScreen) {
-						OnGameFinishedAction();
+						if (OnGameFinishedAction != null) OnGameFinishedAction();
 
 						var p1 = bondLink.emitterA.GetComponent<PlayerStateController>();
 						var p2 = bondLink.emitterB.GetComponent<PlayerStateController>();

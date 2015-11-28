@@ -77,7 +77,7 @@ public class PlayerStatusProvider : MonoBehaviour {
     public event KnockBackAction OnKnockBackAction;
     public void setKnockBackUp()
     {
-        OnKnockBackAction();
+		if (OnKnockBackAction != null) OnKnockBackAction();
     }
 	public void setKnockBackDown()
 	{

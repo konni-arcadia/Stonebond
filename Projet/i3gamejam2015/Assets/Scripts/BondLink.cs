@@ -6,6 +6,12 @@ public class BondLink : MonoBehaviour {
 	public GameObject emitterA;
 	public GameObject emitterB;
 
+	public GameObject emitterAsource;
+	public GameObject emitterBsource;
+	
+	public GameObject emitterAnoReturnPoint;
+	public GameObject emitterBnoReturnPoint;
+	
 	protected GameObject linkMiddle;
 	protected Renderer rend;
 	protected float originalZ;

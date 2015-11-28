@@ -222,7 +222,8 @@ public class SoundManager : MonoBehaviour
     }
     public void GAMEPLAY_Land()
     {
-        audioSource.PlayOneShot(Land);
+		var source = GetAudioSource("SFXSound");
+		source.PlayOneShot(Land);
     }
     public void GAMEPLAY_Walljump()
     {

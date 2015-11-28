@@ -478,6 +478,7 @@ AudioSource:
   m_Pitch: 1
   Loop: 0
   Mute: 0
+  Spatialize: 0
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
@@ -682,11 +683,16 @@ MonoBehaviour:
   VerticalAimThresholdDegree: 100
   initialSpawnTime: 1.79999995
   respawnTime: 1.20000005
-  attackTime: .349999994
-  attackCooldownTime: .5
+  attackUpMinTime: .349999994
+  attackUpMaxTime: .349999994
+  attackDownMinTime: .349999994
+  attackDownMaxTime: .349999994
+  attackForwardMinTime: .100000001
+  attackForwardMaxTime: .5
+  attackCooldownTime: .300000012
   attackVelocityUp: 800
   attackVelocityDown: 1800
-  attackVelocityForward: 600
+  attackVelocityForward: 1000
   attackHorizGravity: 0
   attackCurve:
     serializedVersion: 2
@@ -705,6 +711,7 @@ MonoBehaviour:
     m_PostInfinity: 2
   attackUpHorizControl: 5
   attackDownHorizControl: 5
+  specialAttackVelocity: 2000
   knockbackTime: .5
   knockbackVelocityUp: 8000
   knockbackVelocityDown: 12000
@@ -745,7 +752,9 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_MinimumChartSize: 4
   m_AutoUVMaxDistance: .5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
@@ -771,7 +780,9 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_MinimumChartSize: 4
   m_AutoUVMaxDistance: .5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
@@ -888,7 +899,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: attackCooldownTime
-      value: .5
+      value: .300000012
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: attackVelocityUp
@@ -924,11 +935,35 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: attackVelocityForward
-      value: 600
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: knockbackVelocityForward
       value: 12000
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackForwardMaxTime
+      value: .5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackForwardMinTime
+      value: .100000001
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackUpMinTime
+      value: .349999994
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackUpMaxTime
+      value: .349999994
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackDownMinTime
+      value: .349999994
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackDownMaxTime
+      value: .349999994
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

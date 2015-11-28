@@ -467,13 +467,13 @@ public class PlayerStateController : MonoBehaviour
 		// notification
 		switch(aimDirection) {
 		case AimDirection.UP:
-			statusProvider.setDashUp ();
+			statusProvider.setAttackUp ();
 			break;
 		case AimDirection.DOWN:
-			statusProvider.setDashDown ();
+			statusProvider.setAttackDown ();
 			break;
 		case AimDirection.FORWARD:
-			statusProvider.setDashForward ();
+			statusProvider.setAttackForward ();
 			break;
 		}
 	}

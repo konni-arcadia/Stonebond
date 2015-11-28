@@ -595,7 +595,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 175f89bebba16fb45a68902b57c95793, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 10
+  maxSpeed: 9
   maxFallSpeed: 200
   breakForce: 100
   initialJumpForce: 1000
@@ -684,11 +684,10 @@ MonoBehaviour:
   respawnTime: 1.20000005
   attackTime: .349999994
   attackCooldownTime: .5
-  attackVelocityUp: 1200
-  attackVelocityDown: 2000
-  attackVelocityForwardGround: 3000
-  attackVelocityForwardAir: 4000
-  attackHorizGravity: 20
+  attackVelocityUp: 800
+  attackVelocityDown: 1400
+  attackVelocityForward: 600
+  attackHorizGravity: 0
   attackCurve:
     serializedVersion: 2
     m_Curve:
@@ -704,6 +703,8 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+  attackUpHorizControl: 5
+  attackDownHorizControl: 5
   knockbackTime: .5
   knockbackVelocityUp: 10000
   knockbackVelocityDown: 16000
@@ -791,7 +792,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: maxSpeed
-      value: 10
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Offset.x
@@ -891,24 +892,40 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: attackVelocityUp
-      value: 1200
+      value: 800
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: attackVelocityDown
-      value: 2000
+      value: 1400
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: attackVelocityForwardGround
-      value: 3000
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: attackVelocityForwardAir
-      value: 4000
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: statusProvider
       value: 
       objectReference: {fileID: 11421360}
+    - target: {fileID: 0}
+      propertyPath: attackUpHorizControl
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackDownHorizControl
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackHorizGravity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackVelocityForward
+      value: 600
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 170380}

@@ -317,5 +317,24 @@ public class SoundManager : MonoBehaviour
         return source;
     }
 
+    #region Triggers
+    //TODO
+    //Là c'est un peu deg... > faut changer ces trigger en events
+    public void TriggerMenuBack()
+    {
 
+    }
+    public void TriggerPause()
+    {
+
+    }
+    public void TriggerResume()
+    {
+
+    }
+    public void TriggerGameFinished()
+    {
+
+    } 
+    #endregion
 }

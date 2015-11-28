@@ -73,7 +73,7 @@ public class LevelSelectionManager : MonoBehaviour {
             Destroy(gameObject);
         }
 
-		if (!wasPressed[noControler - 1] && inputManager.AxisValueCtrl(noControler, InputManager.Vertical) < InputManager.AxisDeadZone)
+		if (!wasPressed[noControler - 1] && inputManager.AxisValueCtrl(noControler, InputManager.Vertical) < -InputManager.AxisDeadZone)
         {
             if (menuSelectedItem != (LvlSelectionItem)0)
             {

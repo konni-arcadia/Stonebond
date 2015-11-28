@@ -149,30 +149,8 @@ public class PlayerStateController : MonoBehaviour
 
 		// FIXME move this somewhere else, doesn't belong to player logic...
 		SpriteRenderer bodyRenderer = transform.Find ("CharacterSprites").Find ("Body").GetComponent<SpriteRenderer> ();
-
-		switch (playerId) {
-		case 1:
-			// Shred
-			bodyRenderer.material.SetColor("_ChromaTexColor", Color.red);
-			bodyRenderer.material.SetColor("_Color", Color.Lerp(Color.white, Color.red, 0.3f));
-			break;
-		case 2:
-			// Wise
-			bodyRenderer.material.SetColor("_ChromaTexColor", Color.green);
-			bodyRenderer.material.SetColor("_Color", Color.Lerp(Color.white, Color.green, 0.3f));
-			break;
-		case 3:
-			// Buddy
-			bodyRenderer.material.SetColor("_ChromaTexColor", Color.cyan);
-			bodyRenderer.material.SetColor("_Color", Color.Lerp(Color.white, Color.cyan, 0.3f));
-			break;
-		case 4:
-			// Dextrous
-			bodyRenderer.material.SetColor("_ChromaTexColor", Color.yellow);
-			bodyRenderer.material.SetColor("_Color", Color.Lerp(Color.white, Color.yellow, 0.3f));
-			break;
-		}
-		
+		bodyRenderer.material.SetColor("_ChromaTexColor", PlayerInfo.Color);
+		bodyRenderer.material.SetColor("_Color", Color.Lerp(Color.white, PlayerInfo.Color, 0.3f));
 	}
 
 	//
@@ -567,6 +545,10 @@ public class PlayerStateController : MonoBehaviour
 	public int GetPlayerId ()
 	{
 		return playerId;
+	}
+
+	private GameState.PlayerInfo PlayerInfo {
+		get { return GameState.Instance.Player(playerId); }
 	}
 
 	//

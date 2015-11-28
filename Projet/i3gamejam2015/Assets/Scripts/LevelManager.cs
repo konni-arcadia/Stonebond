@@ -67,6 +67,7 @@ public class LevelManager : MonoBehaviour {
 						WinScreenManager.IdOfWonP1 = p1.GetPlayerId();
 						WinScreenManager.IdOfWonP2 = p2.GetPlayerId();
 						WinScreenManager.IdOfLevelToRestartTo = Application.loadedLevel;
+						GameState.Instance.NotifyWinners(p1.GetPlayerId(), p2.GetPlayerId());
 						WinScreenManager.showScreen();
 						hasAlreadyShownWinScreen = true;
 					}

@@ -128,7 +128,13 @@ public class BondLink : MonoBehaviour {
 
 		// backward particles
 //backwardParticlesAcontainer.transform.localPosition = Vector3.zero;
-		backwardParticlesAcollider.transform.localPosition = Vector3.zero;
+
+		// pour dire que le lien est à 100%, mettre la local position Y du backwardCollider à 0
+		// pour dire que le lien est à 0%, mettre la local position Y du backwardCollider à <LONGUEUR DU DEMI-LIEN>
+		// formule = position locale du backwardCollider . Y = ( 1 - <PERCENT_COMPLETE (0.00-1.00)> ) * <LONGUEUR DU DEMI-LIEN>
+		float fuckingY = (1 - 0.75f) * linkLine.x * 0.5f;
+		Vector3 fuckingLocalPos = new Vector3(0, fuckingY, 0);
+		backwardParticlesAcollider.transform.localPosition = fuckingLocalPos;
 
 
 

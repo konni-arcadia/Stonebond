@@ -43,7 +43,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 492484}
   - 114: {fileID: 11430984}
-  - 114: {fileID: 11483254}
   m_Layer: 13
   m_Name: BondLink
   m_TagString: Untagged
@@ -158,7 +157,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 412976}
   m_Layer: 0
-  m_Name: Collider
+  m_Name: ForwardLineCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -221,6 +220,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 438214}
+  - 114: {fileID: 11464910}
   m_Layer: 0
   m_Name: EmitterASource
   m_TagString: Untagged
@@ -350,7 +350,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 195614}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.94386268, y: -1.18591881, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 426020}
@@ -416,7 +416,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 123408}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.94386244, y: -1.18591821, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 422032}
@@ -444,7 +444,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 117872}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.94386268, y: -1.18591881, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 426020}
@@ -471,7 +471,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 143622}
   m_LocalRotation: {x: 0, y: 0, z: 1, w: -1.49011626e-07}
-  m_LocalPosition: {x: -0, y: -.0900006294, z: 0}
+  m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 423810}
@@ -496,7 +496,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 154992}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.94386244, y: -1.18591821, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 422032}
@@ -544,7 +544,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 174806}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.94386268, y: -1.18591881, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 426020}
@@ -556,7 +556,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 102546}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.94386268, y: -1.18591881, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 426020}
@@ -568,7 +568,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 137356}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.94386244, y: -1.18591821, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 422032}
@@ -580,7 +580,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 185072}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.94386244, y: -1.18591821, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 422032}
@@ -660,20 +660,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02eedf4ba68e35c40900accfb2ac2335, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  emitterA: {fileID: 0}
-  emitterB: {fileID: 0}
+  playerA: {fileID: 0}
+  playerB: {fileID: 0}
+  playerAStateController: {fileID: 0}
+  playerBStateController: {fileID: 0}
   emitterAsource: {fileID: 172092}
   emitterBsource: {fileID: 0}
   emitterAlinkMiddle: {fileID: 143378}
   emitterBlinkMiddle: {fileID: 0}
-  magicalParticlesAcontainer: {fileID: 192868}
-  magicalParticlesBcontainer: {fileID: 0}
---- !u!114 &11483254
+  forwardLineColliderA: {fileID: 142378}
+  forwardLineColliderB: {fileID: 0}
+  backwardParticlesAcollider: {fileID: 141000}
+  backwardParticlesBcollider: {fileID: 0}
+--- !u!114 &11464910
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 120606}
+  m_GameObject: {fileID: 172092}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 76bfd9e735646441b9ad75452cfbf889, type: 3}
@@ -3781,7 +3785,7 @@ ParticleSystem:
   InitialModule:
     enabled: 1
     startLifetime:
-      scalar: 2
+      scalar: 10
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -4742,7 +4746,7 @@ ParticleSystem:
   CollisionModule:
     enabled: 1
     type: 0
-    plane0: {fileID: 0}
+    plane0: {fileID: 412976}
     plane1: {fileID: 0}
     plane2: {fileID: 0}
     plane3: {fileID: 0}
@@ -5802,7 +5806,7 @@ ParticleSystem:
   InitialModule:
     enabled: 1
     startLifetime:
-      scalar: 2
+      scalar: 10
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -6763,7 +6767,7 @@ ParticleSystem:
   CollisionModule:
     enabled: 1
     type: 0
-    plane0: {fileID: 0}
+    plane0: {fileID: 412976}
     plane1: {fileID: 0}
     plane2: {fileID: 0}
     plane3: {fileID: 0}
@@ -6805,7 +6809,7 @@ ParticleSystem:
   InitialModule:
     enabled: 1
     startLifetime:
-      scalar: 2
+      scalar: 10
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -7766,7 +7770,7 @@ ParticleSystem:
   CollisionModule:
     enabled: 1
     type: 0
-    plane0: {fileID: 0}
+    plane0: {fileID: 412976}
     plane1: {fileID: 0}
     plane2: {fileID: 0}
     plane3: {fileID: 0}
@@ -9879,7 +9883,7 @@ ParticleSystem:
   InitialModule:
     enabled: 1
     startLifetime:
-      scalar: 2
+      scalar: 10
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -10840,7 +10844,7 @@ ParticleSystem:
   CollisionModule:
     enabled: 1
     type: 0
-    plane0: {fileID: 0}
+    plane0: {fileID: 412976}
     plane1: {fileID: 0}
     plane2: {fileID: 0}
     plane3: {fileID: 0}

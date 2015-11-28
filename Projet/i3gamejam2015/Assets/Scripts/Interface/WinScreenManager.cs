@@ -61,28 +61,39 @@ public class WinScreenManager : MonoBehaviour {
 	void CheckControlerStartMenu(int noControler) {
 		if (!isMenuDisplayed) {
 			// First time: display the overlay
-			if (inputManager.WasPressedCtrl(noControler, InputManager.START) /*&& timeSinceStart >= 1*/) {
+			if (inputManager.WasPressedCtrl(noControler, InputManager.A) ||inputManager.WasPressedCtrl(noControler, InputManager.START) /*&& timeSinceStart >= 1*/) {
 				isMenuDisplayed = true;
 				menu.SetActive(true);
 				return;
 			}
 		}
         else {
-            if (inputManager.WasPressedCtrl(noControler, InputManager.A)) {
+			if (inputManager.WasPressedCtrl(noControler, InputManager.A) ||inputManager.WasPressedCtrl(noControler, InputManager.START)) {
+				GameObject InControlObject = GameObject.Find("InControl");
+
                 switch (menuSelectedItem)
                 {
 
                     case StartMenuItem.Quit: Application.Quit();
                         break;
 
-					case StartMenuItem.Restart: Application.LoadLevel(IdOfLevelToRestartTo);
-                                                break;
+				case StartMenuItem.Restart: if(InControlObject != null)
+												Destroy(InControlObject);
+											Application.LoadLevel(IdOfLevelToRestartTo);
+												
+                                               break;
 
                     case StartMenuItem.LvlSelection: PlayerPrefs.SetInt("ComeFromLVL", 0);
+												if(InControlObject != null)
+													Destroy(InControlObject);
                                                 Application.LoadLevel("Menu");
+
                                                 break;
 
-                    case StartMenuItem.MenuSelection: Application.LoadLevel("Menu");
+				case StartMenuItem.MenuSelection: if(InControlObject != null)
+													Destroy(InControlObject);
+												Application.LoadLevel("Menu");
+																				
                                                 break;
                 }
                 Time.timeScale = 1.0f;
@@ -91,7 +102,7 @@ public class WinScreenManager : MonoBehaviour {
 
             }
 
-			if (!wasPressed[noControler - 1] && inputManager.AxisValueCtrl(noControler, InputManager.Vertical) < 0)
+			if (!wasPressed[noControler - 1] && inputManager.AxisValueCtrl(noControler, InputManager.Vertical) < -InputManager.AxisDeadZone)
             {
                 if (menuSelectedItem != (StartMenuItem)0)
                 {
@@ -103,7 +114,7 @@ public class WinScreenManager : MonoBehaviour {
                 }
 
             }
-			else if (!wasPressed[noControler - 1] && inputManager.AxisValueCtrl(noControler, InputManager.Vertical) > 0)
+			else if (!wasPressed[noControler - 1] && inputManager.AxisValueCtrl(noControler, InputManager.Vertical) > InputManager.AxisDeadZone)
             {
                 if (menuSelectedItem != StartMenuItem.Quit)
                 {

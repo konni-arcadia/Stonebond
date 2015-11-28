@@ -24,6 +24,7 @@ public class PlayerStateController : MonoBehaviour
 		SPAWN,
 		IDLE,
 		ATTACK,
+		SPECIAL_ATTACK,
 		KNOCKBACK,
 		CRYSTALED,
 		INVINCIBLE
@@ -69,7 +70,13 @@ public class PlayerStateController : MonoBehaviour
 	// ATTACK
 	// 
 
-	public float attackTime = 1.0f;
+	public float attackUpMinTime = 0.35f;
+	public float attackUpMaxTime = 0.35f;
+	public float attackDownMinTime = 0.35f;
+	public float attackDownMaxTime = 0.35f;
+	public float attackForwardMinTime = 0.35f;
+	public float attackForwardMaxTime = 0.35f;
+
 	public float attackCooldownTime = 4.0f;
 	public float attackVelocityUp = 1000.0f;
 	public float attackVelocityDown = 1000.0f;
@@ -79,7 +86,11 @@ public class PlayerStateController : MonoBehaviour
 	public float attackUpHorizControl = 0.5f;
 	public float attackDownHorizControl = 0.5f;
 
-	//private bool airDash = false;
+	//
+	// SPECIAL ATTACK
+	// 
+
+	public float specialAttackVelocity = 2000.0f;
 
 	//
 	// KNOCKBACK
@@ -166,6 +177,7 @@ public class PlayerStateController : MonoBehaviour
 
 	public void setBondLink(BondLink bondLink) {
 		isBond = bondLink != null;
+		statusProvider.setBoundStatus (bondLink != null);
 	}
 
 	public void onCollide(Collider2D source, Collider2D other) {
@@ -246,6 +258,10 @@ public class PlayerStateController : MonoBehaviour
 		case State.ATTACK:
 			setVisible (true); // dirty make sure sprite is visible if went out of invinsible
 			updateAttack ();
+			break;
+		case State.SPECIAL_ATTACK:
+			setVisible (true); // dirty make sure sprite is visible if went out of invinsible
+			updateSpecialAttack ();
 			break;
 		case State.KNOCKBACK:
 			setVisible (true); // dirty make sure sprite is visible if went out of invinsible
@@ -336,14 +352,39 @@ public class PlayerStateController : MonoBehaviour
 	
 	private void updateAttack ()
 	{
-		stateTime -= Time.deltaTime;
-		if (stateTime <= 0.0f) {
+		float attackMinTime = 0.0f;
+		float attackMaxTime = 0.0f;
+
+		switch (aimDirection) {
+		case AimDirection.UP:
+			attackMinTime = attackUpMinTime;
+			attackMaxTime = attackUpMaxTime;
+			break;
+		case AimDirection.DOWN:
+			attackMinTime = attackDownMinTime;
+			attackMaxTime = attackDownMaxTime;
+			break;
+		case AimDirection.FORWARD:
+			attackMinTime = attackForwardMinTime;
+			attackMaxTime = attackForwardMaxTime;
+			break;
+		}
+
+		stateTime += Time.deltaTime;
+
+		if (stateTime > attackMaxTime) {
 			attackCooldown = attackCooldownTime;
 			setIdleState ();
 			return;
 		}
 
-		float attackPct = 1.0f - stateTime / attackTime;
+		if(stateTime > attackMinTime && !inputManager.IsHeld(playerId, InputManager.BUTTON_ATTACK)) {
+			attackCooldown = attackCooldownTime;
+			setIdleState ();
+			return;
+		}
+
+		float attackPct = stateTime / attackMaxTime;
 		float attackVelocityPct = attackCurve.Evaluate (attackPct);
 
 		switch (aimDirection) {
@@ -367,6 +408,14 @@ public class PlayerStateController : MonoBehaviour
 			movementController.setVelocity (new Vector2(attackVelocityPct * Time.deltaTime * velocity, -attackHorizGravity));
 			break;
 		}
+	}
+
+	private void updateSpecialAttack () {
+		float velocity = specialAttackVelocity;
+		if(!movementController.isFacingRight()) {
+			velocity = -velocity;
+		}
+		movementController.setVelocity (new Vector2(Time.deltaTime * velocity, 0.0f));
 	}
 	
 	private void updateKnockback ()
@@ -439,13 +488,12 @@ public class PlayerStateController : MonoBehaviour
 	{
 		print ("p" + playerId + ": enter ATTACK state");
 		state = State.ATTACK;
-		stateTime = attackTime;
+		stateTime = 0.0f;
 		
 		movementController.setMovementEnabled (false);
 		movementController.setFrictionEnabled (false);
 		movementController.resetForces ();
-
-		// notification
+		
 		switch(aimDirection) {
 		case AimDirection.UP:
 			attackColliderUp.enabled = true;
@@ -476,6 +524,14 @@ public class PlayerStateController : MonoBehaviour
 			statusProvider.setAttackForward ();
 			break;
 		}
+	}
+
+	private void specialAttack()
+	{
+		print ("p" + playerId + ": enter SPECIAL_ATTACK state");
+		state = State.SPECIAL_ATTACK;
+
+		// NOT IMPLEMENTED
 	}
 	
 	private void knockback (AimDirection knockbackDirection)

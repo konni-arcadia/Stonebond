@@ -14,10 +14,11 @@ public class PlayerSelectorManager : MonoBehaviour {
     public bool HasChoosen = false;
     public bool HasPressedStart = false;
 
+	InputManager inputManager;
 	// Use this for initialization
 	void Start () {
         
-	
+		inputManager = GetComponent<InputManager> ();
 	}
 	
 	// Update is called once per frame
@@ -30,11 +31,11 @@ public class PlayerSelectorManager : MonoBehaviour {
         if (!HasChoosen)
         {
 			// Allow action button too for testing
-            if (!HasPressedStart && (Input.GetButtonDown(InputManager.START + " P" + PlayerNumber) || Input.GetButtonDown(InputManager.A + " P" + PlayerNumber)))
+			if (!HasPressedStart && (inputManager.WasPressed(PlayerNumber, InputManager.START) || inputManager.WasPressed(PlayerNumber, InputManager.A)))
             {
                 SetChoosenState();
             }
-            else if (HasPressedStart && Input.GetButtonDown(InputManager.A + " P" + PlayerNumber))
+			else if (HasPressedStart && inputManager.WasPressed(PlayerNumber, InputManager.A))
             {
                 HasChoosen = true;
                 Ready.enabled = true;

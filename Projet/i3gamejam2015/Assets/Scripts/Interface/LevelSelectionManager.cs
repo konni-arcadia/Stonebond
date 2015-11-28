@@ -3,10 +3,9 @@ using System.Collections;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-public class LevelSelectionManager : MonoBehaviour
-{
+public class LevelSelectionManager : MonoBehaviour {
 
-    enum LvlSelectionItem { Spire, Pipes, Cathedrale, Forest };
+    enum LvlSelectionItem { Spire, Pipes, Cathedrale, Forest};
 
     private string dpadHorizontal = "Horizontal";
     private string dpadVertical = "Vertical";
@@ -19,14 +18,14 @@ public class LevelSelectionManager : MonoBehaviour
     private LvlSelectionItem menuSelectedItem = LvlSelectionItem.Spire;
 
     private bool[] wasPressed = new bool[4];
-    private InputManager inputManager;
+	private InputManager inputManager;
 
     // Use this for initialization
     void Start()
     {
-        inputManager = GetComponent<InputManager>();
+		inputManager = GetComponent<InputManager> ();
         //SoundManager.Instance.StageSelect_Play();
-        SoundManager.Instance.StageSelect_Play();
+
     }
 
     // Update is called once per frame
@@ -39,38 +38,34 @@ public class LevelSelectionManager : MonoBehaviour
     void CheckControlerStartMenu(int noControler)
     {
 
-        if (inputManager.WasPressedCtrl(noControler, InputManager.A))
+		if (inputManager.WasPressedCtrl(noControler, InputManager.A))
         {
-            GameObject InControlObject = GameObject.Find("InControl");
-            if (InControlObject != null)
-                Destroy(InControlObject);
+			GameObject InControlObject = GameObject.Find("InControl");
+			if(InControlObject != null)
+				Destroy(InControlObject);
 
             SoundManager.Instance.StageSelect_Stop();
             switch (menuSelectedItem)
             {
 
-                case LvlSelectionItem.Cathedrale:
-                    Application.LoadLevel("LevelCathedrale");
+                case LvlSelectionItem.Cathedrale: Application.LoadLevel("LevelCathedrale");
                     SoundManager.Instance.Stage_Play(SoundManager.StageEnum.RosetteOfTheWingedOnes);
                     break;
 
-                case LvlSelectionItem.Forest:
-                    Application.LoadLevel("LevelForest"); ;
+                case LvlSelectionItem.Forest: Application.LoadLevel("LevelForest"); ;
                     SoundManager.Instance.Stage_Play(SoundManager.StageEnum.CloisterOfTheSilence);
                     break;
 
-                case LvlSelectionItem.Pipes:
-                    Application.LoadLevel("LevelOrgan"); ;
+                case LvlSelectionItem.Pipes: Application.LoadLevel("LevelOrgan"); ;
                     SoundManager.Instance.Stage_Play(SoundManager.StageEnum.PipesOfAwakening);
                     break;
 
-                case LvlSelectionItem.Spire:
-                    Application.LoadLevel("LevelRoof"); ;
+                case LvlSelectionItem.Spire: Application.LoadLevel("LevelRoof"); ;
                     SoundManager.Instance.Stage_Play(SoundManager.StageEnum.SpireHigh);
                     break;
             }
         }
-        else if (inputManager.WasPressedCtrl(noControler, InputManager.B))
+		else if (inputManager.WasPressedCtrl(noControler, InputManager.B ))
         {
             Application.LoadLevelAdditiveAsync("SelectPlayers");
             SoundManager.Instance.StageSelect_Stop();
@@ -78,7 +73,7 @@ public class LevelSelectionManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        if (!wasPressed[noControler - 1] && inputManager.AxisValueCtrl(noControler, InputManager.Vertical) < 0)
+		if (!wasPressed[noControler - 1] && inputManager.AxisValueCtrl(noControler, InputManager.Vertical) < -InputManager.AxisDeadZone)
         {
             if (menuSelectedItem != (LvlSelectionItem)0)
             {
@@ -89,7 +84,7 @@ public class LevelSelectionManager : MonoBehaviour
             }
 
         }
-        else if (!wasPressed[noControler - 1] && inputManager.AxisValueCtrl(noControler, InputManager.Vertical) > 0)
+		else if (!wasPressed[noControler - 1] && inputManager.AxisValueCtrl(noControler, InputManager.Vertical) > InputManager.AxisDeadZone)
         {
             if (menuSelectedItem != LvlSelectionItem.Forest)
             {
@@ -100,9 +95,9 @@ public class LevelSelectionManager : MonoBehaviour
             }
 
         }
-        else if (inputManager.AxisValueCtrl(noControler, InputManager.Vertical) < InputManager.AxisDeadZone &&
-                 inputManager.AxisValueCtrl(noControler, InputManager.Vertical) > -InputManager.AxisDeadZone
-                 && wasPressed[noControler - 1])
+		else if (inputManager.AxisValueCtrl(noControler, InputManager.Vertical) < InputManager.AxisDeadZone &&
+		         inputManager.AxisValueCtrl(noControler, InputManager.Vertical) > -InputManager.AxisDeadZone
+		         && wasPressed[noControler - 1])
         {
             wasPressed[noControler - 1] = false;
         }

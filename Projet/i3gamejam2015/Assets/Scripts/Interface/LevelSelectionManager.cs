@@ -18,11 +18,12 @@ public class LevelSelectionManager : MonoBehaviour {
     private LvlSelectionItem menuSelectedItem = LvlSelectionItem.Spire;
 
     private bool[] wasPressed = new bool[4];
-
+	private InputManager inputManager;
 
     // Use this for initialization
     void Start()
     {
+		inputManager = GetComponent<InputManager> ();
         //SoundManager.Instance.StageSelect_Play();
 
     }
@@ -37,7 +38,7 @@ public class LevelSelectionManager : MonoBehaviour {
     void CheckControlerStartMenu(int noControler)
     {
 
-        if (Input.GetButtonDown(InputManager.A + " P" + noControler))
+		if (inputManager.WasPressedCtrl(noControler, InputManager.A))
         {
 			GameObject InControlObject = GameObject.Find("InControl");
 			if(InControlObject != null)
@@ -64,7 +65,7 @@ public class LevelSelectionManager : MonoBehaviour {
                     break;
             }
         }
-        else if (Input.GetButtonDown(InputManager.B + " P" + noControler))
+		else if (inputManager.WasPressedCtrl(noControler, InputManager.B ))
         {
             Application.LoadLevelAdditiveAsync("SelectPlayers");
             SoundManager.Instance.StageSelect_Stop();
@@ -72,7 +73,7 @@ public class LevelSelectionManager : MonoBehaviour {
             Destroy(gameObject);
         }
 
-        if (!wasPressed[noControler - 1] && Input.GetAxis(dpadVertical + noControler) < 0)
+		if (!wasPressed[noControler - 1] && inputManager.AxisValueCtrl(noControler, InputManager.Vertical) < 0)
         {
             if (menuSelectedItem != (LvlSelectionItem)0)
             {
@@ -83,7 +84,7 @@ public class LevelSelectionManager : MonoBehaviour {
             }
 
         }
-        else if (!wasPressed[noControler - 1] && Input.GetAxis(dpadVertical + noControler) > 0)
+		else if (!wasPressed[noControler - 1] && inputManager.AxisValueCtrl(noControler, InputManager.Vertical) > 0)
         {
             if (menuSelectedItem != LvlSelectionItem.Forest)
             {
@@ -94,7 +95,9 @@ public class LevelSelectionManager : MonoBehaviour {
             }
 
         }
-        else if (Input.GetAxis(dpadVertical + noControler) == 0 && wasPressed[noControler - 1])
+		else if (inputManager.AxisValueCtrl(noControler, InputManager.Vertical) < 0.1f &&
+		         inputManager.AxisValueCtrl(noControler, InputManager.Vertical) > -0.1f 
+		         && wasPressed[noControler - 1])
         {
             wasPressed[noControler - 1] = false;
         }

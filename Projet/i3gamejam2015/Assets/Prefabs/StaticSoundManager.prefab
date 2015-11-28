@@ -10,7 +10,7 @@ GameObject:
   - 4: {fileID: 453824}
   - 82: {fileID: 8214314}
   m_Layer: 0
-  m_Name: Jump
+  m_Name: JumpSound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43,7 +43,7 @@ GameObject:
   - 4: {fileID: 400956}
   - 82: {fileID: 8204998}
   m_Layer: 0
-  m_Name: StageSelect
+  m_Name: StageSelectSound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -59,7 +59,7 @@ GameObject:
   - 4: {fileID: 439514}
   - 82: {fileID: 8261612}
   m_Layer: 0
-  m_Name: Voice
+  m_Name: VoiceSound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -75,7 +75,7 @@ GameObject:
   - 4: {fileID: 456986}
   - 82: {fileID: 8260262}
   m_Layer: 0
-  m_Name: Bond
+  m_Name: BondSound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -91,7 +91,7 @@ GameObject:
   - 4: {fileID: 493150}
   - 82: {fileID: 8217790}
   m_Layer: 0
-  m_Name: Attack
+  m_Name: AttackSound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -107,7 +107,7 @@ GameObject:
   - 4: {fileID: 419810}
   - 82: {fileID: 8295062}
   m_Layer: 0
-  m_Name: Background
+  m_Name: BackgroundSound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -123,7 +123,7 @@ GameObject:
   - 4: {fileID: 486756}
   - 82: {fileID: 8257754}
   m_Layer: 0
-  m_Name: MainMenu
+  m_Name: MainMenuSound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -139,7 +139,7 @@ GameObject:
   - 4: {fileID: 473604}
   - 82: {fileID: 8278422}
   m_Layer: 0
-  m_Name: SFX
+  m_Name: SFXSound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -910,6 +910,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8ea1d4a3128e3f46a67babbcd7e6e38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BPM: 110
   PressStartScreen: {fileID: 8300000, guid: 5805c61015ad33d4db8afa585a7fbf31, type: 3}
   CharacterSelect: {fileID: 8300000, guid: cefc718ddbf987e498b38a16f07c6be0, type: 3}
   StageSelect: {fileID: 8300000, guid: ad7ecd17a59254f4989b4fa73998aca0, type: 3}
@@ -930,6 +931,7 @@ MonoBehaviour:
   VOICEFight: {fileID: 8300000, guid: 1c8e6ddce89247d49b8679457a47bdc2, type: 3}
   VOICEGameover: {fileID: 8300000, guid: c7b0b560c9799df438b0a3a9835203a5, type: 3}
   BoundStart: {fileID: 8300000, guid: 22db80cff9c560d488c54bba00044f91, type: 3}
+  BoundLoop: {fileID: 8300000, guid: 7489db97604037345b3814e063713ea2, type: 3}
   BoundBreak: {fileID: 8300000, guid: 674fbb9bf26efa146a78ddaa6bf1aa90, type: 3}
   VictoryJingle: {fileID: 8300000, guid: 3b674da562936c040906a3045c8d8fe5, type: 3}
   Jump: {fileID: 8300000, guid: 3c4547c2416c227408cf4b8fe4380e0f, type: 3}

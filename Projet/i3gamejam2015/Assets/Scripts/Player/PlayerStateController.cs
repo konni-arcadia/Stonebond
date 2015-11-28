@@ -177,6 +177,7 @@ public class PlayerStateController : MonoBehaviour
 
 	public void setBondLink(BondLink bondLink) {
 		isBond = bondLink != null;
+		statusProvider.setBoundStatus (bondLink != null);
 	}
 
 	public void onCollide(Collider2D source, Collider2D other) {

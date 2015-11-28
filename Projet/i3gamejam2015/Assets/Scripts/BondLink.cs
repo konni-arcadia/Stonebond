@@ -177,7 +177,7 @@ public class BondLink : MonoBehaviour {
 		backwardParticlesAcollider.transform.localPosition = fuckingLocalPos;
 		
 		// -- B
-		//backwardParticlesBcollider.transform.localPosition = fuckingLocalPos;
+		backwardParticlesBcollider.transform.localPosition = fuckingLocalPos;
 		
 
 

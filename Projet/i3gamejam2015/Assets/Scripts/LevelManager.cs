@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System;
 using System.Collections.Generic;
@@ -57,19 +57,19 @@ public class LevelManager : MonoBehaviour {
 				var distance = Vector3.Distance(bondLink.emitterA.transform.position, bondLink.emitterB.transform.position);
 				bondLinkGauge += distance * gaugeDecreaseFactor;
 
-				// A winner is designated
-				if (bondLinkGauge > 1) {
-					bondLinkGauge = 1;
-					if (!hasAlreadyShownWinScreen) {
-						var p1 = bondLink.emitterA.GetComponent<PlayerStateController>();
-						var p2 = bondLink.emitterB.GetComponent<PlayerStateController>();
-						WinScreenManager.IdOfWonP1 = p1.GetPlayerId();
-						WinScreenManager.IdOfWonP2 = p2.GetPlayerId();
-						WinScreenManager.IdOfLevelToRestartTo = Application.loadedLevel;
-						WinScreenManager.showScreen();
-						hasAlreadyShownWinScreen = true;
-					}
-				}
+//				// A winner is designated
+//				if (bondLinkGauge > 1) {
+//					bondLinkGauge = 1;
+//					if (!hasAlreadyShownWinScreen) {
+//						var p1 = bondLink.emitterA.GetComponent<PlayerStateController>();
+//						var p2 = bondLink.emitterB.GetComponent<PlayerStateController>();
+//						WinScreenManager.IdOfWonP1 = p1.GetPlayerId();
+//						WinScreenManager.IdOfWonP2 = p2.GetPlayerId();
+//						WinScreenManager.IdOfLevelToRestartTo = Application.loadedLevel;
+//						WinScreenManager.showScreen();
+//						hasAlreadyShownWinScreen = true;
+//					}
+//				}
 			}
 		}
 		else {

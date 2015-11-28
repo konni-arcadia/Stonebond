@@ -159,6 +159,13 @@ public class SoundManager : MonoBehaviour
         }
         source.loop = true;
         source.Play();
+
+		var snapshot = mainMixer.FindSnapshot("Background");
+		if (snapshot != null)
+		{
+			snapshot.TransitionTo(transitionIn);
+		}
+
     }
     public void Stage_Stop()
     {

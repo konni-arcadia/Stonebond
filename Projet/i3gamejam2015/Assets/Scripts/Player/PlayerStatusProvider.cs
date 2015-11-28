@@ -45,28 +45,35 @@ public class PlayerStatusProvider : MonoBehaviour {
 		if (onWallJumpAction != null) onWallJumpAction();
 	}
 
-	public delegate void DashForwardAction();
-    public event DashForwardAction OnDashForwardAction;
-    public void setDashForward()
+	public delegate void AttackForwardAction();
+    public event AttackForwardAction OnAttackForwardAction;
+    public void setAttackForward()
     {
-        if (OnDashForwardAction != null) OnDashForwardAction();
+        if (OnAttackForwardAction != null) OnAttackForwardAction();
     }
 
-    public delegate void DashUpAction();
-    public event DashUpAction OnDashUpAction;
-    public void setDashUp()
+    public delegate void AttackUpAction();
+    public event AttackUpAction OnAttackUpAction;
+    public void setAttackUp()
     {
-        if (OnDashUpAction != null) OnDashUpAction();
+        if (OnAttackUpAction != null) OnAttackUpAction();
     }
 
-    public delegate void DashDownAction();
-    public event DashDownAction OnDashDownAction;
-    public void setDashDown()
+    public delegate void AttackDownAction();
+    public event AttackDownAction OnAttackDownAction;
+    public void setAttackDown()
     {
-        if (OnDashDownAction != null) OnDashDownAction();
+        if (OnAttackDownAction != null) OnAttackDownAction();
     }
 
-    public delegate void KnockBackAction();
+	public delegate void AttackSpecialAction();
+	public event AttackForwardAction OnAttackSpecialAction;
+	public void setAttackSpecial()
+	{
+		if (OnAttackSpecialAction != null) OnAttackSpecialAction();
+	}
+
+	public delegate void KnockBackAction();
     public event KnockBackAction OnKnockBackAction;
     public void setKnockBackUp()
     {

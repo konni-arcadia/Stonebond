@@ -11,6 +11,7 @@ public class LevelManager : MonoBehaviour {
 	public GameObject gaugeInner, gaugeFrame;
 	public float gaugeDecreaseFactor;
 	public float increaseStartCooldownSecs = 2;
+	public float introDuration = 2;
 	private BondLink bondLink;
 	private float bondLinkGauge, appearedSinceSec;
 	private WinScreenManager WinScreenManager {
@@ -66,6 +67,7 @@ public class LevelManager : MonoBehaviour {
 						WinScreenManager.IdOfWonP1 = p1.GetPlayerId();
 						WinScreenManager.IdOfWonP2 = p2.GetPlayerId();
 						WinScreenManager.IdOfLevelToRestartTo = Application.loadedLevel;
+						GameState.Instance.NotifyWinners(p1.GetPlayerId(), p2.GetPlayerId());
 						WinScreenManager.showScreen();
 						hasAlreadyShownWinScreen = true;
 					}

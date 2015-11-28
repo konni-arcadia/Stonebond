@@ -10,6 +10,7 @@ public class GameState : Singleton<GameState> {
 		public string Name;
 		public Color Color;
 		public int ControllerId;
+		public int TotalScore = 0;
 	}
 
 	// May be moved somewhere else; just to ensure that during development we always have exactly 4 players.
@@ -31,6 +32,12 @@ public class GameState : Singleton<GameState> {
 
 	// Number of players.
 	public int NumPlayers { get { return players.Count; } }
+
+	// Increments the score of the two winners.
+	public void NotifyWinners(int playerAId, int playerBId) {
+		Player(playerAId).TotalScore += 1;
+		Player(playerBId).TotalScore += 1;
+	}
 
 	// Get a given player.
 	public PlayerInfo Player(int id) {

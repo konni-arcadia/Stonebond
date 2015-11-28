@@ -687,9 +687,9 @@ MonoBehaviour:
   attackUpMaxTime: .349999994
   attackDownMinTime: .349999994
   attackDownMaxTime: .349999994
-  attackForwardMinTime: .200000003
+  attackForwardMinTime: .100000001
   attackForwardMaxTime: .5
-  attackCooldownTime: 0
+  attackCooldownTime: .300000012
   attackVelocityUp: 800
   attackVelocityDown: 1800
   attackVelocityForward: 1000
@@ -899,7 +899,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: attackCooldownTime
-      value: 0
+      value: .300000012
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: attackVelocityUp
@@ -947,7 +947,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: attackForwardMinTime
-      value: .200000003
+      value: .100000001
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: attackUpMinTime

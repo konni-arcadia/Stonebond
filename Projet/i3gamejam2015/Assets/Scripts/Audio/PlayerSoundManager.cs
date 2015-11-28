@@ -21,7 +21,10 @@ public class PlayerSoundManager : MonoBehaviour
     {
         if (isGrounded && !prevIsGroundedFlag)
         {
-            SoundManager.Instance.GAMEPLAY_Land();
+			if(SoundManager.Instance != null)
+			{
+            	SoundManager.Instance.GAMEPLAY_Land();
+			}
         }
         prevIsGroundedFlag = isGrounded;
     }

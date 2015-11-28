@@ -154,14 +154,18 @@ public class BondLink : MonoBehaviour {
 		
 		// -- B
 		forwardLineColliderB.transform.position = linkLineMiddlePoint;
-		
+
+
+		//
 		// magic particles
+
 ///////		magicalParticlesAcontainer.transform.position = linkLineQuarterLengthPoint;
 		// magicalParticlesAsystem = ...
 		// Faire en sorte que la shape box Y soit égale à la longueur de linkLineMiddlePoint
 
 		// backward particles
 //backwardParticlesAcontainer.transform.localPosition = Vector3.zero;
+
 
 		//
 		// complétion du bond
@@ -179,25 +183,6 @@ public class BondLink : MonoBehaviour {
 		// -- B
 		backwardParticlesBcollider.transform.localPosition = fuckingLocalPos;
 		
-
-
-//		emitterBlinkMiddle.transform.position = linkLineMiddlePoint;
-
-
-
-		//emitterAsource.transform.LookAt (emitterAlinkMiddle.transform, - Vector3.forward);
-//		emitterB.tran	sform.LookAt (emitterBlinkMiddle);
-		
-//		emitterAlinkMiddle.transform.LookAt (emitterA.transform);
-//		emitterBlinkMiddle.transform.LookAt (emitterB);
-
-//
-//		float linkWidth = linkLine.magnitude;
-//		float currentWidth = rend.bounds.size.x;
-//		Vector3 scale = linkMiddle.transform.localScale;
-//        scale.x = linkWidth / originalWidth;
-//
-//		linkMiddle.transform.localScale = scale;
 
 	}
 	

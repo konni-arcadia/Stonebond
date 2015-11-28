@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using InControl;
 
 public class InputManager : MonoBehaviour {
 	private const float AxisDeadZone = 0.6f;
@@ -26,6 +27,8 @@ public class InputManager : MonoBehaviour {
 /*		float value = Input.GetAxis(axisName + playerId);
 		if (value > 0) return Mathf.Max(0, value - AxisDeadZone) / (1 - AxisDeadZone);
 		else return Mathf.Min(0, value + AxisDeadZone) / (1 - AxisDeadZone);*/
+
+		Debug.Log (axisName + playerId);
 		return Input.GetAxis(axisName + controllerId);
 	}
 	

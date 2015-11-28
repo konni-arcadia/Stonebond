@@ -215,7 +215,8 @@ public class SoundManager : MonoBehaviour
 
     public void GAMEPLAY_Jump()
     {
-        audioSource.PlayOneShot(Jump);
+        var source = GetAudioSource("JumpSound");
+        source.PlayOneShot(Jump);
     }
     public void GAMEPLAY_Land()
     {
@@ -223,27 +224,32 @@ public class SoundManager : MonoBehaviour
     }
     public void GAMEPLAY_Walljump()
     {
-        audioSource.PlayOneShot(WallJump);
+        var source = GetAudioSource("SFXSound");
+        source.PlayOneShot(WallJump);
     }
-    public void GAMEPLAY_AttackA()
+    public void GAMEPLAY_Attack()
     {
-        audioSource.PlayOneShot(AttackA);
+        var source = GetAudioSource("AttackSound");
+        source.PlayOneShot(AttackA);
     }
-    public void GAMEPLAY_AttackB()
-    {
-        audioSource.PlayOneShot(AttackB);
-    }
+    //public void GAMEPLAY_AttackB()
+    //{
+    //    audioSource.PlayOneShot(AttackB);
+    //}
     public void GAMEPLAY_Death()
     {
-        audioSource.PlayOneShot(Death);
+        var source = GetAudioSource("SFXSound");
+        source.PlayOneShot(Death);
     }
     public void GAMEPLAY_Rebirth()
     {
-        audioSource.PlayOneShot(Rebirth);
+        var source = GetAudioSource("SFXSound");
+        source.PlayOneShot(Rebirth);
     }
     public void GAMEPLAY_Knockback()
     {
-        audioSource.PlayOneShot(Knockback);
+        var source = GetAudioSource("SFXSound");
+        source.PlayOneShot(Knockback);
     }
     //public void SelectYourCharacter_Play()
     //{
@@ -261,6 +267,12 @@ public class SoundManager : MonoBehaviour
         {
             snapshot.TransitionTo(transitionIn);
         }
+
+        var source = GetAudioSource("SFXSound");
+        if (source != null)
+        {
+            source.PlayOneShot(BoundStart);
+        }
     }
 
     public void StopBound()
@@ -269,6 +281,12 @@ public class SoundManager : MonoBehaviour
         if (snapshot != null)
         {
             snapshot.TransitionTo(transitionOut);
+        }
+
+        var source = GetAudioSource("SFXSound");
+        if (source != null)
+        {
+            source.PlayOneShot(BoundBreak);
         }
     }
 

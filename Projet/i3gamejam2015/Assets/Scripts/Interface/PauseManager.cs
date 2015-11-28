@@ -51,7 +51,7 @@ public class PauseManager : MonoBehaviour {
                 {
 
                     case StartMenuItem.Quit: 
-						OnGameExitedAction();
+						if(OnGameExitedAction != null) OnGameExitedAction();
 						Application.Quit();
                         break;
 
@@ -61,7 +61,7 @@ public class PauseManager : MonoBehaviour {
                                                 break;
 
                     case StartMenuItem.LvlSelection: 
-						OnGameExitedAction();
+						if(OnGameExitedAction != null) OnGameExitedAction();
 						PlayerPrefs.SetInt("ComeFromLVL", 0); 
                                                 Application.LoadLevel("Menu");
 												if(InControlObject != null)
@@ -69,7 +69,7 @@ public class PauseManager : MonoBehaviour {
                                                 break;
 
                     case StartMenuItem.MenuSelection:
-						OnGameExitedAction();
+						if(OnGameExitedAction != null) OnGameExitedAction();
 						Application.LoadLevel("Menu");
 												if(InControlObject != null)
 													Destroy(InControlObject);
@@ -86,7 +86,7 @@ public class PauseManager : MonoBehaviour {
                 Time.timeScale = 1.0f;
             }
 
-			if (!wasPressed[noControler - 1] && inputManager.AxisValueCtrl(noControler, InputManager.Vertical) < InputManager.AxisDeadZone)
+			if (!wasPressed[noControler - 1] && inputManager.AxisValueCtrl(noControler, InputManager.Vertical) < -InputManager.AxisDeadZone)
             {
                 if (menuSelectedItem != (StartMenuItem)0)
                 {
@@ -111,7 +111,7 @@ public class PauseManager : MonoBehaviour {
 
             }
 			else if (inputManager.AxisValueCtrl(noControler, InputManager.Vertical) < InputManager.AxisDeadZone &&
-			         inputManager.AxisValueCtrl(noControler, InputManager.Vertical) > InputManager.AxisDeadZone && 
+			         inputManager.AxisValueCtrl(noControler, InputManager.Vertical) > -InputManager.AxisDeadZone && 
 			         wasPressed[noControler - 1])
             {
                 wasPressed[noControler - 1] = false;

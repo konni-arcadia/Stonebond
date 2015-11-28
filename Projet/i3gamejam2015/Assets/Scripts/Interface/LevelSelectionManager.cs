@@ -24,7 +24,7 @@ public class LevelSelectionManager : MonoBehaviour {
     void Start()
     {
 		inputManager = GetComponent<InputManager> ();
-        //SoundManager.Instance.StageSelect_Play();
+        SoundManager.Instance.StageSelect_Play();
 
     }
 

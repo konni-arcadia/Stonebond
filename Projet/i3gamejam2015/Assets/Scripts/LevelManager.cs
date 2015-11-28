@@ -36,7 +36,9 @@ public class LevelManager : MonoBehaviour {
 		}
 		// Only allows the creation of the bond if all players have been active since the last cut
 		allowsCreateBond = allowsCreateBond ||
-			(activePlayers.Count == players.Length && !bondMode);
+			(activePlayers.Count == players.Length && !bondMode)
+			// Once many players have been killed, we can't create a bond anymore unless all players get back on track
+			&& activePlayers.Count >= 2;
 
 		if (activePlayers.Count == 2 && !bondMode && allowsCreateBond)
 			EnterBondMode(activePlayers);

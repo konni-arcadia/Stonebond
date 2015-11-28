@@ -29,6 +29,9 @@ public class GameState : Singleton<GameState> {
 		players.Add(p);
 	}
 
+	// Number of players.
+	public int NumPlayers { get { return players.Count; } }
+
 	// Get a given player.
 	public PlayerInfo Player(int id) {
 		id -= 1;

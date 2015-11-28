@@ -148,22 +148,29 @@ public class PlayerStateController : MonoBehaviour
 
 		SpriteRenderer bodyRenderer = transform.Find ("CharacterSprites").Find ("Body").GetComponent<SpriteRenderer> ();
 
+
+
+		//bodyRenderer.material.SetColor("_Color", Color.blue);
+		//bodyRenderer.material.HasProperty ();
+
 		switch (playerId) {
 		case 1:
 			// Shred
-			bodyRenderer.color = new Color32 (0xC6, 0xA4, 0x5F, 0xFF);
+			//bodyRenderer.color = new Color32 (0xC6, 0xA4, 0x5F, 0xFF);
+			//bodyRenderer.material.SetColor("Tint", new Color32 (0xC6, 0xA4, 0x5F, 0xFF));
+
 			break;
 		case 2:
 			// Wise
-			bodyRenderer.color = new Color32 (0x9C, 0x5E, 0x73, 0xFF);
+			//bodyRenderer.color = new Color32 (0x9C, 0x5E, 0x73, 0xFF);
 			break;
 		case 3:
 			// Buddy
-			bodyRenderer.color = new Color32 (0x75, 0x73, 0x9A, 0xFF);
+			//bodyRenderer.color = new Color32 (0x75, 0x73, 0x9A, 0xFF);
 			break;
 		case 4:
 			// Dextrous
-			bodyRenderer.color = new Color32 (0x55, 0x91, 0x7D, 0xFF);
+			//bodyRenderer.color = new Color32 (0x55, 0x91, 0x7D, 0xFF);
 			break;
 		}
 		

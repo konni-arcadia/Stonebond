@@ -68,7 +68,7 @@ public class WinScreenManager : MonoBehaviour {
 			}
 		}
         else {
-            if (inputManager.WasPressedCtrl(noControler, InputManager.A)) {
+			if (inputManager.WasPressedCtrl(noControler, InputManager.A) ||inputManager.WasPressedCtrl(noControler, InputManager.START)) {
 				GameObject InControlObject = GameObject.Find("InControl");
 
                 switch (menuSelectedItem)

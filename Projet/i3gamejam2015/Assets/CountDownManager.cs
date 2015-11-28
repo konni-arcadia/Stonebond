@@ -23,6 +23,7 @@ public class CountDownManager : MonoBehaviour {
 	
 	public void OnFightTextShown()
 	{
+		Flash.flash ();
 		// TODO add sound
 		Debug.Log("OnFightTextShown");
 	}

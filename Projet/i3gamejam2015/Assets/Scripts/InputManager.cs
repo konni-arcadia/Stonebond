@@ -22,17 +22,20 @@ public class InputManager : MonoBehaviour {
 	}
 
 	public float AxisValue(int playerId, string axisName) {
+		int controllerId = GameState.Instance.Player(playerId).ControllerId;
 /*		float value = Input.GetAxis(axisName + playerId);
 		if (value > 0) return Mathf.Max(0, value - AxisDeadZone) / (1 - AxisDeadZone);
 		else return Mathf.Min(0, value + AxisDeadZone) / (1 - AxisDeadZone);*/
-		return Input.GetAxis(axisName + playerId);
+		return Input.GetAxis(axisName + controllerId);
 	}
 	
 	public bool IsHeld(int playerId, string keyName) {
-		return Input.GetButton(keyName + " P" + playerId);
+		int controllerId = GameState.Instance.Player(playerId).ControllerId;
+		return Input.GetButton(keyName + " P" + controllerId);
 	}
 
 	public bool WasPressed(int playerId, string keyName) {
-		return Input.GetButtonDown(keyName + " P" + playerId);
+		int controllerId = GameState.Instance.Player(playerId).ControllerId;
+		return Input.GetButtonDown(keyName + " P" + controllerId);
 	}
 }

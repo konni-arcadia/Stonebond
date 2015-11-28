@@ -28,12 +28,10 @@ public class WinScreenManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		// NOTE: instantiated at the very beginning of the game
         buttonList = StartButtonArea.GetComponentsInChildren<Outline>();
-
 		canvas.enabled = false;
         menu.SetActive(false);
-		transform.Find("P1").GetComponent<Image>().sprite = playerTextSprites[IdOfWonP1 - 1];
-		transform.Find("P2").GetComponent<Image>().sprite = playerTextSprites[IdOfWonP2 - 1];
 	}
 	
 	// Update is called once per frame
@@ -117,6 +115,8 @@ public class WinScreenManager : MonoBehaviour {
             pauseMenu.RemovePauseScreen();
         }
 
+		transform.Find("P1").GetComponent<Image>().sprite = playerTextSprites[IdOfWonP1 - 1];
+		transform.Find("P2").GetComponent<Image>().sprite = playerTextSprites[IdOfWonP2 - 1];
 		canvas.enabled = true;
 		timeSinceStart = 0;
 		isSceneDisplayed = true;

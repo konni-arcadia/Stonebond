@@ -10,13 +10,14 @@ public class MenuManager : MonoBehaviour {
     private Color32 highlithed = new Color32(107, 107, 107, 255);
     private Color32 normal = new Color32(0, 0, 0, 255);
     
-    public GameObject StartButtonArea;
+    public GameObject PressStartButtonArea, StartButtonArea;
     private Outline[] buttonList;
 
     private StartMenuItem menuSelectedItem = StartMenuItem.GameStart;
 
     private bool[] wasPressed = new bool[4];
 	private InputManager inputManager;
+	private bool pressStartActive = false;
 
 	// Use this for initialization
 	void Start () {
@@ -25,7 +26,9 @@ public class MenuManager : MonoBehaviour {
 
         PlayerPrefs.DeleteAll();
         SoundManager.Instance.PressStart_Play();
-	
+		StartButtonArea.SetActive(false);
+		PressStartButtonArea.SetActive(true);
+		StartCoroutine(ShowPressStartAfterDelay());
 	}
 	
 	// Update is called once per frame
@@ -34,29 +37,49 @@ public class MenuManager : MonoBehaviour {
             CheckControlerStartMenu(i);
 	}
 
+	IEnumerator ShowPressStartAfterDelay() {
+		pressStartActive = true;
+		while (pressStartActive) {
+			PressStartButtonArea.SetActive(true);
+			yield return new WaitForSeconds(1);
+			PressStartButtonArea.SetActive(false);
+			yield return new WaitForSeconds(0.5f);
+		}
+	}
+
+	IEnumerator ShowMenuAfterDelay() {
+		PressStartButtonArea.SetActive(false);
+		yield return new WaitForSeconds(0.2f);
+		StartButtonArea.SetActive(true);
+	}
+
     void CheckControlerStartMenu(int noControler)
     {
-
 		if (inputManager.WasPressedCtrl(noControler,InputManager.A) || inputManager.WasPressedCtrl(noControler, InputManager.START))
         {
-            switch (menuSelectedItem){
-            
-                case StartMenuItem.Quit : Application.Quit();
-                    break;
+			if (!StartButtonArea.active) {
+				pressStartActive = false;
+				StartCoroutine(ShowMenuAfterDelay());
+				return;
+			}
+			else {
+				switch (menuSelectedItem) {
+					case StartMenuItem.Quit: Application.Quit();
+						break;
 
-                case StartMenuItem.GameStart: Application.LoadLevelAdditiveAsync("SelectPlayers");
-                    SoundManager.Instance.PressStart_Stop();
-                    break;
+					case StartMenuItem.GameStart: Application.LoadLevelAdditiveAsync("SelectPlayers");
+						SoundManager.Instance.PressStart_Stop();
+						break;
 
-                case StartMenuItem.Credits: Application.LoadLevelAdditiveAsync("Credits");
-                    SoundManager.Instance.PressStart_Stop();
-                    break;
+					case StartMenuItem.Credits: Application.LoadLevelAdditiveAsync("Credits");
+						SoundManager.Instance.PressStart_Stop();
+						break;
 
-                case StartMenuItem.HowTo: return;
-            }
-            SoundManager.Instance.Validate_Play();
-            Destroy(gameObject);
-            
+					case StartMenuItem.HowTo: return;
+				}
+				SoundManager.Instance.Validate_Play();
+				Destroy(gameObject);
+			}            
         }
 
 		if (!wasPressed[noControler-1] && inputManager.AxisValueCtrl(noControler, InputManager.Vertical) < -InputManager.AxisDeadZone)

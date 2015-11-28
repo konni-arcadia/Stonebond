@@ -29,7 +29,8 @@ public class PlayerSelectorManager : MonoBehaviour {
     {
         if (!HasChoosen)
         {
-            if (!HasPressedStart && Input.GetButtonDown(InputManager.START + " P" + PlayerNumber))
+			// Allow action button too for testing
+            if (!HasPressedStart && (Input.GetButtonDown(InputManager.START + " P" + PlayerNumber) || Input.GetButtonDown(InputManager.A + " P" + PlayerNumber)))
             {
                 SetChoosenState();
             }

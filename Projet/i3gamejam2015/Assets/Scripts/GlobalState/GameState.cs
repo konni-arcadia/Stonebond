@@ -9,21 +9,23 @@ public class GameState : Singleton<GameState> {
 	public class PlayerInfo {
 		public string Name;
 		public Color Color;
+		public int ControllerId;
 	}
 
 	// May be moved somewhere else; just to ensure that during development we always have exactly 4 players.
 	protected GameState() {
-		AddPlayer("P1", predefinedPlayerColors[0]);
-		AddPlayer("P2", predefinedPlayerColors[1]);
-		AddPlayer("P3", predefinedPlayerColors[2]);
-		AddPlayer("P4", predefinedPlayerColors[3]);
+		AddPlayer("P1", predefinedPlayerColors[0], 1);
+		AddPlayer("P2", predefinedPlayerColors[1], 2);
+		AddPlayer("P3", predefinedPlayerColors[2], 3);
+		AddPlayer("P4", predefinedPlayerColors[3], 4);
 	}
 
 	// Adds a new player.
-	public void AddPlayer(string name, Color color) {
+	public void AddPlayer(string name, Color color, int controllerId) {
 		var p = new PlayerInfo();
 		p.Name = name;
 		p.Color = color;
+		p.ControllerId = controllerId;
 		players.Add(p);
 	}
 

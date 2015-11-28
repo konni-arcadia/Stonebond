@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 public class LevelSelectionManager : MonoBehaviour {
 
-    enum LvlSelectionItem { Spire, Forest, Pipes, Cathedrale};
+    enum LvlSelectionItem { Spire, Pipes, Cathedrale, Forest};
 
     private string dpadHorizontal = "Horizontal";
     private string dpadVertical = "Vertical";
@@ -81,7 +81,7 @@ public class LevelSelectionManager : MonoBehaviour {
         }
         else if (!wasPressed[noControler - 1] && Input.GetAxis(dpadVertical + noControler) > 0)
         {
-            if (menuSelectedItem != LvlSelectionItem.Cathedrale)
+            if (menuSelectedItem != LvlSelectionItem.Forest)
             {
                 SoundManager.Instance.Cursor_Play();
                 menuSelectedItem += 1;

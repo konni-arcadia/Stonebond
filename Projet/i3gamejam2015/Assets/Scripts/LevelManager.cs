@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System;
 using System.Collections.Generic;
@@ -11,7 +11,6 @@ public class LevelManager : MonoBehaviour {
 	public GameObject gaugeInner, gaugeFrame;
 	public float gaugeDecreaseFactor;
 	public float increaseStartCooldownSecs = 2;
-	public float introDuration = 2;
 	private BondLink bondLink;
 	private float bondLinkGauge, appearedSinceSec;
 	private WinScreenManager WinScreenManager {
@@ -52,20 +51,19 @@ public class LevelManager : MonoBehaviour {
 				var distance = Vector3.Distance(bondLink.emitterA.transform.position, bondLink.emitterB.transform.position);
 				bondLinkGauge += distance * gaugeDecreaseFactor;
 
-				// A winner is designated
-				if (bondLinkGauge > 1) {
-					bondLinkGauge = 1;
-					if (!hasAlreadyShownWinScreen) {
-						var p1 = bondLink.emitterA.GetComponent<PlayerStateController>();
-						var p2 = bondLink.emitterB.GetComponent<PlayerStateController>();
-						WinScreenManager.IdOfWonP1 = p1.GetPlayerId();
-						WinScreenManager.IdOfWonP2 = p2.GetPlayerId();
-						WinScreenManager.IdOfLevelToRestartTo = Application.loadedLevel;
-						GameState.Instance.NotifyWinners(p1.GetPlayerId(), p2.GetPlayerId());
-						WinScreenManager.showScreen();
-						hasAlreadyShownWinScreen = true;
-					}
-				}
+//				// A winner is designated
+//				if (bondLinkGauge > 1) {
+//					bondLinkGauge = 1;
+//					if (!hasAlreadyShownWinScreen) {
+//						var p1 = bondLink.emitterA.GetComponent<PlayerStateController>();
+//						var p2 = bondLink.emitterB.GetComponent<PlayerStateController>();
+//						WinScreenManager.IdOfWonP1 = p1.GetPlayerId();
+//						WinScreenManager.IdOfWonP2 = p2.GetPlayerId();
+//						WinScreenManager.IdOfLevelToRestartTo = Application.loadedLevel;
+//						WinScreenManager.showScreen();
+//						hasAlreadyShownWinScreen = true;
+//					}
+//				}
 			}
 		}
 		else {
@@ -84,6 +82,8 @@ public class LevelManager : MonoBehaviour {
 
 		MyLittlePoney.shake (1.0f, 1.0f, 2.0f, 2.0f);
 		Flash.flash (0.0f, 0.0f, 0.0f);
+
+		SoundManager.Instance.GAMEPLAY_BoundBreak ();
 	}
 
 	private void EnterBondMode(List<PlayerStateController> activePlayers) {
@@ -98,6 +98,8 @@ public class LevelManager : MonoBehaviour {
 		activePlayers[1].setBondLink(bondLink);
 		bondLinkGauge = 0;
 		appearedSinceSec = 0;
+
+		SoundManager.Instance.GAMEPLAY_Bound_Play ();
 
 		MyLittlePoney.slowMotion ();
 	}

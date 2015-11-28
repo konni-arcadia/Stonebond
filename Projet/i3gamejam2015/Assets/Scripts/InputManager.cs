@@ -32,7 +32,7 @@ public class InputManager : MonoBehaviour {
 		if (value > 0) return Mathf.Max(0, value - AxisDeadZone) / (1 - AxisDeadZone);
 		else return Mathf.Min(0, value + AxisDeadZone) / (1 - AxisDeadZone);*/
 		float axisValue = 0.0f;
-		var inputDevice = (InControl.InputManager.Devices.Count > controllerId) ? InControl.InputManager.Devices[controllerId] : null;
+		var inputDevice = (InControl.InputManager.Devices.Count > controllerId-1) ? InControl.InputManager.Devices[controllerId-1] : null;
 		if (inputDevice != null) {
 			switch (axisName) {
 			case InputManager.Horizontal:
@@ -51,7 +51,7 @@ public class InputManager : MonoBehaviour {
 	public bool IsHeld(int playerId, string keyName) {
 		int controllerId = GameState.Instance.Player(playerId).ControllerId;
 		bool axisValue = false;
-		var inputDevice = (InControl.InputManager.Devices.Count > controllerId) ? InControl.InputManager.Devices[controllerId] : null;
+		var inputDevice = (InControl.InputManager.Devices.Count > controllerId-1) ? InControl.InputManager.Devices[controllerId-1] : null;
 		if (inputDevice != null) {
 			switch (keyName) {
 			case InputManager.A: 
@@ -77,7 +77,7 @@ public class InputManager : MonoBehaviour {
 	public bool WasPressedCtrl(int controllerId, string keyName) {
 		
 		bool axisValue = false;
-		var inputDevice = (InControl.InputManager.Devices.Count > controllerId) ? InControl.InputManager.Devices[controllerId] : null;
+		var inputDevice = (InControl.InputManager.Devices.Count > controllerId-1) ? InControl.InputManager.Devices[controllerId-1] : null;
 		if (inputDevice != null) {
 			switch (keyName) {
 			case InputManager.A: 

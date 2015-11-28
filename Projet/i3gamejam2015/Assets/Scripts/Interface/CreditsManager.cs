@@ -18,7 +18,7 @@ public class CreditsManager : MonoBehaviour {
     void CheckControlerStartMenu(int noControler)
     {
 
-        if (Input.GetButtonDown(InputManager.B + " P" + noControler))
+		if (inputManager.WasPressedCtrl(noControler, InputManager.B))
         {
             Application.LoadLevelAdditiveAsync("SelectOption");
 

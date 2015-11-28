@@ -95,7 +95,7 @@ GameObject:
   - 4: {fileID: 133786810}
   - 61: {fileID: 133786811}
   m_Layer: 8
-  m_Name: 3x3
+  m_Name: 3x3 Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -112,7 +112,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 4
 --- !u!61 &133786811
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -124,9 +124,9 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_Offset: {x: 1, y: .156897068}
+  m_Offset: {x: 1, y: .91821146}
   serializedVersion: 2
-  m_Size: {x: 3.24000001, y: 3}
+  m_Size: {x: 3.23999977, y: 1.39999998}
 --- !u!1 &186943202
 GameObject:
   m_ObjectHideFlags: 0
@@ -137,7 +137,7 @@ GameObject:
   - 4: {fileID: 186943203}
   - 61: {fileID: 186943204}
   m_Layer: 8
-  m_Name: 3x3 (1)
+  m_Name: 3x3 Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -154,7 +154,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 6
 --- !u!61 &186943204
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -166,9 +166,9 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_Offset: {x: 1.05999994, y: .0299999993}
+  m_Offset: {x: 1.05999947, y: .833608866}
   serializedVersion: 2
-  m_Size: {x: 3, y: 3}
+  m_Size: {x: 3, y: 1.39999998}
 --- !u!1 &211560558
 GameObject:
   m_ObjectHideFlags: 0
@@ -226,7 +226,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 443422, guid: c5501fad9ab5b144ea2d91b926a85505, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -.119999997
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 443422, guid: c5501fad9ab5b144ea2d91b926a85505, type: 2}
       propertyPath: m_LocalPosition.y
@@ -262,7 +262,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11430486, guid: c5501fad9ab5b144ea2d91b926a85505, type: 2}
       propertyPath: startToLeft
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 21276782, guid: c5501fad9ab5b144ea2d91b926a85505, type: 2}
       propertyPath: m_SortingOrder
@@ -274,11 +274,15 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 441814, guid: c5501fad9ab5b144ea2d91b926a85505, type: 2}
       propertyPath: m_LocalPosition.x
-      value: .0399999991
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 455170, guid: c5501fad9ab5b144ea2d91b926a85505, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -9.01000023
+      value: -6.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 403234, guid: c5501fad9ab5b144ea2d91b926a85505, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c5501fad9ab5b144ea2d91b926a85505, type: 2}
@@ -618,7 +622,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 139956, guid: 541cf7c480da3444a901215230feca53, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 541cf7c480da3444a901215230feca53, type: 2}
@@ -1049,7 +1053,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 443422, guid: c5501fad9ab5b144ea2d91b926a85505, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -.0199999996
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 443422, guid: c5501fad9ab5b144ea2d91b926a85505, type: 2}
       propertyPath: m_LocalPosition.y
@@ -1089,11 +1093,15 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 441814, guid: c5501fad9ab5b144ea2d91b926a85505, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 8.71000004
+      value: 6.5
       objectReference: {fileID: 0}
     - target: {fileID: 455170, guid: c5501fad9ab5b144ea2d91b926a85505, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -.219999999
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 403234, guid: c5501fad9ab5b144ea2d91b926a85505, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c5501fad9ab5b144ea2d91b926a85505, type: 2}

@@ -110,9 +110,11 @@ public class SoundManager : MonoBehaviour
     }
     public void CharacterSelect_Play()
     {
-        audioSource.clip = CharacterSelect;
-        audioSource.loop = true;
-        audioSource.Play();
+        //audioSource.clip = CharacterSelect;
+        //audioSource.loop = true;
+        //audioSource.Play();
+        var source = GetAudioSource("VoiceSound");
+        source.PlayOneShot(VOICECharacterSelect);
     }
     public void CharacterSelect_Stop()
     {

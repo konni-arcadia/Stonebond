@@ -35,8 +35,7 @@ public class BondLink : MonoBehaviour {
 	
 	public GameObject backwardParticlesAcollider;
 	public GameObject backwardParticlesBcollider;
-	
-	//protected GameObject linkMiddle;
+
 	protected Renderer rend;
 	protected float originalZ;
 
@@ -46,31 +45,25 @@ public class BondLink : MonoBehaviour {
 	void Start () {
 
 		fxA = emitterAsource.GetComponent<BondLinkFX> ();
-//		fxB = emitterBsource.GetComponent<BondLinkFX> ();
+		fxB = emitterBsource.GetComponent<BondLinkFX> ();
 
 		playerAStateController = playerA.GetComponent<PlayerStateController> ();
-//		playerBStateController = playerB.GetComponent<PlayerStateController> ();
+		playerBStateController = playerB.GetComponent<PlayerStateController> ();
 
 		// TODO: call from LevelManager
 		OnBond ();
 
-		//linkMiddle = transform.Find ("testAnimLink01").gameObject;
-		//rend = linkMiddle.GetComponent<Renderer> ();
-		//originalZ = linkMiddle.transform.position.z;
-
-//        originalWidth = rend.bounds.size.x;
-
-//        if (originalWidth == 0)
-//            Debug.LogError("Link sprite has a width of 0 !!!");
-		
 	}
 
 	public void OnBond() {
 //		ParticleSystem particles
 
 		fxA.SetPlayer (playerAStateController.playerId);
+		fxB.SetPlayer (playerBStateController.playerId);
 
 		fxA.GetLineParticles ().gameObject.SetActive(true);
+		fxB.GetLineParticles ().gameObject.SetActive(true);
+
 //		forwardParticlesAsystem = 
 //		forwardParticlesAsystem
 //		fxB.GetLineParticles ();
@@ -102,25 +95,66 @@ public class BondLink : MonoBehaviour {
 
 		//
 		// Met à jour la géométrie du lien
-		//
+		// --------------------------------
 
+		//
 		// Bouge les deux points source et linkmiddle
+
+		// -- A
+
+		// -- -- source
 		emitterAsource.transform.position = playerA.transform.position;
+
+		// -- -- middle point
 		emitterAlinkMiddle.transform.position = linkLineMiddlePoint;
 
+		// -- B
+
+		// -- -- source
+		emitterBsource.transform.position = playerB.transform.position;
+
+		// -- -- middle point
+		emitterBlinkMiddle.transform.position = linkLineMiddlePoint;
+
+
+		//
 		// Tourne les deux points source et linkmiddle pour qu'ils se regardent
+
+		// -- calcul d'angle
 		float angle = Mathf.Atan2(linkLine.y, linkLine.x) * Mathf.Rad2Deg;
-		angle -= 90;
-		emitterAsource.transform.rotation = Quaternion.AngleAxis (angle, Vector3.forward);
-		emitterAlinkMiddle.transform.rotation = Quaternion.AngleAxis (angle, Vector3.forward);
+
+		// -- A
+		float angleA = angle - 90;
+
+		// -- -- source
+		emitterAsource.transform.rotation = Quaternion.AngleAxis (angleA, Vector3.forward);
+		
+		// -- -- middle point
+		emitterAlinkMiddle.transform.rotation = Quaternion.AngleAxis (angleA, Vector3.forward);
+
+		// -- B
+		float angleB = angle + 90;
+
+		// -- -- source
+		emitterBsource.transform.rotation = Quaternion.AngleAxis (angleB, Vector3.forward);
+		
+		// -- -- middle point
+		emitterBlinkMiddle.transform.rotation = Quaternion.AngleAxis (angleB, Vector3.forward);
+		
 
 		//
 		// Met à jour les particules
+		// --------------------------
+
 		//
-
 		// forward particles
-		forwardLineColliderA.transform.position = linkLineMiddlePoint;
 
+		// -- A
+		forwardLineColliderA.transform.position = linkLineMiddlePoint;
+		
+		// -- B
+		forwardLineColliderB.transform.position = linkLineMiddlePoint;
+		
 		// magic particles
 ///////		magicalParticlesAcontainer.transform.position = linkLineQuarterLengthPoint;
 		// magicalParticlesAsystem = ...
@@ -129,13 +163,22 @@ public class BondLink : MonoBehaviour {
 		// backward particles
 //backwardParticlesAcontainer.transform.localPosition = Vector3.zero;
 
-		// pour dire que le lien est à 100%, mettre la local position Y du backwardCollider à 0
-		// pour dire que le lien est à 0%, mettre la local position Y du backwardCollider à <LONGUEUR DU DEMI-LIEN>
-		// formule = position locale du backwardCollider . Y = ( 1 - <PERCENT_COMPLETE (0.00-1.00)> ) * <LONGUEUR DU DEMI-LIEN>
+		//
+		// complétion du bond
+
+		// -- calcul du pourcentage de complétion (visuel)
+		//    pour dire que le lien est à 100%, mettre la local position Y du backwardCollider à 0
+		//    pour dire que le lien est à 0%, mettre la local position Y du backwardCollider à <LONGUEUR DU DEMI-LIEN>
+		//    formule = position locale du backwardCollider . Y = ( 1 - <PERCENT_COMPLETE (0.00-1.00)> ) * <LONGUEUR DU DEMI-LIEN>
 		float fuckingY = (1 - 0.75f) * linkLine.x * 0.5f;
 		Vector3 fuckingLocalPos = new Vector3(0, fuckingY, 0);
-		backwardParticlesAcollider.transform.localPosition = fuckingLocalPos;
 
+		// -- A
+		backwardParticlesAcollider.transform.localPosition = fuckingLocalPos;
+		
+		// -- B
+		//backwardParticlesBcollider.transform.localPosition = fuckingLocalPos;
+		
 
 
 //		emitterBlinkMiddle.transform.position = linkLineMiddlePoint;

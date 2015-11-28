@@ -582,6 +582,7 @@ GameObject:
   - 114: {fileID: 1554908633}
   - 114: {fileID: 1554908632}
   - 114: {fileID: 1554908631}
+  - 114: {fileID: 1554908635}
   m_Layer: 5
   m_Name: SuperposedMenu
   m_TagString: Untagged
@@ -683,6 +684,17 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
+--- !u!114 &1554908635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1554908629}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4c29944dad53d4439f4dce3b9b008df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1581771753
 GameObject:
   m_ObjectHideFlags: 0

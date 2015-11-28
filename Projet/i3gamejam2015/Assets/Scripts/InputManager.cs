@@ -6,38 +6,96 @@ public class InputManager : MonoBehaviour {
 	private const float AxisDeadZone = 0.6f;
 	// Buttons
 	public const string A = "Jump";
-    public const string START = "START";
+	public const string START = "START";
 	public const string BUTTON_ATTACK = "Attack";
-    public const string B = "Cancel";
-
+	public const string B = "Cancel";
+	
 	// Axis
 	public const string Horizontal = "Horizontal";
 	public const string Vertical = "Vertical";
 	public const string DpadHorizontal = "DpadHorizontal";
 	public const string DpadVertical = "DpadVertical";
-
+	
 	void Start () {
 	}
 	
 	void Update () {
 	}
-
-	public float AxisValue(int playerId, string axisName) {
+	public float AxisValue(int playerId, string axisName)
+	{
 		int controllerId = GameState.Instance.Player(playerId).ControllerId;
-/*		float value = Input.GetAxis(axisName + playerId);
+		return AxisValueCtrl (controllerId, axisName);
+	}
+	public float AxisValueCtrl(int controllerId, string axisName) {
+		
+		/*		float value = Input.GetAxis(axisName + playerId);
 		if (value > 0) return Mathf.Max(0, value - AxisDeadZone) / (1 - AxisDeadZone);
 		else return Mathf.Min(0, value + AxisDeadZone) / (1 - AxisDeadZone);*/
-
-		return Input.GetAxis(axisName + controllerId);
+		float axisValue = 0.0f;
+		var inputDevice = (InControl.InputManager.Devices.Count > controllerId) ? InControl.InputManager.Devices[controllerId] : null;
+		if (inputDevice != null) {
+			switch (axisName) {
+			case InputManager.Horizontal:
+				axisValue += inputDevice.LeftStickX;
+				break;
+			case InputManager.Vertical:
+				axisValue += inputDevice.LeftStickY;
+				break;
+			}
+		}
+		axisValue += Input.GetAxis (axisName + controllerId);
+		
+		return axisValue;
 	}
 	
 	public bool IsHeld(int playerId, string keyName) {
 		int controllerId = GameState.Instance.Player(playerId).ControllerId;
-		return Input.GetButton(keyName + " P" + controllerId);
+		bool axisValue = false;
+		var inputDevice = (InControl.InputManager.Devices.Count > controllerId) ? InControl.InputManager.Devices[controllerId] : null;
+		if (inputDevice != null) {
+			switch (keyName) {
+			case InputManager.A: 
+				axisValue = axisValue || inputDevice.Action1.IsPressed;
+				break;
+			case InputManager.B:
+				axisValue = axisValue || inputDevice.Action2.IsPressed;
+				break;
+			case InputManager.BUTTON_ATTACK:
+				axisValue = axisValue || inputDevice.Action3.IsPressed;
+				break;
+				
+			}
+		}
+		axisValue = axisValue || Input.GetButton (keyName + " P" + controllerId);
+		return axisValue;
 	}
-
-	public bool WasPressed(int playerId, string keyName) {
+	public bool WasPressed(int playerId, string keyName)
+	{
 		int controllerId = GameState.Instance.Player(playerId).ControllerId;
-		return Input.GetButtonDown(keyName + " P" + controllerId);
+		return WasPressedCtrl (controllerId, keyName);
+	}
+	public bool WasPressedCtrl(int controllerId, string keyName) {
+		
+		bool axisValue = false;
+		var inputDevice = (InControl.InputManager.Devices.Count > controllerId) ? InControl.InputManager.Devices[controllerId] : null;
+		if (inputDevice != null) {
+			switch (keyName) {
+			case InputManager.A: 
+				axisValue = axisValue || inputDevice.Action1.WasPressed;
+				break;
+			case InputManager.B:
+				axisValue = axisValue || inputDevice.Action2.WasPressed;
+				break;
+			case InputManager.BUTTON_ATTACK:
+				axisValue = axisValue || inputDevice.Action3.WasPressed;
+				break;
+			case InputManager.START:
+				axisValue = axisValue || inputDevice.MenuWasPressed;
+				break;
+				
+			}
+		}
+		axisValue = axisValue || Input.GetButtonDown (keyName + " P" + controllerId);
+		return axisValue;
 	}
 }

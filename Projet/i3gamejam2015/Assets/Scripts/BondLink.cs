@@ -51,9 +51,6 @@ public class BondLink : MonoBehaviour {
 		fxA = emitterAsource.GetComponent<BondLinkFX> ();
 		fxB = emitterBsource.GetComponent<BondLinkFX> ();
 
-		playerAStateController = playerA.GetComponent<PlayerStateController> ();
-		playerBStateController = playerB.GetComponent<PlayerStateController> ();
-
 		// TODO: call from LevelManager
 		OnBond ();
 
@@ -62,7 +59,10 @@ public class BondLink : MonoBehaviour {
 	public void OnBond() {
 //		ParticleSystem particles
 
-		fxA.SetPlayer (playerAStateController.playerId);
+		playerAStateController = playerA.GetComponent<PlayerStateController>();
+		playerBStateController = playerB.GetComponent<PlayerStateController>();
+
+		fxA.SetPlayer(playerAStateController.playerId);
 		fxB.SetPlayer (playerBStateController.playerId);
 
 		fxA.GetLineParticles ().gameObject.SetActive(true);

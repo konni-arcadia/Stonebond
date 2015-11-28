@@ -6,16 +6,41 @@ public class PlayerSoundManager : MonoBehaviour
     public PlayerStatusProvider statusProvider;
 
     bool prevIsGroundedFlag = true;
-    //bool prevIsGroundedFlag = true;
 
     void Start()
     {
-        //statusProvider.OnDashUpAction??
         statusProvider.OnBoundChangedAction += OnBounded;
         statusProvider.OnGroundedStatusChanged += OnGrounded;
         statusProvider.OnOnWallStatusChanged += OnWallrided;
         statusProvider.OnKnockBackAction += onKnockbacked;
         statusProvider.OnDieAction += onPlayerDied;
+        statusProvider.onJumpAction += OnJumped;
+        statusProvider.onWallJumpAction += OnWallJumped;
+        statusProvider.OnAttackUpAction += OnAttack;
+        statusProvider.OnAttackSpecialAction += OnAttack;
+        statusProvider.OnAttackForwardAction += OnAttack;
+        statusProvider.OnAttackDownAction += OnAttack;
+        statusProvider.OnRespawnWarningAction += OnRespawned;
+    }
+
+    private void OnRespawned()
+    {
+        SoundManager.Instance.GAMEPLAY_Rebirth();
+    }
+
+    private void OnAttack()
+    {
+        SoundManager.Instance.GAMEPLAY_Attack();
+    }
+
+    private void OnWallJumped()
+    { 
+        SoundManager.Instance.GAMEPLAY_Walljump();
+    }
+
+    private void OnJumped()
+    {
+        SoundManager.Instance.GAMEPLAY_Jump();
     }
 
     private void OnBounded(bool isBounded)
@@ -34,10 +59,10 @@ public class PlayerSoundManager : MonoBehaviour
     {
         if (isGrounded && !prevIsGroundedFlag)
         {
-			if(SoundManager.Instance != null)
-			{
-            	SoundManager.Instance.GAMEPLAY_Land();
-			}
+            if (SoundManager.Instance != null)
+            {
+                SoundManager.Instance.GAMEPLAY_Land();
+            }
         }
         prevIsGroundedFlag = isGrounded;
     }

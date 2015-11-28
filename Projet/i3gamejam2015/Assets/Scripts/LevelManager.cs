@@ -24,19 +24,10 @@ public class LevelManager : MonoBehaviour {
         //Load the pause menu
         Application.LoadLevelAdditive("Pause");
 		Application.LoadLevelAdditive("WinScreen");
-
-		// Build the list of players
-		var list = FindObjectsOfType<PlayerStateController>();
-		players = new PlayerStateController[list.Length];
-		foreach (var p in list) {
-			if (players[p.GetPlayerId() - 1] == null)
-				players[p.GetPlayerId() - 1] = p;
-			else
-				throw new InvalidOperationException("Player ID " + p.GetPlayerId() + " more than once in this scene");
-		}
 	}
 
 	void Update() {
+		GatherPlayers();
 		// Check if we are only two left, this would initiate the "bond mode"
 		List<PlayerStateController> activePlayers = new List<PlayerStateController>();
 		foreach (PlayerStateController player in players) {
@@ -44,7 +35,8 @@ public class LevelManager : MonoBehaviour {
 				activePlayers.Add(player);
 		}
 		// Only allows the creation of the bond if all players have been active since the last cut
-		allowsCreateBond |= activePlayers.Count == players.Length && !bondMode;
+		allowsCreateBond = allowsCreateBond ||
+			(activePlayers.Count == players.Length && !bondMode);
 
 		if (activePlayers.Count == 2 && !bondMode && allowsCreateBond)
 			EnterBondMode(activePlayers);
@@ -115,5 +107,19 @@ public class LevelManager : MonoBehaviour {
 		Debug.Log("Leaving bond mode");
 		bondMode = false;
 		allowsCreateBond = false;
+	}
+
+	private void GatherPlayers() {
+		if (players != null && players.Length > 0) return;
+
+		// Build the list of players
+		var list = FindObjectsOfType<PlayerStateController>();
+		players = new PlayerStateController[list.Length];
+		foreach (var p in list) {
+			if (players[p.GetPlayerId() - 1] == null)
+				players[p.GetPlayerId() - 1] = p;
+			else
+				throw new InvalidOperationException("Player ID " + p.GetPlayerId() + " more than once in this scene");
+		}
 	}
 }

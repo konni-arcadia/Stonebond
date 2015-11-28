@@ -4,6 +4,12 @@ using UnityEngine.Audio;
 
 public class SoundManager : MonoBehaviour
 {
+    public float BPM = 110;
+    private float quarterNote;
+    private float transitionIn;
+    private float transitionOut;
+    private AudioMixer mainMixer;
+
     private AudioSource audioSource;
     public AudioClip PressStartScreen;
     public AudioClip CharacterSelect;
@@ -79,6 +85,10 @@ public class SoundManager : MonoBehaviour
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
+        quarterNote = 60f / BPM;
+        transitionIn = quarterNote / 8f;
+        transitionOut = quarterNote * 8f;
+        mainMixer = Resources.Load<AudioMixer>("Main");
     }
 
     public void PressStart_Play()
@@ -113,24 +123,24 @@ public class SoundManager : MonoBehaviour
     }
     public void Stage_Play(StageEnum _stage)
     {
+        var source = GetAudioSource("BackgroundSound");
         switch (_stage)
         {
             case StageEnum.PipesOfAwakening:
-                audioSource.clip = StageSpireHigh;
+                source.clip = StageSpireHigh;
                 break;
             case StageEnum.SpireHigh:
-                audioSource.clip = StagePipesOfAwakening;
+                source.clip = StagePipesOfAwakening;
                 break;
             case StageEnum.CloisterOfTheSilence:
-                audioSource.clip = StageCloisterOfTheSilence;
+                source.clip = StageCloisterOfTheSilence;
                 break;
             case StageEnum.RosetteOfTheWingedOnes:
-                audioSource.clip = StageRosetteOfTheWingedOnes;
+                source.clip = StageRosetteOfTheWingedOnes;
                 break;
         }
-        audioSource.loop = true;
-        audioSource.volume = 0.3f;
-        audioSource.Play();
+        source.loop = true;
+        source.Play();
     }
     public void Stage_Stop()
     {
@@ -236,4 +246,17 @@ public class SoundManager : MonoBehaviour
     //{
     //    audioSource.PlayOneShot(SelectYourStage);
     //}
+
+    protected AudioSource GetAudioSource(string _objectID)
+    {
+        var gameObject = GameObject.Find(_objectID);
+        AudioSource source = null;
+        if (gameObject != null)
+        {
+            source = gameObject.GetComponent<AudioSource>();
+        }
+        return source;
+    }
+
+
 }

@@ -21,9 +21,6 @@ public class PauseManager : MonoBehaviour {
     public Canvas menu;
 	private InputManager inputManager;
 
-	public delegate void GameExitedAction();
-	public event GameExitedAction OnGameExitedAction;
-
 	// Use this for initialization
 	void Start () {
 		inputManager = GetComponent<InputManager> ();
@@ -51,17 +48,22 @@ public class PauseManager : MonoBehaviour {
                 {
 
                     case StartMenuItem.Quit: 
-						if(OnGameExitedAction != null) OnGameExitedAction();
+						// TODO create event for that
+						if(SoundManager.Instance != null) SoundManager.Instance.TriggerMenuBack();
 						Application.Quit();
                         break;
 
-                    case StartMenuItem.Resume: isDisplayed = false;
+                    case StartMenuItem.Resume:
+						// TODO create event for that
+						if(SoundManager.Instance != null) SoundManager.Instance.TriggerResume();
+						isDisplayed = false;
                                                 menu.enabled = false;
 
                                                 break;
 
                     case StartMenuItem.LvlSelection: 
-						if(OnGameExitedAction != null) OnGameExitedAction();
+						// TODO create event for that
+						if(SoundManager.Instance != null) SoundManager.Instance.TriggerMenuBack();
 						PlayerPrefs.SetInt("ComeFromLVL", 0); 
                                                 Application.LoadLevel("Menu");
 												if(InControlObject != null)
@@ -69,7 +71,8 @@ public class PauseManager : MonoBehaviour {
                                                 break;
 
                     case StartMenuItem.MenuSelection:
-						if(OnGameExitedAction != null) OnGameExitedAction();
+						// TODO create event for that
+						if(SoundManager.Instance != null) SoundManager.Instance.TriggerMenuBack();
 						Application.LoadLevel("Menu");
 												if(InControlObject != null)
 													Destroy(InControlObject);
@@ -121,6 +124,9 @@ public class PauseManager : MonoBehaviour {
         {
 			if (inputManager.WasPressedCtrl( noControler, InputManager.START))
             {
+				// TODO create event for that
+				if(SoundManager.Instance != null) SoundManager.Instance.TriggerPause();
+
                 isDisplayed = true;
                 menu.enabled = true;
                 Time.timeScale = 0.0f;

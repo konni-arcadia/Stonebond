@@ -19,9 +19,6 @@ public class LevelManager : MonoBehaviour {
 	}
 	private bool hasAlreadyShownWinScreen, allowsCreateBond;
 
-	public delegate void GameFinishedAction();
-	public event GameFinishedAction OnGameFinishedAction;
-
 	// Requires the objects to have already been spawned (PlayerSpawner::Awake, which is executed before)
 	void Start () {
         //Load the pause menu
@@ -59,7 +56,8 @@ public class LevelManager : MonoBehaviour {
 				if (bondLinkGauge > 1) {
 					bondLinkGauge = 1;
 					if (!hasAlreadyShownWinScreen) {
-						if (OnGameFinishedAction != null) OnGameFinishedAction();
+						// TODO create event for that
+						if(SoundManager.Instance != null) SoundManager.Instance.TriggerGameFinished();
 
 						var p1 = bondLink.emitterA.GetComponent<PlayerStateController>();
 						var p2 = bondLink.emitterB.GetComponent<PlayerStateController>();

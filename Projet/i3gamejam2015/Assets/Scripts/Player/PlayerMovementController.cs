@@ -28,6 +28,7 @@ public class PlayerMovementController : MonoBehaviour
     private float allowJumpTime = 0, disallowDirectionTime = 0;
     private List<Vector2> pendingForcesToApply = new List<Vector2>();
     private bool isMovementEnabled = true, inWallJump = false;
+	private bool isFrictionEnabled = true;
 
     private Rigidbody2D body;
     private InputManager inputManager;
@@ -111,7 +112,9 @@ public class PlayerMovementController : MonoBehaviour
         //		body.AddForce(Vector2.right * h * moveForce);
 
         Vector2 velocity = body.velocity;
-        float targetSpeed = h * maxSpeed, frictionFactor = grounded && !inWallJump ? 2 : 10;
+		float targetSpeed = h * maxSpeed;
+		float frictionFactor = grounded && !inWallJump && isFrictionEnabled ? 2 : 10;
+
         // In the air, there is less friction
         velocity.x += (targetSpeed - velocity.x) / frictionFactor;
         // When grinding, limit the velocity
@@ -162,6 +165,11 @@ public class PlayerMovementController : MonoBehaviour
     {
         isMovementEnabled = enabled;
     }
+
+	public void setFrictionEnabled(bool enabled)
+	{
+		isFrictionEnabled = enabled;
+	}
 
     public void applyForce(Vector2 force)
     {

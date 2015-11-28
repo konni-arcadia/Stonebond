@@ -83,8 +83,8 @@ public class MenuManager : MonoBehaviour {
             }
             
         }
-		else if (inputManager.AxisValueCtrl(noControler, InputManager.Vertical) < 0.1f &&
-		         inputManager.AxisValueCtrl(noControler, InputManager.Vertical) > -0.1f && wasPressed[noControler-1])
+		else if (inputManager.AxisValueCtrl(noControler, InputManager.Vertical) < InputManager.AxisDeadZone &&
+		         inputManager.AxisValueCtrl(noControler, InputManager.Vertical) > -InputManager.AxisDeadZone && wasPressed[noControler-1])
         {
             wasPressed[noControler - 1] = false;
         }

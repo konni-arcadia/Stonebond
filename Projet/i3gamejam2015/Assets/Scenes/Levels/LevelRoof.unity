@@ -308,7 +308,6 @@ GameObject:
   - 4: {fileID: 367575099}
   - 212: {fileID: 367575098}
   - 61: {fileID: 367575097}
-  - 61: {fileID: 367575100}
   m_Layer: 8
   m_Name: platform03
   m_TagString: Untagged
@@ -369,19 +368,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 9
---- !u!61 &367575100
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 367575096}
-  m_Enabled: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_Offset: {x: -.0499248505, y: -.449320793}
-  serializedVersion: 2
-  m_Size: {x: 3.09834051, y: 2.90014839}
 --- !u!4 &378498894 stripped
 Transform:
   m_PrefabParentObject: {fileID: 444806, guid: 9f1f14e08f26cfd40ab56ff21694444b, type: 2}

@@ -83,41 +83,61 @@ public class SoundManager : MonoBehaviour
         source.clip = BoundLoop;
         source.loop = true;
         source.Play();
+
+		//preload Main Menu
+		var mainMenuSource = GetAudioSource("MainMenuSound");
+		mainMenuSource.clip = PressStartScreen;
+		mainMenuSource.loop = true;
+		mainMenuSource.Play();
+
+		//preload Char Select
+		var characterSelectSource = GetAudioSource("CharacterSelectSound");
+		characterSelectSource.clip = CharacterSelect;
+		characterSelectSource.loop = true;
+		characterSelectSource.Play();
+
+		//preload stage Select
+		var stageSelectSound = GetAudioSource("StageSelectSound");
+		stageSelectSound.clip = StageSelect;
+		stageSelectSound.loop = true;
+		stageSelectSound.Play();
     }
 
     public void PressStart_Play()
     {
-        //TODO
-        audioSource.clip = PressStartScreen;
-        audioSource.loop = true;
-        audioSource.Play();
+		var snapshot = mainMixer.FindSnapshot("MainMenu");
+		if (snapshot != null)
+		{
+			snapshot.TransitionTo(transitionIn);
+		}
     }
     public void PressStart_Stop()
     {
         //TODO
-        audioSource.Stop();
     }
     public void CharacterSelect_Play()
     {
-        //TODO
-        
+		var snapshot = mainMixer.FindSnapshot("CharacterSelect");
+		if (snapshot != null)
+		{
+			snapshot.TransitionTo(transitionIn);
+		}
     }
     public void CharacterSelect_Stop()
     {
         //TODO
-        audioSource.Stop();
     }
     public void StageSelect_Play()
     {
-        //TODO
-        audioSource.clip = StageSelect;
-        audioSource.loop = true;
-        audioSource.Play();
+		var snapshot = mainMixer.FindSnapshot("StageSelect");
+		if (snapshot != null)
+		{
+			snapshot.TransitionTo(transitionIn);
+		}
     }
     public void StageSelect_Stop()
     {
         //TODO
-        audioSource.Stop();
     }
     public void Stage_Play(StageEnum _stage)
     {

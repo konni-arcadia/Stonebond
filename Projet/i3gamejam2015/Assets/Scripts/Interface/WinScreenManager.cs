@@ -69,20 +69,31 @@ public class WinScreenManager : MonoBehaviour {
 		}
         else {
             if (inputManager.WasPressedCtrl(noControler, InputManager.A)) {
+				GameObject InControlObject = GameObject.Find("InControl");
+
                 switch (menuSelectedItem)
                 {
 
                     case StartMenuItem.Quit: Application.Quit();
                         break;
 
-					case StartMenuItem.Restart: Application.LoadLevel(IdOfLevelToRestartTo);
-                                                break;
+				case StartMenuItem.Restart: if(InControlObject != null)
+												Destroy(InControlObject);
+											Application.LoadLevel(IdOfLevelToRestartTo);
+												
+                                               break;
 
                     case StartMenuItem.LvlSelection: PlayerPrefs.SetInt("ComeFromLVL", 0);
+												if(InControlObject != null)
+													Destroy(InControlObject);
                                                 Application.LoadLevel("Menu");
+
                                                 break;
 
-                    case StartMenuItem.MenuSelection: Application.LoadLevel("Menu");
+				case StartMenuItem.MenuSelection: if(InControlObject != null)
+													Destroy(InControlObject);
+												Application.LoadLevel("Menu");
+																				
                                                 break;
                 }
                 Time.timeScale = 1.0f;

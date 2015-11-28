@@ -969,15 +969,15 @@ Prefab:
     m_Modifications:
     - target: {fileID: 492484, guid: 074d547b207b8e349a4b7a021bd3e9cf, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 12.5459185
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 492484, guid: 074d547b207b8e349a4b7a021bd3e9cf, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -.0661375523
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 492484, guid: 074d547b207b8e349a4b7a021bd3e9cf, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 492484, guid: 074d547b207b8e349a4b7a021bd3e9cf, type: 2}
       propertyPath: m_LocalRotation.x
@@ -1007,9 +1007,18 @@ Prefab:
       propertyPath: playerB
       value: 
       objectReference: {fileID: 1376899263}
+    - target: {fileID: 11430984, guid: 074d547b207b8e349a4b7a021bd3e9cf, type: 2}
+      propertyPath: destroyCollider
+      value: 
+      objectReference: {fileID: 890736547}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 074d547b207b8e349a4b7a021bd3e9cf, type: 2}
   m_IsPrefabParent: 0
+--- !u!61 &890736547 stripped
+BoxCollider2D:
+  m_PrefabParentObject: {fileID: 6150560, guid: 074d547b207b8e349a4b7a021bd3e9cf,
+    type: 2}
+  m_PrefabInternal: {fileID: 890736545}
 --- !u!1 &927886251
 GameObject:
   m_ObjectHideFlags: 0

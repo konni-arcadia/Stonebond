@@ -5,6 +5,8 @@ public class BondLink : MonoBehaviour {
 
 	public float completion; // should be between 0.0f and 1.0f
 
+	public BoxCollider2D destroyCollider;
+
 	public GameObject middleAnimation;
 
 	public GameObject playerA;
@@ -194,7 +196,11 @@ public class BondLink : MonoBehaviour {
 		
 		// -- B
 		backwardParticlesBcollider.transform.localPosition = fuckingLocalPos;
-		
+
+		// -- collider
+		destroyCollider.transform.position = middleAnimation.transform.position;
+		Vector2 colliderSize = new Vector2( Mathf.Abs( backwardParticlesBcollider.transform.position.y - backwardParticlesAcollider.transform.position.y ), 1);
+		destroyCollider.size = colliderSize;
 
 	}
 	

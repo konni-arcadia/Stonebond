@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.Audio;
-
 public class SoundManager : MonoBehaviour
 {
     public float BPM = 110;
@@ -11,6 +10,7 @@ public class SoundManager : MonoBehaviour
     private AudioMixer mainMixer;
 
     private AudioSource audioSource;
+    #region AudioClips
     public AudioClip PressStartScreen;
     public AudioClip CharacterSelect;
     public AudioClip StageSelect;
@@ -39,11 +39,7 @@ public class SoundManager : MonoBehaviour
     public AudioClip Land;
     public AudioClip Death;
     public AudioClip Rebirth;
-
-
-    //public AudioClip SelectYourCharacter;
-    //public AudioClip SelectYourStage;
-    //public AudioClip Bound;
+    #endregion
 
     public enum StageEnum
     {
@@ -52,16 +48,7 @@ public class SoundManager : MonoBehaviour
         CloisterOfTheSilence,
         RosetteOfTheWingedOnes,
     }
-
-    //public AudioMixerSnapshot outOfCombat;
-    //public AudioMixerSnapshot inCombat;
-    //public AudioClip CharacterSelect;
-    //public AudioClip StageSelect;
-    //public AudioSource stingSource;
-    //public float bpm = 70;
-
-
-
+    
     #region SINGLETON
     private static SoundManager instance = null;
     public static SoundManager Instance
@@ -96,67 +83,40 @@ public class SoundManager : MonoBehaviour
         source.clip = BoundLoop;
         source.loop = true;
         source.Play();
-
-		//preload Main Menu Sound
-		var mainMenuSource = GetAudioSource("MainMenuSound");
-		mainMenuSource.clip = PressStartScreen;
-		mainMenuSource.loop = true;
-		mainMenuSource.Play();
-
-		//prload Character Select
-		var charSelectSource = GetAudioSource("CharacterSelectSound");
-		charSelectSource.clip = CharacterSelect;
-		charSelectSource.loop = true; 
-		charSelectSource.Play();
-
-		//prload Stage Select
-		var stageSelectSource = GetAudioSource("StageSelectSound");
-		stageSelectSource.clip = StageSelect;
-		stageSelectSource.loop = true; 
-		stageSelectSource.Play();
     }
 
     public void PressStart_Play()
     {
-		var snapshot = mainMixer.FindSnapshot("MainMenu");
-		if (snapshot != null)
-		{
-			snapshot.TransitionTo(transitionIn);
-		}
+        //TODO
+        audioSource.clip = PressStartScreen;
+        audioSource.loop = true;
+        audioSource.Play();
     }
     public void PressStart_Stop()
     {
+        //TODO
         audioSource.Stop();
     }
     public void CharacterSelect_Play()
     {
-        var source = GetAudioSource("VoiceSound");
-		{
-			source.PlayOneShot(VOICECharacterSelect);
-		}
-		var snapshot = mainMixer.FindSnapshot("CharacterSelect");
-		if (snapshot != null)
-		{
-			snapshot.TransitionTo(transitionIn);
-    	}
-	}
+        //TODO
+        
+    }
     public void CharacterSelect_Stop()
     {
-		var snapshot = mainMixer.FindSnapshot("Background");
-		if (snapshot != null)
-		{
-			snapshot.TransitionTo(transitionIn);
-		}
-
+        //TODO
+        audioSource.Stop();
     }
     public void StageSelect_Play()
     {
+        //TODO
         audioSource.clip = StageSelect;
         audioSource.loop = true;
         audioSource.Play();
     }
     public void StageSelect_Stop()
     {
+        //TODO
         audioSource.Stop();
     }
     public void Stage_Play(StageEnum _stage)
@@ -182,68 +142,54 @@ public class SoundManager : MonoBehaviour
     }
     public void Stage_Stop()
     {
+        //TODO
         audioSource.Stop();
     }
     public void Stage_Pause()
     {
+        //TODO
         audioSource.Pause();
     }
     public void Stage_Unpause()
     {
+        //TODO
         audioSource.UnPause();
     }
     public void Cursor_Play()
     {
-        audioSource.PlayOneShot(Cursor);
+        var source = GetAudioSource("SFXSound");
+        source.PlayOneShot(Cursor);
     }
     public void Validate_Play()
     {
-        audioSource.PlayOneShot(Validate);
+        var source = GetAudioSource("SFXSound");
+        source.PlayOneShot(Validate);
+        //audioSource.PlayOneShot(Validate);
     }
     public void Cancel_Play()
     {
-        audioSource.PlayOneShot(Cancel);
+        var source = GetAudioSource("SFXSound");
+        source.PlayOneShot(Cancel);
+        //audioSource.PlayOneShot(Cancel);
     }
 
     public void VOICE_Title_Play()
     {
+        //TODO
         audioSource.PlayOneShot(VOICETitle);
     }
     public void VOICE_SelectCharacter_Play()
     {
-        audioSource.PlayOneShot(VOICECharacterSelect);
-    }
-    public void VOICE_GetReady_Play()
-    {
-        audioSource.PlayOneShot(VOICEGetReady);
-    }
-    public void VOICE_Fight_Play()
-    {
-        audioSource.PlayOneShot(VOICEFight);
-    }
-    public void VOICE_Gameover_Play()
-    {
-        audioSource.PlayOneShot(VOICEGameover);
-    }
-    public void GAMEPLAY_Bound_Play()
-    {
-        audioSource.PlayOneShot(BoundStart);
-    }
-    public void GAMEPLAY_BoundBreak()
-    {
-        audioSource.PlayOneShot(BoundBreak);
+        var source = GetAudioSource("VoiceSound");
+        source.PlayOneShot(VOICECharacterSelect);
+        //audioSource.PlayOneShot(VOICECharacterSelect);
     }
     public void GAMEPLAY_Victory()
     {
+        //TODO
         audioSource.Stop();
         audioSource.PlayOneShot(VictoryJingle);
     }
-    //public void GAMEPLAY_Airdash()
-    //{
-    //    audioSource.PlayOneShot(AirDash);
-    //}
-
-
     public void GAMEPLAY_Jump()
     {
         var source = GetAudioSource("JumpSound");
@@ -262,12 +208,16 @@ public class SoundManager : MonoBehaviour
     public void GAMEPLAY_Attack()
     {
         var source = GetAudioSource("AttackSound");
-        source.PlayOneShot(AttackA);
+        float r = Random.Range(0, 2);
+        if (r > 0.5f)
+        {
+            source.PlayOneShot(AttackA);
+        }
+        else
+        {
+            source.PlayOneShot(AttackB);
+        }
     }
-    //public void GAMEPLAY_AttackB()
-    //{
-    //    audioSource.PlayOneShot(AttackB);
-    //}
     public void GAMEPLAY_Death()
     {
         var source = GetAudioSource("SFXSound");
@@ -298,16 +248,6 @@ public class SoundManager : MonoBehaviour
         var source = GetAudioSource("VoiceSound");
         source.PlayOneShot(VOICEGameover);
     }
-
-
-    //public void SelectYourCharacter_Play()
-    //{
-    //    audioSource.PlayOneShot(SelectYourCharacter);
-    //}
-    //public void SelectYourStage_Play()
-    //{
-    //    audioSource.PlayOneShot(SelectYourStage);
-    //}
 
     public void StartBound()
     {

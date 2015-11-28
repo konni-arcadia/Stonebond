@@ -26,8 +26,12 @@ public class SoundManager : MonoBehaviour
 
     public AudioClip Jump;
     public AudioClip WallJump;
-    public AudioClip Attack;
+    public AudioClip AttackA;
+    public AudioClip AttackB;
     public AudioClip Knockback;
+    public AudioClip Land;
+    public AudioClip Death;
+    public AudioClip Rebirth;
 
 
     //public AudioClip SelectYourCharacter;
@@ -196,13 +200,29 @@ public class SoundManager : MonoBehaviour
     {
         audioSource.PlayOneShot(Jump);
     }
+    public void GAMEPLAY_Land()
+    {
+        audioSource.PlayOneShot(Land);
+    }
     public void GAMEPLAY_Walljump()
     {
         audioSource.PlayOneShot(WallJump);
     }
-    public void GAMEPLAY_Attack()
+    public void GAMEPLAY_AttackA()
     {
-        audioSource.PlayOneShot(Attack);
+        audioSource.PlayOneShot(AttackA);
+    }
+    public void GAMEPLAY_AttackB()
+    {
+        audioSource.PlayOneShot(AttackB);
+    }
+    public void GAMEPLAY_Death()
+    {
+        audioSource.PlayOneShot(Death);
+    }
+    public void GAMEPLAY_Rebirth()
+    {
+        audioSource.PlayOneShot(Rebirth);
     }
     public void GAMEPLAY_Knockback()
     {

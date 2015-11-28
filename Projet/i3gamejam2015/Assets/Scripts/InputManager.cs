@@ -39,7 +39,7 @@ public class InputManager : MonoBehaviour {
 				axisValue += inputDevice.LeftStickX;
 				break;
 			case InputManager.Vertical:
-				axisValue += inputDevice.LeftStickY;
+				axisValue -= inputDevice.LeftStickY;
 				break;
 			}
 		}

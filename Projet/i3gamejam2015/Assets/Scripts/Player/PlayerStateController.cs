@@ -23,7 +23,7 @@ public class PlayerStateController : MonoBehaviour
 	{
 		SPAWN,
 		IDLE,
-		SLASH_ATTACK,
+		ATTACK,
 		KNOCKBACK,
 		CRYSTALED,
 		INVINCIBLE
@@ -157,7 +157,7 @@ public class PlayerStateController : MonoBehaviour
 	// PUBLIC
 	//
 
-	public bool IsSlashed() {
+	public bool IsCrystaled() {
 		return state == State.CRYSTALED || state == State.SPAWN;
 	}
 
@@ -168,8 +168,8 @@ public class PlayerStateController : MonoBehaviour
 	public void onCollide(Collider2D source, Collider2D other) {
 		//debug ("onCollide");
 		
-		if (state != State.SLASH_ATTACK) {
-			//debug ("not in SLASH_ATTACK state");
+		if (state != State.ATTACK) {
+			//debug ("not in ATTACK state");
 			return;
 		}
 		
@@ -198,7 +198,7 @@ public class PlayerStateController : MonoBehaviour
 		PlayerStateController enemy = other.GetComponentInParent<PlayerStateController> ();
 		if (enemy != null) {
 			//debug ("collide with enemy " + enemy.playerId);
-			if (enemy.isPerformingSlashAttack () && isAimingOppositeDirection (enemy)) {
+			if (enemy.isPerformingAttack () && isAimingOppositeDirection (enemy)) {
 				enemy.knockback (aimDirection);
 				knockback (enemy.aimDirection);
 
@@ -208,8 +208,8 @@ public class PlayerStateController : MonoBehaviour
 				else {
 					MyLittlePoney.shake (0.0f, 0.5f, 0.0f, 2.0f);
 				}
-			} else if (enemy.isSlashable ()) {
-				enemy.hitWithSlash (aimDirection);
+			} else if (enemy.isAttackable ()) {
+				enemy.hitWithAttack (aimDirection);
 
 				MyLittlePoney.shake (0.5f, 0.5f, 2.0f, 2.0f);
 			}
@@ -219,7 +219,7 @@ public class PlayerStateController : MonoBehaviour
 		BondLink bondLink = other.GetComponentInParent<BondLink> ();
 		if (bondLink != null) {
 			LevelManager levelManager = FindObjectOfType<LevelManager>();
-			levelManager.bondHasBeenSlashedBy(this);
+			levelManager.bondHasBeenBrokenBy(this);
 		}
 		
 		debug ("WARNING unexpected collision");
@@ -240,7 +240,7 @@ public class PlayerStateController : MonoBehaviour
 			setVisible (true); // dirty make sure sprite is visible if went out of invinsible
 			updateIdle ();
 			break;
-		case State.SLASH_ATTACK:
+		case State.ATTACK:
 			setVisible (true); // dirty make sure sprite is visible if went out of invinsible
 			updateAttack ();
 			break;
@@ -311,16 +311,16 @@ public class PlayerStateController : MonoBehaviour
         //if (angleDegrees != 0) //don't take "empty" pads into account.
         //    print("Joystick angle: " + angleDegrees + " Direction is: " + aimDirection); //DEBUG THIS SHIT NIGGA
 
-		// slash attack
+		// attack
 		if (inputManager.WasPressed (playerId, InputManager.BUTTON_ATTACK)) {
 			if (attackCooldown == 0.0f) {
-				slash ();
+				attack ();
 			} else {
-				print ("p" + playerId + ": slash attack on CD");
+				print ("p" + playerId + ": attack on CD");
 			}
 		}
 
-		// slash attack cooldown
+		// attack cooldown
 		if (attackCooldown > 0.0f) {
 			attackCooldown -= Time.deltaTime;
 			if (attackCooldown < 0.0f) {
@@ -340,8 +340,8 @@ public class PlayerStateController : MonoBehaviour
 
 		// dash
 
-		float slashPct = 1.0f - stateTime / attackTime;
-		float dashVelocityPct = attackCurve.Evaluate (slashPct);
+		float attackPct = 1.0f - stateTime / attackTime;
+		float dashVelocityPct = attackCurve.Evaluate (attackPct);
 
 		switch (aimDirection) {
 		case AimDirection.UP:
@@ -440,10 +440,10 @@ public class PlayerStateController : MonoBehaviour
 		stateTime = initialSpawn ? initialSpawnTime : respawnTime;
 	}
 
-	private void slash()
+	private void attack()
 	{
-		print ("p" + playerId + ": enter SLASH_ATTACK state");
-		state = State.SLASH_ATTACK;
+		print ("p" + playerId + ": enter ATTACK state");
+		state = State.ATTACK;
 		stateTime = attackTime;
 		
 		movementController.setMovementEnabled(false);
@@ -510,7 +510,7 @@ public class PlayerStateController : MonoBehaviour
 		}
 	}
 	
-	private void hitWithSlash (AimDirection dir)
+	private void hitWithAttack (AimDirection dir)
 	{
 		print ("p" + playerId + ": enter CRYSTALED state");
 		state = State.CRYSTALED;
@@ -555,12 +555,12 @@ public class PlayerStateController : MonoBehaviour
 	// HELPERS
 	//
 
-	private bool isPerformingSlashAttack ()
+	private bool isPerformingAttack ()
 	{
-		return state == State.SLASH_ATTACK;
+		return state == State.ATTACK;
 	}
 
-	private bool isSlashable() {
+	private bool isAttackable() {
 		if (isBond) {
 			return false;
 		}
@@ -609,7 +609,7 @@ public class PlayerStateController : MonoBehaviour
 		case State.IDLE:
 			//drawColliderRect (bodyCollider, Color.white);
 			break;
-		case State.SLASH_ATTACK:
+		case State.ATTACK:
 			drawColliderRect (bodyCollider, Color.red);
 			switch(aimDirection) {
 			case AimDirection.UP:

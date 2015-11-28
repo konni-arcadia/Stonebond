@@ -49,7 +49,7 @@ public class LevelManager : MonoBehaviour {
 			appearedSinceSec += Time.deltaTime;
 
 			if (appearedSinceSec >= increaseStartCooldownSecs) {
-				var distance = Vector3.Distance(bondLink.emitterA.transform.position, bondLink.emitterB.transform.position);
+				var distance = Vector3.Distance(bondLink.playerA.transform.position, bondLink.playerB.transform.position);
 				bondLinkGauge += distance * gaugeDecreaseFactor;
 
 //				// A winner is designated
@@ -73,8 +73,8 @@ public class LevelManager : MonoBehaviour {
 	}
 
 	public void bondHasBeenBrokenBy(PlayerStateController player) {
-		var p1 = bondLink.emitterA.GetComponent<PlayerStateController>();
-		var p2 = bondLink.emitterB.GetComponent<PlayerStateController>();
+		var p1 = bondLink.playerAStateController;
+		var p2 = bondLink.playerBStateController;
 		if (p1 == player || p2 == player) {
 			Debug.Log("Discarding slash by bonded player");
 			return;
@@ -93,8 +93,8 @@ public class LevelManager : MonoBehaviour {
 		// Create a bond object linking the two players
 		GameObject obj = Instantiate(bondLinkPrefab);
 		bondLink = obj.GetComponent<BondLink>();
-		bondLink.emitterA = activePlayers[0].gameObject;
-		bondLink.emitterB = activePlayers[1].gameObject;
+		bondLink.playerA = activePlayers[0].gameObject;
+		bondLink.playerB = activePlayers[1].gameObject;
 		activePlayers[0].setBondLink(bondLink);
 		activePlayers[1].setBondLink(bondLink);
 		bondLinkGauge = 0;

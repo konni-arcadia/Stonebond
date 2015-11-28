@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.Audio;
-
 public class SoundManager : MonoBehaviour
 {
     public float BPM = 110;
@@ -11,6 +10,7 @@ public class SoundManager : MonoBehaviour
     private AudioMixer mainMixer;
 
     private AudioSource audioSource;
+    #region AudioClips
     public AudioClip PressStartScreen;
     public AudioClip CharacterSelect;
     public AudioClip StageSelect;
@@ -39,11 +39,7 @@ public class SoundManager : MonoBehaviour
     public AudioClip Land;
     public AudioClip Death;
     public AudioClip Rebirth;
-
-
-    //public AudioClip SelectYourCharacter;
-    //public AudioClip SelectYourStage;
-    //public AudioClip Bound;
+    #endregion
 
     public enum StageEnum
     {
@@ -52,16 +48,7 @@ public class SoundManager : MonoBehaviour
         CloisterOfTheSilence,
         RosetteOfTheWingedOnes,
     }
-
-    //public AudioMixerSnapshot outOfCombat;
-    //public AudioMixerSnapshot inCombat;
-    //public AudioClip CharacterSelect;
-    //public AudioClip StageSelect;
-    //public AudioSource stingSource;
-    //public float bpm = 70;
-
-
-
+    
     #region SINGLETON
     private static SoundManager instance = null;
     public static SoundManager Instance
@@ -91,42 +78,72 @@ public class SoundManager : MonoBehaviour
         transitionOut = quarterNote * 8f;
         mainMixer = Resources.Load<AudioMixer>("Main");
 
+        var snapshot = mainMixer.FindSnapshot("MainMenu");
+        if (snapshot != null)
+        {
+            snapshot.TransitionTo(0);
+        }
+
         //preload bound
         var source = GetAudioSource("BondSound");
         source.clip = BoundLoop;
         source.loop = true;
         source.Play();
+
+		//preload Main Menu
+		var mainMenuSource = GetAudioSource("MainMenuSound");
+		mainMenuSource.clip = PressStartScreen;
+		mainMenuSource.loop = true;
+		mainMenuSource.Play();
+
+		//preload Char Select
+		var characterSelectSource = GetAudioSource("CharacterSelectSound");
+		characterSelectSource.clip = CharacterSelect;
+		characterSelectSource.loop = true;
+		characterSelectSource.Play();
+
+		//preload stage Select
+		var stageSelectSound = GetAudioSource("StageSelectSound");
+		stageSelectSound.clip = StageSelect;
+		stageSelectSound.loop = true;
+		stageSelectSound.Play();
     }
 
     public void PressStart_Play()
     {
-        audioSource.clip = PressStartScreen;
-        audioSource.loop = true;
-        audioSource.Play();
+		var snapshot = mainMixer.FindSnapshot("MainMenu");
+		if (snapshot != null)
+		{
+			snapshot.TransitionTo(transitionIn);
+		}
     }
     public void PressStart_Stop()
     {
-        audioSource.Stop();
+        //TODO
     }
     public void CharacterSelect_Play()
     {
-        audioSource.clip = CharacterSelect;
-        audioSource.loop = true;
-        audioSource.Play();
+		var snapshot = mainMixer.FindSnapshot("CharacterSelect");
+		if (snapshot != null)
+		{
+			snapshot.TransitionTo(transitionIn);
+		}
     }
     public void CharacterSelect_Stop()
     {
-        audioSource.Stop();
+        //TODO
     }
     public void StageSelect_Play()
     {
-        audioSource.clip = StageSelect;
-        audioSource.loop = true;
-        audioSource.Play();
+		var snapshot = mainMixer.FindSnapshot("StageSelect");
+		if (snapshot != null)
+		{
+			snapshot.TransitionTo(transitionIn);
+		}
     }
     public void StageSelect_Stop()
     {
-        audioSource.Stop();
+        //TODO
     }
     public void Stage_Play(StageEnum _stage)
     {
@@ -148,71 +165,66 @@ public class SoundManager : MonoBehaviour
         }
         source.loop = true;
         source.Play();
+
+		var snapshot = mainMixer.FindSnapshot("Background");
+		if (snapshot != null)
+		{
+			snapshot.TransitionTo(transitionIn);
+		}
+
     }
     public void Stage_Stop()
     {
+        //TODO
         audioSource.Stop();
     }
     public void Stage_Pause()
     {
+        //TODO
         audioSource.Pause();
     }
     public void Stage_Unpause()
     {
+        //TODO
         audioSource.UnPause();
     }
     public void Cursor_Play()
     {
-        audioSource.PlayOneShot(Cursor);
+        var source = GetAudioSource("SFXSound");
+        source.PlayOneShot(Cursor);
     }
     public void Validate_Play()
     {
-        audioSource.PlayOneShot(Validate);
+        var source = GetAudioSource("SFXSound");
+        source.PlayOneShot(Validate);
+        //audioSource.PlayOneShot(Validate);
     }
     public void Cancel_Play()
     {
-        audioSource.PlayOneShot(Cancel);
+        var source = GetAudioSource("SFXSound");
+        source.PlayOneShot(Cancel);
+        //audioSource.PlayOneShot(Cancel);
     }
 
     public void VOICE_Title_Play()
     {
-        audioSource.PlayOneShot(VOICETitle);
+        //TODO
+        var source = GetAudioSource("VoiceSound");
+        source.PlayOneShot(VOICETitle);
+        //audioSource.PlayOneShot(VOICETitle);
     }
     public void VOICE_SelectCharacter_Play()
     {
-        audioSource.PlayOneShot(VOICECharacterSelect);
-    }
-    public void VOICE_GetReady_Play()
-    {
-        audioSource.PlayOneShot(VOICEGetReady);
-    }
-    public void VOICE_Fight_Play()
-    {
-        audioSource.PlayOneShot(VOICEFight);
-    }
-    public void VOICE_Gameover_Play()
-    {
-        audioSource.PlayOneShot(VOICEGameover);
-    }
-    public void GAMEPLAY_Bound_Play()
-    {
-        audioSource.PlayOneShot(BoundStart);
-    }
-    public void GAMEPLAY_BoundBreak()
-    {
-        audioSource.PlayOneShot(BoundBreak);
+        var source = GetAudioSource("VoiceSound");
+        source.PlayOneShot(VOICECharacterSelect);
+        //audioSource.PlayOneShot(VOICECharacterSelect);
     }
     public void GAMEPLAY_Victory()
     {
+        //TODO
         audioSource.Stop();
         audioSource.PlayOneShot(VictoryJingle);
     }
-    //public void GAMEPLAY_Airdash()
-    //{
-    //    audioSource.PlayOneShot(AirDash);
-    //}
-
-
     public void GAMEPLAY_Jump()
     {
         var source = GetAudioSource("JumpSound");
@@ -220,7 +232,8 @@ public class SoundManager : MonoBehaviour
     }
     public void GAMEPLAY_Land()
     {
-        audioSource.PlayOneShot(Land);
+		var source = GetAudioSource("SFXSound");
+		source.PlayOneShot(Land);
     }
     public void GAMEPLAY_Walljump()
     {
@@ -230,12 +243,16 @@ public class SoundManager : MonoBehaviour
     public void GAMEPLAY_Attack()
     {
         var source = GetAudioSource("AttackSound");
-        source.PlayOneShot(AttackA);
+        float r = Random.Range(0, 2);
+        if (r > 0.5f)
+        {
+            source.PlayOneShot(AttackA);
+        }
+        else
+        {
+            source.PlayOneShot(AttackB);
+        }
     }
-    //public void GAMEPLAY_AttackB()
-    //{
-    //    audioSource.PlayOneShot(AttackB);
-    //}
     public void GAMEPLAY_Death()
     {
         var source = GetAudioSource("SFXSound");
@@ -266,16 +283,6 @@ public class SoundManager : MonoBehaviour
         var source = GetAudioSource("VoiceSound");
         source.PlayOneShot(VOICEGameover);
     }
-
-
-    //public void SelectYourCharacter_Play()
-    //{
-    //    audioSource.PlayOneShot(SelectYourCharacter);
-    //}
-    //public void SelectYourStage_Play()
-    //{
-    //    audioSource.PlayOneShot(SelectYourStage);
-    //}
 
     public void StartBound()
     {
@@ -318,5 +325,43 @@ public class SoundManager : MonoBehaviour
         return source;
     }
 
+    #region Triggers
+    //TODO
+    //Là c'est un peu deg... > faut changer ces trigger en events
+    public void TriggerMenuBack()
+    {
+        var snapshot = mainMixer.FindSnapshot("MainMenu");
+        if (snapshot != null)
+        {
+            snapshot.TransitionTo(transitionOut);
+        }
+    }
+    
+    public void TriggerGameFinished()
+    {
+        var snapshot = mainMixer.FindSnapshot("MainMenu");
+        if (snapshot != null)
+        {
+            snapshot.TransitionTo(transitionOut);
+        }
+    }
 
+    public void TriggerPause()
+    {
+        var snapshot = mainMixer.FindSnapshot("Pause");
+        if (snapshot != null)
+        {
+            snapshot.TransitionTo(transitionOut);
+        }
+    }
+    public void TriggerResume()
+    {
+        var snapshot = mainMixer.FindSnapshot("Background");
+        if (snapshot != null)
+        {
+            snapshot.TransitionTo(transitionOut);
+        }
+    }
+
+    #endregion
 }

@@ -16,10 +16,11 @@ public class MenuManager : MonoBehaviour {
     private StartMenuItem menuSelectedItem = StartMenuItem.GameStart;
 
     private bool[] wasPressed = new bool[4];
-
+	private InputManager inputManager;
 
 	// Use this for initialization
 	void Start () {
+		inputManager = GetComponent<InputManager> ();
         buttonList = StartButtonArea.GetComponentsInChildren<Outline>();
 
         PlayerPrefs.DeleteAll();
@@ -36,7 +37,7 @@ public class MenuManager : MonoBehaviour {
     void CheckControlerStartMenu(int noControler)
     {
 
-        if (Input.GetButtonDown(InputManager.A + " P" + noControler) || Input.GetButtonDown(InputManager.START + " P" + noControler))
+		if (inputManager.WasPressedCtrl(noControler,InputManager.A) || inputManager.WasPressedCtrl(noControler, InputManager.START))
         {
             switch (menuSelectedItem){
             
@@ -58,7 +59,7 @@ public class MenuManager : MonoBehaviour {
             
         }
 
-        if (!wasPressed[noControler-1] && Input.GetAxis(dpadVertical + noControler) < 0)
+        if (!wasPressed[noControler-1] && inputManager.AxisValueCtrl(noControler, InputManager.Vertical) < 0)
         {
             if (menuSelectedItem != (StartMenuItem)0)
             {
@@ -70,7 +71,7 @@ public class MenuManager : MonoBehaviour {
             }
             
         }
-        else if (!wasPressed[noControler - 1] && Input.GetAxis(dpadVertical + noControler) > 0)
+		else if (!wasPressed[noControler - 1] && inputManager.AxisValueCtrl(noControler, InputManager.Vertical) > 0)
         {
             if (menuSelectedItem != StartMenuItem.Quit)
             {
@@ -82,7 +83,8 @@ public class MenuManager : MonoBehaviour {
             }
             
         }
-        else if (Input.GetAxis(dpadVertical + noControler) == 0 && wasPressed[noControler - 1])
+		else if (inputManager.AxisValueCtrl(noControler, InputManager.Vertical) < 0.1f &&
+		         inputManager.AxisValueCtrl(noControler, InputManager.Vertical) > -0.1f && wasPressed[noControler-1])
         {
             wasPressed[noControler - 1] = false;
         }

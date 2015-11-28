@@ -3,9 +3,10 @@ using System.Collections;
 
 public class CreditsManager : MonoBehaviour {
 
+	private InputManager inputManager;
 	// Use this for initialization
 	void Start () {
-	
+		inputManager = GetComponent<InputManager> ();
 	}
 	
 	// Update is called once per frame
@@ -17,7 +18,7 @@ public class CreditsManager : MonoBehaviour {
     void CheckControlerStartMenu(int noControler)
     {
 
-        if (Input.GetButtonDown(InputManager.B + " P" + noControler))
+		if (inputManager.WasPressedCtrl(noControler, InputManager.B))
         {
             Application.LoadLevelAdditiveAsync("SelectOption");
 

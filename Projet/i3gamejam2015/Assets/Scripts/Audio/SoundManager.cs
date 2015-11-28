@@ -208,7 +208,15 @@ public class SoundManager : MonoBehaviour
     public void GAMEPLAY_Attack()
     {
         var source = GetAudioSource("AttackSound");
-        source.PlayOneShot(AttackA);
+        float r = Random.Range(0, 2);
+        if (r > 0.5f)
+        {
+            source.PlayOneShot(AttackA);
+        }
+        else
+        {
+            source.PlayOneShot(AttackB);
+        }
     }
     public void GAMEPLAY_Death()
     {

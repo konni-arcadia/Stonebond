@@ -869,6 +869,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 11469036, guid: e04ac53af8c69aa4cb428305bd9e940d, type: 2}
+      propertyPath: StageRosetteOfTheWingedOnes
+      value: 
+      objectReference: {fileID: 8300000, guid: b38b411b7a3b3954ebb3b9de16818565, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e04ac53af8c69aa4cb428305bd9e940d, type: 2}
   m_IsPrefabParent: 0

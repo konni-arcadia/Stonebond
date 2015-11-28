@@ -184,7 +184,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerNumber: 1
   PlayerSelection: {fileID: 1237846756}
-  Name: {fileID: 0}
   PressStart: {fileID: 1391407858}
   Player: {fileID: 0}
   Ready: {fileID: 1962362063}
@@ -275,7 +274,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 21
-  m_Sprite: {fileID: 21300000, guid: cf513ba91f5edaa4c94eae649305ed9e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 597d603e965b58940b35c1de867adc5c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!4 &413565031
 Transform:
@@ -597,7 +596,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 21
-  m_Sprite: {fileID: 21300000, guid: 77fb3a0bd2fa7634d90ab68fc8b05d50, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b549c51b591ff24459b40ac09b619b1b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1225160628
 GameObject:
@@ -642,7 +641,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerNumber: 4
   PlayerSelection: {fileID: 1350068517}
-  Name: {fileID: 0}
   PressStart: {fileID: 1690467869}
   Player: {fileID: 0}
   Ready: {fileID: 622941872}
@@ -815,7 +813,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerNumber: 2
   PlayerSelection: {fileID: 899180708}
-  Name: {fileID: 0}
   PressStart: {fileID: 1861621069}
   Player: {fileID: 0}
   Ready: {fileID: 756331913}
@@ -861,7 +858,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 21
-  m_Sprite: {fileID: 21300000, guid: fcc6a45790c7e2848bc8af9eeaad5e3d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 21809f2b8de2017479e895dec0d54d9c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!4 &1508331813
 Transform:
@@ -1086,7 +1083,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 21
-  m_Sprite: {fileID: 21300000, guid: 32a6a6aa9858b244f9061416db3547ed, type: 3}
+  m_Sprite: {fileID: 21300000, guid: bae8b5e5f6e991344acdd1ac99d600b8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1838756762
 GameObject:
@@ -1604,7 +1601,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerNumber: 3
   PlayerSelection: {fileID: 863323200}
-  Name: {fileID: 0}
   PressStart: {fileID: 758016575}
   Player: {fileID: 0}
   Ready: {fileID: 1838756764}

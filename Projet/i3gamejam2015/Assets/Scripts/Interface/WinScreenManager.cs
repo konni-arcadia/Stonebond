@@ -47,7 +47,7 @@ public class WinScreenManager : MonoBehaviour {
 	void CheckControlerStartMenu(int noControler) {
 		if (!isMenuDisplayed) {
 			// First time: display the overlay
-			if (Input.GetButtonDown(InputManager.A + " P" + noControler) && timeSinceStart >= 1) {
+			if (Input.GetButtonDown(InputManager.START + " P" + noControler) /*&& timeSinceStart >= 1*/) {
 				isMenuDisplayed = true;
 				menu.SetActive(true);
 				return;
@@ -71,7 +71,9 @@ public class WinScreenManager : MonoBehaviour {
                     case StartMenuItem.MenuSelection: Application.LoadLevel("Menu");
                                                 break;
                 }
+                Time.timeScale = 1.0f;
                 SoundManager.Instance.Validate_Play();
+
 
             }
 
@@ -108,8 +110,16 @@ public class WinScreenManager : MonoBehaviour {
 
 	// Call this when a player has won
 	public void showScreen() {
+
+        PauseManager pauseMenu = FindObjectOfType<PauseManager>();
+        if (pauseMenu != null)
+        {
+            pauseMenu.RemovePauseScreen();
+        }
+
 		canvas.enabled = true;
 		timeSinceStart = 0;
 		isSceneDisplayed = true;
+        Time.timeScale = 0.0f;
 	}
 }

@@ -50,6 +50,8 @@ public class MenuManager : MonoBehaviour {
                 case StartMenuItem.Credits: Application.LoadLevelAdditiveAsync("Credits");
                     SoundManager.Instance.PressStart_Stop();
                     break;
+
+                case StartMenuItem.HowTo: return;
             }
             SoundManager.Instance.Validate_Play();
             Destroy(gameObject);

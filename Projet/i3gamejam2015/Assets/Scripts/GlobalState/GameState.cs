@@ -39,6 +39,14 @@ public class GameState : Singleton<GameState> {
 		Player(playerBId).TotalScore += 1;
 	}
 
+    public void ClearScores()
+    {
+        foreach (PlayerInfo player in players)
+        {
+            player.TotalScore = 0;
+        }
+    }
+
 	// Get a given player.
 	public PlayerInfo Player(int id) {
 		id -= 1;

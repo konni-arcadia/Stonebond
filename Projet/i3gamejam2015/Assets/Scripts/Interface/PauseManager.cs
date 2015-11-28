@@ -21,6 +21,8 @@ public class PauseManager : MonoBehaviour {
     public Canvas menu;
 	private InputManager inputManager;
 
+	public delegate void GameExitedAction();
+	public event GameExitedAction OnGameExitedAction;
 
 	// Use this for initialization
 	void Start () {
@@ -48,7 +50,9 @@ public class PauseManager : MonoBehaviour {
                 switch (menuSelectedItem)
                 {
 
-                    case StartMenuItem.Quit: Application.Quit();
+                    case StartMenuItem.Quit: 
+						OnGameExitedAction();
+						Application.Quit();
                         break;
 
                     case StartMenuItem.Resume: isDisplayed = false;
@@ -56,13 +60,17 @@ public class PauseManager : MonoBehaviour {
 
                                                 break;
 
-                    case StartMenuItem.LvlSelection: PlayerPrefs.SetInt("ComeFromLVL", 0); 
+                    case StartMenuItem.LvlSelection: 
+						OnGameExitedAction();
+						PlayerPrefs.SetInt("ComeFromLVL", 0); 
                                                 Application.LoadLevel("Menu");
 												if(InControlObject != null)
 													Destroy(InControlObject);
                                                 break;
 
-                    case StartMenuItem.MenuSelection: Application.LoadLevel("Menu");
+                    case StartMenuItem.MenuSelection:
+						OnGameExitedAction();
+						Application.LoadLevel("Menu");
 												if(InControlObject != null)
 													Destroy(InControlObject);
                                                 break;

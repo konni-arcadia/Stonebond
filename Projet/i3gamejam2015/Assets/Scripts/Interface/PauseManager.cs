@@ -21,6 +21,8 @@ public class PauseManager : MonoBehaviour {
     public Canvas menu;
 	private InputManager inputManager;
 
+	public delegate void GameExitedAction();
+	public event GameExitedAction OnGameExitedAction;
 
 	// Use this for initialization
 	void Start () {
@@ -44,21 +46,33 @@ public class PauseManager : MonoBehaviour {
         {
 			if (inputManager.WasPressedCtrl(noControler, InputManager.A))
             {
+				GameObject InControlObject = GameObject.Find("InControl");
                 switch (menuSelectedItem)
                 {
 
-                    case StartMenuItem.Quit: Application.Quit();
+                    case StartMenuItem.Quit: 
+						OnGameExitedAction();
+						Application.Quit();
                         break;
 
                     case StartMenuItem.Resume: isDisplayed = false;
                                                 menu.enabled = false;
+
                                                 break;
 
-                    case StartMenuItem.LvlSelection: PlayerPrefs.SetInt("ComeFromLVL", 0); 
+                    case StartMenuItem.LvlSelection: 
+						OnGameExitedAction();
+						PlayerPrefs.SetInt("ComeFromLVL", 0); 
                                                 Application.LoadLevel("Menu");
+												if(InControlObject != null)
+													Destroy(InControlObject);
                                                 break;
 
-                    case StartMenuItem.MenuSelection: Application.LoadLevel("Menu");
+                    case StartMenuItem.MenuSelection:
+						OnGameExitedAction();
+						Application.LoadLevel("Menu");
+												if(InControlObject != null)
+													Destroy(InControlObject);
                                                 break;
                 }
                 Time.timeScale = 1.0f;
@@ -72,7 +86,7 @@ public class PauseManager : MonoBehaviour {
                 Time.timeScale = 1.0f;
             }
 
-			if (!wasPressed[noControler - 1] && inputManager.AxisValueCtrl(noControler, InputManager.Vertical) < 0)
+			if (!wasPressed[noControler - 1] && inputManager.AxisValueCtrl(noControler, InputManager.Vertical) < InputManager.AxisDeadZone)
             {
                 if (menuSelectedItem != (StartMenuItem)0)
                 {
@@ -84,7 +98,7 @@ public class PauseManager : MonoBehaviour {
                 }
 
             }
-			else if (!wasPressed[noControler - 1] && inputManager.AxisValueCtrl(noControler, InputManager.Vertical) > 0)
+			else if (!wasPressed[noControler - 1] && inputManager.AxisValueCtrl(noControler, InputManager.Vertical) > InputManager.AxisDeadZone)
             {
                 if (menuSelectedItem != StartMenuItem.Quit)
                 {

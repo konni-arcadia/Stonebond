@@ -96,13 +96,33 @@ public class SoundManager : MonoBehaviour
         source.clip = BoundLoop;
         source.loop = true;
         source.Play();
+
+		//preload Main Menu Sound
+		var mainMenuSource = GetAudioSource("MainMenuSound");
+		mainMenuSource.clip = PressStartScreen;
+		mainMenuSource.loop = true;
+		mainMenuSource.Play();
+
+		//prload Character Select
+		var charSelectSource = GetAudioSource("CharacterSelectSound");
+		charSelectSource.clip = CharacterSelect;
+		charSelectSource.loop = true; 
+		charSelectSource.Play();
+
+		//prload Stage Select
+		var stageSelectSource = GetAudioSource("StageSelectSound");
+		stageSelectSource.clip = StageSelect;
+		stageSelectSource.loop = true; 
+		stageSelectSource.Play();
     }
 
     public void PressStart_Play()
     {
-        audioSource.clip = PressStartScreen;
-        audioSource.loop = true;
-        audioSource.Play();
+		var snapshot = mainMixer.FindSnapshot("MainMenu");
+		if (snapshot != null)
+		{
+			snapshot.TransitionTo(transitionIn);
+		}
     }
     public void PressStart_Stop()
     {
@@ -110,15 +130,24 @@ public class SoundManager : MonoBehaviour
     }
     public void CharacterSelect_Play()
     {
-        //audioSource.clip = CharacterSelect;
-        //audioSource.loop = true;
-        //audioSource.Play();
         var source = GetAudioSource("VoiceSound");
-        source.PlayOneShot(VOICECharacterSelect);
-    }
+		{
+			source.PlayOneShot(VOICECharacterSelect);
+		}
+		var snapshot = mainMixer.FindSnapshot("CharacterSelect");
+		if (snapshot != null)
+		{
+			snapshot.TransitionTo(transitionIn);
+    	}
+	}
     public void CharacterSelect_Stop()
     {
-        audioSource.Stop();
+		var snapshot = mainMixer.FindSnapshot("Background");
+		if (snapshot != null)
+		{
+			snapshot.TransitionTo(transitionIn);
+		}
+
     }
     public void StageSelect_Play()
     {

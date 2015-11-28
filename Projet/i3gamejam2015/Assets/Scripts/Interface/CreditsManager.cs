@@ -3,9 +3,10 @@ using System.Collections;
 
 public class CreditsManager : MonoBehaviour {
 
+	private InputManager inputManager;
 	// Use this for initialization
 	void Start () {
-	
+		inputManager = GetComponent<InputManager> ();
 	}
 	
 	// Update is called once per frame

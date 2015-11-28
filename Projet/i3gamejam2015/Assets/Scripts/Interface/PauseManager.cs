@@ -19,10 +19,12 @@ public class PauseManager : MonoBehaviour {
 
     private bool isDisplayed = false;
     public Canvas menu;
+	private InputManager inputManager;
 
 
 	// Use this for initialization
 	void Start () {
+		inputManager = GetComponent<InputManager> ();
         buttonList = StartButtonArea.GetComponentsInChildren<Outline>();
 
         menu.enabled = false;
@@ -40,7 +42,7 @@ public class PauseManager : MonoBehaviour {
 
         if (isDisplayed)
         {
-            if (Input.GetButtonDown(InputManager.A + " P" + noControler))
+			if (inputManager.WasPressedCtrl(noControler, InputManager.A))
             {
                 switch (menuSelectedItem)
                 {
@@ -63,14 +65,14 @@ public class PauseManager : MonoBehaviour {
                 SoundManager.Instance.Validate_Play();
 
             }
-            else if (Input.GetButtonDown(InputManager.START + " P" + noControler))
+			else if (inputManager.WasPressedCtrl(noControler, InputManager.START))
             {
                 isDisplayed = false;
                 menu.enabled = false;
                 Time.timeScale = 1.0f;
             }
 
-            if (!wasPressed[noControler - 1] && Input.GetAxis(dpadVertical + noControler) < 0)
+			if (!wasPressed[noControler - 1] && inputManager.AxisValueCtrl(noControler, InputManager.Vertical) < 0)
             {
                 if (menuSelectedItem != (StartMenuItem)0)
                 {
@@ -82,7 +84,7 @@ public class PauseManager : MonoBehaviour {
                 }
 
             }
-            else if (!wasPressed[noControler - 1] && Input.GetAxis(dpadVertical + noControler) > 0)
+			else if (!wasPressed[noControler - 1] && inputManager.AxisValueCtrl(noControler, InputManager.Vertical) > 0)
             {
                 if (menuSelectedItem != StartMenuItem.Quit)
                 {
@@ -94,14 +96,16 @@ public class PauseManager : MonoBehaviour {
                 }
 
             }
-            else if (Input.GetAxis(dpadVertical + noControler) == 0 && wasPressed[noControler - 1])
+			else if (inputManager.AxisValueCtrl(noControler, InputManager.Vertical) < 0.1f &&
+			         inputManager.AxisValueCtrl(noControler, InputManager.Vertical) > -0.1f && 
+			         wasPressed[noControler - 1])
             {
                 wasPressed[noControler - 1] = false;
             }
         }
         else
         {
-            if (Input.GetButtonDown(InputManager.START + " P" + noControler))
+			if (inputManager.WasPressedCtrl( noControler, InputManager.START))
             {
                 isDisplayed = true;
                 menu.enabled = true;

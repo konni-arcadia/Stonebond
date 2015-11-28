@@ -22,12 +22,15 @@ public class WinScreenManager : MonoBehaviour {
 	public Canvas canvas;
 	private float timeSinceStart;
 	public Sprite[] playerTextSprites;
-	
+
+	private InputManager inputManager ;
+
 	// TEMP TODO refactor end of game jam alert
 	public static int IdOfWonP1 = 1, IdOfWonP2 = 2, IdOfLevelToRestartTo;
 
 	// Use this for initialization
 	void Start () {
+		inputManager = GetComponent<InputManager> ();
 		// NOTE: instantiated at the very beginning of the game
         buttonList = StartButtonArea.GetComponentsInChildren<Outline>();
 		canvas.enabled = false;
@@ -45,14 +48,14 @@ public class WinScreenManager : MonoBehaviour {
 	void CheckControlerStartMenu(int noControler) {
 		if (!isMenuDisplayed) {
 			// First time: display the overlay
-			if (Input.GetButtonDown(InputManager.START + " P" + noControler) /*&& timeSinceStart >= 1*/) {
+			if (inputManager.WasPressedCtrl(noControler, InputManager.START) /*&& timeSinceStart >= 1*/) {
 				isMenuDisplayed = true;
 				menu.SetActive(true);
 				return;
 			}
 		}
         else {
-            if (Input.GetButtonDown(InputManager.A + " P" + noControler)) {
+            if (inputManager.WasPressedCtrl(noControler, InputManager.A)) {
                 switch (menuSelectedItem)
                 {
 
@@ -75,7 +78,7 @@ public class WinScreenManager : MonoBehaviour {
 
             }
 
-            if (!wasPressed[noControler - 1] && Input.GetAxis(dpadVertical + noControler) < 0)
+			if (!wasPressed[noControler - 1] && inputManager.AxisValueCtrl(noControler, InputManager.Vertical) < 0)
             {
                 if (menuSelectedItem != (StartMenuItem)0)
                 {
@@ -87,7 +90,7 @@ public class WinScreenManager : MonoBehaviour {
                 }
 
             }
-            else if (!wasPressed[noControler - 1] && Input.GetAxis(dpadVertical + noControler) > 0)
+			else if (!wasPressed[noControler - 1] && inputManager.AxisValueCtrl(noControler, InputManager.Vertical) > 0)
             {
                 if (menuSelectedItem != StartMenuItem.Quit)
                 {
@@ -99,7 +102,8 @@ public class WinScreenManager : MonoBehaviour {
                 }
 
             }
-            else if (Input.GetAxis(dpadVertical + noControler) == 0 && wasPressed[noControler - 1])
+			else if (inputManager.AxisValueCtrl(noControler, InputManager.Vertical) < 0.1f &&
+			         inputManager.AxisValueCtrl(noControler, InputManager.Vertical) > -0.1f  && wasPressed[noControler - 1])
             {
                 wasPressed[noControler - 1] = false;
             }

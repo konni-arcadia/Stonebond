@@ -31,7 +31,21 @@ public class PlayerStatusProvider : MonoBehaviour {
         if (OnOnWallStatusChanged != null) OnOnWallStatusChanged(isOnWall);
     }
 
-    public delegate void DashForwardAction();
+	public delegate void JumpAction();
+	public event JumpAction onJumpAction;
+	public void setJump()
+	{
+		if (onJumpAction != null) onJumpAction();
+	}
+
+	public delegate void WallJumpAction();
+	public event JumpAction onWallJumpAction;
+	public void setWallJump()
+	{
+		if (onWallJumpAction != null) onWallJumpAction();
+	}
+
+	public delegate void DashForwardAction();
     public event DashForwardAction OnDashForwardAction;
     public void setDashForward()
     {

@@ -106,6 +106,8 @@ public class LevelManager : MonoBehaviour {
 		appearedSinceSec = 0;
 
 		SoundManager.Instance.GAMEPLAY_Bound_Play ();
+
+		MyLittlePoney.slowMotion ();
 	}
 
 	private void ExitBondMode(PlayerStateController p1, PlayerStateController p2) {

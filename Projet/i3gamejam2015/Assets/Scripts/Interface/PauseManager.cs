@@ -86,7 +86,7 @@ public class PauseManager : MonoBehaviour {
                 Time.timeScale = 1.0f;
             }
 
-			if (!wasPressed[noControler - 1] && inputManager.AxisValueCtrl(noControler, InputManager.Vertical) < InputManager.AxisDeadZone)
+			if (!wasPressed[noControler - 1] && inputManager.AxisValueCtrl(noControler, InputManager.Vertical) < -InputManager.AxisDeadZone)
             {
                 if (menuSelectedItem != (StartMenuItem)0)
                 {
@@ -111,7 +111,7 @@ public class PauseManager : MonoBehaviour {
 
             }
 			else if (inputManager.AxisValueCtrl(noControler, InputManager.Vertical) < InputManager.AxisDeadZone &&
-			         inputManager.AxisValueCtrl(noControler, InputManager.Vertical) > InputManager.AxisDeadZone && 
+			         inputManager.AxisValueCtrl(noControler, InputManager.Vertical) > -InputManager.AxisDeadZone && 
 			         wasPressed[noControler - 1])
             {
                 wasPressed[noControler - 1] = false;

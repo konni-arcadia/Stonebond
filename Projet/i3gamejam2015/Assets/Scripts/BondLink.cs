@@ -21,9 +21,12 @@ public class BondLink : MonoBehaviour {
 	protected GameObject magicalParticlesAcontainer;
 	protected GameObject magicalParticlesBcontainer;
 	
+//	protected ParticleSystem forwardParticlesAsystem;
+//	protected ParticleSystem forwardParticlesBsystem;
+	
 	protected ParticleSystem magicalParticlesAsystem;
 	protected ParticleSystem magicalParticlesBsystem;
-
+	
 	public GameObject forwardLineColliderA;
 	public GameObject forwardLineColliderB;
 
@@ -43,10 +46,13 @@ public class BondLink : MonoBehaviour {
 	void Start () {
 
 		fxA = emitterAsource.GetComponent<BondLinkFX> ();
-		fxB = emitterBsource.GetComponent<BondLinkFX> ();
+//		fxB = emitterBsource.GetComponent<BondLinkFX> ();
 
 		playerAStateController = playerA.GetComponent<PlayerStateController> ();
-		playerBStateController = playerB.GetComponent<PlayerStateController> ();
+//		playerBStateController = playerB.GetComponent<PlayerStateController> ();
+
+		// TODO: call from LevelManager
+		OnBond ();
 
 		//linkMiddle = transform.Find ("testAnimLink01").gameObject;
 		//rend = linkMiddle.GetComponent<Renderer> ();
@@ -62,7 +68,11 @@ public class BondLink : MonoBehaviour {
 	public void OnBond() {
 //		ParticleSystem particles
 
-//		fxA.GetLineParticles ();
+		fxA.SetPlayer (playerAStateController.playerId);
+
+		fxA.GetLineParticles ().gameObject.SetActive(true);
+//		forwardParticlesAsystem = 
+//		forwardParticlesAsystem
 //		fxB.GetLineParticles ();
 
 		//magicalParticlesAcontainer
@@ -112,7 +122,7 @@ public class BondLink : MonoBehaviour {
 		forwardLineColliderA.transform.position = linkLineMiddlePoint;
 
 		// magic particles
-		magicalParticlesAcontainer.transform.position = linkLineQuarterLengthPoint;
+///////		magicalParticlesAcontainer.transform.position = linkLineQuarterLengthPoint;
 		// magicalParticlesAsystem = ...
 		// Faire en sorte que la shape box Y soit égale à la longueur de linkLineMiddlePoint
 

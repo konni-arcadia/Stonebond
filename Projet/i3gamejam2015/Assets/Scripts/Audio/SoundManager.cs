@@ -78,6 +78,12 @@ public class SoundManager : MonoBehaviour
         transitionOut = quarterNote * 8f;
         mainMixer = Resources.Load<AudioMixer>("Main");
 
+        var snapshot = mainMixer.FindSnapshot("MainMenu");
+        if (snapshot != null)
+        {
+            snapshot.TransitionTo(0);
+        }
+
         //preload bound
         var source = GetAudioSource("BondSound");
         source.clip = BoundLoop;
@@ -203,7 +209,9 @@ public class SoundManager : MonoBehaviour
     public void VOICE_Title_Play()
     {
         //TODO
-        audioSource.PlayOneShot(VOICETitle);
+        var source = GetAudioSource("VoiceSound");
+        source.PlayOneShot(VOICETitle);
+        //audioSource.PlayOneShot(VOICETitle);
     }
     public void VOICE_SelectCharacter_Play()
     {
@@ -322,19 +330,38 @@ public class SoundManager : MonoBehaviour
     //Là c'est un peu deg... > faut changer ces trigger en events
     public void TriggerMenuBack()
     {
-
+        var snapshot = mainMixer.FindSnapshot("MainMenu");
+        if (snapshot != null)
+        {
+            snapshot.TransitionTo(transitionOut);
+        }
     }
+    
+    public void TriggerGameFinished()
+    {
+        var snapshot = mainMixer.FindSnapshot("MainMenu");
+        if (snapshot != null)
+        {
+            snapshot.TransitionTo(transitionOut);
+        }
+    }
+
     public void TriggerPause()
     {
-
+        var snapshot = mainMixer.FindSnapshot("Pause");
+        if (snapshot != null)
+        {
+            snapshot.TransitionTo(transitionOut);
+        }
     }
     public void TriggerResume()
     {
-
+        var snapshot = mainMixer.FindSnapshot("Background");
+        if (snapshot != null)
+        {
+            snapshot.TransitionTo(transitionOut);
+        }
     }
-    public void TriggerGameFinished()
-    {
 
-    } 
     #endregion
 }

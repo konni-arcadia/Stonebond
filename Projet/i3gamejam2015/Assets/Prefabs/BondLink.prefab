@@ -129,9 +129,9 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
-  m_Offset: {x: -.0225105286, y: 0}
+  m_Offset: {x: -.0109348297, y: 0}
   serializedVersion: 2
-  m_Size: {x: 8.12486649, y: .400000006}
+  m_Size: {x: 8.51846695, y: .400000006}
 --- !u!95 &9581820
 Animator:
   serializedVersion: 3
@@ -162,10 +162,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   emitterA: {fileID: 0}
   emitterB: {fileID: 0}
-  emitterAsource: {fileID: 0}
-  emitterBsource: {fileID: 0}
-  emitterAnoReturnPoint: {fileID: 0}
-  emitterBnoReturnPoint: {fileID: 0}
 --- !u!198 &19838728
 ParticleSystem:
   m_ObjectHideFlags: 1

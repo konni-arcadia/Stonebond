@@ -1007,6 +1007,10 @@ Prefab:
       propertyPath: playerB
       value: 
       objectReference: {fileID: 1376899263}
+    - target: {fileID: 19838206, guid: 074d547b207b8e349a4b7a021bd3e9cf, type: 2}
+      propertyPath: CollisionModule.plane0
+      value: 
+      objectReference: {fileID: 2019521562}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 074d547b207b8e349a4b7a021bd3e9cf, type: 2}
   m_IsPrefabParent: 0
@@ -2085,6 +2089,10 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 11
+--- !u!4 &2019521562 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 451580, guid: 074d547b207b8e349a4b7a021bd3e9cf, type: 2}
+  m_PrefabInternal: {fileID: 890736545}
 --- !u!1001 &2097453889
 Prefab:
   m_ObjectHideFlags: 0

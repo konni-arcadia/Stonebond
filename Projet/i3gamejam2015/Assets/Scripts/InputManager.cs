@@ -4,7 +4,7 @@ using System.Collections;
 
 public class InputManager : MonoBehaviour {
 	//private const float AxisDeadZone = 0.6f;
-	public const float AxisDeadZone = 0.01f;
+	public const float AxisDeadZone = 0.1f;
 	// Buttons
 	public const string A = "Jump";
 	public const string START = "START";

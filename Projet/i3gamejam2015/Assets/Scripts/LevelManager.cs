@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 using System;
 using System.Collections.Generic;
@@ -49,22 +49,26 @@ public class LevelManager : MonoBehaviour {
 			appearedSinceSec += Time.deltaTime;
 
 			if (appearedSinceSec >= increaseStartCooldownSecs) {
-				var distance = Vector3.Distance(bondLink.playerA.transform.position, bondLink.playerB.transform.position);
+				var distance = Vector3.Distance(bondLink.emitterA.transform.position, bondLink.emitterB.transform.position);
 				bondLinkGauge += distance * gaugeDecreaseFactor;
 
-//				// A winner is designated
-//				if (bondLinkGauge > 1) {
-//					bondLinkGauge = 1;
-//					if (!hasAlreadyShownWinScreen) {
-//						var p1 = bondLink.emitterA.GetComponent<PlayerStateController>();
-//						var p2 = bondLink.emitterB.GetComponent<PlayerStateController>();
-//						WinScreenManager.IdOfWonP1 = p1.GetPlayerId();
-//						WinScreenManager.IdOfWonP2 = p2.GetPlayerId();
-//						WinScreenManager.IdOfLevelToRestartTo = Application.loadedLevel;
-//						WinScreenManager.showScreen();
-//						hasAlreadyShownWinScreen = true;
-//					}
-//				}
+				// A winner is designated
+				if (bondLinkGauge > 1) {
+					bondLinkGauge = 1;
+					if (!hasAlreadyShownWinScreen) {
+						// TODO create event for that
+						if(SoundManager.Instance != null) SoundManager.Instance.TriggerGameFinished();
+
+						var p1 = bondLink.emitterA.GetComponent<PlayerStateController>();
+						var p2 = bondLink.emitterB.GetComponent<PlayerStateController>();
+						WinScreenManager.IdOfWonP1 = p1.GetPlayerId();
+						WinScreenManager.IdOfWonP2 = p2.GetPlayerId();
+						WinScreenManager.IdOfLevelToRestartTo = Application.loadedLevel;
+						GameState.Instance.NotifyWinners(p1.GetPlayerId(), p2.GetPlayerId());
+						WinScreenManager.showScreen();
+						hasAlreadyShownWinScreen = true;
+					}
+				}
 			}
 		}
 		else {
@@ -73,8 +77,8 @@ public class LevelManager : MonoBehaviour {
 	}
 
 	public void bondHasBeenBrokenBy(PlayerStateController player) {
-		var p1 = bondLink.playerAStateController;
-		var p2 = bondLink.playerBStateController;
+		var p1 = bondLink.emitterA.GetComponent<PlayerStateController>();
+		var p2 = bondLink.emitterB.GetComponent<PlayerStateController>();
 		if (p1 == player || p2 == player) {
 			Debug.Log("Discarding slash by bonded player");
 			return;
@@ -83,8 +87,6 @@ public class LevelManager : MonoBehaviour {
 
 		MyLittlePoney.shake (1.0f, 1.0f, 2.0f, 2.0f);
 		Flash.flash (0.0f, 0.0f, 0.0f);
-
-		SoundManager.Instance.GAMEPLAY_BoundBreak ();
 	}
 
 	private void EnterBondMode(List<PlayerStateController> activePlayers) {
@@ -93,14 +95,12 @@ public class LevelManager : MonoBehaviour {
 		// Create a bond object linking the two players
 		GameObject obj = Instantiate(bondLinkPrefab);
 		bondLink = obj.GetComponent<BondLink>();
-		bondLink.playerA = activePlayers[0].gameObject;
-		bondLink.playerB = activePlayers[1].gameObject;
+		bondLink.emitterA = activePlayers[0].gameObject;
+		bondLink.emitterB = activePlayers[1].gameObject;
 		activePlayers[0].setBondLink(bondLink);
 		activePlayers[1].setBondLink(bondLink);
 		bondLinkGauge = 0;
 		appearedSinceSec = 0;
-
-		SoundManager.Instance.GAMEPLAY_Bound_Play ();
 
 		MyLittlePoney.slowMotion ();
 	}

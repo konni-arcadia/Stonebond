@@ -24,7 +24,7 @@ public class LevelSelectionManager : MonoBehaviour {
     void Start()
     {
 		inputManager = GetComponent<InputManager> ();
-        //SoundManager.Instance.StageSelect_Play();
+        SoundManager.Instance.StageSelect_Play();
 
     }
 
@@ -73,7 +73,7 @@ public class LevelSelectionManager : MonoBehaviour {
             Destroy(gameObject);
         }
 
-		if (!wasPressed[noControler - 1] && inputManager.AxisValueCtrl(noControler, InputManager.Vertical) < 0)
+		if (!wasPressed[noControler - 1] && inputManager.AxisValueCtrl(noControler, InputManager.Vertical) < -InputManager.AxisDeadZone)
         {
             if (menuSelectedItem != (LvlSelectionItem)0)
             {
@@ -84,7 +84,7 @@ public class LevelSelectionManager : MonoBehaviour {
             }
 
         }
-		else if (!wasPressed[noControler - 1] && inputManager.AxisValueCtrl(noControler, InputManager.Vertical) > 0)
+		else if (!wasPressed[noControler - 1] && inputManager.AxisValueCtrl(noControler, InputManager.Vertical) > InputManager.AxisDeadZone)
         {
             if (menuSelectedItem != LvlSelectionItem.Forest)
             {

@@ -21,7 +21,6 @@ public class PauseManager : MonoBehaviour {
     public Canvas menu;
 	private InputManager inputManager;
 
-
 	// Use this for initialization
 	void Start () {
 		inputManager = GetComponent<InputManager> ();
@@ -44,21 +43,39 @@ public class PauseManager : MonoBehaviour {
         {
 			if (inputManager.WasPressedCtrl(noControler, InputManager.A))
             {
+				GameObject InControlObject = GameObject.Find("InControl");
                 switch (menuSelectedItem)
                 {
 
-                    case StartMenuItem.Quit: Application.Quit();
+                    case StartMenuItem.Quit: 
+						// TODO create event for that
+						if(SoundManager.Instance != null) SoundManager.Instance.TriggerMenuBack();
+						Application.Quit();
                         break;
 
-                    case StartMenuItem.Resume: isDisplayed = false;
+                    case StartMenuItem.Resume:
+						// TODO create event for that
+						if(SoundManager.Instance != null) SoundManager.Instance.TriggerResume();
+						isDisplayed = false;
                                                 menu.enabled = false;
+
                                                 break;
 
-                    case StartMenuItem.LvlSelection: PlayerPrefs.SetInt("ComeFromLVL", 0); 
+                    case StartMenuItem.LvlSelection: 
+						// TODO create event for that
+						if(SoundManager.Instance != null) SoundManager.Instance.TriggerMenuBack();
+						PlayerPrefs.SetInt("ComeFromLVL", 0); 
                                                 Application.LoadLevel("Menu");
+												if(InControlObject != null)
+													Destroy(InControlObject);
                                                 break;
 
-                    case StartMenuItem.MenuSelection: Application.LoadLevel("Menu");
+                    case StartMenuItem.MenuSelection:
+						// TODO create event for that
+						if(SoundManager.Instance != null) SoundManager.Instance.TriggerMenuBack();
+						Application.LoadLevel("Menu");
+												if(InControlObject != null)
+													Destroy(InControlObject);
                                                 break;
                 }
                 Time.timeScale = 1.0f;
@@ -72,7 +89,7 @@ public class PauseManager : MonoBehaviour {
                 Time.timeScale = 1.0f;
             }
 
-			if (!wasPressed[noControler - 1] && inputManager.AxisValueCtrl(noControler, InputManager.Vertical) < 0)
+			if (!wasPressed[noControler - 1] && inputManager.AxisValueCtrl(noControler, InputManager.Vertical) < -InputManager.AxisDeadZone)
             {
                 if (menuSelectedItem != (StartMenuItem)0)
                 {
@@ -84,7 +101,7 @@ public class PauseManager : MonoBehaviour {
                 }
 
             }
-			else if (!wasPressed[noControler - 1] && inputManager.AxisValueCtrl(noControler, InputManager.Vertical) > 0)
+			else if (!wasPressed[noControler - 1] && inputManager.AxisValueCtrl(noControler, InputManager.Vertical) > InputManager.AxisDeadZone)
             {
                 if (menuSelectedItem != StartMenuItem.Quit)
                 {
@@ -97,7 +114,7 @@ public class PauseManager : MonoBehaviour {
 
             }
 			else if (inputManager.AxisValueCtrl(noControler, InputManager.Vertical) < InputManager.AxisDeadZone &&
-			         inputManager.AxisValueCtrl(noControler, InputManager.Vertical) > InputManager.AxisDeadZone && 
+			         inputManager.AxisValueCtrl(noControler, InputManager.Vertical) > -InputManager.AxisDeadZone && 
 			         wasPressed[noControler - 1])
             {
                 wasPressed[noControler - 1] = false;
@@ -107,6 +124,9 @@ public class PauseManager : MonoBehaviour {
         {
 			if (inputManager.WasPressedCtrl( noControler, InputManager.START))
             {
+				// TODO create event for that
+				if(SoundManager.Instance != null) SoundManager.Instance.TriggerPause();
+
                 isDisplayed = true;
                 menu.enabled = true;
                 Time.timeScale = 0.0f;

@@ -1,0 +1,441 @@
+fileFormatVersion: 2
+guid: 07bae7bd3445e4329b07bf0b9da53838
+timeCreated: 1448724475
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: LINK_creation01
+    21300002: LINK_creation02
+    21300004: LINK_creation03
+    21300006: LINK_creation04
+    21300008: LINK_creation05
+    21300010: LINK_creation06
+    21300012: LINK_creation07
+    21300014: LINK_cycle01
+    21300016: LINK_cycle02
+    21300018: LINK_cycle03
+    21300020: LINK_cycle04
+    21300022: LINK_cycle05
+    21300024: LINK_cycle06
+    21300026: LINK_cycle07
+    21300028: LINK_cycle08
+    21300030: link_break01
+    21300032: link_break02
+    21300034: link_break03
+    21300036: link_break04
+    21300038: link_break05
+    21300040: link_break06
+    21300042: shield_000
+    21300044: shield_001
+    21300046: shield_002
+    21300048: shield_003
+    21300050: shield_004
+    21300052: shield_005
+    21300054: shield_006
+    21300056: shield_007
+    21300058: shield_008
+    21300060: shield_009
+    21300062: shield_010
+    21300064: LINK_bondLimit00
+    21300066: LINK_bondLimit01
+    21300068: LINK_bondLimit02
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 8
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 4096
+  textureSettings:
+    filterMode: 0
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 15
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: LINK_bondLimit00
+      rect:
+        serializedVersion: 2
+        x: 228
+        y: 16
+        width: 16
+        height: 19
+      alignment: 9
+      pivot: {x: .5625, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: LINK_bondLimit01
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 8
+        width: 18
+        height: 18
+      alignment: 9
+      pivot: {x: .5, y: .527777791}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: LINK_bondLimit02
+      rect:
+        serializedVersion: 2
+        x: 438
+        y: 6
+        width: 18
+        height: 17
+      alignment: 9
+      pivot: {x: .5, y: .558823526}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: LINK_creation01
+      rect:
+        serializedVersion: 2
+        x: 364
+        y: 8
+        width: 36
+        height: 36
+      alignment: 9
+      pivot: {x: .513888896, y: .486111104}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: LINK_creation02
+      rect:
+        serializedVersion: 2
+        x: 152
+        y: 31
+        width: 43
+        height: 44
+      alignment: 9
+      pivot: {x: .54651165, y: .511363626}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: LINK_creation03
+      rect:
+        serializedVersion: 2
+        x: 196
+        y: 39
+        width: 45
+        height: 41
+      alignment: 9
+      pivot: {x: .477777779, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: LINK_creation04
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 60
+        width: 13
+        height: 13
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: LINK_creation05
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 82
+        width: 48
+        height: 45
+      alignment: 9
+      pivot: {x: .489583343, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: LINK_creation06
+      rect:
+        serializedVersion: 2
+        x: 404
+        y: 44
+        width: 35
+        height: 39
+      alignment: 9
+      pivot: {x: .557142854, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: LINK_creation07
+      rect:
+        serializedVersion: 2
+        x: 402
+        y: 9
+        width: 34
+        height: 33
+      alignment: 9
+      pivot: {x: .455882341, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: LINK_cycle01
+      rect:
+        serializedVersion: 2
+        x: 287
+        y: 40
+        width: 38
+        height: 42
+      alignment: 9
+      pivot: {x: .526315808, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: LINK_cycle02
+      rect:
+        serializedVersion: 2
+        x: 348
+        y: 85
+        width: 41
+        height: 42
+      alignment: 9
+      pivot: {x: .48780489, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: LINK_cycle03
+      rect:
+        serializedVersion: 2
+        x: 253
+        y: 85
+        width: 43
+        height: 42
+      alignment: 9
+      pivot: {x: .511627913, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: LINK_cycle04
+      rect:
+        serializedVersion: 2
+        x: 364
+        y: 46
+        width: 38
+        height: 37
+      alignment: 9
+      pivot: {x: .526315808, y: .513513505}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: LINK_cycle05
+      rect:
+        serializedVersion: 2
+        x: 55
+        y: 36
+        width: 46
+        height: 42
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: LINK_cycle06
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 39
+        width: 46
+        height: 41
+      alignment: 9
+      pivot: {x: .5, y: .48780489}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: LINK_cycle07
+      rect:
+        serializedVersion: 2
+        x: 303
+        y: 84
+        width: 43
+        height: 42
+      alignment: 9
+      pivot: {x: .511627913, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: LINK_cycle08
+      rect:
+        serializedVersion: 2
+        x: 327
+        y: 41
+        width: 35
+        height: 41
+      alignment: 9
+      pivot: {x: .485714287, y: .48780489}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: link_break01
+      rect:
+        serializedVersion: 2
+        x: 169
+        y: 3
+        width: 27
+        height: 26
+      alignment: 9
+      pivot: {x: .444444448, y: .538461566}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: link_break02
+      rect:
+        serializedVersion: 2
+        x: 327
+        y: 11
+        width: 30
+        height: 28
+      alignment: 9
+      pivot: {x: .466666669, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: link_break03
+      rect:
+        serializedVersion: 2
+        x: 154
+        y: 78
+        width: 44
+        height: 48
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: link_break04
+      rect:
+        serializedVersion: 2
+        x: 439
+        y: 92
+        width: 44
+        height: 35
+      alignment: 9
+      pivot: {x: .5, y: .428571433}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: link_break05
+      rect:
+        serializedVersion: 2
+        x: 236
+        y: 49
+        width: 44
+        height: 35
+      alignment: 9
+      pivot: {x: .5, y: .428571433}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: link_break06
+      rect:
+        serializedVersion: 2
+        x: 468
+        y: 102
+        width: 36
+        height: 25
+      alignment: 9
+      pivot: {x: .5, y: .639999986}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: shield_000
+      rect:
+        serializedVersion: 2
+        x: 193
+        y: 118
+        width: 9
+        height: 9
+      alignment: 9
+      pivot: {x: .388888896, y: .611111104}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: shield_001
+      rect:
+        serializedVersion: 2
+        x: 276
+        y: 59
+        width: 8
+        height: 24
+      alignment: 9
+      pivot: {x: .5625, y: .9375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: shield_002
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 7
+        width: 28
+        height: 29
+      alignment: 9
+      pivot: {x: .410714298, y: .568965495}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: shield_003
+      rect:
+        serializedVersion: 2
+        x: 441
+        y: 59
+        width: 36
+        height: 38
+      alignment: 9
+      pivot: {x: .541666687, y: .486842096}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: shield_004
+      rect:
+        serializedVersion: 2
+        x: 441
+        y: 25
+        width: 33
+        height: 31
+      alignment: 9
+      pivot: {x: .469696969, y: .532258093}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: shield_005
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 28
+        width: 49
+        height: 44
+      alignment: 9
+      pivot: {x: .418367356, y: .420454532}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: shield_006
+      rect:
+        serializedVersion: 2
+        x: 397
+        y: 85
+        width: 40
+        height: 42
+      alignment: 9
+      pivot: {x: .487500012, y: .488095224}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: shield_007
+      rect:
+        serializedVersion: 2
+        x: 55
+        y: 79
+        width: 46
+        height: 48
+      alignment: 9
+      pivot: {x: .576086938, y: .53125}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: shield_008
+      rect:
+        serializedVersion: 2
+        x: 204
+        y: 81
+        width: 46
+        height: 46
+      alignment: 9
+      pivot: {x: .489130437, y: .510869563}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: shield_009
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 75
+        width: 52
+        height: 52
+      alignment: 9
+      pivot: {x: .490384609, y: .509615362}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: shield_010
+      rect:
+        serializedVersion: 2
+        x: 294
+        y: 13
+        width: 29
+        height: 28
+      alignment: 9
+      pivot: {x: .465517253, y: .553571403}
+      border: {x: 0, y: 0, z: 0, w: 0}
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

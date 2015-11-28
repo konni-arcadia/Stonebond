@@ -7,6 +7,10 @@ public class MyLittlePoney : MonoBehaviour {
 
 	public float scaler = 1.0f;
 
+	//
+	// SCREEN SHAKE
+	//
+
 	private float strenghtX = 0.0f;
 	private float strenghtY = 0.0f;
 	private float strenghtZ = 0.0f;
@@ -81,6 +85,8 @@ public class MyLittlePoney : MonoBehaviour {
 		}
 
 		transform.localPosition = position;
+
+		updateSlowMotion ();
 	}
 
 	public static void shake(float strenghtX, float strenghtY, float decayX, float decayY) {
@@ -101,5 +107,30 @@ public class MyLittlePoney : MonoBehaviour {
 		
 		instance.strenghtZ = strenghtZ * instance.scaler;
 		instance.decayZ = decayZ * instance.scaler;
+	}
+
+	//
+	// SLOW MOTION
+	//
+
+	public float slowMotionTime = 0.15f;
+	private float slowMotionCounter = 0.0f;
+
+	private void updateSlowMotion() {
+		if(slowMotionCounter > 0.0f) {
+			slowMotionCounter -= Time.deltaTime;
+			if(slowMotionCounter <= 0.0f) {
+				slowMotionCounter = 0.0f;
+				Time.timeScale = 1.0f;
+			}
+			else {
+				float pct = 1.0f - slowMotionCounter / slowMotionTime;
+				Time.timeScale = 0.5f + pct * 0.5f;
+			}
+		}
+	}
+
+	public static void slowMotion() {
+		instance.slowMotionCounter = instance.slowMotionTime;
 	}
 }

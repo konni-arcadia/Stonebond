@@ -77,7 +77,10 @@ public class PlayerStateController : MonoBehaviour
 	public float attackVelocityForwardAir = 2000.0f;
 	public float attackHorizGravity = 20.0f;
 	public AnimationCurve attackCurve;
-	private bool airDash = false;
+	public float attackUpHorizControl = 0.5f;
+	public float attackDownHorizControl = 0.5f;
+
+	//private bool airDash = false;
 
 	//
 	// KNOCKBACK
@@ -338,22 +341,26 @@ public class PlayerStateController : MonoBehaviour
 			return;
 		}
 
-		// dash
-
 		float attackPct = 1.0f - stateTime / attackTime;
-		float dashVelocityPct = attackCurve.Evaluate (attackPct);
+		float attackVelocityPct = attackCurve.Evaluate (attackPct);
 
 		switch (aimDirection) {
-		case AimDirection.UP:
-			movementController.setVelocity (new Vector2(0.0f, dashVelocityPct * Time.deltaTime * attackVelocityUp));
+		case AimDirection.UP: {
+			float vx = inputManager.AxisValue (playerId, InputManager.Horizontal) * attackUpHorizControl;
+			float vy = attackVelocityPct * Time.deltaTime * attackVelocityUp;
+			movementController.setVelocity (new Vector2(vx, vy));
 			break;
-		case AimDirection.DOWN:
-			movementController.setVelocity (new Vector2(0.0f, dashVelocityPct * Time.deltaTime * -attackVelocityDown));
+		}
+		case AimDirection.DOWN: {
+			float vx = inputManager.AxisValue (playerId, InputManager.Horizontal) * attackDownHorizControl;
+			float vy = attackVelocityPct * Time.deltaTime * -attackVelocityDown;
+			movementController.setVelocity (new Vector2(vx, vy));
 			break;
+		}
 		case AimDirection.FORWARD:
 			// TODO check if ground
 			float velocity;
-			if(airDash) {
+			/*if(airDash) {
 				velocity = attackVelocityForwardAir;
 				if(movementController.isGrounded ()) {
 					// cancel the air dash
@@ -362,14 +369,14 @@ public class PlayerStateController : MonoBehaviour
 					return;
 				}
 			}
-			else {
+			else {*/
 				velocity = attackVelocityForwardGround;
-			}
+			//}
 
 			if(!movementController.isFacingRight()) {
 				velocity = -velocity;
 			}
-			movementController.setVelocity (new Vector2(dashVelocityPct * Time.deltaTime * velocity, -attackHorizGravity));
+			movementController.setVelocity (new Vector2(attackVelocityPct * Time.deltaTime * velocity, -attackHorizGravity));
 			break;
 		}
 	}
@@ -536,6 +543,7 @@ public class PlayerStateController : MonoBehaviour
 		// TODO statusProvider.setDie (transform.position, directionVector);
 
 		Flash.flash ();
+		MyLittlePoney.slowMotion ();
 	}
 
 	//

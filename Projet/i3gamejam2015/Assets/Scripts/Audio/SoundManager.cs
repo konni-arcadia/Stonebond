@@ -128,6 +128,7 @@ public class SoundManager : MonoBehaviour
 		{
 			snapshot.TransitionTo(transitionIn);
 		}
+		VOICE_SelectCharacter_Play();
     }
     public void CharacterSelect_Stop()
     {

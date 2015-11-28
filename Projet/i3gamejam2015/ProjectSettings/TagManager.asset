@@ -31,7 +31,7 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - HUD
   - 
   - 
   - 
@@ -41,4 +41,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: HUD
+    uniqueID: 1200718115
     locked: 0

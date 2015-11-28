@@ -17,20 +17,23 @@ public class CountDownManager : MonoBehaviour {
 
 	public void OnGetReadyTextShown()
 	{
-		// TODO add sound
-		Debug.Log("OnGetReadyTextShown");
+        // TODO add sound
+        //Debug.Log("OnGetReadyTextShown");
+        SoundManager.Instance.GAMEPLAY_Ready();
 	}
 	
 	public void OnFightTextShown()
 	{
 		Flash.flash ();
 		// TODO add sound
-		Debug.Log("OnFightTextShown");
-	}
+		//Debug.Log("OnFightTextShown");
+        SoundManager.Instance.GAMEPLAY_Fight();
+    }
 	
 	public void OnCountDownOver()
 	{
-		// TODO notify level manager
-		Debug.Log("OnCountDownOver");
-	}
+        // TODO notify level manager
+        //Debug.Log("OnCountDownOver");
+        SoundManager.Instance.GAMEPLAY_Gameover();
+    }
 }

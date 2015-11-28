@@ -251,6 +251,23 @@ public class SoundManager : MonoBehaviour
         var source = GetAudioSource("SFXSound");
         source.PlayOneShot(Knockback);
     }
+    public void GAMEPLAY_Ready()
+    {
+        var source = GetAudioSource("VoiceSound");
+        source.PlayOneShot(VOICEGetReady);
+    }
+    public void GAMEPLAY_Fight()
+    {
+        var source = GetAudioSource("VoiceSound");
+        source.PlayOneShot(VOICEFight);
+    }
+    public void GAMEPLAY_Gameover()
+    {
+        var source = GetAudioSource("VoiceSound");
+        source.PlayOneShot(VOICEGameover);
+    }
+
+
     //public void SelectYourCharacter_Play()
     //{
     //    audioSource.PlayOneShot(SelectYourCharacter);

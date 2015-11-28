@@ -39,6 +39,10 @@ public class LevelSelectionManager : MonoBehaviour {
 
         if (Input.GetButtonDown(InputManager.A + " P" + noControler))
         {
+			GameObject InControlObject = GameObject.Find("InControl");
+			if(InControlObject != null)
+				Destroy(InControlObject);
+
             SoundManager.Instance.StageSelect_Stop();
             switch (menuSelectedItem)
             {

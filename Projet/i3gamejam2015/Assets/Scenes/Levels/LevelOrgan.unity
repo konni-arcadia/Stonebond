@@ -342,6 +342,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scaler: .5
+  slowMotionTime: .150000006
 --- !u!81 &410019695
 AudioListener:
   m_ObjectHideFlags: 0

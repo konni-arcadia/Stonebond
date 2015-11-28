@@ -11,10 +11,23 @@ public class PlayerSoundManager : MonoBehaviour
     void Start()
     {
         //statusProvider.OnDashUpAction??
+        statusProvider.OnBoundChangedAction += OnBounded;
         statusProvider.OnGroundedStatusChanged += OnGrounded;
         statusProvider.OnOnWallStatusChanged += OnWallrided;
         statusProvider.OnKnockBackAction += onKnockbacked;
         statusProvider.OnDieAction += onPlayerDied;
+    }
+
+    private void OnBounded(bool isBounded)
+    {
+        if (isBounded)
+        {
+            SoundManager.Instance.StartBound();
+        }
+        else
+        {
+            SoundManager.Instance.StopBound();
+        }
     }
 
     private void OnGrounded(bool isGrounded)

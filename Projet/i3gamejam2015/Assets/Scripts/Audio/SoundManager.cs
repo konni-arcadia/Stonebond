@@ -27,6 +27,7 @@ public class SoundManager : MonoBehaviour
     public AudioClip VOICEFight;
     public AudioClip VOICEGameover;
     public AudioClip BoundStart;
+    public AudioClip BoundLoop;
     public AudioClip BoundBreak;
     public AudioClip VictoryJingle;
 
@@ -89,6 +90,12 @@ public class SoundManager : MonoBehaviour
         transitionIn = quarterNote / 8f;
         transitionOut = quarterNote * 8f;
         mainMixer = Resources.Load<AudioMixer>("Main");
+
+        //preload bound
+        var source = GetAudioSource("BondSound");
+        source.clip = BoundLoop;
+        source.loop = true;
+        source.Play();
     }
 
     public void PressStart_Play()
@@ -246,6 +253,24 @@ public class SoundManager : MonoBehaviour
     //{
     //    audioSource.PlayOneShot(SelectYourStage);
     //}
+
+    public void StartBound()
+    {
+        var snapshot = mainMixer.FindSnapshot("Bond");
+        if (snapshot != null)
+        {
+            snapshot.TransitionTo(transitionIn);
+        }
+    }
+
+    public void StopBound()
+    {
+        var snapshot = mainMixer.FindSnapshot("Background");
+        if (snapshot != null)
+        {
+            snapshot.TransitionTo(transitionOut);
+        }
+    }
 
     protected AudioSource GetAudioSource(string _objectID)
     {

@@ -38,12 +38,13 @@
 		}
 
 		Cull Off
-		Lighting Off // On
+		Lighting Off //On
 		ZWrite Off
 		Blend One OneMinusSrcAlpha
 
 		CGPROGRAM
-		#pragma surface surf Lambert vertex:vert nofog keepalpha
+		#pragma surface surf Lambert nofog keepalpha
+		#pragma vertex vert
 		#pragma multi_compile _ PIXELSNAP_ON
 
 		sampler2D _MainTex;
@@ -106,6 +107,7 @@
 			
 			float tintBurn = 0.2;
 			
+			
 			//o.Albedo = srcTex.rgb * srcTex.a;
 			//o.Albedo = ( srcTex.rgb * IN.color * srcTex.a )
 				//+ ( _ChromaTexColor * chrTex.a );
@@ -124,6 +126,12 @@
 			
 			//o.Normal = UnpackNormal ( lerp( neutralNormalMap, nmpTex, 1 ) );
 			//o.Normal = UnpackNormal ( neutralNormalMap );
+
+
+//			o.Albedo = srcTex.rgb * srcTex.a;
+//			
+//			o.Alpha = srcTex.a;
+//			
 			
 		}
 		ENDCG

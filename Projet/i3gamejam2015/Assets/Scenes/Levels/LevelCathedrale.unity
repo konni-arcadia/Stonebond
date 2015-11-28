@@ -262,7 +262,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 443422, guid: c5501fad9ab5b144ea2d91b926a85505, type: 2}
       propertyPath: m_RootOrder
-      value: 12
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 106184, guid: c5501fad9ab5b144ea2d91b926a85505, type: 2}
       propertyPath: m_Name
@@ -469,6 +469,48 @@ Camera:
   m_StereoConvergence: 10
   m_StereoSeparation: .0219999999
   m_StereoMirrorMode: 0
+--- !u!1001 &376793616
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 445492, guid: 294137296027b2e479aede083fd94e21, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -8.27000046
+      objectReference: {fileID: 0}
+    - target: {fileID: 445492, guid: 294137296027b2e479aede083fd94e21, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 2.45000005
+      objectReference: {fileID: 0}
+    - target: {fileID: 445492, guid: 294137296027b2e479aede083fd94e21, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 445492, guid: 294137296027b2e479aede083fd94e21, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 445492, guid: 294137296027b2e479aede083fd94e21, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 445492, guid: 294137296027b2e479aede083fd94e21, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 445492, guid: 294137296027b2e479aede083fd94e21, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 445492, guid: 294137296027b2e479aede083fd94e21, type: 2}
+      propertyPath: m_RootOrder
+      value: 12
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 294137296027b2e479aede083fd94e21, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1001 &438987345
 Prefab:
   m_ObjectHideFlags: 0
@@ -548,7 +590,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 447376, guid: 8116402c71c5f54408c42dcd07a0a934, type: 2}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8116402c71c5f54408c42dcd07a0a934, type: 2}
@@ -599,6 +641,10 @@ Prefab:
     - target: {fileID: 21280966, guid: 6d997ba5afbdb4f4a8b5ccd242d1d299, type: 2}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 126798, guid: 6d997ba5afbdb4f4a8b5ccd242d1d299, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6d997ba5afbdb4f4a8b5ccd242d1d299, type: 2}
@@ -698,7 +744,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 403350, guid: a904c34d903b54d4480ae07335a47cd0, type: 2}
       propertyPath: m_RootOrder
-      value: 9
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 108138, guid: a904c34d903b54d4480ae07335a47cd0, type: 2}
       propertyPath: m_Name
@@ -877,7 +923,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 403350, guid: a904c34d903b54d4480ae07335a47cd0, type: 2}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 21284508, guid: a904c34d903b54d4480ae07335a47cd0, type: 2}
       propertyPath: m_Sprite
@@ -1070,7 +1116,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 443422, guid: c5501fad9ab5b144ea2d91b926a85505, type: 2}
       propertyPath: m_RootOrder
-      value: 11
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 21276782, guid: c5501fad9ab5b144ea2d91b926a85505, type: 2}
       propertyPath: m_SortingOrder

@@ -49,7 +49,6 @@ public class PlayerMovementController : MonoBehaviour
     void Update()
     {
         // The player is grounded if a linecast to the groundcheck position hits anything on the ground layer.
-        bool wasGrounded = grounded;
         grounded = false;
         if (body.velocity.y <= 0)
         {
@@ -124,7 +123,8 @@ public class PlayerMovementController : MonoBehaviour
         if (wantJump || wantWallJump)
         {
             //			AudioSource.PlayClipAtPoint(jumpClip, body.position);
-            SoundManager.Instance.GAMEPLAY_Jump();
+            //SoundManager.Instance.GAMEPLAY_Jump();
+			// TODO mystatusProvider
 
             // Ensure that the current vy doesn't take in account
             Vector2 vel = body.velocity;
@@ -149,7 +149,7 @@ public class PlayerMovementController : MonoBehaviour
         else if (wantJumpExtension)
         {
             body.AddForce(new Vector2(0, extensionJumpForce * Time.fixedDeltaTime));
-            SoundManager.Instance.GAMEPLAY_Walljump();
+            // TODO event SoundManager.Instance.GAMEPLAY_Walljump();
         }
 
         //Update Y velocity in player status component

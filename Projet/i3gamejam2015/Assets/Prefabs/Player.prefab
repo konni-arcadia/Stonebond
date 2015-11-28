@@ -59,7 +59,7 @@ GameObject:
   - 61: {fileID: 6147806}
   - 114: {fileID: 11438052}
   m_Layer: 11
-  m_Name: slashAttackColliderForward
+  m_Name: attackColliderForward
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -169,7 +169,7 @@ GameObject:
   - 61: {fileID: 6103116}
   - 114: {fileID: 11443848}
   m_Layer: 11
-  m_Name: slashAttackColliderDown
+  m_Name: attackColliderDown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -207,7 +207,7 @@ GameObject:
   - 61: {fileID: 6124196}
   - 114: {fileID: 11462366}
   m_Layer: 11
-  m_Name: slashAttackColliderUp
+  m_Name: attackColliderUp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -594,7 +594,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 175f89bebba16fb45a68902b57c95793, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 13
+  maxSpeed: 10
   maxFallSpeed: 200
   breakForce: 100
   initialJumpForce: 1000
@@ -669,14 +669,14 @@ MonoBehaviour:
   VerticalAimThresholdDegree: 100
   initialSpawnTime: 1.79999995
   respawnTime: 1.20000005
-  slashAttackTime: .349999994
-  slashAttackCooldownTime: .5
-  slashAttackDashVelocityUp: 1200
-  slashAttackDashVelocityDown: 2000
-  slashAttackDashVelocityForwardGround: 3000
-  slashAttackDashVelocityForwardAir: 4000
-  slashAttackHorizDashGravity: 40
-  slashAttackDashCurve:
+  attackTime: .349999994
+  attackCooldownTime: .5
+  attackVelocityUp: 1200
+  attackVelocityDown: 2000
+  attackVelocityForwardGround: 3000
+  attackVelocityForwardAir: 4000
+  attackHorizGravity: 20
+  attackCurve:
     serializedVersion: 2
     m_Curve:
     - time: -.00145984697
@@ -710,7 +710,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-  slashedTime: 2
+  crystaledTime: 2
   invincibleAfterSpawnTime: 3
   invinsibleBlinkInterval: .119999997
 --- !u!212 &21232852
@@ -773,8 +773,12 @@ Prefab:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 0}
+      propertyPath: attackCurve.m_Curve.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
       propertyPath: maxSpeed
-      value: 13
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Offset.x
@@ -855,6 +859,38 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: initialSpawnTime
       value: 1.79999995
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: initialJumpForce
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Name
+      value: attackColliderUp
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackTime
+      value: .349999994
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackCooldownTime
+      value: .5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackVelocityUp
+      value: 1200
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackVelocityDown
+      value: 2000
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackVelocityForwardGround
+      value: 3000
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackVelocityForwardAir
+      value: 4000
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

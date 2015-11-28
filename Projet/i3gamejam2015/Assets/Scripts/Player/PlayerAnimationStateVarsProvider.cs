@@ -23,9 +23,10 @@ public class PlayerAnimationStateVarsProvider : MonoBehaviour {
         myStatusProvider.OnVelocityYChanged += VelocityYChangedAction;
         myStatusProvider.OnGroundedStatusChanged += GroundedAction;
         myStatusProvider.OnOnWallStatusChanged += OnWallAction;
-        myStatusProvider.OnDashForwardAction += DashForwardAction;
-        myStatusProvider.OnDashUpAction += DashUpAction;
-        myStatusProvider.OnDashDownAction += DashDownAction;
+        myStatusProvider.OnAttackForwardAction += AttackForwardAction;
+        myStatusProvider.OnAttackUpAction += AttackUpAction;
+        myStatusProvider.OnAttackDownAction += AttackDownAction;
+		myStatusProvider.OnAttackSpecialAction += AttackSpecialAction;
         myStatusProvider.OnKnockBackAction += KnockBackAction;
         myStatusProvider.OnDieAction += DieAction;
         myStatusProvider.OnRespawnWarningAction += RespawnWarningAction;
@@ -58,26 +59,31 @@ public class PlayerAnimationStateVarsProvider : MonoBehaviour {
     }
 
 
-    public void DashForwardAction()
+    public void AttackForwardAction()
     {
         if (myAnimator != null)
-            myAnimator.SetTrigger("ForwardDash");
+            myAnimator.SetTrigger("ForwardAttack");
     }
 
 
-    public void DashUpAction()
+    public void AttackUpAction()
     {
         if (myAnimator != null)
-            myAnimator.SetTrigger("UpwardDash");
+            myAnimator.SetTrigger("UpwardAttack");
     }
 
 
-    public void DashDownAction()
+    public void AttackDownAction()
     {
         if (myAnimator != null)
-            myAnimator.SetTrigger("DownwardDash");
+            myAnimator.SetTrigger("DownwardAttack");
     }
 
+	public void AttackSpecialAction()
+	{
+		if (myAnimator != null)
+			myAnimator.SetTrigger("SpecialAttack");
+	}
 
     public void KnockBackAction()
     {

@@ -59,7 +59,7 @@ public class MenuManager : MonoBehaviour {
             
         }
 
-		if (!wasPressed[noControler-1] && inputManager.AxisValueCtrl(noControler, InputManager.Vertical) < InputManager.AxisDeadZone)
+		if (!wasPressed[noControler-1] && inputManager.AxisValueCtrl(noControler, InputManager.Vertical) < -InputManager.AxisDeadZone)
         {
             if (menuSelectedItem != (StartMenuItem)0)
             {

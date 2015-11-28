@@ -58,7 +58,7 @@ InputManager:
     descriptiveName: 
     descriptiveNegativeName: 
     negativeButton: a
-    positiveButton: s
+    positiveButton: d
     altNegativeButton: 
     altPositiveButton: 
     gravity: 1000
@@ -89,8 +89,8 @@ InputManager:
     m_Name: Horizontal3
     descriptiveName: 
     descriptiveNegativeName: 
-    negativeButton: d
-    positiveButton: f
+    negativeButton: g
+    positiveButton: h
     altNegativeButton: 
     altPositiveButton: 
     gravity: 1000
@@ -121,8 +121,8 @@ InputManager:
     m_Name: Horizontal4
     descriptiveName: 
     descriptiveNegativeName: 
-    negativeButton: g
-    positiveButton: h
+    negativeButton: j
+    positiveButton: k
     altNegativeButton: 
     altPositiveButton: 
     gravity: 1000
@@ -153,8 +153,8 @@ InputManager:
     m_Name: Vertical1
     descriptiveName: 
     descriptiveNegativeName: 
-    negativeButton: down
-    positiveButton: up
+    negativeButton: up
+    positiveButton: down
     altNegativeButton: 
     altPositiveButton: 
     gravity: 3
@@ -179,6 +179,22 @@ InputManager:
     snap: 0
     invert: 0
     type: 2
+    axis: 1
+    joyNum: 2
+  - serializedVersion: 3
+    m_Name: Vertical2
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: s
+    positiveButton: w
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 0
+    dead: .25
+    sensitivity: 1
+    snap: 0
+    invert: 0
+    type: 0
     axis: 1
     joyNum: 2
   - serializedVersion: 3
@@ -234,7 +250,7 @@ InputManager:
     descriptiveName: 
     descriptiveNegativeName: 
     negativeButton: 
-    positiveButton: up
+    positiveButton: n
     altNegativeButton: 
     altPositiveButton: 
     gravity: 1000
@@ -266,7 +282,7 @@ InputManager:
     descriptiveName: 
     descriptiveNegativeName: 
     negativeButton: 
-    positiveButton: w
+    positiveButton: 4
     altNegativeButton: 
     altPositiveButton: 
     gravity: 1000
@@ -298,7 +314,7 @@ InputManager:
     descriptiveName: 
     descriptiveNegativeName: 
     negativeButton: 
-    positiveButton: r
+    positiveButton: t
     altNegativeButton: 
     altPositiveButton: 
     gravity: 1000
@@ -330,7 +346,7 @@ InputManager:
     descriptiveName: 
     descriptiveNegativeName: 
     negativeButton: 
-    positiveButton: z
+    positiveButton: u
     altNegativeButton: 
     altPositiveButton: 
     gravity: 1000
@@ -362,7 +378,7 @@ InputManager:
     descriptiveName: 
     descriptiveNegativeName: 
     negativeButton: 
-    positiveButton: down
+    positiveButton: m
     altNegativeButton: 
     altPositiveButton: 
     gravity: 1000
@@ -394,7 +410,7 @@ InputManager:
     descriptiveName: 
     descriptiveNegativeName: 
     negativeButton: 
-    positiveButton: q
+    positiveButton: 5
     altNegativeButton: 
     altPositiveButton: 
     gravity: 1000
@@ -426,7 +442,7 @@ InputManager:
     descriptiveName: 
     descriptiveNegativeName: 
     negativeButton: 
-    positiveButton: e
+    positiveButton: z
     altNegativeButton: 
     altPositiveButton: 
     gravity: 1000
@@ -442,7 +458,7 @@ InputManager:
     descriptiveName: 
     descriptiveNegativeName: 
     negativeButton: 
-    positiveButton: t
+    positiveButton: i
     altNegativeButton: 
     altPositiveButton: 
     gravity: 1000
@@ -490,7 +506,7 @@ InputManager:
     descriptiveName: 
     descriptiveNegativeName: 
     negativeButton: 
-    positiveButton: p
+    positiveButton: return
     altNegativeButton: 
     altPositiveButton: 
     gravity: 1000

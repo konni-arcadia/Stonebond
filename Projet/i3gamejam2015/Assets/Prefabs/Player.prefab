@@ -59,7 +59,7 @@ GameObject:
   - 61: {fileID: 6147806}
   - 114: {fileID: 11438052}
   m_Layer: 11
-  m_Name: slashAttackColliderForward
+  m_Name: attackColliderForward
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -169,7 +169,7 @@ GameObject:
   - 61: {fileID: 6103116}
   - 114: {fileID: 11443848}
   m_Layer: 11
-  m_Name: slashAttackColliderDown
+  m_Name: attackColliderDown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -189,6 +189,7 @@ GameObject:
   - 61: {fileID: 6179232}
   - 114: {fileID: 11492586}
   - 114: {fileID: 11421360}
+  - 114: {fileID: 11476394}
   m_Layer: 9
   m_Name: Player
   m_TagString: Untagged
@@ -207,7 +208,7 @@ GameObject:
   - 61: {fileID: 6124196}
   - 114: {fileID: 11462366}
   m_Layer: 11
-  m_Name: slashAttackColliderUp
+  m_Name: attackColliderUp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -328,7 +329,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 170380}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.27000046, y: 2.45000005, z: 0}
+  m_LocalPosition: {x: -17.8700008, y: 2.45000005, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 477898}
@@ -594,7 +595,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 175f89bebba16fb45a68902b57c95793, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 13
+  maxSpeed: 10
   maxFallSpeed: 200
   breakForce: 100
   initialJumpForce: 1000
@@ -643,6 +644,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7accde2a362128a468cd9c62fbb1309b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &11476394
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 170380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d7cc12d4cf453748867390805910cac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  statusProvider: {fileID: 11421360}
 --- !u!114 &11492586
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -667,15 +680,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerId: 1
   VerticalAimThresholdDegree: 100
-  spawnTime: 2.29999995
-  slashAttackTime: .349999994
-  slashAttackCooldownTime: .5
-  slashAttackDashVelocityUp: 1200
-  slashAttackDashVelocityDown: 2000
-  slashAttackDashVelocityForwardGround: 3000
-  slashAttackDashVelocityForwardAir: 4000
-  slashAttackHorizDashGravity: 40
-  slashAttackDashCurve:
+  initialSpawnTime: 1.79999995
+  respawnTime: 1.20000005
+  attackTime: .349999994
+  attackCooldownTime: .5
+  attackVelocityUp: 1200
+  attackVelocityDown: 2000
+  attackVelocityForwardGround: 3000
+  attackVelocityForwardAir: 4000
+  attackHorizGravity: 20
+  attackCurve:
     serializedVersion: 2
     m_Curve:
     - time: -.00145984697
@@ -709,9 +723,9 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-  slashedTime: 2
+  crystaledTime: 2
   invincibleAfterSpawnTime: 3
-  invinsibleBlinkInterval: .100000001
+  invinsibleBlinkInterval: .119999997
 --- !u!212 &21232852
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -772,8 +786,12 @@ Prefab:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 0}
+      propertyPath: attackCurve.m_Curve.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
       propertyPath: maxSpeed
-      value: 13
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Offset.x
@@ -829,11 +847,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: invinsibleBlinkInterval
-      value: .100000001
+      value: .119999997
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: spawnTime
-      value: 2.29999995
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: slashAttackDashVelocityForwardGround
@@ -847,6 +865,50 @@ Prefab:
       propertyPath: VerticalAimThresholdDegree
       value: 100
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: respawnTime
+      value: 1.20000005
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: initialSpawnTime
+      value: 1.79999995
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: initialJumpForce
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Name
+      value: attackColliderUp
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackTime
+      value: .349999994
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackCooldownTime
+      value: .5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackVelocityUp
+      value: 1200
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackVelocityDown
+      value: 2000
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackVelocityForwardGround
+      value: 3000
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackVelocityForwardAir
+      value: 4000
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: statusProvider
+      value: 
+      objectReference: {fileID: 11421360}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 170380}

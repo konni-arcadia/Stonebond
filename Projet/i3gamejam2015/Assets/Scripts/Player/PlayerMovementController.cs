@@ -28,6 +28,7 @@ public class PlayerMovementController : MonoBehaviour
     private float allowJumpTime = 0, disallowDirectionTime = 0;
     private List<Vector2> pendingForcesToApply = new List<Vector2>();
     private bool isMovementEnabled = true, inWallJump = false;
+	private bool isFrictionEnabled = true;
 
     private Rigidbody2D body;
     private InputManager inputManager;
@@ -49,7 +50,6 @@ public class PlayerMovementController : MonoBehaviour
     void Update()
     {
         // The player is grounded if a linecast to the groundcheck position hits anything on the ground layer.
-        bool wasGrounded = grounded;
         grounded = false;
         if (body.velocity.y <= 0)
         {
@@ -112,7 +112,9 @@ public class PlayerMovementController : MonoBehaviour
         //		body.AddForce(Vector2.right * h * moveForce);
 
         Vector2 velocity = body.velocity;
-        float targetSpeed = h * maxSpeed, frictionFactor = grounded && !inWallJump ? 2 : 10;
+		float targetSpeed = h * maxSpeed;
+		float frictionFactor = grounded && !inWallJump && isFrictionEnabled ? 2 : 10;
+
         // In the air, there is less friction
         velocity.x += (targetSpeed - velocity.x) / frictionFactor;
         // When grinding, limit the velocity
@@ -123,8 +125,12 @@ public class PlayerMovementController : MonoBehaviour
         // If the player should jump...
         if (wantJump || wantWallJump)
         {
-            //			AudioSource.PlayClipAtPoint(jumpClip, body.position);
-            SoundManager.Instance.GAMEPLAY_Jump();
+			if(wantWallJump) {
+				myStatusProvider.setWallJump();
+			}
+			else {
+				myStatusProvider.setJump ();
+			}
 
             // Ensure that the current vy doesn't take in account
             Vector2 vel = body.velocity;
@@ -149,7 +155,6 @@ public class PlayerMovementController : MonoBehaviour
         else if (wantJumpExtension)
         {
             body.AddForce(new Vector2(0, extensionJumpForce * Time.fixedDeltaTime));
-            SoundManager.Instance.GAMEPLAY_Walljump();
         }
 
         //Update Y velocity in player status component
@@ -160,6 +165,15 @@ public class PlayerMovementController : MonoBehaviour
     {
         isMovementEnabled = enabled;
     }
+
+	public void setFrictionEnabled(bool enabled)
+	{
+		isFrictionEnabled = enabled;
+		if (body != null) {
+			// WARNING cryptic value inside!
+			body.gravityScale = enabled ? 2.0f : 0.0f;
+		}
+	}
 
     public void applyForce(Vector2 force)
     {

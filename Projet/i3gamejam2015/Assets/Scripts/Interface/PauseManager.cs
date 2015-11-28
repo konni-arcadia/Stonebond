@@ -109,4 +109,9 @@ public class PauseManager : MonoBehaviour {
             }
         }
     }
+
+    public void RemovePauseScreen()
+    {
+        Destroy(gameObject);
+    }
 }

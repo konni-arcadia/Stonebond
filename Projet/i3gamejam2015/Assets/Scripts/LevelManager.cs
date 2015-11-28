@@ -39,7 +39,7 @@ public class LevelManager : MonoBehaviour {
 		// Check if we are only two left, this would initiate the "bond mode"
 		List<PlayerStateController> activePlayers = new List<PlayerStateController>();
 		foreach (PlayerStateController player in players) {
-			if (!player.IsSlashed())
+			if (!player.IsCrystaled())
 				activePlayers.Add(player);
 		}
 		// Only allows the creation of the bond if all players have been active since the last cut
@@ -77,7 +77,7 @@ public class LevelManager : MonoBehaviour {
 		}
 	}
 
-	public void bondHasBeenSlashedBy(PlayerStateController player) {
+	public void bondHasBeenBrokenBy(PlayerStateController player) {
 		var p1 = bondLink.emitterA.GetComponent<PlayerStateController>();
 		var p2 = bondLink.emitterB.GetComponent<PlayerStateController>();
 		if (p1 == player || p2 == player) {
@@ -106,6 +106,8 @@ public class LevelManager : MonoBehaviour {
 		appearedSinceSec = 0;
 
 		SoundManager.Instance.GAMEPLAY_Bound_Play ();
+
+		MyLittlePoney.slowMotion ();
 	}
 
 	private void ExitBondMode(PlayerStateController p1, PlayerStateController p2) {

@@ -97,9 +97,7 @@ public class LevelManager : MonoBehaviour {
 		// Create a bond object linking the two players
 		GameObject obj = Instantiate(bondLinkPrefab);
 		bondLink = obj.GetComponent<BondLink>();
-		bondLink.playerA = activePlayers[0].gameObject;
-		bondLink.playerB = activePlayers[1].gameObject;
-		bondLink.OnBond (); // initialisation of animations !!! IMPORTANT
+		bondLink.LinkPlayers ( activePlayers[0].gameObject, activePlayers[1].gameObject);
 		activePlayers[0].setBondLink(bondLink);
 		activePlayers[1].setBondLink(bondLink);
 		bondLinkGauge = 0;

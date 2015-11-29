@@ -77,7 +77,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 492484}
   - 114: {fileID: 11430984}
-  - 61: {fileID: 6150560}
   m_Layer: 13
   m_Name: BondLink
   m_TagString: Untagged
@@ -128,7 +127,23 @@ GameObject:
   - 212: {fileID: 21254374}
   - 95: {fileID: 9574716}
   m_Layer: 0
-  m_Name: Animation
+  m_Name: MiddleAnimation
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &131234
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 499990}
+  - 61: {fileID: 6160864}
+  m_Layer: 0
+  m_Name: BondBreakCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -175,7 +190,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 489292}
   m_Layer: 0
-  m_Name: MiddleCollider
+  m_Name: MiddlePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1017,6 +1032,7 @@ Transform:
   - {fileID: 463794}
   - {fileID: 435052}
   - {fileID: 423810}
+  - {fileID: 499990}
   m_Father: {fileID: 492484}
   m_RootOrder: 0
 --- !u!4 &492304
@@ -1085,12 +1101,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 418506}
   m_RootOrder: 1
---- !u!61 &6150560
+--- !u!4 &499990
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 131234}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 489292}
+  m_RootOrder: 3
+--- !u!61 &6160864
 BoxCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 120606}
+  m_GameObject: {fileID: 131234}
   m_Enabled: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
@@ -1161,8 +1189,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   completion: 0
-  collider: {fileID: 6150560}
+  middlePoint: {fileID: 135664}
   middleAnimation: {fileID: 125126}
+  middleCollider: {fileID: 131234}
   playerA: {fileID: 0}
   playerB: {fileID: 0}
   playerAStateController: {fileID: 0}

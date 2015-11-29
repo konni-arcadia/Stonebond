@@ -24,7 +24,7 @@ public class PauseManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		inputManager = GetComponent<InputManager> ();
-        buttonList = StartButtonArea.GetComponentsInChildren<Outline>();
+		buttonList = StartButtonArea.GetComponentsInChildren<Outline>(true);
 
         menu.enabled = false;
 	

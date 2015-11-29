@@ -49,8 +49,8 @@ public class MenuManager : MonoBehaviour {
 
 	IEnumerator ShowMenuAfterDelay() {
 		PressStartButtonArea.SetActive(false);
-		yield return new WaitForSeconds(0.2f);
 		SoundManager.Instance.VOICE_Title_Play();
+		yield return new WaitForSeconds(0.2f);
 		StartButtonArea.SetActive(true);
 	}
 

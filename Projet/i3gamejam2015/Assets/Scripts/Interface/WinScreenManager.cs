@@ -22,10 +22,11 @@ public class WinScreenManager : MonoBehaviour {
     public GameObject menu;
 	public Canvas canvas;
 	private float timeSinceStart;
+	private float minTimeBeforeShowingMenu = 1;
 	public Sprite[] playerTextSprites;
 
-	private InputManager inputManager ;
-
+	private InputManager inputManager;
+	
     public Image Winner1;
     public Image Winner2;
     public Image Looser3;
@@ -42,7 +43,7 @@ public class WinScreenManager : MonoBehaviour {
 		inputManager = GetComponent<InputManager> ();
 		// NOTE: instantiated at the very beginning of the game
 
-        buttonList = StartButtonArea.GetComponentsInChildren<Outline>();
+		buttonList = StartButtonArea.GetComponentsInChildren<Outline>(true);
 
 		canvas.enabled = false;
         menu.SetActive(false);
@@ -51,24 +52,40 @@ public class WinScreenManager : MonoBehaviour {
 	}
 
 	// Update is called once per frame
-	void Update () {
-		if (!isSceneDisplayed) return;
-		timeSinceStart += Time.deltaTime;
+	void Update () 
+	{
+		// Only updated when visible
+		if (!isSceneDisplayed)
+			return;
+
+		// Increase time since shown
+		// Time.deltaTime can't be used here because of Time.timeScale set to 0 to pause the game.
+		timeSinceStart += Time.unscaledDeltaTime;
+
+		// Check all controllers inputs
         for (int i = 1; i < 5; i++ )
             CheckControlerStartMenu(i);
 	}
 
-	void CheckControlerStartMenu(int noControler) {
-		if (!isMenuDisplayed) {
-			// First time: display the overlay
-			if (inputManager.WasPressedCtrl(noControler, InputManager.A) ||inputManager.WasPressedCtrl(noControler, InputManager.START) /*&& timeSinceStart >= 1*/) {
+	void CheckControlerStartMenu(int noControler)
+	{
+		if (!isMenuDisplayed)
+		{
+			// First time: display the overlay (but only after a certain time)
+			if ((inputManager.WasPressedCtrl(noControler, InputManager.A) 
+			  || inputManager.WasPressedCtrl(noControler, InputManager.START)) 
+			  && timeSinceStart > minTimeBeforeShowingMenu)
+			{
 				isMenuDisplayed = true;
 				menu.SetActive(true);
 				return;
 			}
 		}
-        else {
-			if (inputManager.WasPressedCtrl(noControler, InputManager.A) ||inputManager.WasPressedCtrl(noControler, InputManager.START)) {
+        else 
+		{
+			if (inputManager.WasPressedCtrl(noControler, InputManager.A) 
+			 || inputManager.WasPressedCtrl(noControler, InputManager.START)) 
+			{
 				GameObject InControlObject = GameObject.Find("InControl");
 
                 switch (menuSelectedItem)
@@ -98,10 +115,9 @@ public class WinScreenManager : MonoBehaviour {
                 }
                 Time.timeScale = 1.0f;
                 SoundManager.Instance.Validate_Play();
-
-
             }
 
+			// Select previous button
 			if (!wasPressed[noControler - 1] && inputManager.AxisValueCtrl(noControler, InputManager.Vertical) < -InputManager.AxisDeadZone)
             {
                 if (menuSelectedItem != (StartMenuItem)0)
@@ -114,6 +130,7 @@ public class WinScreenManager : MonoBehaviour {
                 }
 
             }
+			// Select next button
 			else if (!wasPressed[noControler - 1] && inputManager.AxisValueCtrl(noControler, InputManager.Vertical) > InputManager.AxisDeadZone)
             {
                 if (menuSelectedItem != StartMenuItem.Quit)
@@ -135,8 +152,8 @@ public class WinScreenManager : MonoBehaviour {
     }
 
 	// Call this when a player has won
-	public void showScreen() {
-
+	public void showScreen() 
+	{
         PauseManager pauseMenu = FindObjectOfType<PauseManager>();
         if (pauseMenu != null)
         {
@@ -146,7 +163,7 @@ public class WinScreenManager : MonoBehaviour {
 		canvas.enabled = true;
 		timeSinceStart = 0;
 		isSceneDisplayed = true;
-        Time.timeScale = 0.0f;
+        Time.timeScale = 0.0f; // Stop the game
 
         Winner1.sprite = playerTextSprites[IdOfWonP1 - 1];
         Scores[0].text = GameState.Instance.Player(IdOfWonP1).TotalScore.ToString() ;

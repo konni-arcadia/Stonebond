@@ -16,14 +16,14 @@ public class BondLinkFX : MonoBehaviour
 	}
 
 	
-	ParticleSystem GetLineParticles()
+	public ParticleSystem GetLineParticles()
 	{
-		return lineParticles[playerId];
+		return lineParticles[playerId - 1];
 	}
 	
-	ParticleSystem GetMagicalParticles()
+	public ParticleSystem GetMagicalParticles()
 	{
-		return magicalParticles[playerId];
+		return magicalParticles[playerId - 1];
 	}
 	
 	public void Create()

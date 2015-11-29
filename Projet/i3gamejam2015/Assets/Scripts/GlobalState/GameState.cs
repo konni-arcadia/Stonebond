@@ -30,6 +30,12 @@ public class GameState : Singleton<GameState> {
 		players.Add(p);
 	}
 
+	public void ClearScores() {
+		foreach (PlayerInfo player in players) {
+			player.TotalScore = 0;
+		}
+	}
+
 	// Number of players.
 	public int NumPlayers { get { return players.Count; } }
 
@@ -39,18 +45,15 @@ public class GameState : Singleton<GameState> {
 		Player(playerBId).TotalScore += 1;
 	}
 
-    public void ClearScores()
-    {
-        foreach (PlayerInfo player in players)
-        {
-            player.TotalScore = 0;
-        }
-    }
-
 	// Get a given player.
 	public PlayerInfo Player(int id) {
 		id -= 1;
 		return id >= 0 && id < players.Count ? players[id] : null;
+	}
+
+	public void ResetPlayerControllers() {
+		for (int i = 1; i <= players.Count; i++)
+			Player(i).ControllerId = i;
 	}
 
 	//

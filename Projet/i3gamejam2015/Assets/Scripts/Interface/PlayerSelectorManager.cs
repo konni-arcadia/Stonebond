@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class PlayerSelectorManager : MonoBehaviour {
 
+	float waitBeforeAllowingSelection;
     public int PlayerNumber = 1;
     public GameObject PlayerSelection;
     //public Text Name;
@@ -23,7 +24,11 @@ public class PlayerSelectorManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        CheckPlayerController();
+		if (waitBeforeAllowingSelection > 0) {
+			waitBeforeAllowingSelection -= Time.deltaTime;
+			return;
+		}
+		CheckPlayerController();
 	}
 
     void CheckPlayerController()
@@ -31,11 +36,7 @@ public class PlayerSelectorManager : MonoBehaviour {
         if (!HasChoosen)
         {
 			// Allow action button too for testing
-			if (!HasPressedStart && (inputManager.WasPressed(PlayerNumber, InputManager.START) || inputManager.WasPressed(PlayerNumber, InputManager.A)))
-            {
-                SetChoosenState();
-            }
-			else if (HasPressedStart && inputManager.WasPressed(PlayerNumber, InputManager.A))
+			if (HasPressedStart && inputManager.WasPressed(PlayerNumber, InputManager.A))
             {
                 HasChoosen = true;
                 Ready.enabled = true;
@@ -43,6 +44,7 @@ public class PlayerSelectorManager : MonoBehaviour {
         }
     }
 
+	// Called from PlayersSelectorManager
     public void SetChoosenState()
     {
         SoundManager.Instance.Validate_Play();
@@ -51,6 +53,8 @@ public class PlayerSelectorManager : MonoBehaviour {
         //Name.enabled = true;
         PlayerSelection.SetActive(true);
         Ready.enabled = false;
+		// Do not allow validating the second time immediately (READY)
+		waitBeforeAllowingSelection = 0.2f;
     }
 
     public void SetInitialState()

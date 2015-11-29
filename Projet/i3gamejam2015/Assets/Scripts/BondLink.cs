@@ -5,9 +5,10 @@ public class BondLink : MonoBehaviour {
 
 	public float completion; // should be between 0.0f and 1.0f
 
-	public BoxCollider2D destroyCollider;
-
+	public GameObject middlePoint;
 	public GameObject middleAnimation;
+	public GameObject middleCollider;
+	protected BoxCollider2D destroyCollider;
 
 	public GameObject playerA;
 	public GameObject playerB;
@@ -46,20 +47,27 @@ public class BondLink : MonoBehaviour {
 	protected float originalZ;
 
     float originalWidth;
-
-	// Use this for initialization
+	
 	void Start () {
 
+	}
+
+	public void LinkPlayers(GameObject player_A, GameObject player_B) {
+
+		// internal references
+		completion = 0;
 		fxA = emitterAsource.GetComponent<BondLinkFX> ();
 		fxB = emitterBsource.GetComponent<BondLinkFX> ();
+		destroyCollider = middleCollider.GetComponent<BoxCollider2D> ();
 
-		// TODO: call from LevelManager
+		// link
+		playerA = player_A;
+		playerB = player_B;
 		OnBond ();
 
 	}
 
-	public void OnBond() {
-//		ParticleSystem particles
+	protected void OnBond() {
 
 		playerAStateController = playerA.GetComponent<PlayerStateController>();
 		playerBStateController = playerB.GetComponent<PlayerStateController>();
@@ -129,6 +137,10 @@ public class BondLink : MonoBehaviour {
 		// -- calcul d'angle
 		float angle = Mathf.Atan2(linkLine.y, linkLine.x) * Mathf.Rad2Deg;
 
+		// -- break collider
+		middleCollider.transform.rotation = Quaternion.AngleAxis (angle, Vector3.forward);
+
+
 		// -- A
 		float angleA = angle - 90;
 
@@ -156,7 +168,9 @@ public class BondLink : MonoBehaviour {
 		//
 		// middle animation (energy sphere)
 
-		middleAnimation.transform.position = linkLineMiddlePoint;
+		middlePoint.transform.position = linkLineMiddlePoint;
+		middleAnimation.transform.localPosition = Vector3.zero;
+		// TODO? rotate this animation ? Ask Matthieu Bonvin.
 
 
 
@@ -188,7 +202,7 @@ public class BondLink : MonoBehaviour {
 		//    pour dire que le lien est à 100%, mettre la local position Y du backwardCollider à 0
 		//    pour dire que le lien est à 0%, mettre la local position Y du backwardCollider à <LONGUEUR DU DEMI-LIEN>
 		//    formule = position locale du backwardCollider . Y = ( 1 - <PERCENT_COMPLETE (0.00-1.00)> ) * <LONGUEUR DU DEMI-LIEN>
-		float fuckingY = (1 - completion) * Mathf.Abs(linkLine.x) * 0.5f;
+		float fuckingY = (1 - completion) * linkLine.magnitude * 0.5f;
 		Vector3 fuckingLocalPos = new Vector3(0, fuckingY, 0);
 
 		// -- A
@@ -198,8 +212,9 @@ public class BondLink : MonoBehaviour {
 		backwardParticlesBcollider.transform.localPosition = fuckingLocalPos;
 
 		// -- collider
-		destroyCollider.transform.position = middleAnimation.transform.position;
-		Vector2 colliderSize = new Vector2( Mathf.Abs( backwardParticlesBcollider.transform.position.y - backwardParticlesAcollider.transform.position.y ), 1);
+//		destroyCollider.transform.position = middleAnimation.transform.position;
+		float colliderSizeX = completion * linkLine.magnitude;
+		Vector2 colliderSize = new Vector2( colliderSizeX, 1);
 		destroyCollider.size = colliderSize;
 
 	}

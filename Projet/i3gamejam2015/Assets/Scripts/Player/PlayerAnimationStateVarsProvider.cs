@@ -27,7 +27,8 @@ public class PlayerAnimationStateVarsProvider : MonoBehaviour {
         myStatusProvider.OnAttackUpAction += AttackUpAction;
         myStatusProvider.OnAttackDownAction += AttackDownAction;
 		myStatusProvider.OnAttackSpecialAction += AttackSpecialAction;
-        myStatusProvider.OnKnockBackAction += KnockBackAction;
+        myStatusProvider.OnVerticalKnockbackAction += VerticalKnockbackAction;
+		myStatusProvider.OnHorizontalKnockbackAction += HorizontalKnockbackAction;
         myStatusProvider.OnDieAction += DieAction;
         myStatusProvider.OnRespawnWarningAction += RespawnWarningAction;
 	}
@@ -85,12 +86,17 @@ public class PlayerAnimationStateVarsProvider : MonoBehaviour {
 			myAnimator.SetTrigger("SpecialAttack");
 	}
 
-    public void KnockBackAction()
+    public void HorizontalKnockbackAction()
     {
         if (myAnimator != null)
             myAnimator.SetTrigger("KnockBack");
     }
 
+	public void VerticalKnockbackAction()
+	{
+		if (myAnimator != null)
+			myAnimator.SetTrigger("KnockBack");
+	}
 
     public void DieAction(Vector2 deathVector)
     {

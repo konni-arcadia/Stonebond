@@ -73,19 +73,25 @@ public class PlayerStatusProvider : MonoBehaviour {
 		if (OnAttackSpecialAction != null) OnAttackSpecialAction();
 	}
 
-	public delegate void KnockBackAction();
-    public event KnockBackAction OnKnockBackAction;
-    public void setKnockBackUp()
-    {
-		if (OnKnockBackAction != null) OnKnockBackAction();
-    }
-	public void setKnockBackDown()
+	public delegate void AttackFailedAction();
+	public event AttackFailedAction OnAttackFailedAction;
+	public void setAttackFailed()
 	{
-		if (OnKnockBackAction != null) OnKnockBackAction();
+		if (OnAttackFailedAction != null) OnAttackFailedAction();
 	}
-	public void setKnockBackForward()
+
+	public delegate void VerticalKnockbackAction();
+	public event VerticalKnockbackAction OnVerticalKnockbackAction;
+    public void setVerticalKnockback()
+    {
+		if (OnVerticalKnockbackAction != null) OnVerticalKnockbackAction();
+    }
+
+	public delegate void HorizontalKnockbackAction();
+	public event HorizontalKnockbackAction OnHorizontalKnockbackAction;
+	public void setHorizontalKnockback()
 	{
-		if (OnKnockBackAction != null) OnKnockBackAction();
+		if (OnHorizontalKnockbackAction != null) OnHorizontalKnockbackAction();
 	}
 
     public delegate void DieAction(Vector2 deathVector);
@@ -106,11 +112,11 @@ public class PlayerStatusProvider : MonoBehaviour {
         if (OnRespawnWarningAction != null) OnRespawnWarningAction();
     }
 
-    public delegate void InvinsibleStateAction();
+    public delegate void InvinsibleStateAction(bool isInvinsible);
     public event InvinsibleStateAction OnInvinsibleChangedAction;
     public void setInvincibleStatus(bool isInvincible)
     {
-		if (OnInvinsibleChangedAction != null) OnInvinsibleChangedAction();
+		if (OnInvinsibleChangedAction != null) OnInvinsibleChangedAction(isInvincible);
     }
 
 	public delegate void BoundStateAction(bool isBounded);

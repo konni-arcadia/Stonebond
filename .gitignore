@@ -1,14 +1,33 @@
-Library
-Temp
-*.Identifier
-*.Identifier.meta
-*.db
+# =============== #
+# Unity generated #
+# =============== #
+[Tt]emp/
+[Oo]bj/
+[Bb]uild
+[Ll]ibrary/
+ 
+# ===================================== #
+# Visual Studio / MonoDevelop generated #
+# ===================================== #
+[Ee]xported[Oo]bj/
+*.vs
+*.svd
+*.userprefs
 *.csproj
-*.sln
+*.pidb
 *.suo
-obj/*
-UnityVS
-UnityVS.meta
-.vs
-**/*.userprefs
-*EditorBuildSettings.asset
+*.sln*
+*.user
+*.unityproj
+*.booproj
+ 
+# ============ #
+# OS generated #
+# ============ #
+.DS_Store*
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+ehthumbs.db
+[Tt]humbs.db

@@ -87,7 +87,7 @@ public class LevelManager : MonoBehaviour {
 		}
 		ExitBondMode(p1, p2);
 
-		MyLittlePoney.shake (1.0f, 1.0f, 2.0f, 2.0f);
+		ScreenShake.shake (1.0f, 1.0f, 2.0f, 2.0f);
 		Flash.flash (0.0f, 0.0f, 0.0f);
 	}
 
@@ -103,7 +103,7 @@ public class LevelManager : MonoBehaviour {
 		bondLinkGauge = 0;
 		appearedSinceSec = 0;
 
-		MyLittlePoney.slowMotion ();
+		SlowMotion.slowMotion ();
 	}
 
 	private void ExitBondMode(PlayerStateController p1, PlayerStateController p2) {

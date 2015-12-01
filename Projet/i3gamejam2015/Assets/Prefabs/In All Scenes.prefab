@@ -8,6 +8,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 475536}
+  - 114: {fileID: 11463618}
   m_Layer: 0
   m_Name: In All Scenes
   m_TagString: Untagged
@@ -402,6 +403,18 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+--- !u!114 &11463618
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 307da5a4b7a57954c9841dc7ab3165aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slowMotionTime: .150000006
 --- !u!114 &11482854
 MonoBehaviour:
   m_ObjectHideFlags: 1

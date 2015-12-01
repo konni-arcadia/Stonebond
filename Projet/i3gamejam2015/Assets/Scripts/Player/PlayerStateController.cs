@@ -56,7 +56,7 @@ public class PlayerStateController : MonoBehaviour
 	}
 
 	private AimDirection aimDirection = AimDirection.FORWARD;
-    public float VerticalAimThresholdDegree = 90f;
+    public float verticalAimThresholdDegree = 90f;
 
 	//
 	// SPAWN
@@ -128,7 +128,7 @@ public class PlayerStateController : MonoBehaviour
 
 	void Awake ()
 	{
-		print ("Awake player " + playerId);
+		print("p" + playerId + ": awake");
 
 		bodyCollider = transform.Find ("bodyCollider").GetComponent<Collider2D> ();
 
@@ -216,17 +216,8 @@ public class PlayerStateController : MonoBehaviour
 			if (enemy.isPerformingAttack () && isAimingOppositeDirection (enemy)) {
 				enemy.knockback (aimDirection);
 				knockback (enemy.aimDirection);
-
-				if(aimDirection == AimDirection.FORWARD) {
-					MyLittlePoney.shake (0.5f, 0.0f, 2.0f, 0.0f);
-				}
-				else {
-					MyLittlePoney.shake (0.0f, 0.5f, 0.0f, 2.0f);
-				}
 			} else if (enemy.isAttackable ()) {
 				enemy.hitWithAttack (aimDirection);
-
-				MyLittlePoney.shake (0.5f, 0.5f, 2.0f, 2.0f);
 			}
 			return;
 		}
@@ -235,9 +226,10 @@ public class PlayerStateController : MonoBehaviour
 		if (bondLink != null) {
 			LevelManager levelManager = FindObjectOfType<LevelManager>();
 			levelManager.bondHasBeenBrokenBy(this);
+			return;
 		}
 		
-		debug ("WARNING unexpected collision");
+		Debug.LogWarning ("p" + playerId + ": unexpected collision", this);
 	}
 
 	//
@@ -246,29 +238,28 @@ public class PlayerStateController : MonoBehaviour
 
 	void Update ()
 	{
+		// DIRTY make sure sprite is visible if went out of invinsible
+		if (state != State.INVINCIBLE) {
+			setVisible (true);
+		}
+
 		switch (state) {
-		case State.SPAWN:
-			setVisible (true); // dirty make sure sprite is visible if went out of invinsible
+		case State.SPAWN:		
 			updateSpawn ();
 			break;
 		case State.IDLE:
-			setVisible (true); // dirty make sure sprite is visible if went out of invinsible
 			updateIdle ();
 			break;
 		case State.ATTACK:
-			setVisible (true); // dirty make sure sprite is visible if went out of invinsible
 			updateAttack ();
 			break;
 		case State.SPECIAL_ATTACK:
-			setVisible (true); // dirty make sure sprite is visible if went out of invinsible
 			updateSpecialAttack ();
 			break;
 		case State.KNOCKBACK:
-			setVisible (true); // dirty make sure sprite is visible if went out of invinsible
 			updateKnockback ();
 			break;
 		case State.CRYSTALED:
-			setVisible (true); // dirty make sure sprite is visible if went out of invinsible
 			updateCrystaled ();
 			break;
 		case State.INVINCIBLE:
@@ -295,7 +286,7 @@ public class PlayerStateController : MonoBehaviour
 				stateTime = invincibleAfterSpawnTime;
 				movementController.setMovementEnabled (true);
 				movementController.setFrictionEnabled (true);
-				//statusProvider.setInvincibleStatus(true);
+				statusProvider.setInvincibleStatus(true);
 			}
 		}
 	}
@@ -312,32 +303,31 @@ public class PlayerStateController : MonoBehaviour
 	{
 		movementController.setMovementEnabled (true);
 		movementController.setFrictionEnabled (true);
+		        
+        float aimX = inputManager.AxisValue(playerId, InputManager.Horizontal);
+        float aimY = inputManager.AxisValue(playerId, InputManager.Vertical);        
+		float aimAngle = Mathf.Atan2(aimY, aimX) * Mathf.Rad2Deg;          
+		if (aimAngle < 0.0f) {
+			aimAngle += 360.0f;
+		}
 
-        //Aim direction vector based:
-        float x = inputManager.AxisValue(playerId, InputManager.Horizontal);
-        float y = inputManager.AxisValue(playerId, InputManager.Vertical);
-        Vector2 v = new Vector2(x, y);                      //set a Vector2 based on controller tilt.
-        float angleRadians = Mathf.Atan2(v.y, v.x);         //Get the angle of the vector (radian)
-        float angleDegrees = angleRadians * Mathf.Rad2Deg;  //Convert to degree
-        //angleDegrees will be in the range [-180,180], convert to [0,360] 'cause I'm human... Ho and 0 Degree = straight right.
-        if (angleDegrees < 0)
-            angleDegrees += 360;
-
-        if (angleDegrees > 270 - (VerticalAimThresholdDegree / 2f) && angleDegrees < 270 + (VerticalAimThresholdDegree / 2f))
-        { aimDirection = AimDirection.UP; }
-        else if (angleDegrees > 90 - (VerticalAimThresholdDegree / 2f) && angleDegrees < 90 + (VerticalAimThresholdDegree / 2f))
-        { aimDirection = AimDirection.DOWN; }
-        else
-        { aimDirection = AimDirection.FORWARD; }
-        //if (angleDegrees != 0) //don't take "empty" pads into account.
-        //    print("Joystick angle: " + angleDegrees + " Direction is: " + aimDirection); //DEBUG THIS SHIT NIGGA
-
+		if (aimAngle > 270.0f - (verticalAimThresholdDegree / 2.0f) && aimAngle < 270.0f + (verticalAimThresholdDegree / 2.0f)) {
+			aimDirection = AimDirection.UP;
+		}
+		else if (aimAngle > 90.0f - (verticalAimThresholdDegree / 2.0f) && aimAngle < 90.0f + (verticalAimThresholdDegree / 2.0f)) {
+			aimDirection = AimDirection.DOWN;
+		}
+        else {
+			aimDirection = AimDirection.FORWARD;
+		}
+		
 		// attack
 		if (inputManager.WasPressed (playerId, InputManager.BUTTON_ATTACK)) {
 			if (attackCooldown == 0.0f) {
 				attack ();
 			} else {
 				print ("p" + playerId + ": attack on CD");
+				statusProvider.setAttackFailed();
 			}
 		}
 
@@ -428,18 +418,18 @@ public class PlayerStateController : MonoBehaviour
 		}
 
 		float knockbackPct = 1.0f - stateTime / knockbackTime;
-		float knockbackVelocityPct = knockbackCurve.Evaluate (knockbackPct);
+		float knockbackForcePct = knockbackCurve.Evaluate (knockbackPct);
 
 		switch (knockbackDirection) {
 		case AimDirection.UP:
-			movementController.applyForce (new Vector2(0.0f, knockbackVelocityPct * Time.deltaTime * knockbackVelocityUp));
+			movementController.applyForce (new Vector2(0.0f, knockbackForcePct * Time.deltaTime * knockbackVelocityUp));
 			break;
 		case AimDirection.DOWN:
-			movementController.applyForce (new Vector2(0.0f, knockbackVelocityPct * Time.deltaTime * -knockbackVelocityDown));
+			movementController.applyForce (new Vector2(0.0f, knockbackForcePct * Time.deltaTime * -knockbackVelocityDown));
 			break;
 		case AimDirection.FORWARD:
 			float velocity = movementController.isFacingRight() ? -knockbackVelocityForward : knockbackVelocityForward;
-			movementController.applyForce (new Vector2(knockbackVelocityPct * Time.deltaTime * velocity, 0.0f));
+			movementController.applyForce (new Vector2(knockbackForcePct * Time.deltaTime * velocity, 0.0f));
 			break;
 		}
 	}
@@ -453,7 +443,7 @@ public class PlayerStateController : MonoBehaviour
 			print ("p" + playerId + ": enter IDLE state");
 			state = State.IDLE;
 
-			//statusProvider.setInvincibleStatus(false);
+			statusProvider.setInvincibleStatus(false);
 			setVisible (true);
 			return;
 		}
@@ -549,18 +539,16 @@ public class PlayerStateController : MonoBehaviour
 		attackColliderDown.enabled = false;
 		attackColliderForward.enabled = false;
 
-		// notification
-		switch(aimDirection) {
-		case AimDirection.UP:
-			statusProvider.setKnockBackUp ();
-			break;
-		case AimDirection.DOWN:
-			statusProvider.setKnockBackDown ();
-			break;
-		case AimDirection.FORWARD:
-			statusProvider.setKnockBackForward ();
-			break;
+		if(aimDirection == AimDirection.FORWARD) {
+			statusProvider.setHorizontalKnockback();
+			// TODO move to effect manager
+			ScreenShake.shake (0.5f, 0.0f, 2.0f, 0.0f);
 		}
+		else {
+			statusProvider.setVerticalKnockback();
+			// TODO move to effect manager
+			ScreenShake.shake (0.0f, 0.5f, 0.0f, 2.0f);
+		}	
 	}
 	
 	private void hitWithAttack (AimDirection dir)
@@ -574,23 +562,11 @@ public class PlayerStateController : MonoBehaviour
 		movementController.resetForces ();
 	
 		// notification
-		statusProvider.setDie(); // TODO remove
-		Vector2 directionVector = new Vector3 ();
-		switch (dir) {
-		case AimDirection.UP:
-			directionVector.Set(0.0f, 1.0f);
-			break;
-		case AimDirection.DOWN:
-			directionVector.Set(0.0f, -1.0f);
-			break;
-		case AimDirection.FORWARD:
-			directionVector.Set(movementController.isFacingRight() ? 1.0f : -1.0f, 0.0f);
-			break;
-		}
-		// TODO statusProvider.setDie (transform.position, directionVector);
-
+		statusProvider.setDie();
+		// TODO use player effect script
 		Flash.flash ();
-		MyLittlePoney.slowMotion ();
+		SlowMotion.slowMotion ();
+		ScreenShake.shake (0.5f, 0.5f, 2.0f, 2.0f);
 	}
 
 	//

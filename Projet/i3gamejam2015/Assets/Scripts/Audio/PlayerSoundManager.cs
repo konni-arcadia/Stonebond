@@ -12,7 +12,8 @@ public class PlayerSoundManager : MonoBehaviour
         statusProvider.OnBoundChangedAction += OnBounded;
         statusProvider.OnGroundedStatusChanged += OnGrounded;
         statusProvider.OnOnWallStatusChanged += OnWallrided;
-        statusProvider.OnKnockBackAction += onKnockbacked;
+        statusProvider.OnHorizontalKnockbackAction += onKnockbacked;
+		statusProvider.OnVerticalKnockbackAction += onKnockbacked;
         statusProvider.OnDieAction += onPlayerDied;
         statusProvider.onJumpAction += OnJumped;
         statusProvider.onWallJumpAction += OnWallJumped;

@@ -25,34 +25,41 @@ public class PlayerSoundManager : MonoBehaviour
 
     private void OnRespawned()
     {
-        SoundManager.Instance.GAMEPLAY_Rebirth();
+		if (SoundManager.Instance != null) {
+			SoundManager.Instance.GAMEPLAY_Rebirth ();
+		}
     }
 
     private void OnAttack()
     {
-        SoundManager.Instance.GAMEPLAY_Attack();
+		if (SoundManager.Instance != null) {
+			SoundManager.Instance.GAMEPLAY_Attack ();
+		}
     }
 
     private void OnWallJumped()
     { 
-        SoundManager.Instance.GAMEPLAY_Walljump();
+		if (SoundManager.Instance != null) {
+			SoundManager.Instance.GAMEPLAY_Walljump ();
+		}
     }
 
     private void OnJumped()
     {
-        SoundManager.Instance.GAMEPLAY_Jump();
+		if (SoundManager.Instance != null) {
+			SoundManager.Instance.GAMEPLAY_Jump ();
+		}
     }
 
     private void OnBounded(bool isBounded)
     {
-        if (isBounded)
-        {
-            SoundManager.Instance.StartBound();
-        }
-        else
-        {
-            SoundManager.Instance.StopBound();
-        }
+		if (SoundManager.Instance != null) {
+			if (isBounded) {
+				SoundManager.Instance.StartBound ();
+			} else {
+				SoundManager.Instance.StopBound ();
+			}
+		}
     }
 
     private void OnGrounded(bool isGrounded)
@@ -81,12 +88,16 @@ public class PlayerSoundManager : MonoBehaviour
 
     private void onKnockbacked()
     {
-        SoundManager.Instance.GAMEPLAY_Knockback();
+		if (SoundManager.Instance != null) {
+			SoundManager.Instance.GAMEPLAY_Knockback ();
+		}
     }
 
     private void onPlayerDied(Vector2 deathVector)
     {
-        SoundManager.Instance.GAMEPLAY_Death();
+		if (SoundManager.Instance != null) {
+			SoundManager.Instance.GAMEPLAY_Death ();
+		}
     }
 
     //void Update() { }

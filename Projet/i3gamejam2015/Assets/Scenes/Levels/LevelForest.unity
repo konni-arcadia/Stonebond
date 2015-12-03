@@ -392,7 +392,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3de028f8a8386734f9606e7ea4e3b608, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scaler: .5
+  scaler: 1
+  maxX: 3.40282347e+38
+  maxY: 3.40282347e+38
+  maxZ: 3.40282347e+38
 --- !u!81 &586084380
 AudioListener:
   m_ObjectHideFlags: 0

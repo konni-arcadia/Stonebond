@@ -87,7 +87,7 @@ public class LevelManager : MonoBehaviour {
 		}
 		ExitBondMode(p1, p2);
 
-		ScreenShake.shake (1.0f, 1.0f, 2.0f, 2.0f);
+		ScreenShake.ShakeXY (1.0f, 2.0f, 1.0f, 2.0f);
 		Flash.flash (0.0f, 0.0f, 0.0f);
 	}
 

@@ -542,12 +542,12 @@ public class PlayerStateController : MonoBehaviour
 		if(aimDirection == AimDirection.FORWARD) {
 			statusProvider.setHorizontalKnockback();
 			// TODO move to effect manager
-			ScreenShake.shake (0.5f, 0.0f, 2.0f, 0.0f);
+			ScreenShake.ShakeX (0.5f, 2.0f);
 		}
 		else {
 			statusProvider.setVerticalKnockback();
 			// TODO move to effect manager
-			ScreenShake.shake (0.0f, 0.5f, 0.0f, 2.0f);
+			ScreenShake.ShakeY (0.5f, 2.0f);
 		}	
 	}
 	
@@ -566,7 +566,7 @@ public class PlayerStateController : MonoBehaviour
 		// TODO use player effect script
 		Flash.flash ();
 		SlowMotion.slowMotion ();
-		ScreenShake.shake (0.5f, 0.5f, 2.0f, 2.0f);
+		ScreenShake.ShakeXY (0.5f, 2.0f, 0.5f, 2.0f);
 	}
 
 	//

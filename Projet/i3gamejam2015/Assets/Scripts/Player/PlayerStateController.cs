@@ -86,6 +86,8 @@ public class PlayerStateController : MonoBehaviour
 	public float attackUpHorizControl = 0.5f;
 	public float attackDownHorizControl = 0.5f;
 
+	private float attackCooldown;
+
 	//
 	// SPECIAL ATTACK
 	// 
@@ -102,7 +104,6 @@ public class PlayerStateController : MonoBehaviour
 	public float knockbackVelocityForward = 3000.0f;
 	public AnimationCurve knockbackCurve;
 
-	private float attackCooldown;
 	private AimDirection knockbackDirection;
 
 	//
@@ -160,11 +161,6 @@ public class PlayerStateController : MonoBehaviour
 		movementController.setMovementEnabled (false);
 		movementController.setFrictionEnabled (true);
 		spawn ();
-
-		// FIXME move this somewhere else, doesn't belong to player logic...
-		SpriteRenderer bodyRenderer = transform.Find ("CharacterSprites").Find ("Body").GetComponent<SpriteRenderer> ();
-		bodyRenderer.material.SetColor("_ChromaTexColor", PlayerInfo.Color);
-		bodyRenderer.material.SetColor("_Color", Color.Lerp(Color.white, PlayerInfo.Color, 0.3f));
 	}
 
 	//
@@ -173,6 +169,32 @@ public class PlayerStateController : MonoBehaviour
 
 	public bool IsCrystaled() {
 		return state == State.CRYSTALED || state == State.SPAWN;
+	}
+
+	public int GetPlayerId ()
+	{
+		return playerId;
+	}
+
+	public float GetAttackCooldownPct() {
+		return attackCooldown / attackCooldownTime;
+	}
+
+	public float GetAttackPct() {
+		if (state != State.ATTACK) {
+			return 0.0f;
+		}
+
+		switch (aimDirection) {
+		case AimDirection.UP:
+			return stateTime / attackUpMaxTime;
+		case AimDirection.DOWN:
+			return stateTime / attackDownMaxTime;
+		case AimDirection.FORWARD:
+			return stateTime / attackForwardMaxTime;
+		default:
+			return 0.0f;
+		}
 	}
 
 	public void setBondLink(BondLink bondLink) {
@@ -466,8 +488,7 @@ public class PlayerStateController : MonoBehaviour
 
 	private void spawn()
 	{
-		// FIXME have to events: initalSpawn and respawn
-		statusProvider.setRespawnWarning ();
+		statusProvider.setRespawn (initialSpawn);
 
 		print ("p" + playerId + ": enter SPAWN state");
 		state = State.SPAWN;
@@ -541,13 +562,9 @@ public class PlayerStateController : MonoBehaviour
 
 		if(aimDirection == AimDirection.FORWARD) {
 			statusProvider.setHorizontalKnockback();
-			// TODO move to effect manager
-			ScreenShake.ShakeX (0.5f, 2.0f);
 		}
 		else {
 			statusProvider.setVerticalKnockback();
-			// TODO move to effect manager
-			ScreenShake.ShakeY (0.5f, 2.0f);
 		}	
 	}
 	
@@ -561,25 +578,17 @@ public class PlayerStateController : MonoBehaviour
 		movementController.setFrictionEnabled (true);
 		movementController.resetForces ();
 	
-		// notification
-		statusProvider.setDie();
-		// TODO use player effect script
-		Flash.flash ();
-		SlowMotion.slowMotion ();
-		ScreenShake.ShakeXY (0.5f, 2.0f, 0.5f, 2.0f);
-	}
-
-	//
-	// GETTERS
-	//
-
-	public int GetPlayerId ()
-	{
-		return playerId;
-	}
-
-	private GameState.PlayerInfo PlayerInfo {
-		get { return GameState.Instance.Player(playerId); }
+		switch(aimDirection) {
+		case AimDirection.UP:
+			statusProvider.setDie (new Vector2(0.0f, 1.0f));
+			break;
+		case AimDirection.DOWN:
+			statusProvider.setDie (new Vector2(0.0f, -1.0f));
+			break;
+		case AimDirection.FORWARD:		
+			statusProvider.setDie (new Vector2(movementController.isFacingRight() ? 1.0f : -1.0f, 0.0f));
+			break;
+		}
 	}
 
 	//

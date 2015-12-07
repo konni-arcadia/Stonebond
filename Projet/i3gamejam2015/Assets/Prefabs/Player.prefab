@@ -190,6 +190,7 @@ GameObject:
   - 114: {fileID: 11492586}
   - 114: {fileID: 11421360}
   - 114: {fileID: 11476394}
+  - 114: {fileID: 11405382}
   m_Layer: 9
   m_Name: Player
   m_TagString: Untagged
@@ -550,6 +551,21 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &11405382
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 170380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e91ff7b37153174aaa2108721e9bf34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bodyColorDarkPct: .100000001
+  bodyColorBrightPct: .100000001
+  chromaColorDarkPct: 1
+  chromaColorBrightPct: .899999976
 --- !u!114 &11408930
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -680,15 +696,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerId: 1
-  VerticalAimThresholdDegree: 100
+  verticalAimThresholdDegree: 100
   initialSpawnTime: 1.79999995
   respawnTime: 1.20000005
   attackUpMinTime: .349999994
   attackUpMaxTime: .349999994
   attackDownMinTime: .349999994
   attackDownMaxTime: .349999994
-  attackForwardMinTime: .100000001
-  attackForwardMaxTime: .449999988
+  attackForwardMinTime: .349999994
+  attackForwardMaxTime: .349999994
   attackCooldownTime: .300000012
   attackVelocityUp: 800
   attackVelocityDown: 2100
@@ -943,11 +959,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: attackForwardMaxTime
-      value: .449999988
+      value: .349999994
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: attackForwardMinTime
-      value: .100000001
+      value: .349999994
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: attackUpMinTime
@@ -964,6 +980,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: attackDownMaxTime
       value: .349999994
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: verticalAimThresholdDegree
+      value: 100
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

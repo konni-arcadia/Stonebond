@@ -94,22 +94,18 @@ public class PlayerStatusProvider : MonoBehaviour {
 		if (OnHorizontalKnockbackAction != null) OnHorizontalKnockbackAction();
 	}
 
-    public delegate void DieAction(Vector2 deathVector);
+	public delegate void DieAction(Vector2 attackDirection);
     public event DieAction OnDieAction;
-    public void setDie()
+	public void setDie(Vector2 attackDirection)
     {
-        setDie(Vector2.zero);
-    }
-    public void setDie(Vector2 deathVector)
-    {
-        if (OnDieAction != null) OnDieAction(deathVector);
+		if (OnDieAction != null) OnDieAction(attackDirection);
     }
 
-    public delegate void RespawnWarningAction();
-    public event RespawnWarningAction OnRespawnWarningAction;
-    public void setRespawnWarning()
+    public delegate void RespawnAction(bool initial);
+    public event RespawnAction OnRespawnAction;
+    public void setRespawn(bool initial)
     {
-        if (OnRespawnWarningAction != null) OnRespawnWarningAction();
+		if (OnRespawnAction != null) OnRespawnAction(initial);
     }
 
     public delegate void InvinsibleStateAction(bool isInvinsible);

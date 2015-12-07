@@ -9,6 +9,7 @@ public class GameState : Singleton<GameState> {
 	public class PlayerInfo {
 		public string Name;
 		public Color Color;
+		public Color BodyColor;
 		public int ControllerId;
 		public int TotalScore = 0;
 	}
@@ -26,6 +27,7 @@ public class GameState : Singleton<GameState> {
 		var p = new PlayerInfo();
 		p.Name = name;
 		p.Color = color;
+		p.BodyColor = Color.Lerp(Color.white, color, 0.3f);
 		p.ControllerId = controllerId;
 		players.Add(p);
 	}

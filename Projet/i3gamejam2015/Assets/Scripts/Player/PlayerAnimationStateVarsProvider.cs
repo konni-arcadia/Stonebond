@@ -30,7 +30,7 @@ public class PlayerAnimationStateVarsProvider : MonoBehaviour {
         myStatusProvider.OnVerticalKnockbackAction += VerticalKnockbackAction;
 		myStatusProvider.OnHorizontalKnockbackAction += HorizontalKnockbackAction;
         myStatusProvider.OnDieAction += DieAction;
-        myStatusProvider.OnRespawnWarningAction += RespawnWarningAction;
+        myStatusProvider.OnRespawnAction += RespawnAction;
 	}
 
     public void AxisHChangedAction(float axisHValue)
@@ -104,7 +104,7 @@ public class PlayerAnimationStateVarsProvider : MonoBehaviour {
             myAnimator.SetTrigger("Die");
     }
 
-    public void RespawnWarningAction()
+    public void RespawnAction(bool initial)
     {
         if (myAnimator != null)
             myAnimator.SetTrigger("Respawn");

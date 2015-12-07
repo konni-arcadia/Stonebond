@@ -21,10 +21,10 @@ public class PlayerSoundManager : MonoBehaviour
         statusProvider.OnAttackSpecialAction += OnAttack;
         statusProvider.OnAttackForwardAction += OnAttack;
         statusProvider.OnAttackDownAction += OnAttack;
-        statusProvider.OnRespawnWarningAction += OnRespawned;
+        statusProvider.OnRespawnAction += OnRespawned;
     }
 
-    private void OnRespawned()
+    private void OnRespawned(bool initial)
     {
 		if (SoundManager.Instance != null) {
 			SoundManager.Instance.GAMEPLAY_Rebirth ();

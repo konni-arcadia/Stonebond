@@ -22,12 +22,15 @@ public class PlayerMovementController : MonoBehaviour
     private bool grounded = false;			// Whether or not the player is grounded.
     private bool isGrinding = false;
 
+	private float originalGravityScale;
+
     // Executed at next iteration
     private bool wantJump = false, wantWallJump = false, wantJumpExtension = false;
     private int playerId;
     private float allowJumpTime = 0, disallowDirectionTime = 0;
     private List<Vector2> pendingForcesToApply = new List<Vector2>();
     private bool isMovementEnabled = true, inWallJump = false;
+	private bool isJumpEnabled = true;
 	private bool isFrictionEnabled = true;
 
     private Rigidbody2D body;
@@ -36,16 +39,21 @@ public class PlayerMovementController : MonoBehaviour
 
     private PlayerStatusProvider myStatusProvider;
 
-    void Start()
+    void Awake()
     {
         // Setting up references.
         body = GetComponent<Rigidbody2D>();
-        inputManager = FindObjectOfType<InputManager>();
-        playerId = GetComponent<PlayerStateController>().GetPlayerId();
-        bodyCollider = transform.Find("bodyCollider").GetComponent<Collider2D>();
-        setFacingRight(startsFacingRight);
+        inputManager = FindObjectOfType<InputManager>();        
+        bodyCollider = transform.Find("bodyCollider").GetComponent<Collider2D>();        
         myStatusProvider = GetComponent<PlayerStatusProvider>();
     }
+
+	void Start()
+	{
+		playerId = GetComponent<PlayerStateController>().GetPlayerId();
+		originalGravityScale = body.gravityScale;
+		setFacingRight(startsFacingRight);
+	}
 
     void Update()
     {
@@ -161,28 +169,31 @@ public class PlayerMovementController : MonoBehaviour
         myStatusProvider.setVelocityYValue(body.velocity.y);
     }
 
+	public void resetForces()
+	{
+		body.velocity = new Vector2(0, 0);
+		wantJumpExtension = false;
+	}
+
     public void setMovementEnabled(bool enabled)
     {
         isMovementEnabled = enabled;
     }
 
-	public void setFrictionEnabled(bool enabled)
+	public void setJumpEnabled(bool enabled)
 	{
-		isFrictionEnabled = enabled;
-		if (body != null) {
-			// WARNING cryptic value inside!
-			//body.gravityScale = enabled ? 2.0f : 0.0f;
-		}
+		isJumpEnabled = enabled;
+	}
+
+	public void setGravityEnabled(bool enabled)
+	{
+		isFrictionEnabled = enabled; // no gravity, no friction heh
+		body.gravityScale = enabled ? originalGravityScale : 0.0f;
 	}
 
     public void applyForce(Vector2 force)
     {
         pendingForcesToApply.Add(force);
-    }
-
-    public void setVelocity(Vector2 velocity)
-    {
-        body.velocity = velocity;
     }
 
     public bool isFacingRight()
@@ -196,11 +207,11 @@ public class PlayerMovementController : MonoBehaviour
     }
 
     // Freezes the player until an applyForce is called
-    public void resetForces()
-    {
-        body.velocity = new Vector2(0, 0);
-        wantJumpExtension = false;
-    }
+  //  public void resetForces()
+    //{
+      //  body.velocity = new Vector2(0, 0);
+        //wantJumpExtension = false;
+    //}
 
     public void setFacingRight(bool facingRight)
     {

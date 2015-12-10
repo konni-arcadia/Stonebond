@@ -564,8 +564,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bodyColorDarkPct: .100000001
   bodyColorBrightPct: .100000001
-  chromaColorDarkPct: 1
-  chromaColorBrightPct: .899999976
+  chromaColorDarkPct: .800000012
+  chromaColorBrightPct: .800000012
 --- !u!114 &11408930
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -699,39 +699,69 @@ MonoBehaviour:
   verticalAimThresholdDegree: 100
   initialSpawnTime: 1.79999995
   respawnTime: 1.20000005
-  attackUpMinTime: .349999994
-  attackUpMaxTime: .349999994
-  attackDownMinTime: .349999994
-  attackDownMaxTime: .349999994
-  attackForwardMinTime: .349999994
-  attackForwardMaxTime: .349999994
-  attackCooldownTime: .300000012
-  attackVelocityUp: 800
-  attackVelocityDown: 2100
-  attackVelocityForward: 1200
-  attackHorizGravity: 0
-  attackCurve:
+  attackUpTimeMin: .25
+  attackUpTimeMax: .25
+  attackUpForceMin: 0
+  attackUpForceMax: 46000
+  attackUpCurve:
     serializedVersion: 2
     m_Curve:
-    - time: -.00145984697
-      value: 1.0060674
-      inSlope: .0282003246
-      outSlope: .0282003246
+    - time: -.0215608664
+      value: .996078312
+      inSlope: -3.54302144
+      outSlope: -3.54302144
       tangentMode: 0
-    - time: 1.00440037
-      value: -.00305330753
-      inSlope: -2.8310976
-      outSlope: -2.8310976
+    - time: 1.00645161
+      value: 3.26149166e-06
+      inSlope: -.118604958
+      outSlope: -.118604958
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-  attackUpHorizControl: 5
-  attackDownHorizControl: 5
-  specialAttackVelocity: 2000
-  knockbackTime: .5
-  knockbackVelocityUp: 8000
-  knockbackVelocityDown: 12000
-  knockbackVelocityForward: 12000
+  attackDownTimeMin: .25
+  attackDownTimeMax: .25
+  attackDownForceMin: 0
+  attackDownForceMax: 46000
+  attackDownCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: -.0215608664
+      value: .996078312
+      inSlope: -3.54302144
+      outSlope: -3.54302144
+      tangentMode: 0
+    - time: 1.00645161
+      value: 3.26149166e-06
+      inSlope: -.118604958
+      outSlope: -.118604958
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  attackForwardTimeMin: .200000003
+  attackForwardTimeMax: .200000003
+  attackForwardForceMin: 0
+  attackForwardForceMax: 30000
+  attackForwardCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: -.0215608664
+      value: .996078312
+      inSlope: -3.54302144
+      outSlope: -3.54302144
+      tangentMode: 0
+    - time: 1.00645161
+      value: 3.26149166e-06
+      inSlope: -.118604958
+      outSlope: -.118604958
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  attackCooldownTime: .300000012
+  specialAttackVelocity: 20000
+  knockbackTime: .400000006
+  knockbackForceUp: 16000
+  knockbackForceDown: 16000
+  knockbackForceForward: 16000
   knockbackCurve:
     serializedVersion: 2
     m_Curve:
@@ -818,6 +848,18 @@ Prefab:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 0}
+      propertyPath: attackUpCurve.m_Curve.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackDownCurve.m_Curve.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackForwardCurve.m_Curve.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
       propertyPath: maxSpeed
       value: 9
       objectReference: {fileID: 0}
@@ -863,11 +905,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: knockbackVelocityDown
-      value: 12000
+      value: 24000
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: knockbackVelocityUp
-      value: 8000
+      value: 16000
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: invincibleAfterSpawnTime
@@ -939,11 +981,11 @@ Prefab:
       objectReference: {fileID: 11421360}
     - target: {fileID: 0}
       propertyPath: attackUpHorizControl
-      value: 5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: attackDownHorizControl
-      value: 5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: attackHorizGravity
@@ -955,7 +997,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: knockbackVelocityForward
-      value: 12000
+      value: 24000
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: attackForwardMaxTime
@@ -967,11 +1009,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: attackUpMinTime
-      value: .349999994
+      value: .300000012
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: attackUpMaxTime
-      value: .349999994
+      value: .300000012
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: attackDownMinTime
@@ -984,6 +1026,214 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: verticalAimThresholdDegree
       value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackUpVelocity
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackDownVelocity
+      value: 2100
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackForwardVelocity
+      value: 1200
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackUpCurve.m_Curve.Array.data[0].value
+      value: .996078312
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackUpCurve.m_Curve.Array.data[0].time
+      value: -.0215608664
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackUpCurve.m_Curve.Array.data[1].time
+      value: 1.00645161
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackUpCurve.m_Curve.Array.data[1].value
+      value: 3.26149166e-06
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackUpCurve.m_Curve.Array.data[0].inSlope
+      value: -3.54302144
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackUpCurve.m_Curve.Array.data[0].outSlope
+      value: -3.54302144
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackUpCurve.m_Curve.Array.data[1].inSlope
+      value: -.118604958
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackUpCurve.m_Curve.Array.data[1].outSlope
+      value: -.118604958
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackUpVelocityMin
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackForwardCurve.m_Curve.Array.data[1].value
+      value: 3.26149166e-06
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackForwardCurve.m_Curve.Array.data[1].time
+      value: 1.00645161
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackForwardCurve.m_Curve.Array.data[1].inSlope
+      value: -.118604958
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackForwardCurve.m_Curve.Array.data[1].outSlope
+      value: -.118604958
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackForwardCurve.m_Curve.Array.data[2].value
+      value: .016093161
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackForwardCurve.m_Curve.Array.data[2].time
+      value: .987470031
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackForwardCurve.m_Curve.Array.data[2].inSlope
+      value: 2.67161131
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackForwardCurve.m_Curve.Array.data[2].outSlope
+      value: 2.67161131
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackForwardCurve.m_Curve.Array.data[0].value
+      value: .996078312
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackForwardCurve.m_Curve.Array.data[0].inSlope
+      value: -3.54302144
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackForwardCurve.m_Curve.Array.data[0].outSlope
+      value: -3.54302144
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackForwardCurve.m_Curve.Array.data[3].inSlope
+      value: .0418592803
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackForwardCurve.m_Curve.Array.data[3].outSlope
+      value: .0418592803
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackForwardCurve.m_Curve.Array.data[3].time
+      value: .997891188
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackForwardCurve.m_Curve.Array.data[3].value
+      value: -.488803804
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackUpVelocityMax
+      value: 46000
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackDownVelocityMax
+      value: 46000
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackForwardVelocityMax
+      value: 30000
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: specialAttackVelocity
+      value: 20000
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackDownCurve.m_Curve.Array.data[0].time
+      value: -.0215608664
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackDownCurve.m_Curve.Array.data[0].inSlope
+      value: -3.54302144
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackDownCurve.m_Curve.Array.data[0].outSlope
+      value: -3.54302144
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackDownCurve.m_Curve.Array.data[1].value
+      value: 3.26149166e-06
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackDownCurve.m_Curve.Array.data[1].inSlope
+      value: -.118604958
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackDownCurve.m_Curve.Array.data[1].outSlope
+      value: -.118604958
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackForwardCurve.m_Curve.Array.data[0].time
+      value: -.0215608664
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackUpTimeMax
+      value: .25
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackUpTimeMin
+      value: .25
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackDownTimeMin
+      value: .25
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackDownTimeMax
+      value: .25
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackForwardTimeMin
+      value: .200000003
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackForwardTimeMax
+      value: .200000003
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackDownVelocityMin
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackForwardVelocityMin
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: chromaColorDarkPct
+      value: .800000012
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: chromaColorBrightPct
+      value: .800000012
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: knockbackForceUp
+      value: 16000
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: knockbackForceDown
+      value: 16000
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: knockbackForceForward
+      value: 16000
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: knockbackTime
+      value: .400000006
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

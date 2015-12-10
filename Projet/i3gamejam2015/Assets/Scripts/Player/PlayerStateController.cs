@@ -56,7 +56,7 @@ public class PlayerStateController : MonoBehaviour
 	}
 
 	private AimDirection aimDirection = AimDirection.FORWARD;
-    public float verticalAimThresholdDegree = 90f;
+    public float verticalAimThresholdDegree = 90.0f;
 
 	//
 	// SPAWN
@@ -70,21 +70,25 @@ public class PlayerStateController : MonoBehaviour
 	// ATTACK
 	// 
 
-	public float attackUpMinTime = 0.35f;
-	public float attackUpMaxTime = 0.35f;
-	public float attackDownMinTime = 0.35f;
-	public float attackDownMaxTime = 0.35f;
-	public float attackForwardMinTime = 0.35f;
-	public float attackForwardMaxTime = 0.35f;
+	public float attackUpTimeMin = 0.25f;
+	public float attackUpTimeMax = 0.25f;
+	public float attackUpForceMin = 0.0f;
+	public float attackUpForceMax = 46000.0f;
+	public AnimationCurve attackUpCurve;
 
-	public float attackCooldownTime = 4.0f;
-	public float attackVelocityUp = 1000.0f;
-	public float attackVelocityDown = 1000.0f;
-	public float attackVelocityForward = 2000.0f;
-	public float attackHorizGravity = 20.0f;
-	public AnimationCurve attackCurve;
-	public float attackUpHorizControl = 0.5f;
-	public float attackDownHorizControl = 0.5f;
+	public float attackDownTimeMin = 0.25f;
+	public float attackDownTimeMax = 0.25f;
+	public float attackDownForceMin = 0.0f;
+	public float attackDownForceMax = 46000.0f;
+	public AnimationCurve attackDownCurve;
+
+	public float attackForwardTimeMin = 0.2f;
+	public float attackForwardTimeMax = 0.2f;
+	public float attackForwardForceMin = 0.0f;
+	public float attackForwardForceMax = 30000.0f;
+	public AnimationCurve attackForwardCurve;
+
+	public float attackCooldownTime = 0.3f;
 
 	private float attackCooldown;
 
@@ -99,9 +103,9 @@ public class PlayerStateController : MonoBehaviour
 	//
 
 	public float knockbackTime = 2.0f;
-	public float knockbackVelocityUp = 2000.0f;
-	public float knockbackVelocityDown = 2000.0f;
-	public float knockbackVelocityForward = 3000.0f;
+	public float knockbackForceUp = 20000.0f;
+	public float knockbackForceDown = 20000.0f;
+	public float knockbackForceForward = 30000.0f;
 	public AnimationCurve knockbackCurve;
 
 	private AimDirection knockbackDirection;
@@ -159,7 +163,7 @@ public class PlayerStateController : MonoBehaviour
 
 		// start in spawn state
 		movementController.setMovementEnabled (false);
-		movementController.setFrictionEnabled (true);
+		movementController.setJumpEnabled (false);
 		spawn ();
 	}
 
@@ -187,11 +191,11 @@ public class PlayerStateController : MonoBehaviour
 
 		switch (aimDirection) {
 		case AimDirection.UP:
-			return stateTime / attackUpMaxTime;
+			return stateTime / attackUpTimeMax;
 		case AimDirection.DOWN:
-			return stateTime / attackDownMaxTime;
+			return stateTime / attackDownTimeMax;
 		case AimDirection.FORWARD:
-			return stateTime / attackForwardMaxTime;
+			return stateTime / attackForwardTimeMax;
 		default:
 			return 0.0f;
 		}
@@ -260,11 +264,6 @@ public class PlayerStateController : MonoBehaviour
 
 	void Update ()
 	{
-		// DIRTY make sure sprite is visible if went out of invinsible
-		if (state != State.INVINCIBLE) {
-			setVisible (true);
-		}
-
 		switch (state) {
 		case State.SPAWN:		
 			updateSpawn ();
@@ -294,11 +293,12 @@ public class PlayerStateController : MonoBehaviour
 	{
 		stateTime -= Time.deltaTime;
 		if (stateTime <= 0.0f) {
+			movementController.setMovementEnabled (true);
+			movementController.setJumpEnabled (true);
+
 			if(initialSpawn) {
-				// prout
 				print ("p" + playerId + ": enter IDLE state");
 				state = State.IDLE;
-
 				initialSpawn = false;
 			}
 			else {
@@ -306,8 +306,6 @@ public class PlayerStateController : MonoBehaviour
 				state = State.INVINCIBLE;
 				invisibleBlinkCounter = invinsibleBlinkInterval;
 				stateTime = invincibleAfterSpawnTime;
-				movementController.setMovementEnabled (true);
-				movementController.setFrictionEnabled (true);
 				statusProvider.setInvincibleStatus(true);
 			}
 		}
@@ -322,10 +320,7 @@ public class PlayerStateController : MonoBehaviour
 	}
 
 	private void updateIdle ()
-	{
-		movementController.setMovementEnabled (true);
-		movementController.setFrictionEnabled (true);
-		        
+	{		        
         float aimX = inputManager.AxisValue(playerId, InputManager.Horizontal);
         float aimY = inputManager.AxisValue(playerId, InputManager.Vertical);        
 		float aimAngle = Mathf.Atan2(aimY, aimX) * Mathf.Rad2Deg;          
@@ -369,65 +364,73 @@ public class PlayerStateController : MonoBehaviour
 
 		switch (aimDirection) {
 		case AimDirection.UP:
-			attackMinTime = attackUpMinTime;
-			attackMaxTime = attackUpMaxTime;
+			attackMinTime = attackUpTimeMin;
+			attackMaxTime = attackUpTimeMax;
 			break;
 		case AimDirection.DOWN:
-			attackMinTime = attackDownMinTime;
-			attackMaxTime = attackDownMaxTime;
+			attackMinTime = attackDownTimeMin;
+			attackMaxTime = attackDownTimeMax;
 			break;
 		case AimDirection.FORWARD:
-			attackMinTime = attackForwardMinTime;
-			attackMaxTime = attackForwardMaxTime;
+			attackMinTime = attackForwardTimeMin;
+			attackMaxTime = attackForwardTimeMax;
 			break;
 		}
 
 		stateTime += Time.deltaTime;
+	
+		// if attack time is over
+		if(stateTime > attackMaxTime || (stateTime > attackMinTime && !inputManager.IsHeld(playerId, InputManager.BUTTON_ATTACK))) {
+			print ("p" + playerId + ": enter IDLE state");
+			state = State.IDLE;
+						
+			switch (aimDirection) {
+			case AimDirection.UP:
+				attackColliderUp.enabled = false;
+				break;
+			case AimDirection.DOWN:
+				attackColliderDown.enabled = false;
+				break;
+			case AimDirection.FORWARD:
+				movementController.setGravityEnabled (true);
+				movementController.setJumpEnabled (true);
+				attackColliderForward.enabled = false;
+				break;
+			}
 
-		if (stateTime > attackMaxTime) {
 			attackCooldown = attackCooldownTime;
-			setIdleState ();
-			return;
-		}
-
-		if(stateTime > attackMinTime && !inputManager.IsHeld(playerId, InputManager.BUTTON_ATTACK)) {
-			attackCooldown = attackCooldownTime;
-			setIdleState ();
 			return;
 		}
 
 		float attackPct = stateTime / attackMaxTime;
-		float attackVelocityPct = attackCurve.Evaluate (attackPct);
 
 		switch (aimDirection) {
-		case AimDirection.UP: {
-			float vx = inputManager.AxisValue (playerId, InputManager.Horizontal) * attackUpHorizControl;
-			float vy = attackVelocityPct * Time.deltaTime * attackVelocityUp;
-			movementController.setVelocity (new Vector2(vx, vy));
-			break;
-		}
-		case AimDirection.DOWN: {
-			float vx = inputManager.AxisValue (playerId, InputManager.Horizontal) * attackDownHorizControl;
-			float vy = attackVelocityPct * Time.deltaTime * -attackVelocityDown;
-			movementController.setVelocity (new Vector2(vx, vy));
-			break;
-		}
-		case AimDirection.FORWARD:
-			float velocity = attackVelocityForward;
-			if(!movementController.isFacingRight()) {
-				velocity = -velocity;
+		case AimDirection.UP:
+			{
+				float force = (attackUpForceMin + attackUpCurve.Evaluate (attackPct) * (attackUpForceMax - attackUpForceMin)) * Time.deltaTime;
+				movementController.applyForce (new Vector2 (0.0f, force));
+				break;
 			}
-			movementController.setVelocity (new Vector2(attackVelocityPct * Time.deltaTime * velocity, -attackHorizGravity));
-			break;
+		case AimDirection.DOWN:
+			{
+				float force = (attackDownForceMin + attackDownCurve.Evaluate (attackPct) * (attackDownForceMax - attackDownForceMin)) * Time.deltaTime;
+				movementController.applyForce (new Vector2 (0.0f, -force));
+				break;
+			}
+		case AimDirection.FORWARD:
+			{
+				float force = (attackForwardForceMin + attackForwardCurve.Evaluate (attackPct) * (attackForwardForceMax - attackForwardForceMin)) * Time.deltaTime;
+				movementController.applyForce (new Vector2 (movementController.isFacingRight () ? force : -force, 0.0f));
+				break;
+			}
 		}
 	}
 
 	private void updateSpecialAttack () {
-		float velocity = specialAttackVelocity;
-		if(!movementController.isFacingRight()) {
-			velocity = -velocity;
-		}
-		movementController.setVelocity (new Vector2(Time.deltaTime * velocity, 0.0f));
+		//float velocity = specialAttackVelocity;
+		//if(!movementController.isFacingRight()) {
+		//	velocity = -velocity;
+		//}
 	}
 	
 	private void updateKnockback ()
@@ -436,22 +439,26 @@ public class PlayerStateController : MonoBehaviour
 		if (stateTime <= 0.0f) {
 			print ("p" + playerId + ": enter IDLE state");
 			state = State.IDLE;
+			
+			movementController.setMovementEnabled (true);
+			movementController.setJumpEnabled (true);
+			movementController.setGravityEnabled (true);
 			return;
 		}
 
 		float knockbackPct = 1.0f - stateTime / knockbackTime;
-		float knockbackForcePct = knockbackCurve.Evaluate (knockbackPct);
+		float knockbackVelocityPct = knockbackCurve.Evaluate (knockbackPct);
 
 		switch (knockbackDirection) {
 		case AimDirection.UP:
-			movementController.applyForce (new Vector2(0.0f, knockbackForcePct * Time.deltaTime * knockbackVelocityUp));
+			movementController.applyForce (new Vector2(0.0f, knockbackVelocityPct * Time.deltaTime * knockbackForceUp));
 			break;
 		case AimDirection.DOWN:
-			movementController.applyForce (new Vector2(0.0f, knockbackForcePct * Time.deltaTime * -knockbackVelocityDown));
+			movementController.applyForce (new Vector2(0.0f, knockbackVelocityPct * Time.deltaTime * -knockbackForceDown));
 			break;
 		case AimDirection.FORWARD:
-			float velocity = movementController.isFacingRight() ? -knockbackVelocityForward : knockbackVelocityForward;
-			movementController.applyForce (new Vector2(knockbackForcePct * Time.deltaTime * velocity, 0.0f));
+			float velocity = movementController.isFacingRight() ? -knockbackForceForward : knockbackForceForward;
+			movementController.applyForce (new Vector2(knockbackVelocityPct * Time.deltaTime * velocity, 0.0f));
 			break;
 		}
 	}
@@ -462,11 +469,11 @@ public class PlayerStateController : MonoBehaviour
 
 		stateTime -= Time.deltaTime;
 		if (stateTime <= 0.0f) {
-			print ("p" + playerId + ": enter IDLE state");
-			state = State.IDLE;
-
 			statusProvider.setInvincibleStatus(false);
 			setVisible (true);
+
+			print ("p" + playerId + ": enter IDLE state");
+			state = State.IDLE;
 			return;
 		}
 
@@ -477,22 +484,13 @@ public class PlayerStateController : MonoBehaviour
 		}
 	}
 
-	private void setIdleState() {
-		print ("p" + playerId + ": enter IDLE state");
-		state = State.IDLE;
-		
-		attackColliderUp.enabled = false;
-		attackColliderDown.enabled = false;
-		attackColliderForward.enabled = false;
-	}
-
 	private void spawn()
 	{
-		statusProvider.setRespawn (initialSpawn);
-
 		print ("p" + playerId + ": enter SPAWN state");
 		state = State.SPAWN;
 		stateTime = initialSpawn ? initialSpawnTime : respawnTime;
+
+		statusProvider.setRespawn (initialSpawn);
 	}
 
 	private void attack()
@@ -500,38 +498,27 @@ public class PlayerStateController : MonoBehaviour
 		print ("p" + playerId + ": enter ATTACK state");
 		state = State.ATTACK;
 		stateTime = 0.0f;
-		
-		movementController.setMovementEnabled (false);
-		movementController.setFrictionEnabled (false);
+
 		movementController.resetForces ();
-		
 		switch(aimDirection) {
 		case AimDirection.UP:
 			attackColliderUp.enabled = true;
 			attackColliderDown.enabled = false;
 			attackColliderForward.enabled = false;
+			statusProvider.setAttackUp ();
 			break;
 		case AimDirection.DOWN:
 			attackColliderUp.enabled = false;
 			attackColliderDown.enabled = true;
 			attackColliderForward.enabled = false;
-			break;
-		case AimDirection.FORWARD:
-			attackColliderUp.enabled = false;
-			attackColliderDown.enabled = false;
-			attackColliderForward.enabled = true;
-			break;
-		}
-
-		// notification
-		switch(aimDirection) {
-		case AimDirection.UP:
-			statusProvider.setAttackUp ();
-			break;
-		case AimDirection.DOWN:
 			statusProvider.setAttackDown ();
 			break;
 		case AimDirection.FORWARD:
+			movementController.setJumpEnabled (false);
+			movementController.setGravityEnabled (false);
+			attackColliderUp.enabled = false;
+			attackColliderDown.enabled = false;
+			attackColliderForward.enabled = true;
 			statusProvider.setAttackForward ();
 			break;
 		}
@@ -553,8 +540,8 @@ public class PlayerStateController : MonoBehaviour
 		this.knockbackDirection = knockbackDirection;
 
 		movementController.setMovementEnabled (false);
-		movementController.setFrictionEnabled (false);
-		movementController.resetForces ();
+		movementController.setJumpEnabled (false);
+		movementController.setGravityEnabled (false);
 
 		attackColliderUp.enabled = false;
 		attackColliderDown.enabled = false;
@@ -575,8 +562,8 @@ public class PlayerStateController : MonoBehaviour
 		stateTime = crystaledTime;
 
 		movementController.setMovementEnabled (false);
-		movementController.setFrictionEnabled (true);
-		movementController.resetForces ();
+		movementController.setJumpEnabled (false);
+		movementController.setGravityEnabled (true);
 	
 		switch(aimDirection) {
 		case AimDirection.UP:
@@ -647,35 +634,30 @@ public class PlayerStateController : MonoBehaviour
 
 		switch (state) {
 		case State.IDLE:
-			//drawColliderRect (bodyCollider, Color.white);
+			drawColliderRect (bodyCollider, Color.white);
 			break;
 		case State.ATTACK:
-			drawColliderRect (bodyCollider, Color.red);
+			drawColliderRect (bodyCollider, Color.white);
 			switch(aimDirection) {
 			case AimDirection.UP:
-				drawRect (bodyCollider.transform.position.x, bodyCollider.transform.position.y + 1.0f, 0.6f, 0.6f, Color.red);
+				drawColliderRect (attackColliderUp, Color.red);
 				break;
 			case AimDirection.DOWN:
-				drawRect (bodyCollider.transform.position.x, bodyCollider.transform.position.y - 1.0f, 0.6f, 0.6f, Color.red);
+				drawColliderRect (attackColliderDown, Color.red);
 				break;
 			case AimDirection.FORWARD:
-				if(movementController.isFacingRight()) {
-					drawRect (bodyCollider.transform.position.x + 1.0f, bodyCollider.transform.position.y, 0.6f, 0.6f, Color.red);
-				}
-				else {
-					drawRect (bodyCollider.transform.position.x - 1.0f, bodyCollider.transform.position.y, 0.6f, 0.6f, Color.red);
-				}
+				drawColliderRect (attackColliderForward, Color.red);
 				break;
 			}
 			break;
 		case State.KNOCKBACK:
-			//drawColliderRect (bodyCollider, Color.green);
+			drawColliderRect (bodyCollider, Color.white);
 			break;
 		case State.CRYSTALED:
-			drawColliderRect (bodyCollider, Color.blue);
+			drawColliderRect (bodyCollider, Color.gray);
 			break;
 		case State.INVINCIBLE:
-			drawColliderRect (bodyCollider, Color.yellow);
+			drawColliderRect (bodyCollider, Color.gray);
 			break;
 		}
 	}

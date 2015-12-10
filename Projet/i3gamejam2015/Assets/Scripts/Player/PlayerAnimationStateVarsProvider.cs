@@ -63,7 +63,7 @@ public class PlayerAnimationStateVarsProvider : MonoBehaviour {
     public void AttackForwardAction()
     {
         if (myAnimator != null)
-			myAnimator.SetTrigger("SpecialAttack");
+			myAnimator.SetTrigger("ForwardAttack");
     }
 
 

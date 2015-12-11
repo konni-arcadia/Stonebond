@@ -78,7 +78,7 @@ public class PlayerMovementController : MonoBehaviour
         // Wall jump state stops when grounded
         inWallJump = inWallJump && !grounded;
 
-        isGrinding = isMovementEnabled && allowJumpTime < Mathf.Epsilon &&
+        isGrinding = isJumpEnabled && allowJumpTime < Mathf.Epsilon &&
             body.velocity.y < 0 && Physics2D.Linecast(raycastBase.position, wallJumpCheck.position, 1 << LayerMask.NameToLayer("Ground"));
 
         //Update grounded status in player status component

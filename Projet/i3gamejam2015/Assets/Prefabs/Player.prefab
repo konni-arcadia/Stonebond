@@ -756,7 +756,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-  attackCooldownTime: .300000012
+  attackCooldownTime: .200000003
   specialAttackVelocity: 20000
   knockbackTime: .400000006
   knockbackForceUp: 16000
@@ -957,7 +957,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: attackCooldownTime
-      value: .300000012
+      value: .200000003
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: attackVelocityUp
@@ -1234,6 +1234,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: knockbackTime
       value: .400000006
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackDownForceMax
+      value: 46000
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

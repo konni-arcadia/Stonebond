@@ -737,10 +737,10 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-  attackForwardTimeMin: .200000003
-  attackForwardTimeMax: .200000003
-  attackForwardForceMin: 0
-  attackForwardForceMax: 30000
+  attackForwardTimeMin: .140000001
+  attackForwardTimeMax: .140000001
+  attackForwardForceMin: 2800
+  attackForwardForceMax: 22000
   attackForwardCurve:
     serializedVersion: 2
     m_Curve:
@@ -1197,11 +1197,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: attackForwardTimeMin
-      value: .200000003
+      value: .140000001
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: attackForwardTimeMax
-      value: .200000003
+      value: .140000001
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: attackDownVelocityMin
@@ -1238,6 +1238,14 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: attackDownForceMax
       value: 46000
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackForwardForceMin
+      value: 2800
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackForwardForceMax
+      value: 22000
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

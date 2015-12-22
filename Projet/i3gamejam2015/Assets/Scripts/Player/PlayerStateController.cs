@@ -162,9 +162,7 @@ public class PlayerStateController : MonoBehaviour
 		}
 
 		// start in spawn state
-		movementController.setMovementEnabled (false);
-		movementController.setJumpEnabled (false);
-		spawn ();
+		setState (State.SPAWN);
 	}
 
 	//
@@ -289,6 +287,82 @@ public class PlayerStateController : MonoBehaviour
 		}
 	}
 
+	private void setState (State newState)
+	{
+		switch (state) {
+		case State.SPAWN:		
+			leaveSpawn ();
+			break;
+		case State.IDLE:
+			leaveIdle ();
+			break;
+		case State.ATTACK:
+			leaveAttack ();
+			break;
+		case State.SPECIAL_ATTACK:
+			leaveSpecialAttack ();
+			break;
+		case State.KNOCKBACK:
+			leaveKnockback ();
+			break;
+		case State.CRYSTALED:
+			leaveCrystaled ();
+			break;
+		case State.INVINCIBLE:
+			leaveInvincible ();
+			break;
+		}
+
+		state = newState;
+		switch (state) {
+		case State.SPAWN:		
+			enterSpawn ();
+			break;
+		case State.IDLE:
+			enterIdle ();
+			break;
+		case State.ATTACK:
+			enterAttack ();
+			break;
+		case State.SPECIAL_ATTACK:
+			enterSpecialAttack ();
+			break;
+		case State.KNOCKBACK:
+			enterKnockback ();
+			break;
+		case State.CRYSTALED:
+			enterCrystaled ();
+			break;
+		case State.INVINCIBLE:
+			enterInvincible ();
+			break;
+		}
+	}
+
+	//
+	// SPAWN
+	//
+
+	private void enterSpawn()
+	{
+		print ("p" + playerId + ": enter SPAWN state");
+		state = State.SPAWN;
+
+		stateTime = initialSpawn ? initialSpawnTime : respawnTime;
+		movementController.setMovementEnabled (false);
+		movementController.setJumpEnabled (false);
+
+		statusProvider.setRespawn (initialSpawn);
+	}
+
+	private void leaveSpawn()
+	{
+		print ("p" + playerId + ": leave SPAWN state");
+
+		movementController.setMovementEnabled (true);
+		movementController.setJumpEnabled (true);
+	}
+
 	private void updateSpawn ()
 	{
 		stateTime -= Time.deltaTime;
@@ -297,26 +371,58 @@ public class PlayerStateController : MonoBehaviour
 			movementController.setJumpEnabled (true);
 
 			if(initialSpawn) {
-				print ("p" + playerId + ": enter IDLE state");
-				state = State.IDLE;
+				setState (State.IDLE);
 				initialSpawn = false;
 			}
 			else {
-				print ("p" + playerId + ": enter INVINCIBLE state");
-				state = State.INVINCIBLE;
-				invisibleBlinkCounter = invinsibleBlinkInterval;
-				stateTime = invincibleAfterSpawnTime;
-				statusProvider.setInvincibleStatus(true);
+				stateTime = invincibleAfterSpawnTime; // FIXME state arg
+				setState (State.INVINCIBLE);
 			}
 		}
+	}
+
+	//
+	// CRYSTALED
+	//
+
+	private void enterCrystaled()
+	{
+		print ("p" + playerId + ": enter CRYSTALED state");
+		state = State.CRYSTALED;
+
+		stateTime = crystaledTime;
+		movementController.setMovementEnabled (false);
+		movementController.setJumpEnabled (false);
+	}
+
+	private void leaveCrystaled()
+	{
+		print ("p" + playerId + ": leave CRYSTALED state");
+		movementController.setMovementEnabled (true);
+		movementController.setJumpEnabled (true);
 	}
 
 	private void updateCrystaled ()
 	{
 		stateTime -= Time.deltaTime;
 		if (stateTime <= 0.0f) {
-			spawn ();
+			setState (State.SPAWN);
 		}
+	}
+
+	//
+	// IDLE
+	//
+
+	private void enterIdle()
+	{
+		print ("p" + playerId + ": enter IDLE state");
+		state = State.IDLE;
+	}
+
+	private void leaveIdle()
+	{
+		print ("p" + playerId + ": leave IDLE state");
 	}
 
 	private void updateIdle ()
@@ -341,7 +447,7 @@ public class PlayerStateController : MonoBehaviour
 		// attack
 		if (inputManager.WasPressed (playerId, InputManager.BUTTON_ATTACK)) {
 			if (attackCooldown == 0.0f) {
-				attack ();
+				setState (State.ATTACK);
 			} else {
 				print ("p" + playerId + ": attack on CD");
 				statusProvider.setAttackFailed();
@@ -356,7 +462,58 @@ public class PlayerStateController : MonoBehaviour
 			}
 		}
 	}
+
+	//
+	// ATTACK
+	//
+
+	private void enterAttack()
+	{
+		print ("p" + playerId + ": enter ATTACK state");
+		state = State.ATTACK;
+
+		stateTime = 0.0f;
+		
+		movementController.resetForces ();
+		switch(aimDirection) {
+		case AimDirection.UP:
+			attackColliderUp.enabled = true;
+			statusProvider.setAttackUp ();
+			break;
+		case AimDirection.DOWN:
+			attackColliderDown.enabled = true;
+			statusProvider.setAttackDown ();
+			break;
+		case AimDirection.FORWARD:
+			movementController.setMovementEnabled (false);
+			movementController.setJumpEnabled (false);
+			movementController.setGravityEnabled (false);
+			attackColliderForward.enabled = true;
+			statusProvider.setAttackForward ();
+			break;
+		}
+	}
 	
+	private void leaveAttack()
+	{
+		switch (aimDirection) {
+		case AimDirection.UP:
+			attackColliderUp.enabled = false;
+			break;
+		case AimDirection.DOWN:
+			attackColliderDown.enabled = false;
+			break;
+		case AimDirection.FORWARD:
+			movementController.setGravityEnabled (true);
+			movementController.setMovementEnabled(true);
+			movementController.setJumpEnabled (true);
+			attackColliderForward.enabled = false;
+			break;
+		}
+		
+		attackCooldown = attackCooldownTime;
+	}
+
 	private void updateAttack ()
 	{
 		float attackMinTime = 0.0f;
@@ -381,24 +538,7 @@ public class PlayerStateController : MonoBehaviour
 	
 		// if attack time is over
 		if(stateTime > attackMaxTime || (stateTime > attackMinTime && !inputManager.IsHeld(playerId, InputManager.BUTTON_ATTACK))) {
-			print ("p" + playerId + ": enter IDLE state");
-			state = State.IDLE;
-						
-			switch (aimDirection) {
-			case AimDirection.UP:
-				attackColliderUp.enabled = false;
-				break;
-			case AimDirection.DOWN:
-				attackColliderDown.enabled = false;
-				break;
-			case AimDirection.FORWARD:
-				movementController.setGravityEnabled (true);
-				movementController.setJumpEnabled (true);
-				attackColliderForward.enabled = false;
-				break;
-			}
-
-			attackCooldown = attackCooldownTime;
+			setState (State.IDLE);
 			return;
 		}
 
@@ -426,13 +566,61 @@ public class PlayerStateController : MonoBehaviour
 		}
 	}
 
+	//
+	// SPECIAL ATTACK
+	//
+
+	private void enterSpecialAttack()
+	{
+		print ("p" + playerId + ": enter SPECIAL_ATTACK state");
+
+		state = State.SPECIAL_ATTACK;
+		
+		// NOT IMPLEMENTED
+	}
+
+	private void leaveSpecialAttack()
+	{
+		print ("p" + playerId + ": leave SPECIAL_ATTACK state");
+	}
+
 	private void updateSpecialAttack () {
 		//float velocity = specialAttackVelocity;
 		//if(!movementController.isFacingRight()) {
 		//	velocity = -velocity;
 		//}
 	}
-	
+
+	//
+	// KNOCKBACK
+	//
+
+	private void enterKnockback ()
+	{
+		print ("p" + playerId + ": enter KNOCKBACK state (dir=" + knockbackDirection + ")");
+		state = State.KNOCKBACK;
+
+		stateTime = knockbackTime;
+
+		movementController.setMovementEnabled (false);
+		movementController.setJumpEnabled (false);
+		movementController.setGravityEnabled (false);
+		
+		if(knockbackDirection == AimDirection.FORWARD) {
+			statusProvider.setHorizontalKnockback();
+		}
+		else {
+			statusProvider.setVerticalKnockback();
+		}	
+	}
+
+	private void leaveKnockback()
+	{
+		movementController.setMovementEnabled (true);
+		movementController.setJumpEnabled (true);
+		movementController.setGravityEnabled (true);
+	}
+
 	private void updateKnockback ()
 	{
 		stateTime -= Time.deltaTime;
@@ -463,17 +651,35 @@ public class PlayerStateController : MonoBehaviour
 		}
 	}
 
+	//
+	// INVINCIBLE
+	//
+
+	private void enterInvincible()
+	{
+		print ("p" + playerId + ": enter INVINCIBLE state");
+		state = State.INVINCIBLE;
+
+		invisibleBlinkCounter = invinsibleBlinkInterval;
+
+		statusProvider.setInvincibleStatus(true);
+	}
+
+	private void leaveInvincible()
+	{
+		print ("p" + playerId + ": leave INVINCIBLE state");
+		setVisible (true);
+
+		statusProvider.setInvincibleStatus(false);
+	}
+
 	private void updateInvincible()
 	{
 		updateIdle ();
 
 		stateTime -= Time.deltaTime;
 		if (stateTime <= 0.0f) {
-			statusProvider.setInvincibleStatus(false);
-			setVisible (true);
-
-			print ("p" + playerId + ": enter IDLE state");
-			state = State.IDLE;
+			setState (State.IDLE);
 			return;
 		}
 
@@ -484,87 +690,12 @@ public class PlayerStateController : MonoBehaviour
 		}
 	}
 
-	private void spawn()
-	{
-		print ("p" + playerId + ": enter SPAWN state");
-		state = State.SPAWN;
-		stateTime = initialSpawn ? initialSpawnTime : respawnTime;
+	//
+	// HELPERS
+	//
 
-		statusProvider.setRespawn (initialSpawn);
-	}
-
-	private void attack()
-	{
-		print ("p" + playerId + ": enter ATTACK state");
-		state = State.ATTACK;
-		stateTime = 0.0f;
-
-		movementController.resetForces ();
-		switch(aimDirection) {
-		case AimDirection.UP:
-			attackColliderUp.enabled = true;
-			attackColliderDown.enabled = false;
-			attackColliderForward.enabled = false;
-			statusProvider.setAttackUp ();
-			break;
-		case AimDirection.DOWN:
-			attackColliderUp.enabled = false;
-			attackColliderDown.enabled = true;
-			attackColliderForward.enabled = false;
-			statusProvider.setAttackDown ();
-			break;
-		case AimDirection.FORWARD:
-			movementController.setJumpEnabled (false);
-			movementController.setGravityEnabled (false);
-			attackColliderUp.enabled = false;
-			attackColliderDown.enabled = false;
-			attackColliderForward.enabled = true;
-			statusProvider.setAttackForward ();
-			break;
-		}
-	}
-
-	private void specialAttack()
-	{
-		print ("p" + playerId + ": enter SPECIAL_ATTACK state");
-		state = State.SPECIAL_ATTACK;
-
-		// NOT IMPLEMENTED
-	}
-	
-	private void knockback (AimDirection knockbackDirection)
-	{
-		print ("p" + playerId + ": enter KNOCKBACK state (dir=" + knockbackDirection + ")");
-		state = State.KNOCKBACK;
-		stateTime = knockbackTime;
-		this.knockbackDirection = knockbackDirection;
-
-		movementController.setMovementEnabled (false);
-		movementController.setJumpEnabled (false);
-		movementController.setGravityEnabled (false);
-
-		attackColliderUp.enabled = false;
-		attackColliderDown.enabled = false;
-		attackColliderForward.enabled = false;
-
-		if(aimDirection == AimDirection.FORWARD) {
-			statusProvider.setHorizontalKnockback();
-		}
-		else {
-			statusProvider.setVerticalKnockback();
-		}	
-	}
-	
 	private void hitWithAttack (AimDirection dir)
 	{
-		print ("p" + playerId + ": enter CRYSTALED state");
-		state = State.CRYSTALED;
-		stateTime = crystaledTime;
-
-		movementController.setMovementEnabled (false);
-		movementController.setJumpEnabled (false);
-		movementController.setGravityEnabled (true);
-	
 		switch(aimDirection) {
 		case AimDirection.UP:
 			statusProvider.setDie (new Vector2(0.0f, 1.0f));
@@ -576,11 +707,15 @@ public class PlayerStateController : MonoBehaviour
 			statusProvider.setDie (new Vector2(movementController.isFacingRight() ? 1.0f : -1.0f, 0.0f));
 			break;
 		}
+
+		setState (State.CRYSTALED);
 	}
 
-	//
-	// HELPERS
-	//
+	private void knockback (AimDirection dir)
+	{
+		knockbackDirection = dir; // FIXME state arg
+		setState (State.KNOCKBACK);
+	}
 
 	private bool isPerformingAttack ()
 	{

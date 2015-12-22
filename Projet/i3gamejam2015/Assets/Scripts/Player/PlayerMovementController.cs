@@ -173,6 +173,7 @@ public class PlayerMovementController : MonoBehaviour
 	{
 		body.velocity = new Vector2(0, 0);
 		wantJumpExtension = false;
+		pendingForcesToApply.Clear();
 	}
 
     public void setMovementEnabled(bool enabled)

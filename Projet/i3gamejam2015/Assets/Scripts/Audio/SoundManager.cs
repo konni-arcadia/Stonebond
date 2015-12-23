@@ -89,24 +89,6 @@ public class SoundManager : MonoBehaviour
         source.clip = BoundLoop;
         source.loop = true;
         source.Play();
-
-		//preload Main Menu
-		var mainMenuSource = GetAudioSource("MainMenuSound");
-		mainMenuSource.clip = PressStartScreen;
-		mainMenuSource.loop = true;
-		mainMenuSource.Play();
-
-		//preload Char Select
-		var characterSelectSource = GetAudioSource("CharacterSelectSound");
-		characterSelectSource.clip = CharacterSelect;
-		characterSelectSource.loop = true;
-		characterSelectSource.Play();
-
-		//preload stage Select
-		var stageSelectSound = GetAudioSource("StageSelectSound");
-		stageSelectSound.clip = StageSelect;
-		stageSelectSound.loop = true;
-		stageSelectSound.Play();
     }
 
     public void PressStart_Play()

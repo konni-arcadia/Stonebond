@@ -10,6 +10,9 @@ AudioMixerController:
   m_MasterGroup: {fileID: 24300001}
   m_Snapshots:
   - {fileID: 24500003}
+  - {fileID: 24526204}
+  - {fileID: 24561626}
+  - {fileID: 24530948}
   m_StartSnapshot: {fileID: 24500003}
   m_SuspendThreshold: -80
   m_EnableSuspend: 1
@@ -22,7 +25,7 @@ AudioMixerController:
     - e4d78a074d0744cde94942bdb36d8857
     name: View
   m_CurrentViewIndex: 0
-  m_TargetSnapshot: {fileID: 24500003}
+  m_TargetSnapshot: {fileID: 24561626}
 --- !u!243 &24300001
 AudioMixerGroupController:
   m_ObjectHideFlags: 0
@@ -151,8 +154,47 @@ AudioMixerSnapshotController:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Snapshot
+  m_Name: DefaultMenu
   m_AudioMixer: {fileID: 24100000}
   m_SnapshotID: 8cdb0ab23c65649af99a8c4055f1658c
-  m_FloatValues: {}
+  m_FloatValues:
+    317704f6b45f645ed9d09ed55f0d50ff: -80
+    41343999b055748d789f9c014c253920: -80
+    d77a33eee0c0a45b6833d2b01f6a64b9: -80
+  m_TransitionOverrides: {}
+--- !u!245 &24526204
+AudioMixerSnapshotController:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: MainMenu
+  m_AudioMixer: {fileID: 24100000}
+  m_SnapshotID: 1ee79e7d1a7e04edcb8d3292c2cd9487
+  m_FloatValues:
+    317704f6b45f645ed9d09ed55f0d50ff: -80
+    d77a33eee0c0a45b6833d2b01f6a64b9: -80
+  m_TransitionOverrides: {}
+--- !u!245 &24530948
+AudioMixerSnapshotController:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: SelectCharacter
+  m_AudioMixer: {fileID: 24100000}
+  m_SnapshotID: 645af8c6a86cc48b39946812d6a12091
+  m_FloatValues:
+    41343999b055748d789f9c014c253920: -80
+    d77a33eee0c0a45b6833d2b01f6a64b9: -80
+  m_TransitionOverrides: {}
+--- !u!245 &24561626
+AudioMixerSnapshotController:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: SelectScene
+  m_AudioMixer: {fileID: 24100000}
+  m_SnapshotID: 42ee430f1cd604cee977c67523806e44
+  m_FloatValues:
+    317704f6b45f645ed9d09ed55f0d50ff: -80
+    41343999b055748d789f9c014c253920: -80
   m_TransitionOverrides: {}

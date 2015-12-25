@@ -90,7 +90,6 @@ public class SoundManager : MonoBehaviour
 
     public void PressStart_Play()
     {
-		//load menuAudioManager
 		AudioSingleton<MenuAudioManager>.Instance.SetMainMenuSnapshot();
     }
     public void PressStart_Stop()
@@ -113,34 +112,35 @@ public class SoundManager : MonoBehaviour
     }
     public void StageSelect_Stop()
     {
-        //TODO
+		AudioSingleton<MenuAudioManager>.Instance.SetDefaultSnapshot();
     }
     public void Stage_Play(StageEnum _stage)
     {
-        var source = GetAudioSource("BackgroundSound");
+        //var source = GetAudioSource("BackgroundSound");
         switch (_stage)
         {
             case StageEnum.PipesOfAwakening:
-                source.clip = StageSpireHigh;
+                //source.clip = StageSpireHigh;
+			AudioSingleton<MusicAudioManager>.Instance.SetPipesOfAwakeningSnapshot();
                 break;
             case StageEnum.SpireHigh:
-                source.clip = StagePipesOfAwakening;
+                //source.clip = StagePipesOfAwakening;
+			AudioSingleton<MusicAudioManager>.Instance.SetSpireHighSnapshot();
                 break;
             case StageEnum.CloisterOfTheSilence:
-                source.clip = StageCloisterOfTheSilence;
+                //source.clip = StageCloisterOfTheSilence;
                 break;
             case StageEnum.RosetteOfTheWingedOnes:
-                source.clip = StageRosetteOfTheWingedOnes;
+                //source.clip = StageRosetteOfTheWingedOnes;
                 break;
         }
-        source.loop = true;
-        source.Play();
 
-		var snapshot = mainMixer.FindSnapshot("Background");
-		if (snapshot != null)
-		{
-			snapshot.TransitionTo(transitionIn);
-		}
+
+		//var snapshot = mainMixer.FindSnapshot("Background");
+		//if (snapshot != null)
+		//{
+		//	snapshot.TransitionTo(transitionIn);
+		//}
 
     }
     public void Stage_Stop()

@@ -10,6 +10,10 @@ AudioMixerController:
   m_MasterGroup: {fileID: 24300001}
   m_Snapshots:
   - {fileID: 24500003}
+  - {fileID: 24563452}
+  - {fileID: 24515086}
+  - {fileID: 24588862}
+  - {fileID: 24593520}
   m_StartSnapshot: {fileID: 24500003}
   m_SuspendThreshold: -80
   m_EnableSuspend: 1
@@ -23,7 +27,7 @@ AudioMixerController:
     - b582e862c507d438fa397f7c8b07e607
     name: View
   m_CurrentViewIndex: 0
-  m_TargetSnapshot: {fileID: 24500003}
+  m_TargetSnapshot: {fileID: 24593520}
 --- !u!243 &24300001
 AudioMixerGroupController:
   m_ObjectHideFlags: 0
@@ -183,8 +187,65 @@ AudioMixerSnapshotController:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Snapshot
+  m_Name: DefaultMusic
   m_AudioMixer: {fileID: 24100000}
   m_SnapshotID: b61c9989f45c641bb8ff42d3a8ba8a78
-  m_FloatValues: {}
+  m_FloatValues:
+    7620e4e2ce369463dafe893b313ef678: -80
+    ac2377155645b4972ac55ddf85106ce3: -80
+    10846ceba793546b5868519b3f0405e3: -80
+    f3a43c9da5fbb4efd81533a9f460474c: -80
+  m_TransitionOverrides: {}
+--- !u!245 &24515086
+AudioMixerSnapshotController:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: CloisterOfTheSilence
+  m_AudioMixer: {fileID: 24100000}
+  m_SnapshotID: b234c4cf500194564a68269ce8d89912
+  m_FloatValues:
+    7620e4e2ce369463dafe893b313ef678: -80
+    10846ceba793546b5868519b3f0405e3: -80
+    f3a43c9da5fbb4efd81533a9f460474c: -80
+  m_TransitionOverrides: {}
+--- !u!245 &24563452
+AudioMixerSnapshotController:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: SpireHigh
+  m_AudioMixer: {fileID: 24100000}
+  m_SnapshotID: f2aa387ac02b5450d98166046fe91770
+  m_FloatValues:
+    7620e4e2ce369463dafe893b313ef678: -80
+    ac2377155645b4972ac55ddf85106ce3: -80
+    10846ceba793546b5868519b3f0405e3: -80
+  m_TransitionOverrides: {}
+--- !u!245 &24588862
+AudioMixerSnapshotController:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: RosetteOfTheWingedOnes
+  m_AudioMixer: {fileID: 24100000}
+  m_SnapshotID: 07dd08e3940104d96b6e67ff740d4a62
+  m_FloatValues:
+    ac2377155645b4972ac55ddf85106ce3: -80
+    10846ceba793546b5868519b3f0405e3: -80
+    f3a43c9da5fbb4efd81533a9f460474c: -80
+  m_TransitionOverrides: {}
+--- !u!245 &24593520
+AudioMixerSnapshotController:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: PipesOfAwakening
+  m_AudioMixer: {fileID: 24100000}
+  m_SnapshotID: 2949095bf16c24533bc35ae02d2a43a3
+  m_FloatValues:
+    7620e4e2ce369463dafe893b313ef678: -80
+    ac2377155645b4972ac55ddf85106ce3: -80
+    10846ceba793546b5868519b3f0405e3: -0.002441872
+    f3a43c9da5fbb4efd81533a9f460474c: -80
   m_TransitionOverrides: {}

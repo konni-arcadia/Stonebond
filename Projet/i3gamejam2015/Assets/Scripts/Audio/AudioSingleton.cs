@@ -47,7 +47,7 @@ public abstract class AudioSingleton<T> : MonoBehaviour where T : MonoBehaviour
 			if (_instance == null) {
 				_instance = (T)FindObjectOfType (mytype);
 				if (_instance == null) {
-					//Debug.Log("initializing instance of: " + mytype.Name);
+					Debug.Log("initializing instance of: " + mytype.Name);
 					string goName = mytype.ToString ();
 					GameObject go = GameObject.Find (goName);
 					if (go == null) // try again searching for a cloned object
@@ -55,7 +55,7 @@ public abstract class AudioSingleton<T> : MonoBehaviour where T : MonoBehaviour
 						go = GameObject.Find (goName+"(Clone)");
 						if (go != null)
 						{
-							//Debug.Log("found clone of object using it!"); 
+							Debug.Log("found clone of object using it!"); 
 						}
 					}
 
@@ -67,7 +67,7 @@ public abstract class AudioSingleton<T> : MonoBehaviour where T : MonoBehaviour
 						{
 							PrefabAttribute attr = (PrefabAttribute)Attribute.GetCustomAttribute(mytype,typeof(PrefabAttribute));
 							string prefabname = attr.Name;
-							//Debug.LogWarning(goName + " not found attempting to instantiate prefab... either: " + goName + " or: " + prefabname);
+							Debug.LogWarning(goName + " not found attempting to instantiate prefab... either: " + goName + " or: " + prefabname);
 							try
 							{
 								if (prefabname != "")
@@ -85,7 +85,7 @@ public abstract class AudioSingleton<T> : MonoBehaviour where T : MonoBehaviour
 						}
 						if (go == null)
 						{
-							//Debug.LogWarning(goName + " not found creating...");
+							Debug.LogWarning(goName + " not found creating...");
 							go = new GameObject ();
 							go.name = goName;
 						}
@@ -98,7 +98,7 @@ public abstract class AudioSingleton<T> : MonoBehaviour where T : MonoBehaviour
 				}
 				else
 				{ 
-					//Debug.Log(mytype.Name + " had to be searched for but was found"); 
+					Debug.Log(mytype.Name + " had to be searched for but was found"); 
 					int count = FindObjectsOfType(mytype).Length;
 					if (count > 1)
 					{

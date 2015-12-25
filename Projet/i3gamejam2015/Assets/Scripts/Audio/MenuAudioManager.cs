@@ -11,26 +11,34 @@ public class MenuAudioManager : BaseAudioManager {
 	public AudioMixerSnapshot SelectCharacterSnapshot;
 	public AudioMixerSnapshot DefaultSnapshot;
 
+	void Awake() {
+		DontDestroyOnLoad(this.gameObject);
+	}
+
 	// Use this for initialization
 	void Start () 
 	{
 		DefaultSnapshot.TransitionTo(transitionIn);
 	}
 
+	public void SetDefaultSnapshot()
+	{
+		DefaultSnapshot.TransitionTo(0f);
+	}
 
 	public void SetMainMenuSnapshot()
 	{
-		MainMenuSnapshot.TransitionTo(5f);
+		MainMenuSnapshot.TransitionTo(0f);
 	}
 
 	public void SetSelectCharacterSnapshot()
 	{
-		SelectCharacterSnapshot.TransitionTo(5f);
+		SelectCharacterSnapshot.TransitionTo(0f);
 	}
 
 	public void SetSelectSceneSnapshot()
 	{
-		SelectSceneSnapshot.TransitionTo(5f);
+		SelectSceneSnapshot.TransitionTo(0f);
 	}
 
 }

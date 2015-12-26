@@ -67,25 +67,25 @@ public abstract class AudioSingleton<T> : MonoBehaviour where T : MonoBehaviour
 						{
 							PrefabAttribute attr = (PrefabAttribute)Attribute.GetCustomAttribute(mytype,typeof(PrefabAttribute));
 							string prefabname = attr.Name;
-							Debug.LogWarning(goName + " not found attempting to instantiate prefab... either: " + goName + " or: " + prefabname);
+							Debug.Log(goName + " not found attempting to instantiate prefab... either: " + goName + " or: " + prefabname);
 							try
 							{
 								if (prefabname != "")
 								{
-									go = (GameObject)Instantiate(Resources.Load(prefabname, typeof(GameObject)));
+									go = (GameObject)Instantiate(Resources.Load(prefabname) as GameObject);
 								}
 								else
 								{
-									go = (GameObject)Instantiate(Resources.Load(goName, typeof(GameObject)));
+									go = (GameObject)Instantiate(Resources.Load(goName)as GameObject);
 								}
 							} catch (Exception e)
 							{
-								Debug.LogError("could not instantiate prefab even though prefab attribute was set: " + e.Message + "\n" + e.StackTrace);
+								Debug.Log("could not instantiate prefab even though prefab attribute was set: " + e.Message + "\n" + e.StackTrace);
 							}
 						}
 						if (go == null)
 						{
-							Debug.LogWarning(goName + " not found creating...");
+							Debug.Log(goName + " not found creating...");
 							go = new GameObject ();
 							go.name = goName;
 						}

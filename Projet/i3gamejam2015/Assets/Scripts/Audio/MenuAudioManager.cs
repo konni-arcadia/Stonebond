@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine.Audio;
 
 
-[PrefabAttribute("/Prefabs/Audio/MenuAudioManager")]
+[PrefabAttribute("Prefabs/Audio/Menu/MenuAudioManager")]
 public class MenuAudioManager : BaseAudioManager {
 
 	public AudioMixerSnapshot MainMenuSnapshot;
@@ -18,7 +18,7 @@ public class MenuAudioManager : BaseAudioManager {
 	// Use this for initialization
 	void Start () 
 	{
-		DefaultSnapshot.TransitionTo(transitionIn);
+		MainMenuSnapshot.TransitionTo(transitionIn);
 	}
 
 	public void SetDefaultSnapshot()

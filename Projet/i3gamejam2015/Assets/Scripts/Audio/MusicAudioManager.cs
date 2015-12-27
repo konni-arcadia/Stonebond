@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.Audio;
 
-[PrefabAttribute("Resources/Prefabs/Audio")]
+[PrefabAttribute("Prefabs/Audio/Music/MusicAudioManager")]
 public class MusicAudioManager : BaseAudioManager {
 
 	public AudioMixerSnapshot SpireHighSnapshot;
@@ -20,6 +20,11 @@ public class MusicAudioManager : BaseAudioManager {
 		DefaultSnapshot.TransitionTo(0f);
 	}
 
+	public void SetDefaultSnapshot()
+	{
+		DefaultSnapshot.TransitionTo(0f);
+	}
+
 	public void SetPipesOfAwakeningSnapshot()
 	{
 		PipesOfAwakeningSnapshot.TransitionTo(0f);
@@ -28,5 +33,15 @@ public class MusicAudioManager : BaseAudioManager {
 	public void SetSpireHighSnapshot()
 	{
 		SpireHighSnapshot.TransitionTo(0f);
+	}
+
+	public void SetCloisterOfTheSilence()
+	{
+		CloisterOfTheSilenceSnapshot.TransitionTo(0f);
+	}
+
+	public void SetRosetteOfTheWingeSnapshot()
+	{
+		RosetteOfTheWingeSnapshot.TransitionTo(0f);
 	}
 }

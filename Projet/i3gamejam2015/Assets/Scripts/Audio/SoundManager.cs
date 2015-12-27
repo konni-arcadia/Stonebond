@@ -11,13 +11,7 @@ public class SoundManager : MonoBehaviour
 
     private AudioSource audioSource;
     #region AudioClips
-    public AudioClip PressStartScreen;
-    public AudioClip CharacterSelect;
-    public AudioClip StageSelect;
-    public AudioClip StageSpireHigh;
-    public AudioClip StagePipesOfAwakening;
-    public AudioClip StageCloisterOfTheSilence;
-    public AudioClip StageRosetteOfTheWingedOnes;
+
     public AudioClip Cursor;
     public AudioClip Validate;
     public AudioClip Cancel;
@@ -78,9 +72,6 @@ public class SoundManager : MonoBehaviour
         transitionOut = quarterNote * 8f;
         mainMixer = Resources.Load<AudioMixer>("Main");
 
-
-
-
         //preload bound
         //var source = GetAudioSource("BondSound");
         //source.clip = BoundLoop;
@@ -94,17 +85,16 @@ public class SoundManager : MonoBehaviour
     }
     public void PressStart_Stop()
     {
-        //TODO
+		AudioSingleton<MenuAudioManager>.Instance.SetDefaultSnapshot();
     }
     public void CharacterSelect_Play()
     {
-		//load menuAudioManager
 		AudioSingleton<MenuAudioManager>.Instance.SetSelectCharacterSnapshot();
 		VOICE_SelectCharacter_Play();
     }
     public void CharacterSelect_Stop()
     {
-        //TODO
+		AudioSingleton<MenuAudioManager>.Instance.SetDefaultSnapshot();
     }
     public void StageSelect_Play()
     {
@@ -116,32 +106,21 @@ public class SoundManager : MonoBehaviour
     }
     public void Stage_Play(StageEnum _stage)
     {
-        //var source = GetAudioSource("BackgroundSound");
         switch (_stage)
         {
             case StageEnum.PipesOfAwakening:
-                //source.clip = StageSpireHigh;
-			AudioSingleton<MusicAudioManager>.Instance.SetPipesOfAwakeningSnapshot();
+				AudioSingleton<MusicAudioManager>.Instance.SetPipesOfAwakeningSnapshot();
                 break;
             case StageEnum.SpireHigh:
-                //source.clip = StagePipesOfAwakening;
-			AudioSingleton<MusicAudioManager>.Instance.SetSpireHighSnapshot();
+				AudioSingleton<MusicAudioManager>.Instance.SetSpireHighSnapshot();
                 break;
-            case StageEnum.CloisterOfTheSilence:
-                //source.clip = StageCloisterOfTheSilence;
+			case StageEnum.CloisterOfTheSilence:
+				AudioSingleton<MusicAudioManager>.Instance.SetCloisterOfTheSilence();
                 break;
-            case StageEnum.RosetteOfTheWingedOnes:
-                //source.clip = StageRosetteOfTheWingedOnes;
+			case StageEnum.RosetteOfTheWingedOnes:
+				AudioSingleton<MusicAudioManager>.Instance.SetRosetteOfTheWingeSnapshot();
                 break;
         }
-
-
-		//var snapshot = mainMixer.FindSnapshot("Background");
-		//if (snapshot != null)
-		//{
-		//	snapshot.TransitionTo(transitionIn);
-		//}
-
     }
     public void Stage_Stop()
     {

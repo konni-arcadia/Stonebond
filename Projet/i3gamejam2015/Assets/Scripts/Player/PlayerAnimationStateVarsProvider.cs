@@ -26,6 +26,8 @@ public class PlayerAnimationStateVarsProvider : MonoBehaviour {
         myStatusProvider.OnAttackForwardAction += AttackForwardAction;
         myStatusProvider.OnAttackUpAction += AttackUpAction;
         myStatusProvider.OnAttackDownAction += AttackDownAction;
+		myStatusProvider.OnChargeStartAction += ChargeStartAction;
+		myStatusProvider.OnChargeStopAction += ChargeStopAction;
 		myStatusProvider.OnAttackSpecialAction += AttackSpecialAction;
         myStatusProvider.OnVerticalKnockbackAction += VerticalKnockbackAction;
 		myStatusProvider.OnHorizontalKnockbackAction += HorizontalKnockbackAction;
@@ -79,6 +81,18 @@ public class PlayerAnimationStateVarsProvider : MonoBehaviour {
         if (myAnimator != null)
             myAnimator.SetTrigger("DownwardAttack");
     }
+
+	public void ChargeStartAction()
+	{
+		if (myAnimator != null)
+			myAnimator.SetBool("Charge", true);
+	}
+
+	public void ChargeStopAction(bool complete)
+	{
+		if (myAnimator != null)
+			myAnimator.SetBool("Charge", false);
+	}
 
 	public void AttackSpecialAction()
 	{

@@ -15,6 +15,8 @@ public class PlayerMovementController : MonoBehaviour
     public Transform[] groundChecks;			// A position marking where to check if the player is grounded.
     public Transform raycastBase, wallJumpCheck;
     public bool startsFacingRight = true;
+	public float frictionFactorGround = 0.5f;
+	public float frictionFactorAir = 0.1f;
 
     public AudioClip jumpClip;
     public AudioClip landClip;
@@ -29,9 +31,10 @@ public class PlayerMovementController : MonoBehaviour
     private int playerId;
     private float allowJumpTime = 0, disallowDirectionTime = 0;
     private List<Vector2> pendingForcesToApply = new List<Vector2>();
-    private bool isMovementEnabled = true, inWallJump = false;
+    private bool inWallJump = false;
 	private bool isJumpEnabled = true;
-	private bool isFrictionEnabled = true;
+	private float fixedFrictionFactor = 0.0f;
+	private float movementFactor = 1.0f;
 
     private Rigidbody2D body;
     private InputManager inputManager;
@@ -85,7 +88,7 @@ public class PlayerMovementController : MonoBehaviour
         myStatusProvider.setOnWallStatus(isGrinding);
 
         // If the jump button is pressed and the player is grounded then the player should jump.
-        if (isMovementEnabled && inputManager.WasPressed(playerId, InputManager.A))
+        if (isJumpEnabled && inputManager.WasPressed(playerId, InputManager.A))
         {
             // Standard way of jumping (allowed to jump)
             if (allowJumpTime > 0)
@@ -107,8 +110,9 @@ public class PlayerMovementController : MonoBehaviour
         pendingForcesToApply.Clear();
 
         // Cache the horizontal input.
-        float h = isMovementEnabled && disallowDirectionTime == 0 ?
-            inputManager.AxisValue(playerId, InputManager.Horizontal) : 0;
+        float h = disallowDirectionTime == 0 ? inputManager.AxisValue(playerId, InputManager.Horizontal) : 0;
+		h *= movementFactor;
+
         // Facing right?
         if (Mathf.Abs(h) >= Mathf.Epsilon)
             setFacingRight(h > 0);
@@ -121,10 +125,18 @@ public class PlayerMovementController : MonoBehaviour
 
         Vector2 velocity = body.velocity;
 		float targetSpeed = h * maxSpeed;
-		float frictionFactor = grounded && !inWallJump && isFrictionEnabled ? 2 : 10;
+		float frictionFactor;
+		if (fixedFrictionFactor == 0.0f)
+		{
+			frictionFactor = grounded && !inWallJump ? frictionFactorGround : frictionFactorAir;
+		}
+		else
+		{
+			frictionFactor = fixedFrictionFactor;
+		}
 
         // In the air, there is less friction
-        velocity.x += (targetSpeed - velocity.x) / frictionFactor;
+        velocity.x += (targetSpeed - velocity.x) * frictionFactor;
         // When grinding, limit the velocity
         if (isGrinding && velocity.y < maxVelocityWhenGrinding)
             velocity.y = maxVelocityWhenGrinding;
@@ -176,9 +188,9 @@ public class PlayerMovementController : MonoBehaviour
 		pendingForcesToApply.Clear();
 	}
 
-    public void setMovementEnabled(bool enabled)
+    public void setMovementFactor(float factor)
     {
-        isMovementEnabled = enabled;
+		movementFactor = factor;
     }
 
 	public void setJumpEnabled(bool enabled)
@@ -186,10 +198,16 @@ public class PlayerMovementController : MonoBehaviour
 		isJumpEnabled = enabled;
 	}
 
-	public void setGravityEnabled(bool enabled)
+	public void setGravityFactor(float factor)
 	{
-		isFrictionEnabled = enabled; // no gravity, no friction heh
-		body.gravityScale = enabled ? originalGravityScale : 0.0f;
+		body.gravityScale = factor * originalGravityScale;
+	}
+
+	// must be set between 0.0f and 1.0f
+	// set to 0.0f to disable fixed friction and have friction depend on the fact the player is on air or ground
+	public void setFixedFrictionFactor(float factor)
+	{
+		fixedFrictionFactor = factor;
 	}
 
     public void applyForce(Vector2 force)

@@ -626,6 +626,8 @@ MonoBehaviour:
   raycastBase: {fileID: 477898}
   wallJumpCheck: {fileID: 438792}
   startsFacingRight: 1
+  frictionFactorGround: .5
+  frictionFactorAir: .100000001
   jumpClip: {fileID: 8300000, guid: 723aa24e67c6988479ddf99a6f1192cd, type: 3}
   landClip: {fileID: 8300000, guid: 799ec483160f49a488b58f01f729bb65, type: 3}
 --- !u!114 &11438052
@@ -757,7 +759,25 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
   attackCooldownTime: .200000003
-  specialAttackVelocity: 20000
+  chargeTime: .300000012
+  specialAttackTime: .449999988
+  specialAttackForceMin: 10000
+  specialAttackForceMax: 32000
+  specialAttackCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: -.00145984697
+      value: 1.00301397
+      inSlope: -3.32232261
+      outSlope: -3.32232261
+      tangentMode: 0
+    - time: 1.00440037
+      value: -.00610673428
+      inSlope: -.208617926
+      outSlope: -.208617926
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
   knockbackTime: .400000006
   knockbackForceUp: 16000
   knockbackForceDown: 16000
@@ -857,6 +877,10 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: attackForwardCurve.m_Curve.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: specialAttackCurve.m_Curve.Array.size
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 0}
@@ -1246,6 +1270,46 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: attackForwardForceMax
       value: 22000
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: specialAttackCurve.m_Curve.Array.data[0].inSlope
+      value: -3.32232261
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: specialAttackCurve.m_Curve.Array.data[0].outSlope
+      value: -3.32232261
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: specialAttackCurve.m_Curve.Array.data[1].inSlope
+      value: -.208617926
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: specialAttackCurve.m_Curve.Array.data[1].outSlope
+      value: -.208617926
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: specialAttackCurve.m_Curve.Array.data[0].value
+      value: 1.00301397
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: specialAttackCurve.m_Curve.Array.data[1].value
+      value: -.00610673428
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: specialAttackForceMax
+      value: 32000
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: chargeTime
+      value: .300000012
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: specialAttackTime
+      value: .449999988
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: specialAttackForceMin
+      value: 10000
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

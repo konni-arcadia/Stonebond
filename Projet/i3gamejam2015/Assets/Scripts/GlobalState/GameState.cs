@@ -53,9 +53,11 @@ public class GameState : Singleton<GameState> {
 		return id >= 0 && id < players.Count ? players[id] : null;
 	}
 
-	public void ResetPlayerControllers() {
-		for (int i = 1; i <= players.Count; i++)
+	public void ResetPlayerControllersAndScore() {
+		for (int i = 1; i <= players.Count; i++) {
 			Player(i).ControllerId = i;
+			Player(i).TotalScore = 0;
+		}
 	}
 
 	//

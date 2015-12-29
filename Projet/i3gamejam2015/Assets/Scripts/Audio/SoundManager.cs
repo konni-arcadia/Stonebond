@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.Audio;
+
 public class SoundManager : MonoBehaviour
 {
     public float BPM = 110;
@@ -15,15 +16,11 @@ public class SoundManager : MonoBehaviour
     public AudioClip Cursor;
     public AudioClip Validate;
     public AudioClip Cancel;
-    public AudioClip VOICETitle;
-    public AudioClip VOICECharacterSelect;
-    public AudioClip VOICEGetReady;
-    public AudioClip VOICEFight;
-    public AudioClip VOICEGameover;
+
     public AudioClip BoundStart;
     public AudioClip BoundLoop;
     public AudioClip BoundBreak;
-    public AudioClip VictoryJingle;
+
 
     public AudioClip Jump;
     public AudioClip WallJump;
@@ -90,7 +87,7 @@ public class SoundManager : MonoBehaviour
     public void CharacterSelect_Play()
     {
 		AudioSingleton<MenuAudioManager>.Instance.SetSelectCharacterSnapshot();
-		VOICE_SelectCharacter_Play();
+		AudioSingleton<VoiceAudioManager>.Instance.SelectCharacterPlay();
     }
     public void CharacterSelect_Stop()
     {
@@ -157,22 +154,15 @@ public class SoundManager : MonoBehaviour
 
     public void VOICE_Title_Play()
     {
-        //TODO
-        var source = GetAudioSource("VoiceSound");
-        source.PlayOneShot(VOICETitle);
-        //audioSource.PlayOneShot(VOICETitle);
+		AudioSingleton<VoiceAudioManager>.Instance.TitlePlay();
     }
-    public void VOICE_SelectCharacter_Play()
-    {
-        var source = GetAudioSource("VoiceSound");
-        source.PlayOneShot(VOICECharacterSelect);
-        //audioSource.PlayOneShot(VOICECharacterSelect);
-    }
+
     public void GAMEPLAY_Victory()
     {
-        //TODO
-        audioSource.Stop();
-        audioSource.PlayOneShot(VictoryJingle);
+		//stop the music
+		AudioSingleton<MusicAudioManager>.Instance.SetDefaultSnapshot();
+		//play sound
+		AudioSingleton<SfxAudioManager>.Instance.VictoryJinglePlay();
     }
     public void GAMEPLAY_Jump()
     {

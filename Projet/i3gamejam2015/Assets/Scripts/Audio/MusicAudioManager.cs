@@ -15,11 +15,6 @@ public class MusicAudioManager : BaseAudioManager {
 		DontDestroyOnLoad(this.gameObject);
 	}
 
-	void Start () 
-	{
-		DefaultSnapshot.TransitionTo(0f);
-	}
-
 	public void SetDefaultSnapshot()
 	{
 		DefaultSnapshot.TransitionTo(0f);

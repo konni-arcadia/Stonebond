@@ -11,10 +11,6 @@ public class MenuAudioManager : BaseAudioManager {
 	public AudioMixerSnapshot SelectCharacterSnapshot;
 	public AudioMixerSnapshot DefaultSnapshot;
 
-	void Awake() {
-		DontDestroyOnLoad(this.gameObject);
-	}
-
 	// Use this for initialization
 	void Start () 
 	{

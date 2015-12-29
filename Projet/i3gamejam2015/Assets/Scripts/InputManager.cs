@@ -9,6 +9,7 @@ public class InputManager : MonoBehaviour {
 	public const string A = "Jump";
 	public const string START = "START";
 	public const string BUTTON_ATTACK = "Attack";
+	public const string BUTTON_CHARGE = "Charge";
 	public const string B = "Cancel";
 	
 	// Axis
@@ -64,7 +65,9 @@ public class InputManager : MonoBehaviour {
 			case InputManager.BUTTON_ATTACK:
 				axisValue = axisValue || inputDevice.Action3.IsPressed;
 				break;
-				
+			case InputManager.BUTTON_CHARGE:
+				axisValue = axisValue || inputDevice.Action4.IsPressed;
+				break;
 			}
 		}
 		axisValue = axisValue || Input.GetButton (keyName + " P" + controllerId);

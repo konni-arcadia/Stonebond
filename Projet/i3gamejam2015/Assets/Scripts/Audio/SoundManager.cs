@@ -6,7 +6,6 @@ public class SoundManager : MonoBehaviour
 {
     public float BPM = 110;
     private float quarterNote;
-    private float transitionIn;
     private float transitionOut;
     private AudioMixer mainMixer;
 
@@ -68,12 +67,6 @@ public class SoundManager : MonoBehaviour
         transitionIn = quarterNote / 8f;
         transitionOut = quarterNote * 8f;
         mainMixer = Resources.Load<AudioMixer>("Main");
-
-        //preload bound
-        //var source = GetAudioSource("BondSound");
-        //source.clip = BoundLoop;
-        //source.loop = true;
-        //source.Play();
     }
 
     public void PressStart_Play()
@@ -121,13 +114,12 @@ public class SoundManager : MonoBehaviour
     }
     public void Stage_Stop()
     {
-        //TODO
-        audioSource.Stop();
+		AudioSingleton<MusicAudioManager>.Instance.SetDefaultSnapshot();
     }
     public void Stage_Pause()
     {
-        //TODO
-        audioSource.Pause();
+		//To Do apply EQ
+		AudioSingleton<MusicAudioManager>.Instance.SetDefaultSnapshot();
     }
     public void Stage_Unpause()
     {
@@ -136,20 +128,15 @@ public class SoundManager : MonoBehaviour
     }
     public void Cursor_Play()
     {
-        var source = GetAudioSource("SFXSound");
-        source.PlayOneShot(Cursor);
+		AudioSingleton<SfxAudioManager>.Instance.PlayCursor();
     }
     public void Validate_Play()
     {
-        var source = GetAudioSource("SFXSound");
-        source.PlayOneShot(Validate);
-        //audioSource.PlayOneShot(Validate);
+		AudioSingleton<SfxAudioManager>.Instance.PlayValidate();
     }
     public void Cancel_Play()
     {
-        var source = GetAudioSource("SFXSound");
-        source.PlayOneShot(Cancel);
-        //audioSource.PlayOneShot(Cancel);
+		AudioSingleton<SfxAudioManager>.Instance.PlayCancel();
     }
 
     public void VOICE_Title_Play()
@@ -162,7 +149,7 @@ public class SoundManager : MonoBehaviour
 		//stop the music
 		AudioSingleton<MusicAudioManager>.Instance.SetDefaultSnapshot();
 		//play sound
-		AudioSingleton<SfxAudioManager>.Instance.VictoryJinglePlay();
+		AudioSingleton<SfxAudioManager>.Instance.PlayVictoryJingle();
     }
     public void GAMEPLAY_Jump()
     {
@@ -209,48 +196,25 @@ public class SoundManager : MonoBehaviour
     }
     public void GAMEPLAY_Ready()
     {
-        var source = GetAudioSource("VoiceSound");
-        source.PlayOneShot(VOICEGetReady);
+		AudioSingleton<VoiceAudioManager>.Instance.PlayGameReady();
     }
     public void GAMEPLAY_Fight()
     {
-        var source = GetAudioSource("VoiceSound");
-        source.PlayOneShot(VOICEFight);
+		AudioSingleton<VoiceAudioManager>.Instance.PlayFight();
     }
     public void GAMEPLAY_Gameover()
     {
-        var source = GetAudioSource("VoiceSound");
-        source.PlayOneShot(VOICEGameover);
+		AudioSingleton<VoiceAudioManager>.Instance.PlayGameOver();
     }
 
     public void StartBound()
     {
-        var snapshot = mainMixer.FindSnapshot("Bond");
-        if (snapshot != null)
-        {
-            snapshot.TransitionTo(transitionIn);
-        }
-
-        var source = GetAudioSource("SFXSound");
-        if (source != null)
-        {
-            source.PlayOneShot(BoundStart);
-        }
+		AudioSingleton<SfxAudioManager>.Instance.PlayStartBound();
     }
 
     public void StopBound()
     {
-        var snapshot = mainMixer.FindSnapshot("Background");
-        if (snapshot != null)
-        {
-            snapshot.TransitionTo(transitionOut);
-        }
-
-        var source = GetAudioSource("SFXSound");
-        if (source != null)
-        {
-            source.PlayOneShot(BoundBreak);
-        }
+		AudioSingleton<SfxAudioManager>.Instance.PlayStopBound();
     }
 
     protected AudioSource GetAudioSource(string _objectID)

@@ -13,14 +13,6 @@ public class SoundManager : MonoBehaviour
     private AudioSource audioSource;
     #region AudioClips
 
-    public AudioClip Cursor;
-    public AudioClip Validate;
-    public AudioClip Cancel;
-
-    public AudioClip BoundStart;
-    public AudioClip BoundLoop;
-    public AudioClip BoundBreak;
-
 
     public AudioClip Jump;
     public AudioClip WallJump;
@@ -169,31 +161,19 @@ public class SoundManager : MonoBehaviour
     }
     public void GAMEPLAY_Attack()
     {
-        var source = GetAudioSource("AttackSound");
-        float r = Random.Range(0, 2);
-        if (r > 0.5f)
-        {
-            source.PlayOneShot(AttackA);
-        }
-        else
-        {
-            source.PlayOneShot(AttackB);
-        }
+		AudioSingleton<SfxAudioManager>.Instance.PlayAttack();
     }
     public void GAMEPLAY_Death()
     {
-        var source = GetAudioSource("SFXSound");
-        source.PlayOneShot(Death);
+		AudioSingleton<SfxAudioManager>.Instance.PlayDeath();
     }
     public void GAMEPLAY_Rebirth()
     {
-        var source = GetAudioSource("SFXSound");
-        source.PlayOneShot(Rebirth);
+		AudioSingleton<SfxAudioManager>.Instance.PlayReBirth();
     }
     public void GAMEPLAY_Knockback()
     {
-        var source = GetAudioSource("SFXSound");
-        source.PlayOneShot(Knockback);
+		AudioSingleton<SfxAudioManager>.Instance.PlayKnockBack();
     }
     public void GAMEPLAY_Ready()
     {
@@ -234,20 +214,12 @@ public class SoundManager : MonoBehaviour
     //Là c'est un peu deg... > faut changer ces trigger en events
     public void TriggerMenuBack()
     {
-        var snapshot = mainMixer.FindSnapshot("MainMenu");
-        if (snapshot != null)
-        {
-            snapshot.TransitionTo(transitionOut);
-        }
+		AudioSingleton<MenuAudioManager>.Instance.SetMainMenuSnapshot();
     }
     
     public void TriggerGameFinished()
     {
-        var snapshot = mainMixer.FindSnapshot("MainMenu");
-        if (snapshot != null)
-        {
-            snapshot.TransitionTo(transitionOut);
-        }
+		AudioSingleton<MenuAudioManager>.Instance.SetMainMenuSnapshot();
     }
 
     public void TriggerPause()

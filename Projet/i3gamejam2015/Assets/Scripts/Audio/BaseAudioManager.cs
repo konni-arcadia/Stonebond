@@ -17,4 +17,15 @@ public class BaseAudioManager : MonoBehaviour {
 		transitionIn = quarterNote / 8f;
 		transitionOut = quarterNote * 8f;
 	}
+
+	protected AudioSource GetAudioSource(string _objectID)
+	{
+		var gameObject = GameObject.Find(_objectID);
+		AudioSource source = null;
+		if (gameObject != null)
+		{
+			source = gameObject.GetComponent<AudioSource>();
+		}
+		return source;
+	}
 }

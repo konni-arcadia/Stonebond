@@ -6,6 +6,7 @@ public class SoundManager : MonoBehaviour
 {
     public float BPM = 110;
     private float quarterNote;
+	private float transitionIn;
     private float transitionOut;
     private AudioMixer mainMixer;
 
@@ -141,7 +142,7 @@ public class SoundManager : MonoBehaviour
 
     public void VOICE_Title_Play()
     {
-		AudioSingleton<VoiceAudioManager>.Instance.TitlePlay();
+		AudioSingleton<VoiceAudioManager>.Instance.PlayTitle();
     }
 
     public void GAMEPLAY_Victory()

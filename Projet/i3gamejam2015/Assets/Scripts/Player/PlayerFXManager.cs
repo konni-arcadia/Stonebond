@@ -61,14 +61,28 @@ public class PlayerFXManager : MonoBehaviour
 
 	void Update()
 	{
-		if (stateController.GetAttackPct () > 0.0f) {
+		if (stateController.GetAttackPct () > 0.0f)
+		{
 			SetBodyColor (Color.Lerp (bodyColorMax, bodyColorMin, stateController.GetAttackPct ()));
 			SetChromaColor (Color.Lerp (chromaColorMax, chromaColorMin, stateController.GetAttackPct ()));
 		}
-		else if (stateController.GetAttackCooldownPct() > 0.0f) {
+		else if (stateController.GetChargePct () > 0.0f)
+		{
+			SetBodyColor (Color.Lerp (bodyColorNormal, bodyColorMax, stateController.GetChargePct ()));
+			SetChromaColor (Color.Lerp (chromaColorNormal, chromaColorMax, stateController.GetChargePct ()));
+		}
+		else if (stateController.GetSpecialAttackPct () > 0.0f)
+		{
+			SetBodyColor (Color.Lerp (bodyColorMax, bodyColorMin, stateController.GetSpecialAttackPct ()));
+			SetChromaColor (Color.Lerp (chromaColorMax, chromaColorMin, stateController.GetSpecialAttackPct ()));
+		}
+		else if (stateController.GetAttackCooldownPct() > 0.0f)
+		{
 			SetBodyColor (bodyColorMin);
 			SetChromaColor (chromaColorMin);
-		} else {
+		}
+		else
+		{
 			SetBodyColor (bodyColorNormal);
 			SetChromaColor (chromaColorNormal);
 		}

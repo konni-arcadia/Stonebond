@@ -66,6 +66,20 @@ public class PlayerStatusProvider : MonoBehaviour {
         if (OnAttackDownAction != null) OnAttackDownAction();
     }
 
+	public delegate void ChargeStartAction();
+	public event ChargeStartAction OnChargeStartAction;
+	public void setChargeStart()
+	{
+		if (OnChargeStartAction != null) OnChargeStartAction();
+	}
+
+	public delegate void ChargeStopAction(bool complete);
+	public event ChargeStopAction OnChargeStopAction;
+	public void setChargeStop(bool complete)
+	{
+		if (OnChargeStopAction != null) OnChargeStopAction(complete);
+	}
+
 	public delegate void AttackSpecialAction();
 	public event AttackForwardAction OnAttackSpecialAction;
 	public void setAttackSpecial()

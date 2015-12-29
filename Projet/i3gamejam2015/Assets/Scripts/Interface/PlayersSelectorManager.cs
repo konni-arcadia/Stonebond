@@ -100,7 +100,7 @@ public class PlayersSelectorManager : MonoBehaviour {
 
     void InitializePlayerSelection() {
 		// By default, assign controller 1 to player 1, 2 to player 2, etc. we'll change the order later
-		GameState.Instance.ResetPlayerControllers();
+		GameState.Instance.ResetPlayerControllersAndScore();
 		if (PlayerPrefs.HasKey(PlayerSeleted)) {
 			char[] listPlayer = PlayerPrefs.GetString(PlayerSeleted).ToCharArray();
 			for (int i = 0; i < listPlayerSelector.Length; i++) {

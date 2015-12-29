@@ -10,7 +10,6 @@ public class BaseAudioManager : MonoBehaviour {
 	protected float transitionIn;
 	protected float transitionOut;
 
-
 	void start()
 	{
 		quarterNote = 60f / BPM;
@@ -18,14 +17,22 @@ public class BaseAudioManager : MonoBehaviour {
 		transitionOut = quarterNote * 8f;
 	}
 
-	protected AudioSource GetAudioSource(string _objectID)
+	void Awake() {
+		DontDestroyOnLoad(this.gameObject);
+	}
+		
+	protected AudioSource GetAudioSource()
 	{
-		var gameObject = GameObject.Find(_objectID);
+		var gameObject = GameObject.Find(this.gameObject.name);
 		AudioSource source = null;
 		if (gameObject != null)
 		{
 			source = gameObject.GetComponent<AudioSource>();
 		}
+		else
+		{
+			Debug.Log ("Missing an audio source to object: " + this.gameObject.name);
+		}	
 		return source;
 	}
 }

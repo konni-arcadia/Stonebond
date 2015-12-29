@@ -11,16 +11,28 @@ public class VoiceAudioManager : BaseAudioManager {
 	public AudioClip VOICEFight;
 	public AudioClip VOICEGameover;
 
-
-	public void TitlePlay()
+	public void PlayTitle()
 	{
-		var source = GetAudioSource(this.gameObject.name);
-		source.PlayOneShot(VOICETitle);
+		GetAudioSource().PlayOneShot(VOICETitle);
 	}
 
 	public void SelectCharacterPlay()
 	{
-		var source = GetAudioSource(this.gameObject.name);
-		source.PlayOneShot(VOICECharacterSelect);
+		GetAudioSource().PlayOneShot(VOICECharacterSelect);
+	}
+
+	public void PlayGameReady()
+	{
+		GetAudioSource().PlayOneShot(VOICEGetReady);
+	}
+
+	public void PlayGameOver()
+	{
+		GetAudioSource().PlayOneShot(VOICEGameover);
+	}
+
+	public void PlayFight()
+	{
+		GetAudioSource().PlayOneShot(VOICEFight);
 	}
 }

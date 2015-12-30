@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.Audio;
 
 public class PauseManager : MonoBehaviour {
 
@@ -27,7 +28,6 @@ public class PauseManager : MonoBehaviour {
 		buttonList = StartButtonArea.GetComponentsInChildren<Outline>(true);
 
         menu.enabled = false;
-	
 	}
 	
 	// Update is called once per frame
@@ -49,13 +49,16 @@ public class PauseManager : MonoBehaviour {
 
                     case StartMenuItem.Quit: 
 						// TODO create event for that
-						if(SoundManager.Instance != null) SoundManager.Instance.TriggerMenuBack();
+						AudioSingleton<MusicAudioManager>.Instance.SetMusicDefaultSnapshot();
+						AudioSingleton<MenuAudioManager>.Instance.SetMainMenuSnapshot();
 						Application.Quit();
                         break;
 
                     case StartMenuItem.Resume:
 						// TODO create event for that
-						if(SoundManager.Instance != null) SoundManager.Instance.TriggerResume();
+						AudioSingleton<MenuAudioManager>.Instance.SetDefaultSnapshot();
+						AudioSingleton<MusicAudioManager>.Instance.SetMainDefaultSnapshot();
+
 						isDisplayed = false;
                                                 menu.enabled = false;
 
@@ -63,7 +66,8 @@ public class PauseManager : MonoBehaviour {
 
                     case StartMenuItem.LvlSelection: 
 						// TODO create event for that
-						if(SoundManager.Instance != null) SoundManager.Instance.TriggerMenuBack();
+						AudioSingleton<MusicAudioManager>.Instance.SetMusicDefaultSnapshot();
+						AudioSingleton<MenuAudioManager>.Instance.SetMainMenuSnapshot();
 						PlayerPrefs.SetInt("ComeFromLVL", 0); 
                                                 Application.LoadLevel("Menu");
 												if(InControlObject != null)
@@ -72,14 +76,15 @@ public class PauseManager : MonoBehaviour {
 
                     case StartMenuItem.MenuSelection:
 						// TODO create event for that
-						if(SoundManager.Instance != null) SoundManager.Instance.TriggerMenuBack();
+						AudioSingleton<MusicAudioManager>.Instance.SetMusicDefaultSnapshot();
+						AudioSingleton<MenuAudioManager>.Instance.SetMainMenuSnapshot();
 						Application.LoadLevel("Menu");
 												if(InControlObject != null)
 													Destroy(InControlObject);
                                                 break;
                 }
                 Time.timeScale = 1.0f;
-                SoundManager.Instance.Validate_Play();
+				AudioSingleton<SfxAudioManager>.Instance.PlayValidate();
 
             }
 			else if (inputManager.WasPressedCtrl(noControler, InputManager.START))
@@ -97,7 +102,7 @@ public class PauseManager : MonoBehaviour {
                     menuSelectedItem -= 1;
                     buttonList[(int)menuSelectedItem].effectColor = highlithed;
                     wasPressed[noControler - 1] = true;
-                    SoundManager.Instance.Cursor_Play();
+					AudioSingleton<SfxAudioManager>.Instance.PlayCursor();
                 }
 
             }
@@ -109,7 +114,7 @@ public class PauseManager : MonoBehaviour {
                     menuSelectedItem += 1;
                     buttonList[(int)menuSelectedItem].effectColor = highlithed;
                     wasPressed[noControler - 1] = true;
-                    SoundManager.Instance.Cursor_Play();
+					AudioSingleton<SfxAudioManager>.Instance.PlayCursor();
                 }
 
             }
@@ -125,7 +130,8 @@ public class PauseManager : MonoBehaviour {
 			if (inputManager.WasPressedCtrl( noControler, InputManager.START))
             {
 				// TODO create event for that
-				if(SoundManager.Instance != null) SoundManager.Instance.TriggerPause();
+				AudioSingleton<MenuAudioManager>.Instance.SetDefaultSnapshot();
+				AudioSingleton<MusicAudioManager>.Instance.SetPauseSnapshot();
 
                 isDisplayed = true;
                 menu.enabled = true;

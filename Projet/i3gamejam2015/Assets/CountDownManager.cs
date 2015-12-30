@@ -19,9 +19,7 @@ public class CountDownManager : MonoBehaviour {
 	{
         // TODO add sound
         //Debug.Log("OnGetReadyTextShown");
-		if (SoundManager.Instance != null) {
-			SoundManager.Instance.GAMEPLAY_Ready ();
-		}
+		AudioSingleton<VoiceAudioManager>.Instance.PlayGameReady();
 	}
 	
 	public void OnFightTextShown()
@@ -29,17 +27,13 @@ public class CountDownManager : MonoBehaviour {
 		Flash.flash ();
 		// TODO add sound
 		//Debug.Log("OnFightTextShown");
-		if (SoundManager.Instance != null) {
-			SoundManager.Instance.GAMEPLAY_Fight ();
-		}
+		AudioSingleton<VoiceAudioManager>.Instance.PlayFight();
     }
 	
 	public void OnCountDownOver()
 	{
         // TODO notify level manager
         //Debug.Log("OnCountDownOver");
-		if (SoundManager.Instance != null) {
-			SoundManager.Instance.GAMEPLAY_Gameover ();
-		}
+		//AudioSingleton<VoiceAudioManager>.Instance.PlayGameOver();
     }
 }

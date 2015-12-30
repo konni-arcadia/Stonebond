@@ -101,18 +101,18 @@ public class LevelManager : MonoBehaviour {
 		GameObject obj = Instantiate(bondLinkPrefab);
 		bondLink = obj.GetComponent<BondLink>();
 		bondLink.LinkPlayers ( activePlayers[0].gameObject, activePlayers[1].gameObject);
-		activePlayers[0].setBondLink(bondLink);
-		activePlayers[1].setBondLink(bondLink);
+		activePlayers[0].SetBondLink(bondLink);
+		activePlayers[1].SetBondLink(bondLink);
 		bondLinkGauge = 0;
 		appearedSinceSec = 0;
 
-		SlowMotion.slowMotion ();
+		SlowMotion.StartSlowMotion ();
 	}
 
 	private void ExitBondMode(PlayerStateController p1, PlayerStateController p2) {
 		Destroy(bondLink.gameObject);
-		p1.setBondLink(null);
-		p2.setBondLink(null);
+        p1.SetBondLink(null);
+        p2.SetBondLink(null);
 		Debug.Log("Leaving bond mode");
 		bondMode = false;
 		allowsCreateBond = false;

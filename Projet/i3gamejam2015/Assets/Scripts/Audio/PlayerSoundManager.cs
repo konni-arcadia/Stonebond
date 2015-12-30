@@ -26,40 +26,33 @@ public class PlayerSoundManager : MonoBehaviour
 
     private void OnRespawned(bool initial)
     {
-		if (SoundManager.Instance != null) {
-			SoundManager.Instance.GAMEPLAY_Rebirth ();
-		}
+		AudioSingleton<SfxAudioManager>.Instance.PlayReBirth();
     }
 
     private void OnAttack()
     {
-		if (SoundManager.Instance != null) {
-			SoundManager.Instance.GAMEPLAY_Attack ();
-		}
+		AudioSingleton<SfxAudioManager>.Instance.PlayAttack();
     }
 
     private void OnWallJumped()
     { 
-		if (SoundManager.Instance != null) {
-			SoundManager.Instance.GAMEPLAY_Walljump ();
-		}
+		AudioSingleton<SfxAudioManager>.Instance.PlayWallJump();
     }
 
     private void OnJumped()
     {
-		if (SoundManager.Instance != null) {
-			SoundManager.Instance.GAMEPLAY_Jump ();
-		}
+		AudioSingleton<SfxAudioManager>.Instance.PlayJump();
     }
 
     private void OnBounded(bool isBounded)
     {
-		if (SoundManager.Instance != null) {
-			if (isBounded) {
-				SoundManager.Instance.StartBound ();
-			} else {
-				SoundManager.Instance.StopBound ();
-			}
+		if (isBounded) 
+		{
+			AudioSingleton<SfxAudioManager>.Instance.PlayStartBound();
+		}
+		else 
+		{
+			AudioSingleton<SfxAudioManager>.Instance.PlayStopBound();
 		}
     }
 
@@ -67,10 +60,7 @@ public class PlayerSoundManager : MonoBehaviour
     {
         if (isGrounded && !prevIsGroundedFlag)
         {
-            if (SoundManager.Instance != null)
-            {
-                SoundManager.Instance.GAMEPLAY_Land();
-            }
+			AudioSingleton<SfxAudioManager>.Instance.PlayLand();
         }
         prevIsGroundedFlag = isGrounded;
     }
@@ -89,16 +79,12 @@ public class PlayerSoundManager : MonoBehaviour
 
     private void onKnockbacked()
     {
-		if (SoundManager.Instance != null) {
-			SoundManager.Instance.GAMEPLAY_Knockback ();
-		}
+		AudioSingleton<SfxAudioManager>.Instance.PlayKnockBack();
     }
 
     private void onPlayerDied(Vector2 deathVector)
     {
-		if (SoundManager.Instance != null) {
-			SoundManager.Instance.GAMEPLAY_Death ();
-		}
+		AudioSingleton<SfxAudioManager>.Instance.PlayDeath();
     }
 
     //void Update() { }

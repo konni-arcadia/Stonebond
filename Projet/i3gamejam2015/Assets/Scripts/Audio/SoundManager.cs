@@ -146,18 +146,15 @@ public class SoundManager : MonoBehaviour
     }
     public void GAMEPLAY_Jump()
     {
-        var source = GetAudioSource("JumpSound");
-        source.PlayOneShot(Jump);
+		AudioSingleton<SfxAudioManager>.Instance.PlayJump();
     }
     public void GAMEPLAY_Land()
     {
-		var source = GetAudioSource("SFXSound");
-		source.PlayOneShot(Land);
+		AudioSingleton<SfxAudioManager>.Instance.PlayLand();
     }
     public void GAMEPLAY_Walljump()
     {
-        var source = GetAudioSource("SFXSound");
-        source.PlayOneShot(WallJump);
+		AudioSingleton<SfxAudioManager>.Instance.PlayWallJump();
     }
     public void GAMEPLAY_Attack()
     {

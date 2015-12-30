@@ -45,7 +45,7 @@ public class PlayerStateController : MonoBehaviour
 	private Collider2D attackColliderUp;
 	private Collider2D attackColliderDown;
 
-	private enum AimDirection
+	public enum AimDirection
 	{
 		UP,
 		DOWN,
@@ -184,8 +184,10 @@ public class PlayerStateController : MonoBehaviour
 		return attackCooldown / attackCooldownTime;
 	}
 
-	public float GetAttackPct() {
-		if (state != State.ATTACK) {
+	public float GetAttackPct()
+	{
+		if (state != State.ATTACK)
+		{
 			return 0.0f;
 		}
 
@@ -201,20 +203,28 @@ public class PlayerStateController : MonoBehaviour
 		}
 	}
 
-	public float GetChargePct() {
-		if (state != State.CHARGE) {
+	public float GetChargePct()
+	{
+		if (state != State.CHARGE)
+		{
 			return 0.0f;
 		}
 
 		return stateTime / chargeTime;
 	}
 
-	public float GetSpecialAttackPct() {
+	public float GetSpecialAttackPct()
+	{
 		if (state != State.SPECIAL_ATTACK) {
 			return 0.0f;
 		}
 		
 		return stateTime / specialAttackTime;
+	}
+
+	public AimDirection GetAimDirection()
+	{
+		return aimDirection;
 	}
 
 	public void setBondLink(BondLink bondLink) {

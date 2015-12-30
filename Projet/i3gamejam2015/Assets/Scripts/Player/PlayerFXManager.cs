@@ -20,6 +20,13 @@ public class PlayerFXManager : MonoBehaviour
 	public float chromaColorDarkPct = 1.0f;
 	public float chromaColorBrightPct = 0.9f;
 
+	public AnimationCurve attackForwardChromaCurve;
+	public AnimationCurve attackUpChromaCurve;
+	public AnimationCurve attackDownChromaCurve;
+	public AnimationCurve attackSpecialChromaCurve;
+	public AnimationCurve chargeChromaCurve;
+	public AnimationCurve attackCooldownChromaCurve;
+
 	private Color bodyColorNormal;
 	private Color bodyColorMin;
 	private Color bodyColorMax;
@@ -63,23 +70,38 @@ public class PlayerFXManager : MonoBehaviour
 	{
 		if (stateController.GetAttackPct () > 0.0f)
 		{
-			SetBodyColor (Color.Lerp (bodyColorMax, bodyColorMin, stateController.GetAttackPct ()));
-			SetChromaColor (Color.Lerp (chromaColorMax, chromaColorMin, stateController.GetAttackPct ()));
+			//SetBodyColor (Color.Lerp (bodyColorMax, bodyColorMin, stateController.GetAttackPct ()));
+
+			switch(stateController.GetAimDirection ()) {
+			case PlayerStateController.AimDirection.UP:
+				SetBodyColor (stateController.GetAttackPct (), attackUpChromaCurve);
+				SetChromaColor (stateController.GetAttackPct (), attackUpChromaCurve);
+				break;
+			case PlayerStateController.AimDirection.DOWN:
+				SetBodyColor (stateController.GetAttackPct (), attackDownChromaCurve);
+				SetChromaColor (stateController.GetAttackPct (), attackDownChromaCurve);
+				break;
+			case PlayerStateController.AimDirection.FORWARD:
+				SetBodyColor (stateController.GetAttackPct (), attackForwardChromaCurve);
+				SetChromaColor (stateController.GetAttackPct (), attackForwardChromaCurve);
+				break;
+			}
+
 		}
 		else if (stateController.GetChargePct () > 0.0f)
 		{
-			SetBodyColor (Color.Lerp (bodyColorNormal, bodyColorMax, stateController.GetChargePct ()));
-			SetChromaColor (Color.Lerp (chromaColorNormal, chromaColorMax, stateController.GetChargePct ()));
+			SetBodyColor (stateController.GetChargePct (), chargeChromaCurve);
+			SetChromaColor (stateController.GetChargePct (), chargeChromaCurve);
 		}
 		else if (stateController.GetSpecialAttackPct () > 0.0f)
 		{
-			SetBodyColor (Color.Lerp (bodyColorMax, bodyColorMin, stateController.GetSpecialAttackPct ()));
-			SetChromaColor (Color.Lerp (chromaColorMax, chromaColorMin, stateController.GetSpecialAttackPct ()));
+			SetBodyColor (stateController.GetSpecialAttackPct (), attackSpecialChromaCurve);
+			SetChromaColor (stateController.GetSpecialAttackPct (), attackSpecialChromaCurve);
 		}
 		else if (stateController.GetAttackCooldownPct() > 0.0f)
 		{
-			SetBodyColor (bodyColorMin);
-			SetChromaColor (chromaColorMin);
+			SetBodyColor (stateController.GetAttackCooldownPct (), attackCooldownChromaCurve);
+			SetChromaColor (stateController.GetAttackCooldownPct (), attackCooldownChromaCurve);
 		}
 		else
 		{
@@ -88,15 +110,18 @@ public class PlayerFXManager : MonoBehaviour
 		}
 	}
 
-	void OnHorizontalKnockback() {
+	void OnHorizontalKnockback()
+	{
 		ScreenShake.ShakeX (0.5f, 2.0f);
 	}
 
-	void OnVerticalKnockback() {
+	void OnVerticalKnockback()
+	{
 		ScreenShake.ShakeY (0.5f, 2.0f);
 	}
 
-	void OnDie(Vector2 attackDirection) {	
+	void OnDie(Vector2 attackDirection)
+	{	
 		Flash.flash ();
 		SlowMotion.slowMotion ();
 		ScreenShake.ShakeXY (0.5f, 2.0f, 0.5f, 2.0f);
@@ -106,11 +131,47 @@ public class PlayerFXManager : MonoBehaviour
 	// HELPERS
 	//
 
-	private void SetBodyColor(Color color) {
+	private void SetChromaColor(float pct, AnimationCurve curve)
+	{
+		float value = curve.Evaluate (pct);
+		if (value < 0.0f)
+		{
+			SetChromaColor (Color.Lerp (chromaColorNormal, chromaColorMin, Mathf.Min (1.0f, Mathf.Abs (value))));
+		}
+		else if (value > 0.0f)
+		{
+			SetChromaColor (Color.Lerp (chromaColorNormal, chromaColorMax, Mathf.Min (1.0f, value)));
+		}
+		else
+		{
+			SetChromaColor (chromaColorNormal);
+		}
+	}
+
+	private void SetBodyColor(float pct, AnimationCurve curve)
+	{
+		float value = curve.Evaluate (pct);
+		if (value < 0.0f)
+		{
+			SetBodyColor (Color.Lerp (bodyColorNormal, bodyColorMin, Mathf.Min (1.0f, Mathf.Abs (value))));
+		}
+		else if (value > 0.0f)
+		{
+			SetBodyColor (Color.Lerp (bodyColorNormal, bodyColorMax, Mathf.Min (1.0f, value)));
+		}
+		else
+		{
+			SetBodyColor (chromaColorNormal);
+		}
+	}
+
+	private void SetBodyColor(Color color)
+	{
 		bodyRenderer.material.SetColor("_Color", color);
 	}
 
-	private void SetChromaColor(Color color) {
+	private void SetChromaColor(Color color)
+	{
 		bodyRenderer.material.SetColor("_ChromaTexColor", color);
 	}
 }

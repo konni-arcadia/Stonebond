@@ -566,6 +566,111 @@ MonoBehaviour:
   bodyColorBrightPct: .100000001
   chromaColorDarkPct: .800000012
   chromaColorBrightPct: .800000012
+  attackForwardChromaCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+    - time: .546440482
+      value: .604717791
+      inSlope: -.0972599909
+      outSlope: -.0972599909
+      tangentMode: 0
+    - time: 1.00365758
+      value: -1.00916004
+      inSlope: -10.8146696
+      outSlope: -10.8146696
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  attackUpChromaCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+    - time: .546440482
+      value: .604717791
+      inSlope: -.0972599909
+      outSlope: -.0972599909
+      tangentMode: 0
+    - time: 1.00365758
+      value: -1.00916004
+      inSlope: -10.8146696
+      outSlope: -10.8146696
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  attackDownChromaCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+    - time: .546440482
+      value: .604717791
+      inSlope: -.0972599909
+      outSlope: -.0972599909
+      tangentMode: 0
+    - time: 1.00365758
+      value: -1.00916004
+      inSlope: -10.8146696
+      outSlope: -10.8146696
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  attackSpecialChromaCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: -.00219458668
+      value: .999999881
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1.00292611
+      value: -1.00458002
+      inSlope: -.603351057
+      outSlope: -.603351057
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  chargeChromaCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+    - time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  attackCooldownChromaCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+    - time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
 --- !u!114 &11408930
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -876,11 +981,35 @@ Prefab:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 0}
+      propertyPath: chargeChromaCurve.m_Curve.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
       propertyPath: attackForwardCurve.m_Curve.Array.size
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: specialAttackCurve.m_Curve.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackUpChromaCurve.m_Curve.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackDownChromaCurve.m_Curve.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackForwardChromaCurve.m_Curve.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackSpecialChromaCurve.m_Curve.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackCooldownChromaCurve.m_Curve.Array.size
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 0}
@@ -1310,6 +1439,98 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: specialAttackForceMin
       value: 10000
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackForwardChromaCurve.m_Curve.Array.data[1].time
+      value: .546440482
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackForwardChromaCurve.m_Curve.Array.data[1].value
+      value: .604717791
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackForwardChromaCurve.m_Curve.Array.data[1].inSlope
+      value: -.0972599909
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackForwardChromaCurve.m_Curve.Array.data[1].outSlope
+      value: -.0972599909
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackForwardChromaCurve.m_Curve.Array.data[2].value
+      value: -1.00916004
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackForwardChromaCurve.m_Curve.Array.data[2].time
+      value: 1.00365758
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackForwardChromaCurve.m_Curve.Array.data[2].inSlope
+      value: -10.8146696
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackForwardChromaCurve.m_Curve.Array.data[2].outSlope
+      value: -10.8146696
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackSpecialChromaCurve.m_Curve.Array.data[0].value
+      value: .999999881
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackSpecialChromaCurve.m_Curve.Array.data[0].time
+      value: -.00219458668
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackSpecialChromaCurve.m_Curve.Array.data[0].inSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackSpecialChromaCurve.m_Curve.Array.data[0].outSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackSpecialChromaCurve.m_Curve.Array.data[1].time
+      value: 1.00292611
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackSpecialChromaCurve.m_Curve.Array.data[1].value
+      value: -1.00458002
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackSpecialChromaCurve.m_Curve.Array.data[1].inSlope
+      value: -.603351057
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackSpecialChromaCurve.m_Curve.Array.data[1].outSlope
+      value: -.603351057
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackSpecialChromaCurve.m_Curve.Array.data[2].time
+      value: 1.00365758
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackSpecialChromaCurve.m_Curve.Array.data[2].value
+      value: -1.00916004
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackSpecialChromaCurve.m_Curve.Array.data[2].inSlope
+      value: -10.8146696
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackSpecialChromaCurve.m_Curve.Array.data[2].outSlope
+      value: -10.8146696
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: chargeChromaCurve.m_Curve.Array.data[0].value
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: chargeChromaCurve.m_Curve.Array.data[0].inSlope
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: chargeChromaCurve.m_Curve.Array.data[0].outSlope
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

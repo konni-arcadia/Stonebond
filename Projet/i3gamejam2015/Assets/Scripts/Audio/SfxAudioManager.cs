@@ -5,8 +5,13 @@ using UnityEngine.Audio;
 [PrefabAttribute("Prefabs/Audio/SFX/SfxAudioManager")]
 public class SfxAudioManager : BaseAudioManager {
 
-	public AudioMixerSnapshot BoundSnapshot;
-	public AudioMixerSnapshot DefaultSnapshot;
+	public AudioMixerSnapshot SfxBoundSnapshot;
+	public AudioMixerSnapshot SfxDefaultSnapshot;
+
+	public AudioMixerSnapshot MainBoundSnapshot;
+	public AudioMixerSnapshot MainDefaultSnapshot;
+
+
 	public AudioClip VictoryJingle;
 	public AudioClip Cursor;
 	public AudioClip Validate;
@@ -24,14 +29,24 @@ public class SfxAudioManager : BaseAudioManager {
 
 	private AudioSource _source;
 
-	public void SetDefaultSnapshot()
+	public void SetSfxDefaultSnapshot()
 	{
-		DefaultSnapshot.TransitionTo(0f);
+		SfxDefaultSnapshot.TransitionTo(0f);
 	}
 
-	public void SetBoundSnapshot()
+	public void SetSfxBoundSnapshot()
 	{
-		BoundSnapshot.TransitionTo(0f);
+		SfxBoundSnapshot.TransitionTo(0f);
+	}
+
+	public void SetMainDefaultSnapshot()
+	{
+		MainDefaultSnapshot.TransitionTo(0f);
+	}
+
+	public void SetMainBoundSnapshot()
+	{
+		MainBoundSnapshot.TransitionTo(0f);
 	}
 		
 	public void PlayVictoryJingle()
@@ -42,13 +57,15 @@ public class SfxAudioManager : BaseAudioManager {
 	public void PlayStartBound()
 	{
 		GetAudioSource().PlayOneShot(BoundStart);
-		SetBoundSnapshot();
+		SetSfxBoundSnapshot();
+		SetMainBoundSnapshot ();
 	}
 
 	public void PlayStopBound()
 	{
 		GetAudioSource().PlayOneShot(BoundStop);
-		SetDefaultSnapshot();
+		SetSfxDefaultSnapshot();
+		SetMainDefaultSnapshot();
 	}
 
 	public void PlayCursor()

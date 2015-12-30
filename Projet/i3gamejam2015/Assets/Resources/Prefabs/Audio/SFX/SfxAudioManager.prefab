@@ -220,8 +220,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mixerGroup: {fileID: 24300001, guid: e92112b978bf443c2ad76572e51b6e16, type: 2}
-  BoundSnapshot: {fileID: 24517232, guid: e92112b978bf443c2ad76572e51b6e16, type: 2}
-  DefaultSnapshot: {fileID: 24500003, guid: e92112b978bf443c2ad76572e51b6e16, type: 2}
+  SfxBoundSnapshot: {fileID: 24517232, guid: e92112b978bf443c2ad76572e51b6e16, type: 2}
+  SfxDefaultSnapshot: {fileID: 24500003, guid: e92112b978bf443c2ad76572e51b6e16, type: 2}
+  MainBoundSnapshot: {fileID: 24538774, guid: 8fd68e0f408954541820745bd1e935e1, type: 2}
+  MainDefaultSnapshot: {fileID: 24512364, guid: 8fd68e0f408954541820745bd1e935e1,
+    type: 2}
   VictoryJingle: {fileID: 8300000, guid: 3b674da562936c040906a3045c8d8fe5, type: 3}
   Cursor: {fileID: 8300000, guid: 77d371aa62af3ec42a02203e57c90929, type: 3}
   Validate: {fileID: 8300000, guid: 4b2e4d7018ba8de439a6badfe5729081, type: 3}

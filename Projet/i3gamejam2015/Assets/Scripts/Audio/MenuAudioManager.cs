@@ -32,9 +32,8 @@ public class MenuAudioManager : BaseAudioManager {
 		SelectCharacterSnapshot.TransitionTo(0f);
 	}
 
-	public void SetSelectSceneSnapshot()
+	public void SetSelectStageSnapshot()
 	{
 		SelectSceneSnapshot.TransitionTo(0f);
 	}
-
 }

@@ -62,7 +62,7 @@ public class SoundManager : MonoBehaviour
         mainMixer = Resources.Load<AudioMixer>("Main");
     }
 
-    public void PressStart_Play()
+    /*public void PressStart_Play()
     {
 		AudioSingleton<MenuAudioManager>.Instance.SetMainMenuSnapshot();
     }
@@ -87,7 +87,9 @@ public class SoundManager : MonoBehaviour
     {
 		AudioSingleton<MenuAudioManager>.Instance.SetDefaultSnapshot();
     }
-    public void Stage_Play(StageEnum _stage)
+    */
+
+	/*public void Stage_Play(StageEnum _stage)
     {
         switch (_stage)
         {
@@ -105,6 +107,7 @@ public class SoundManager : MonoBehaviour
                 break;
         }
     }
+
     public void Stage_Stop()
     {
 		AudioSingleton<MusicAudioManager>.Instance.SetDefaultSnapshot();
@@ -119,6 +122,7 @@ public class SoundManager : MonoBehaviour
         //TODO
         audioSource.UnPause();
     }
+	/*
     public void Cursor_Play()
     {
 		AudioSingleton<SfxAudioManager>.Instance.PlayCursor();
@@ -144,7 +148,7 @@ public class SoundManager : MonoBehaviour
 		//play sound
 		AudioSingleton<SfxAudioManager>.Instance.PlayVictoryJingle();
     }
-    public void GAMEPLAY_Jump()
+    /*public void GAMEPLAY_Jump()
     {
 		AudioSingleton<SfxAudioManager>.Instance.PlayJump();
     }
@@ -163,8 +167,8 @@ public class SoundManager : MonoBehaviour
     public void GAMEPLAY_Death()
     {
 		AudioSingleton<SfxAudioManager>.Instance.PlayDeath();
-    }
-    public void GAMEPLAY_Rebirth()
+    }*/
+    /*public void GAMEPLAY_Rebirth()
     {
 		AudioSingleton<SfxAudioManager>.Instance.PlayReBirth();
     }
@@ -172,6 +176,7 @@ public class SoundManager : MonoBehaviour
     {
 		AudioSingleton<SfxAudioManager>.Instance.PlayKnockBack();
     }
+    
     public void GAMEPLAY_Ready()
     {
 		AudioSingleton<VoiceAudioManager>.Instance.PlayGameReady();
@@ -236,5 +241,5 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    #endregion
+	#endregion*/
 }

@@ -94,4 +94,19 @@ public class SfxAudioManager : BaseAudioManager {
 	{
 		GetAudioSource().PlayOneShot(Rebirth);
 	}
+
+	public void PlayJump()
+	{
+		GetAudioSource().PlayOneShot(Jump);
+	}
+
+	public void PlayLand()
+	{
+		GetAudioSource().PlayOneShot(Land);
+	}
+
+	public void PlayWallJump()
+	{
+		GetAudioSource().PlayOneShot(Land);
+	}
 }

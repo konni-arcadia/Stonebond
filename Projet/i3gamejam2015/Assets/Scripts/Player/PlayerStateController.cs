@@ -135,7 +135,7 @@ public class PlayerStateController : MonoBehaviour
 
 	void Awake ()
 	{
-		print("p" + playerId + ": awake");
+		//print("p" + playerId + ": awake");
 
 		bodyCollider = transform.Find ("bodyCollider").GetComponent<Collider2D> ();
 
@@ -320,6 +320,8 @@ public class PlayerStateController : MonoBehaviour
 
 	private void setState (State newState)
 	{
+		//debug ("leave " + state + ", enter " + newState);
+
 		switch (state) {
 		case State.SPAWN:		
 			leaveSpawn ();
@@ -384,7 +386,6 @@ public class PlayerStateController : MonoBehaviour
 
 	private void enterSpawn()
 	{
-		print ("p" + playerId + ": enter SPAWN state");
 		state = State.SPAWN;
 
 		stateTime = initialSpawn ? initialSpawnTime : respawnTime;
@@ -396,8 +397,6 @@ public class PlayerStateController : MonoBehaviour
 
 	private void leaveSpawn()
 	{
-		print ("p" + playerId + ": leave SPAWN state");
-
 		movementController.setMovementFactor (1.0f);
 		movementController.setJumpEnabled (true);
 	}
@@ -423,7 +422,6 @@ public class PlayerStateController : MonoBehaviour
 
 	private void enterCrystaled()
 	{
-		print ("p" + playerId + ": enter CRYSTALED state");
 		state = State.CRYSTALED;
 
 		stateTime = crystaledTime;
@@ -433,7 +431,6 @@ public class PlayerStateController : MonoBehaviour
 
 	private void leaveCrystaled()
 	{
-		print ("p" + playerId + ": leave CRYSTALED state");
 		movementController.setMovementFactor (1.0f);
 		movementController.setJumpEnabled (true);
 	}
@@ -452,13 +449,11 @@ public class PlayerStateController : MonoBehaviour
 
 	private void enterIdle()
 	{
-		print ("p" + playerId + ": enter IDLE state");
 		state = State.IDLE;
 	}
 
 	private void leaveIdle()
 	{
-		print ("p" + playerId + ": leave IDLE state");
 	}
 
 	private void updateIdle ()
@@ -517,7 +512,6 @@ public class PlayerStateController : MonoBehaviour
 
 	private void enterAttack()
 	{
-		print ("p" + playerId + ": enter ATTACK state");
 		state = State.ATTACK;
 
 		stateTime = 0.0f;
@@ -622,7 +616,6 @@ public class PlayerStateController : MonoBehaviour
 	
 	private void enterCharge()
 	{
-		print ("p" + playerId + ": enter CHARGE state");
 		state = State.CHARGE;
 
 		stateTime = 0.0f;
@@ -635,8 +628,6 @@ public class PlayerStateController : MonoBehaviour
 	
 	private void leaveCharge()
 	{
-		print ("p" + playerId + ": leave CHARGE state");
-
 		movementController.setMovementFactor (1.0f);
 		movementController.setJumpEnabled (true);
 		movementController.setGravityFactor (1.0f);
@@ -679,7 +670,6 @@ public class PlayerStateController : MonoBehaviour
 
 	private void enterSpecialAttack()
 	{
-		print ("p" + playerId + ": enter SPECIAL_ATTACK state");
 		state = State.SPECIAL_ATTACK;
 
 		stateTime = 0.0f;
@@ -687,7 +677,6 @@ public class PlayerStateController : MonoBehaviour
 		movementController.resetForces ();
 		movementController.setMovementFactor (0.0f);
 		movementController.setJumpEnabled (false);
-		//movementController.setGravityFactor (0.0f);
 		movementController.setFixedFrictionFactor (movementController.frictionFactorAir);
 
 		attackColliderForward.enabled = true;
@@ -696,12 +685,9 @@ public class PlayerStateController : MonoBehaviour
 
 	private void leaveSpecialAttack()
 	{
-		print ("p" + playerId + ": leave SPECIAL_ATTACK state");
-
 		//movementController.resetForces ();
 		movementController.setMovementFactor (1.0f);
 		movementController.setJumpEnabled (true);
-	//	movementController.setGravityFactor (1.0f);
 		movementController.setFixedFrictionFactor (0.0f);
 
 		attackColliderForward.enabled = false;
@@ -734,7 +720,6 @@ public class PlayerStateController : MonoBehaviour
 
 	private void enterKnockback ()
 	{
-		print ("p" + playerId + ": enter KNOCKBACK state (dir=" + knockbackDirection + ")");
 		state = State.KNOCKBACK;
 
 		stateTime = knockbackTime;
@@ -793,7 +778,6 @@ public class PlayerStateController : MonoBehaviour
 
 	private void enterInvincible()
 	{
-		print ("p" + playerId + ": enter INVINCIBLE state");
 		state = State.INVINCIBLE;
 
 		invisibleBlinkCounter = invinsibleBlinkInterval;
@@ -803,7 +787,6 @@ public class PlayerStateController : MonoBehaviour
 
 	private void leaveInvincible()
 	{
-		print ("p" + playerId + ": leave INVINCIBLE state");
 		setVisible (true);
 
 		statusProvider.setInvincibleStatus(false);

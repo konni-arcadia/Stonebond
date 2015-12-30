@@ -9,15 +9,47 @@ public class MusicAudioManager : BaseAudioManager {
 	public AudioMixerSnapshot PipesOfAwakeningSnapshot;
 	public AudioMixerSnapshot CloisterOfTheSilenceSnapshot;
 	public AudioMixerSnapshot RosetteOfTheWingeSnapshot;
-	public AudioMixerSnapshot DefaultSnapshot;
+	public AudioMixerSnapshot MusicDefaultSnapshot;
+	public AudioMixerSnapshot PauseSnapshot;
+	public AudioMixerSnapshot MainDefaultSnapshot;
 
 	void Awake() {
 		DontDestroyOnLoad(this.gameObject);
 	}
 
-	public void SetDefaultSnapshot()
+	public void Stage_Play(Constants.StageEnum _stage)
 	{
-		DefaultSnapshot.TransitionTo(0f);
+		switch (_stage)
+		{
+		case Constants.StageEnum.PipesOfAwakening:
+			AudioSingleton<MusicAudioManager>.Instance.SetPipesOfAwakeningSnapshot();
+			break;
+		case Constants.StageEnum.SpireHigh:
+			AudioSingleton<MusicAudioManager>.Instance.SetSpireHighSnapshot();
+			break;
+		case Constants.StageEnum.CloisterOfTheSilence:
+			AudioSingleton<MusicAudioManager>.Instance.SetCloisterOfTheSilence();
+			break;
+		case Constants.StageEnum.RosetteOfTheWingedOnes:
+			AudioSingleton<MusicAudioManager>.Instance.SetRosetteOfTheWingeSnapshot();
+			break;
+		}
+	}
+
+
+	public void SetMusicDefaultSnapshot()
+	{
+		MusicDefaultSnapshot.TransitionTo(0f);
+	}
+
+	public void SetMainDefaultSnapshot()
+	{
+		MainDefaultSnapshot.TransitionTo(0f);
+	}
+
+	public void SetPauseSnapshot()
+	{
+		PauseSnapshot.TransitionTo(0f);
 	}
 
 	public void SetPipesOfAwakeningSnapshot()

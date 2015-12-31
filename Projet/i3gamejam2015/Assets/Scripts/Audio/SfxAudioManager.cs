@@ -23,7 +23,7 @@ public class SfxAudioManager : BaseAudioManager {
 	public AudioClip AttackA;
 	public AudioClip AttackB;
 	public AudioClip Knockback;
-	public AudioClip Land;
+	public AudioClip[] Lands;
 	public AudioClip Death;
 	public AudioClip Rebirth;
 
@@ -127,11 +127,19 @@ public class SfxAudioManager : BaseAudioManager {
 
 	public void PlayLand()
 	{
-		GetAudioSource().PlayOneShot(Land);
+		try
+		{
+			//We can not do Jumps.Count to give a max value so I added a try catch if prefab is null or less than 3
+			GetAudioSource().PlayOneShot(Lands[Random.Range(0,3)]);
+		}
+		catch(System.Exception)
+		{
+			Debug.Log("Please check property Lands in SfxAudioManager prefab. We probably my miss values ?");
+		}
 	}
 
 	public void PlayWallJump()
 	{
-		GetAudioSource().PlayOneShot(Land);
+		GetAudioSource().PlayOneShot(WallJump);
 	}
 }

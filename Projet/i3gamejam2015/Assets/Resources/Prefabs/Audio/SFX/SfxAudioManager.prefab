@@ -231,7 +231,11 @@ MonoBehaviour:
   Cancel: {fileID: 8300000, guid: 45d8095ab4cb69940881ea52e57914bf, type: 3}
   BoundStart: {fileID: 8300000, guid: 22db80cff9c560d488c54bba00044f91, type: 3}
   BoundStop: {fileID: 8300000, guid: 674fbb9bf26efa146a78ddaa6bf1aa90, type: 3}
-  Jump: {fileID: 8300000, guid: 3c4547c2416c227408cf4b8fe4380e0f, type: 3}
+  Jumps:
+  - {fileID: 8300000, guid: 3c4547c2416c227408cf4b8fe4380e0f, type: 3}
+  - {fileID: 8300000, guid: 33990d55bb1f30043a09fb9cd727b41c, type: 3}
+  - {fileID: 8300000, guid: c770527d722045f4f9b62dcca2828636, type: 3}
+  - {fileID: 8300000, guid: 3c93b2ab6ad4c0046b267c63a60fac83, type: 3}
   WallJump: {fileID: 8300000, guid: 9d94adc9b71c2b5409507877eb20bf1e, type: 3}
   AttackA: {fileID: 8300000, guid: 216984fced3b64648bc09fc5c00395b1, type: 3}
   AttackB: {fileID: 8300000, guid: 12cf571515f0697418267f76549f0e63, type: 3}

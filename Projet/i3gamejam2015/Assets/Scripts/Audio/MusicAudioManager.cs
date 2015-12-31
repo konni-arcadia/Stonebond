@@ -13,9 +13,6 @@ public class MusicAudioManager : BaseAudioManager {
 	public AudioMixerSnapshot PauseSnapshot;
 	public AudioMixerSnapshot MainDefaultSnapshot;
 
-	void Awake() {
-		DontDestroyOnLoad(this.gameObject);
-	}
 
 	public void Stage_Play(Constants.StageEnum _stage)
 	{

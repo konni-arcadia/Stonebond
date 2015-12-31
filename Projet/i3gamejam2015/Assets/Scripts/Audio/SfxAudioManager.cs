@@ -18,7 +18,7 @@ public class SfxAudioManager : BaseAudioManager {
 	public AudioClip Cancel;
 	public AudioClip BoundStart;
 	public AudioClip BoundStop;
-	public AudioClip Jump;
+	public AudioClip[] Jumps;
 	public AudioClip WallJump;
 	public AudioClip AttackA;
 	public AudioClip AttackB;
@@ -114,7 +114,15 @@ public class SfxAudioManager : BaseAudioManager {
 
 	public void PlayJump()
 	{
-		GetAudioSource().PlayOneShot(Jump);
+		try
+		{
+			//We can not do Jumps.Count to give a max value so I added a try catch if prefab is null or less than 4
+			GetAudioSource().PlayOneShot(Jumps[Random.Range(0,4)]);
+		}
+		catch(System.Exception)
+		{
+			Debug.Log("Please check property Jumps in SfxAudioManager prefab. We probably my miss values ?");
+		}
 	}
 
 	public void PlayLand()

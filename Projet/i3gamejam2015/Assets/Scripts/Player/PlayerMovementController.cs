@@ -23,6 +23,7 @@ public class PlayerMovementController : MonoBehaviour
 
     private bool grounded = false;			// Whether or not the player is grounded.
     private bool isGrinding = false;
+    private bool onWall = false;
 
 	private float originalGravityScale;
 
@@ -58,6 +59,7 @@ public class PlayerMovementController : MonoBehaviour
 		setFacingRight(startsFacingRight);
         myStatusProvider.setGroundedStatus(grounded);
         myStatusProvider.setGrindingStatus(isGrinding);
+        myStatusProvider.setOnWall(onWall);
 	}
 
     void Update()
@@ -87,9 +89,16 @@ public class PlayerMovementController : MonoBehaviour
         // Wall jump state stops when grounded
         inWallJump = inWallJump && !grounded;
 
+        bool wasOnWall = onWall;
+        onWall = Physics2D.Linecast(raycastBase.position, wallJumpCheck.position, 1 << LayerMask.NameToLayer("Ground"));
+
+        if (wasOnWall != onWall)
+        {
+            myStatusProvider.setOnWall(onWall);
+        }
+
         bool wasGrinding = isGrinding;
-        isGrinding = isJumpEnabled && allowJumpTime < Mathf.Epsilon &&
-            body.velocity.y < 0 && Physics2D.Linecast(raycastBase.position, wallJumpCheck.position, 1 << LayerMask.NameToLayer("Ground"));
+        isGrinding = isJumpEnabled && allowJumpTime < Mathf.Epsilon && body.velocity.y < 0 && onWall;
 
         if (wasGrinding != isGrinding)
         {

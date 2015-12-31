@@ -24,6 +24,13 @@ public class PlayerStatusProvider : MonoBehaviour {
         if (OnGroundedStatusChanged != null) OnGroundedStatusChanged(isGrounded);
     }
 
+    public delegate void OnWallAction(bool onWall);
+    public event OnWallAction OnOnWallStatusChanged;
+    public void setOnWall(bool onWall)
+    {
+        if (OnOnWallStatusChanged != null) OnOnWallStatusChanged(onWall);
+    }
+
     public delegate void GridingAction(bool isGrinding);
     public event GridingAction OnGrindingStatusChanged;
     public void setGrindingStatus(bool isGrinding)

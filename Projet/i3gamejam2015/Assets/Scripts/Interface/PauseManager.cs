@@ -49,7 +49,11 @@ public class PauseManager : MonoBehaviour {
 
                     case StartMenuItem.Quit: 
 						// TODO create event for that
+						//Reset the nice EQ in pause screen
+						AudioSingleton<MusicAudioManager>.Instance.SetMainDefaultSnapshot();
+						//Reset the music to none
 						AudioSingleton<MusicAudioManager>.Instance.SetMusicDefaultSnapshot();
+						//Set the Main menu music in background
 						AudioSingleton<MenuAudioManager>.Instance.SetMainMenuSnapshot();
 						Application.Quit();
                         break;
@@ -57,6 +61,7 @@ public class PauseManager : MonoBehaviour {
                     case StartMenuItem.Resume:
 						// TODO create event for that
 						AudioSingleton<MenuAudioManager>.Instance.SetDefaultSnapshot();
+						//Reset the nice EQ in pause screen to go back to game state
 						AudioSingleton<MusicAudioManager>.Instance.SetMainDefaultSnapshot();
 
 						isDisplayed = false;
@@ -66,8 +71,12 @@ public class PauseManager : MonoBehaviour {
 
                     case StartMenuItem.LvlSelection: 
 						// TODO create event for that
+						//Reset the nice EQ in pause screen
+						AudioSingleton<MusicAudioManager>.Instance.SetMainDefaultSnapshot();
+						//Reset the Music
 						AudioSingleton<MusicAudioManager>.Instance.SetMusicDefaultSnapshot();
-						AudioSingleton<MenuAudioManager>.Instance.SetMainMenuSnapshot();
+						//Set the level Snapshot
+						AudioSingleton<MenuAudioManager>.Instance.SetSelectStageSnapshot();
 						PlayerPrefs.SetInt("ComeFromLVL", 0); 
                                                 Application.LoadLevel("Menu");
 												if(InControlObject != null)
@@ -76,7 +85,11 @@ public class PauseManager : MonoBehaviour {
 
                     case StartMenuItem.MenuSelection:
 						// TODO create event for that
+						//Reset the nice EQ in pause screen
+						AudioSingleton<MusicAudioManager>.Instance.SetMainDefaultSnapshot();
+						//Reset the Music
 						AudioSingleton<MusicAudioManager>.Instance.SetMusicDefaultSnapshot();
+						//Set the Main menu music
 						AudioSingleton<MenuAudioManager>.Instance.SetMainMenuSnapshot();
 						Application.LoadLevel("Menu");
 												if(InControlObject != null)
@@ -89,6 +102,7 @@ public class PauseManager : MonoBehaviour {
             }
 			else if (inputManager.WasPressedCtrl(noControler, InputManager.START))
             {
+				AudioSingleton<MusicAudioManager>.Instance.SetMainDefaultSnapshot();
                 isDisplayed = false;
                 menu.enabled = false;
                 Time.timeScale = 1.0f;

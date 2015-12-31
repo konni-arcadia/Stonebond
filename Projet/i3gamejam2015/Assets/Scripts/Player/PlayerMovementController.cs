@@ -56,11 +56,14 @@ public class PlayerMovementController : MonoBehaviour
 		playerId = GetComponent<PlayerStateController>().GetPlayerId();
 		originalGravityScale = body.gravityScale;
 		setFacingRight(startsFacingRight);
+        myStatusProvider.setGroundedStatus(grounded);
+        myStatusProvider.setOnWallStatus(isGrinding);
 	}
 
     void Update()
     {
         // The player is grounded if a linecast to the groundcheck position hits anything on the ground layer.
+        bool wasGrounded = grounded;
         grounded = false;
         if (body.velocity.y <= 0)
         {
@@ -68,8 +71,11 @@ public class PlayerMovementController : MonoBehaviour
                 grounded = grounded || Physics2D.Linecast(raycastBase.position, groundChecks[i].position, 1 << LayerMask.NameToLayer("Ground"));
         }
 
-        //Update grounded status in player status component
-        myStatusProvider.setGroundedStatus(grounded);
+        if (wasGrounded != grounded)
+        {
+            //Update grounded status in player status component
+            myStatusProvider.setGroundedStatus(grounded);
+        }
 
         // Allow jumping even after we left the ground for a short period
         if (grounded)
@@ -81,11 +87,15 @@ public class PlayerMovementController : MonoBehaviour
         // Wall jump state stops when grounded
         inWallJump = inWallJump && !grounded;
 
+        bool wasGrinding = isGrinding;
         isGrinding = isJumpEnabled && allowJumpTime < Mathf.Epsilon &&
             body.velocity.y < 0 && Physics2D.Linecast(raycastBase.position, wallJumpCheck.position, 1 << LayerMask.NameToLayer("Ground"));
 
-        //Update grounded status in player status component
-        myStatusProvider.setOnWallStatus(isGrinding);
+        if (wasGrinding != isGrinding)
+        {
+            //Update grounded status in player status component
+            myStatusProvider.setOnWallStatus(isGrinding);
+        }
 
         // If the jump button is pressed and the player is grounded then the player should jump.
         if (isJumpEnabled && inputManager.WasPressed(playerId, InputManager.A))

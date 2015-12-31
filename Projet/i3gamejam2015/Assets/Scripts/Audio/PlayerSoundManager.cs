@@ -11,7 +11,7 @@ public class PlayerSoundManager : MonoBehaviour
     {
         statusProvider.OnBoundChangedAction += OnBounded;
         statusProvider.OnGroundedStatusChanged += OnGrounded;
-        statusProvider.OnOnWallStatusChanged += OnWallrided;
+        statusProvider.OnGrindingStatusChanged += OnWallrided;
         statusProvider.OnHorizontalKnockbackAction += onKnockbacked;
 		statusProvider.OnVerticalKnockbackAction += onKnockbacked;
         statusProvider.OnDieAction += onPlayerDied;

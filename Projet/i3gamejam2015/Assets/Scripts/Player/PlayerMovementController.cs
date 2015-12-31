@@ -57,7 +57,7 @@ public class PlayerMovementController : MonoBehaviour
 		originalGravityScale = body.gravityScale;
 		setFacingRight(startsFacingRight);
         myStatusProvider.setGroundedStatus(grounded);
-        myStatusProvider.setOnWallStatus(isGrinding);
+        myStatusProvider.setGrindingStatus(isGrinding);
 	}
 
     void Update()
@@ -94,7 +94,7 @@ public class PlayerMovementController : MonoBehaviour
         if (wasGrinding != isGrinding)
         {
             //Update grounded status in player status component
-            myStatusProvider.setOnWallStatus(isGrinding);
+            myStatusProvider.setGrindingStatus(isGrinding);
         }
 
         // If the jump button is pressed and the player is grounded then the player should jump.

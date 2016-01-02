@@ -38,6 +38,31 @@ public class PlayerStatusProvider : MonoBehaviour {
         if (OnGrindingStatusChanged != null) OnGrindingStatusChanged(isGrinding);
     }
 
+    public enum GroundCollisionType
+    {
+        NORMAL,
+        ATTACK
+    }
+    public delegate void HitGroundAction(GroundCollisionType collisionType, Vector2 velocity);
+    public event HitGroundAction OnHitGroundAction;
+    public void setHitGround(GroundCollisionType collisionType, Vector2 velocity)
+    {
+        if (OnHitGroundAction != null) OnHitGroundAction(collisionType, velocity);
+    }
+
+    public enum WallCollisionType
+    {
+        NORMAL,
+        ATTACK,
+        SPECIAL_ATTACK
+    }
+    public delegate void HitWallAction(WallCollisionType collisionType, Vector2 velocity);
+    public event HitWallAction OnHitWallAction;
+    public void setHitWall(WallCollisionType collisionType, Vector2 velocity)
+    {
+        if (OnHitWallAction != null) OnHitWallAction(collisionType, velocity);
+    }
+
 	public delegate void JumpAction();
 	public event JumpAction onJumpAction;
 	public void setJump()

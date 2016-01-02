@@ -244,7 +244,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: cc6596ded8868ac4594dcbb4b9492679, type: 3}
   - {fileID: 8300000, guid: 915b1749099254313bea3a26e6dd128b, type: 3}
   - {fileID: 8300000, guid: cefd6759df7de4e44a64fd1e93e5e1bb, type: 3}
-  Death: {fileID: 8300000, guid: ffd27528108187046b48a4882b149e5b, type: 3}
+  Deaths:
+  - {fileID: 8300000, guid: ffd27528108187046b48a4882b149e5b, type: 3}
+  - {fileID: 8300000, guid: 2e44b94be1e90482cb2105041e4be0b7, type: 3}
   Rebirth: {fileID: 8300000, guid: 0971cce2bf5b1c54795d26542c3fe901, type: 3}
 --- !u!1001 &100100000
 Prefab:

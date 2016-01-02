@@ -114,7 +114,6 @@ public class PlayerStateController : MonoBehaviour
     //
 
     public float crystaledTime = 2.0f;
-    private GameObject crystal = null;
 
     //
     // INVINSIBLE

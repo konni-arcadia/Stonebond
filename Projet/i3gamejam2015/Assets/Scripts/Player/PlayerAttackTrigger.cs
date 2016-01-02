@@ -7,7 +7,6 @@ public class PlayerAttackTrigger : MonoBehaviour
 
     private PlayerStateController playerState;
     private Collider2D attackCollider;
-    private List<Collider2D> current = new List<Collider2D>();
 
     void Start()
     {

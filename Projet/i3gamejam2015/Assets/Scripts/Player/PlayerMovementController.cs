@@ -39,7 +39,6 @@ public class PlayerMovementController : MonoBehaviour
 
     private Rigidbody2D body;
     private InputManager inputManager;
-    private Collider2D bodyCollider;
 
     private PlayerStatusProvider myStatusProvider;
 
@@ -47,8 +46,7 @@ public class PlayerMovementController : MonoBehaviour
     {
         // Setting up references.
         body = GetComponent<Rigidbody2D>();
-        inputManager = FindObjectOfType<InputManager>();        
-        bodyCollider = transform.Find("bodyCollider").GetComponent<Collider2D>();        
+        inputManager = FindObjectOfType<InputManager>();              
         myStatusProvider = GetComponent<PlayerStatusProvider>();
     }
 

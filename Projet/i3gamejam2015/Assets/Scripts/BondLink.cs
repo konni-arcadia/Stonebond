@@ -101,7 +101,7 @@ public class BondLink : MonoBehaviour {
 		// first we cast the line between the two gargoyles (the simple math is deferred to a sub-function, for readability)
 		Vector3 linkLine = castLine ();
 		Vector3 linkLineMiddlePoint = playerA.transform.position + linkLine * 0.5f;
-		Vector3 linkLineQuarterLengthPoint = playerA.transform.position + linkLine * 0.25f;
+//		Vector3 linkLineQuarterLengthPoint = playerA.transform.position + linkLine * 0.25f;
 
 //		float angle = Mathf.Atan2(linkLine.y, linkLine.x) * Mathf.Rad2Deg;
 //		linkMiddle.transform.rotation = Quaternion.AngleAxis (angle, Vector3.forward);

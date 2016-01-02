@@ -145,9 +145,11 @@ public class PlayerStateController : MonoBehaviour
         movementController = GetComponent<PlayerMovementController>();
         statusProvider = GetComponent<PlayerStatusProvider>();
 
+        statusProvider.OnGroundedStatusChanged += HandleOnGroundedStatusChanged;
+        statusProvider.OnOnWallStatusChanged += HandleOnOnWallStatusChanged;
         awake = true;
     }
-
+  
     void Start()
     {
         PlayerStateController[] allPlayers = FindObjectsOfType<PlayerStateController>();
@@ -232,70 +234,6 @@ public class PlayerStateController : MonoBehaviour
     {
         isBond = bondLink != null;
         statusProvider.setBoundStatus(bondLink != null);
-    }
-
-    public void OnCollide(Collider2D source, Collider2D other)
-    {
-        //LogDebug ("onCollide");
-        
-        if (state != State.ATTACK && state != State.SPECIAL_ATTACK)
-        {
-            LogWarn("collision outside of attack state");
-            return;
-        }
-        
-        switch (aimDirection)
-        {
-            case AimDirection.UP:
-                if (source != attackColliderUp)
-                {
-                    LogWarn("source is not up");
-                    return;
-                }
-                break;
-            case AimDirection.DOWN:
-                if (source != attackColliderDown)
-                {
-                    LogWarn("source is not down");
-                    return;
-                }
-                break;
-            case AimDirection.FORWARD:
-                if (source != attackColliderForward)
-                {
-                    LogWarn("source is not forward");
-                    return;
-                }
-                break;
-        }
-        
-        //LogDebug ("collide");
-        PlayerStateController enemy = other.GetComponentInParent<PlayerStateController>();
-        if (enemy != null)
-        {
-            //LogDebug ("collide with enemy " + enemy.playerId);
-            if (enemy.isPerformingAttack() && isAimingOppositeDirection(enemy))
-            {
-                enemy.knockback(aimDirection);
-                knockback(enemy.aimDirection);
-            }
-            else
-            if (enemy.isAttackable())
-            {
-                enemy.hitWithAttack(aimDirection);
-            }
-            return;
-        }
-        
-        BondLink bondLink = other.GetComponentInParent<BondLink>();
-        if (bondLink != null)
-        {
-            LevelManager levelManager = FindObjectOfType<LevelManager>();
-            levelManager.bondHasBeenBrokenBy(this);
-            return;
-        }
-        
-        LogWarn("unexpected collision");
     }
 
     //
@@ -834,7 +772,7 @@ public class PlayerStateController : MonoBehaviour
 
     private void LeaveInvincible()
     {
-        setVisible(true);
+        SetVisible(true);
 
         statusProvider.setInvincibleStatus(false);
     }
@@ -854,7 +792,120 @@ public class PlayerStateController : MonoBehaviour
         if (invisibleBlinkCounter < 0.0f)
         {
             invisibleBlinkCounter += invinsibleBlinkInterval;
-            setVisible(!visible);
+            SetVisible(!visible);
+        }
+    }
+
+    //
+    // EVENTS HANDLING
+    //
+
+    public void HandleOnCollide(Collider2D source, Collider2D other)
+    {
+        //LogDebug ("onCollide");
+        
+        if (state != State.ATTACK && state != State.SPECIAL_ATTACK)
+        {
+            LogWarn("collision outside of attack state");
+            return;
+        }
+        
+        switch (aimDirection)
+        {
+            case AimDirection.UP:
+                if (source != attackColliderUp)
+                {
+                    LogWarn("source is not up");
+                    return;
+                }
+                break;
+            case AimDirection.DOWN:
+                if (source != attackColliderDown)
+                {
+                    LogWarn("source is not down");
+                    return;
+                }
+                break;
+            case AimDirection.FORWARD:
+                if (source != attackColliderForward)
+                {
+                    LogWarn("source is not forward");
+                    return;
+                }
+                break;
+        }
+        
+        //LogDebug ("collide");
+        PlayerStateController enemy = other.GetComponentInParent<PlayerStateController>();
+        if (enemy != null)
+        {
+            //LogDebug ("collide with enemy " + enemy.playerId);
+            if (enemy.IsPerformingAttack() && IsAimingOppositeDirection(enemy))
+            {
+                enemy.Knockback(aimDirection);
+                Knockback(enemy.aimDirection);
+            }
+            else
+                if (enemy.IsAttackable())
+            {
+                enemy.HitWithAttack(aimDirection);
+            }
+            return;
+        }
+        
+        BondLink bondLink = other.GetComponentInParent<BondLink>();
+        if (bondLink != null)
+        {
+            LevelManager levelManager = FindObjectOfType<LevelManager>();
+            levelManager.bondHasBeenBrokenBy(this);
+            return;
+        }
+        
+        LogWarn("unexpected collision");
+    }
+
+    private void HandleOnGroundedStatusChanged (bool isGrounded)
+    {
+        if (!isGrounded)
+        {
+            return;
+        }
+
+        if (state == State.ATTACK && aimDirection == AimDirection.DOWN)
+        {
+            //LogDebug("hit ground attack=true");
+            SetState(State.IDLE);
+            statusProvider.setHitGround(PlayerStatusProvider.GroundCollisionType.ATTACK, new Vector2());
+        }
+        else
+        {
+            //LogDebug("hit ground attack=false");
+            statusProvider.setHitGround(PlayerStatusProvider.GroundCollisionType.NORMAL, new Vector2());
+        }
+    }
+
+    private void HandleOnOnWallStatusChanged (bool isOnWall)
+    {    
+        if (!isOnWall)
+        {
+            return;
+        }
+
+        if (state == State.ATTACK && aimDirection == AimDirection.FORWARD)
+        {
+            SetState(State.IDLE);
+            statusProvider.setHitWall(PlayerStatusProvider.WallCollisionType.ATTACK, new Vector2());
+        }
+        else if (state == State.SPECIAL_ATTACK)
+        {
+            //LogDebug("hit wall attack=true");
+            SetState(State.IDLE);
+            statusProvider.setHitWall(PlayerStatusProvider.WallCollisionType.SPECIAL_ATTACK, new Vector2());
+        }
+        else
+        {
+            //LogDebug("hit wall attack=false");
+            statusProvider.setHitWall(PlayerStatusProvider.WallCollisionType.NORMAL, new Vector2());
         }
     }
 
@@ -862,7 +913,7 @@ public class PlayerStateController : MonoBehaviour
     // HELPERS
     //
 
-    private void hitWithAttack(AimDirection dir)
+    private void HitWithAttack(AimDirection dir)
     {
         switch (aimDirection)
         {
@@ -880,18 +931,18 @@ public class PlayerStateController : MonoBehaviour
         SetState(State.CRYSTALED);
     }
 
-    private void knockback(AimDirection dir)
+    private void Knockback(AimDirection dir)
     {
         knockbackDirection = dir; // FIXME state arg
         SetState(State.KNOCKBACK);
     }
 
-    private bool isPerformingAttack()
+    private bool IsPerformingAttack()
     {
         return state == State.ATTACK;
     }
 
-    private bool isAttackable()
+    private bool IsAttackable()
     {
         if (isBond)
         {
@@ -901,7 +952,7 @@ public class PlayerStateController : MonoBehaviour
         return state == State.IDLE;
     }
 
-    private bool isAimingOppositeDirection(PlayerStateController enemy)
+    private bool IsAimingOppositeDirection(PlayerStateController enemy)
     {
         if (aimDirection == AimDirection.UP && enemy.aimDirection == AimDirection.DOWN)
             return true;
@@ -915,7 +966,7 @@ public class PlayerStateController : MonoBehaviour
         return false;
     }
 
-    private void setVisible(bool visible)
+    private void SetVisible(bool visible)
     {
         if (this.visible != visible)
         {
@@ -937,11 +988,9 @@ public class PlayerStateController : MonoBehaviour
         Debug.LogWarning("p" + playerId + ": " + text, this);
     }
 
-
     //
     // Debug DRAW
     //
-
 
     public void OnDrawGizmos()
     {

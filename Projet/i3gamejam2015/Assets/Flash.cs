@@ -5,7 +5,7 @@ public class Flash : MonoBehaviour {
 
 	private static Flash instance;
 
-	private SpriteRenderer renderer;
+	private SpriteRenderer spriteRenderer;
 
 	public float flashTime = 0.5f;
 	public AnimationCurve curve;
@@ -16,8 +16,8 @@ public class Flash : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake () {
-		renderer = GetComponent<SpriteRenderer> ();
-		renderer.enabled = false;
+		spriteRenderer = GetComponent<SpriteRenderer> ();
+        spriteRenderer.enabled = false;
 
 		instance = this;
 	}
@@ -27,7 +27,7 @@ public class Flash : MonoBehaviour {
 		if (counter > 0.0f) {
 			counter -= Time.deltaTime;
 			if (counter <= 0.0f) {
-				renderer.enabled = false;
+                spriteRenderer.enabled = false;
 				counter = 0.0f;
 				return;
 			}
@@ -35,7 +35,7 @@ public class Flash : MonoBehaviour {
 
 		float pct = 1.0f - counter / flashTime;
 		float alpha = curve.Evaluate (pct);
-		renderer.color = new Color (instance.r, instance.g, instance.b, alpha);
+        spriteRenderer.color = new Color (instance.r, instance.g, instance.b, alpha);
 	}
 
 	public static void flash() {
@@ -51,7 +51,7 @@ public class Flash : MonoBehaviour {
 		instance.r = r;
 		instance.g = g;
 		instance.b = b;
-		instance.renderer.enabled = true;
-		instance.renderer.color = new Color (instance.r, instance.g, instance.b, 1.0f);
+        instance.spriteRenderer.enabled = true;
+        instance.spriteRenderer.color = new Color (instance.r, instance.g, instance.b, 1.0f);
 	}
 }

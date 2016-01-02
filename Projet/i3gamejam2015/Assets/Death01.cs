@@ -25,8 +25,8 @@ public class Death01 : MonoBehaviour {
 
 		rand = new System.Random ();
 
-		float fxRange = xForceMinMax.y - xForceMinMax.x;
-		float fyRange = yForceMinMax.y - yForceMinMax.x;
+//		float fxRange = xForceMinMax.y - xForceMinMax.x;
+//		float fyRange = yForceMinMax.y - yForceMinMax.x;
 //		print (fxRange);
 
 		for (int i = 0; i < rigidBodies.Length; i++) {

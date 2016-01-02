@@ -23,6 +23,7 @@ public class PlayerMovementController : MonoBehaviour
 
     private bool grounded = false;			// Whether or not the player is grounded.
     private bool isGrinding = false;
+    private bool onWall = false;
 
 	private float originalGravityScale;
 
@@ -30,7 +31,6 @@ public class PlayerMovementController : MonoBehaviour
     private bool wantJump = false, wantWallJump = false, wantJumpExtension = false;
     private int playerId;
     private float allowJumpTime = 0, disallowDirectionTime = 0;
-    private List<Vector2> pendingForcesToApply = new List<Vector2>();
     private bool inWallJump = false;
 	private bool isJumpEnabled = true;
 	private float fixedFrictionFactor = 0.0f;
@@ -38,7 +38,6 @@ public class PlayerMovementController : MonoBehaviour
 
     private Rigidbody2D body;
     private InputManager inputManager;
-    private Collider2D bodyCollider;
 
     private PlayerStatusProvider myStatusProvider;
 
@@ -46,8 +45,7 @@ public class PlayerMovementController : MonoBehaviour
     {
         // Setting up references.
         body = GetComponent<Rigidbody2D>();
-        inputManager = FindObjectOfType<InputManager>();        
-        bodyCollider = transform.Find("bodyCollider").GetComponent<Collider2D>();        
+        inputManager = FindObjectOfType<InputManager>();              
         myStatusProvider = GetComponent<PlayerStatusProvider>();
     }
 
@@ -56,11 +54,15 @@ public class PlayerMovementController : MonoBehaviour
 		playerId = GetComponent<PlayerStateController>().GetPlayerId();
 		originalGravityScale = body.gravityScale;
 		setFacingRight(startsFacingRight);
+        myStatusProvider.setGroundedStatus(grounded);
+        myStatusProvider.setGrindingStatus(isGrinding);
+        myStatusProvider.setOnWall(onWall);
 	}
 
     void Update()
     {
         // The player is grounded if a linecast to the groundcheck position hits anything on the ground layer.
+        bool wasGrounded = grounded;
         grounded = false;
         if (body.velocity.y <= 0)
         {
@@ -68,8 +70,11 @@ public class PlayerMovementController : MonoBehaviour
                 grounded = grounded || Physics2D.Linecast(raycastBase.position, groundChecks[i].position, 1 << LayerMask.NameToLayer("Ground"));
         }
 
-        //Update grounded status in player status component
-        myStatusProvider.setGroundedStatus(grounded);
+        if (wasGrounded != grounded)
+        {
+            //Update grounded status in player status component
+            myStatusProvider.setGroundedStatus(grounded);
+        }
 
         // Allow jumping even after we left the ground for a short period
         if (grounded)
@@ -81,11 +86,22 @@ public class PlayerMovementController : MonoBehaviour
         // Wall jump state stops when grounded
         inWallJump = inWallJump && !grounded;
 
-        isGrinding = isJumpEnabled && allowJumpTime < Mathf.Epsilon &&
-            body.velocity.y < 0 && Physics2D.Linecast(raycastBase.position, wallJumpCheck.position, 1 << LayerMask.NameToLayer("Ground"));
+        bool wasOnWall = onWall;
+        onWall = Physics2D.Linecast(raycastBase.position, wallJumpCheck.position, 1 << LayerMask.NameToLayer("Ground"));
 
-        //Update grounded status in player status component
-        myStatusProvider.setOnWallStatus(isGrinding);
+        if (wasOnWall != onWall)
+        {
+            myStatusProvider.setOnWall(onWall);
+        }
+
+        bool wasGrinding = isGrinding;
+        isGrinding = isJumpEnabled && allowJumpTime < Mathf.Epsilon && body.velocity.y < 0 && onWall;
+
+        if (wasGrinding != isGrinding)
+        {
+            //Update grounded status in player status component
+            myStatusProvider.setGrindingStatus(isGrinding);
+        }
 
         // If the jump button is pressed and the player is grounded then the player should jump.
         if (isJumpEnabled && inputManager.WasPressed(playerId, InputManager.A))
@@ -105,10 +121,6 @@ public class PlayerMovementController : MonoBehaviour
 
     void FixedUpdate()
     {
-        foreach (Vector2 vector in pendingForcesToApply)
-            body.AddForce(vector);
-        pendingForcesToApply.Clear();
-
         // Cache the horizontal input.
         float h = disallowDirectionTime == 0 ? inputManager.AxisValue(playerId, InputManager.Horizontal) : 0;
 		h *= movementFactor;
@@ -185,7 +197,6 @@ public class PlayerMovementController : MonoBehaviour
 	{
 		body.velocity = new Vector2(0, 0);
 		wantJumpExtension = false;
-		pendingForcesToApply.Clear();
 	}
 
     public void setMovementFactor(float factor)
@@ -210,9 +221,10 @@ public class PlayerMovementController : MonoBehaviour
 		fixedFrictionFactor = factor;
 	}
 
+    // must be called within FixedUpdate()
     public void applyForce(Vector2 force)
     {
-        pendingForcesToApply.Add(force);
+        body.AddForce(force);
     }
 
     public bool isFacingRight()

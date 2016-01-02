@@ -250,23 +250,30 @@ public class PlayerStateController : MonoBehaviour
             case State.IDLE:
                 UpdateIdle();
                 break;
-            case State.ATTACK:
-                UpdateAttack();
-                break;
             case State.CHARGE:
                 UpdateCharge();
-                break;
-            case State.SPECIAL_ATTACK:
-                UpdateSpecialAttack();
-                break;
-            case State.KNOCKBACK:
-                UpdateKnockback();
                 break;
             case State.CRYSTALED:
                 UpdateCrystaled();
                 break;
             case State.INVINCIBLE:
                 UpdateInvincible();
+                break;
+        }
+    }
+
+    void FixedUpdate()
+    {
+        switch (state)
+        {
+            case State.ATTACK:
+                FixedUpdateAttack();
+                break;
+            case State.SPECIAL_ATTACK:
+                FixedUpdateSpecialAttack();
+                break;
+            case State.KNOCKBACK:
+                FixedUpdateKnockback();
                 break;
         }
     }
@@ -534,7 +541,7 @@ public class PlayerStateController : MonoBehaviour
         attackCooldown = attackCooldownTime;
     }
 
-    private void UpdateAttack()
+    private void FixedUpdateAttack()
     {
         float attackMinTime = 0.0f;
         float attackMaxTime = 0.0f;
@@ -555,7 +562,7 @@ public class PlayerStateController : MonoBehaviour
                 break;
         }
 
-        stateTime += Time.deltaTime;
+        stateTime += Time.fixedDeltaTime;
     
         // if attack time is over
         if (stateTime > attackMaxTime || (stateTime > attackMinTime && !inputManager.IsHeld(playerId, InputManager.BUTTON_ATTACK)))
@@ -674,9 +681,9 @@ public class PlayerStateController : MonoBehaviour
         attackCooldown = attackCooldownTime;
     }
 
-    private void UpdateSpecialAttack()
+    private void FixedUpdateSpecialAttack()
     {
-        stateTime += Time.deltaTime;
+        stateTime += Time.fixedDeltaTime;
         
         // if attack time is over
         if (stateTime > specialAttackTime)
@@ -688,7 +695,6 @@ public class PlayerStateController : MonoBehaviour
         float attackPct = stateTime / specialAttackTime;
 
         float hForce = (specialAttackForceMin + specialAttackCurve.Evaluate(attackPct) * (specialAttackForceMax - specialAttackForceMin)) * Time.deltaTime;
-        //float vForce = inputManager.AxisValue (playerId, InputManager.Vertical) * -(3000.0f * (1.0f - attackPct)) * Time.deltaTime;
         float vForce = 0.0f;
         movementController.applyForce(new Vector2(movementController.isFacingRight() ? hForce : -hForce, vForce));
     }
@@ -728,9 +734,9 @@ public class PlayerStateController : MonoBehaviour
         movementController.setFixedFrictionFactor(0.0f);
     }
 
-    private void UpdateKnockback()
+    private void FixedUpdateKnockback()
     {
-        stateTime -= Time.deltaTime;
+        stateTime -= Time.fixedDeltaTime;
         if (stateTime <= 0.0f)
         {
             SetState(State.IDLE);

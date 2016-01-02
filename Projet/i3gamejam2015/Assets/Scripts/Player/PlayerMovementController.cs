@@ -31,7 +31,6 @@ public class PlayerMovementController : MonoBehaviour
     private bool wantJump = false, wantWallJump = false, wantJumpExtension = false;
     private int playerId;
     private float allowJumpTime = 0, disallowDirectionTime = 0;
-    private List<Vector2> pendingForcesToApply = new List<Vector2>();
     private bool inWallJump = false;
 	private bool isJumpEnabled = true;
 	private float fixedFrictionFactor = 0.0f;
@@ -122,10 +121,6 @@ public class PlayerMovementController : MonoBehaviour
 
     void FixedUpdate()
     {
-        foreach (Vector2 vector in pendingForcesToApply)
-            body.AddForce(vector);
-        pendingForcesToApply.Clear();
-
         // Cache the horizontal input.
         float h = disallowDirectionTime == 0 ? inputManager.AxisValue(playerId, InputManager.Horizontal) : 0;
 		h *= movementFactor;
@@ -202,7 +197,6 @@ public class PlayerMovementController : MonoBehaviour
 	{
 		body.velocity = new Vector2(0, 0);
 		wantJumpExtension = false;
-		pendingForcesToApply.Clear();
 	}
 
     public void setMovementFactor(float factor)
@@ -227,9 +221,10 @@ public class PlayerMovementController : MonoBehaviour
 		fixedFrictionFactor = factor;
 	}
 
+    // must be called within FixedUpdate()
     public void applyForce(Vector2 force)
     {
-        pendingForcesToApply.Add(force);
+        body.AddForce(force);
     }
 
     public bool isFacingRight()

@@ -11,7 +11,6 @@ public class SfxAudioManager : BaseAudioManager {
 	public AudioMixerSnapshot MainBoundSnapshot;
 	public AudioMixerSnapshot MainDefaultSnapshot;
 
-
 	public AudioClip VictoryJingle;
 	public AudioClip Cursor;
 	public AudioClip Validate;
@@ -24,7 +23,7 @@ public class SfxAudioManager : BaseAudioManager {
 	public AudioClip AttackB;
 	public AudioClip Knockback;
 	public AudioClip[] Lands;
-	public AudioClip Death;
+	public AudioClip[] Deaths;
 	public AudioClip Rebirth;
 
 	private AudioSource _source;
@@ -99,7 +98,15 @@ public class SfxAudioManager : BaseAudioManager {
 
 	public void PlayDeath()
 	{
-		GetAudioSource().PlayOneShot(Death);
+		try
+		{
+			//We can not do Deaths.Count to give a max value so I added a try catch if prefab is null or property size less than 2
+			GetAudioSource().PlayOneShot(Deaths[Random.Range(0,2)]);
+		}
+		catch(System.Exception)
+		{
+			Debug.Log("Please check property Jumps in SfxAudioManager prefab. We probably my miss values ?");
+		}
 	}
 
 	public void PlayReBirth()
@@ -116,7 +123,7 @@ public class SfxAudioManager : BaseAudioManager {
 	{
 		try
 		{
-			//We can not do Jumps.Count to give a max value so I added a try catch if prefab is null or less than 4
+			//We can not do Jumps.Count to give a max value so I added a try catch if prefab is null or property size less than 4
 			GetAudioSource().PlayOneShot(Jumps[Random.Range(0,4)]);
 		}
 		catch(System.Exception)
@@ -129,7 +136,7 @@ public class SfxAudioManager : BaseAudioManager {
 	{
 		try
 		{
-			//We can not do Jumps.Count to give a max value so I added a try catch if prefab is null or less than 3
+			//We can not do Jumps.Count to give a max value so I added a try catch if prefab is null or property size less than 3
 			GetAudioSource().PlayOneShot(Lands[Random.Range(0,3)]);
 		}
 		catch(System.Exception)

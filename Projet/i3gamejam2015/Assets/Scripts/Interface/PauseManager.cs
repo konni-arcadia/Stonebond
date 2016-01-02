@@ -75,6 +75,8 @@ public class PauseManager : MonoBehaviour {
 						AudioSingleton<MusicAudioManager>.Instance.SetMainDefaultSnapshot();
 						//Reset the Music
 						AudioSingleton<MusicAudioManager>.Instance.SetMusicDefaultSnapshot();
+						//Reset the bound if it is still playing
+						AudioSingleton<SfxAudioManager>.Instance.SetSfxDefaultSnapshot();
 						//Set the level Snapshot
 						AudioSingleton<MenuAudioManager>.Instance.SetSelectStageSnapshot();
 						PlayerPrefs.SetInt("ComeFromLVL", 0); 

@@ -840,9 +840,9 @@ MonoBehaviour:
     m_PostInfinity: 2
   attackCooldownTime: .200000003
   chargeTime: .300000012
-  specialAttackTime: .449999988
-  specialAttackForceMin: 10000
-  specialAttackForceMax: 32000
+  specialAttackTime: .550000012
+  specialAttackForceMin: 0
+  specialAttackForceMax: 42000
   specialAttackCurve:
     serializedVersion: 2
     m_Curve:
@@ -851,10 +851,10 @@ MonoBehaviour:
       inSlope: -3.32232261
       outSlope: -3.32232261
       tangentMode: 0
-    - time: 1.00440037
-      value: -.00610673428
-      inSlope: -.208617926
-      outSlope: -.208617926
+    - time: .999988079
+      value: -.00302544981
+      inSlope: -.084056899
+      outSlope: -.084056899
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -1385,11 +1385,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: specialAttackCurve.m_Curve.Array.data[1].inSlope
-      value: -.208617926
+      value: -.084056899
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: specialAttackCurve.m_Curve.Array.data[1].outSlope
-      value: -.208617926
+      value: -.084056899
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: specialAttackCurve.m_Curve.Array.data[0].value
@@ -1397,11 +1397,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: specialAttackCurve.m_Curve.Array.data[1].value
-      value: -.00610673428
+      value: -.00302544981
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: specialAttackForceMax
-      value: 32000
+      value: 42000
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: chargeTime
@@ -1409,11 +1409,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: specialAttackTime
-      value: .449999988
+      value: .550000012
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: specialAttackForceMin
-      value: 10000
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: attackForwardChromaCurve.m_Curve.Array.data[1].time
@@ -1658,6 +1658,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: attackDownChromaCurve.m_Curve.Array.data[2].outSlope
       value: -10.8146696
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: specialAttackCurve.m_Curve.Array.data[1].time
+      value: .999988079
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

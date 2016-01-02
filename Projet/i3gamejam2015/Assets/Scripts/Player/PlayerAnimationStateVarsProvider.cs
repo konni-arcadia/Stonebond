@@ -22,7 +22,7 @@ public class PlayerAnimationStateVarsProvider : MonoBehaviour {
         myStatusProvider.OnAxisHChanged += AxisHChangedAction;
         myStatusProvider.OnVelocityYChanged += VelocityYChangedAction;
         myStatusProvider.OnGroundedStatusChanged += GroundedAction;
-        myStatusProvider.OnOnWallStatusChanged += OnWallAction;
+        myStatusProvider.OnGrindingStatusChanged += OnWallAction;
         myStatusProvider.OnAttackForwardAction += AttackForwardAction;
         myStatusProvider.OnAttackUpAction += AttackUpAction;
         myStatusProvider.OnAttackDownAction += AttackDownAction;

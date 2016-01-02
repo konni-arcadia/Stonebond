@@ -24,11 +24,43 @@ public class PlayerStatusProvider : MonoBehaviour {
         if (OnGroundedStatusChanged != null) OnGroundedStatusChanged(isGrounded);
     }
 
-    public delegate void OnWallAction(bool isOnWall);
+    public delegate void OnWallAction(bool onWall);
     public event OnWallAction OnOnWallStatusChanged;
-    public void setOnWallStatus(bool isOnWall)
+    public void setOnWall(bool onWall)
     {
-        if (OnOnWallStatusChanged != null) OnOnWallStatusChanged(isOnWall);
+        if (OnOnWallStatusChanged != null) OnOnWallStatusChanged(onWall);
+    }
+
+    public delegate void GridingAction(bool isGrinding);
+    public event GridingAction OnGrindingStatusChanged;
+    public void setGrindingStatus(bool isGrinding)
+    {
+        if (OnGrindingStatusChanged != null) OnGrindingStatusChanged(isGrinding);
+    }
+
+    public enum GroundCollisionType
+    {
+        NORMAL,
+        ATTACK
+    }
+    public delegate void HitGroundAction(GroundCollisionType collisionType, Vector2 velocity);
+    public event HitGroundAction OnHitGroundAction;
+    public void setHitGround(GroundCollisionType collisionType, Vector2 velocity)
+    {
+        if (OnHitGroundAction != null) OnHitGroundAction(collisionType, velocity);
+    }
+
+    public enum WallCollisionType
+    {
+        NORMAL,
+        ATTACK,
+        SPECIAL_ATTACK
+    }
+    public delegate void HitWallAction(WallCollisionType collisionType, Vector2 velocity);
+    public event HitWallAction OnHitWallAction;
+    public void setHitWall(WallCollisionType collisionType, Vector2 velocity)
+    {
+        if (OnHitWallAction != null) OnHitWallAction(collisionType, velocity);
     }
 
 	public delegate void JumpAction();

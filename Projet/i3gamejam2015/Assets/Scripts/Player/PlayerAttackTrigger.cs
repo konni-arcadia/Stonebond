@@ -6,13 +6,12 @@ public class PlayerAttackTrigger : MonoBehaviour
 {
 
     private PlayerStateController playerState;
-    private Collider2D collider;
-    private List<Collider2D> current = new List<Collider2D>();
+    private Collider2D attackCollider;
 
     void Start()
     {
         playerState = GetComponentInParent<PlayerStateController>();
-        collider = GetComponent<Collider2D>();
+        attackCollider = GetComponent<Collider2D>();
     }
 
     void Update()
@@ -21,6 +20,6 @@ public class PlayerAttackTrigger : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        playerState.OnCollide(collider, other);
+        playerState.HandleOnCollide(attackCollider, other);
     }
 }

@@ -87,7 +87,16 @@ public class PlayerMovementController : MonoBehaviour
         inWallJump = inWallJump && !grounded;
 
         bool wasOnWall = onWall;
-        onWall = Physics2D.Linecast(raycastBase.position, wallJumpCheck.position, 1 << LayerMask.NameToLayer("Ground"));
+        RaycastHit2D wallHit = Physics2D.Linecast(raycastBase.position, wallJumpCheck.position, 1 << LayerMask.NameToLayer("Ground"));
+        if (wallHit.collider != null)
+        {
+            // don't consider onewayplatform as walls
+            onWall = wallHit.collider.transform.GetComponent<OneWayPlatform>() == null;
+        }
+        else
+        {
+            onWall = false;
+        }
 
         if (wasOnWall != onWall)
         {

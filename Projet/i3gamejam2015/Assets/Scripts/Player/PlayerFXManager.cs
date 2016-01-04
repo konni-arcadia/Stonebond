@@ -41,11 +41,13 @@ public class PlayerFXManager : MonoBehaviour
         stateController = transform.GetComponent<PlayerStateController>();
         bodyRenderer = transform.Find("CharacterSprites").Find("Body").GetComponent<SpriteRenderer>();
 
-        statusProvider.OnHorizontalKnockbackAction += OnHorizontalKnockback;
-        statusProvider.OnVerticalKnockbackAction += OnVerticalKnockback;
-        statusProvider.OnDieAction += OnDie;
+        statusProvider.OnHorizontalKnockbackAction += HandleOnHorizontalKnockback;
+        statusProvider.OnVerticalKnockbackAction += HandleOnVerticalKnockback;
+        statusProvider.OnDieAction += HandleOnDie;
+        statusProvider.OnHitGroundAction += HandleOnHitGroundAction;
+        statusProvider.OnHitWallAction += HandleOnHitWallAction;
     }
-    
+
     void Start()
     {
         GameState.PlayerInfo playerInfo = GameState.Instance.Player(stateController.GetPlayerId());
@@ -110,21 +112,45 @@ public class PlayerFXManager : MonoBehaviour
         }
     }
 
-    void OnHorizontalKnockback()
+    //
+    // EVENTS
+    //
+
+    private void HandleOnHorizontalKnockback()
     {
         ScreenShake.ShakeX(0.5f, 2.0f);
     }
 
-    void OnVerticalKnockback()
+    private void HandleOnVerticalKnockback()
     {
         ScreenShake.ShakeY(0.5f, 2.0f);
     }
 
-    void OnDie(Vector2 attackDirection)
+    private void HandleOnDie(Vector2 attackDirection)
     {   
         Flash.flash();
         SlowMotion.StartSlowMotion();
         ScreenShake.ShakeXY(0.5f, 2.0f, 0.5f, 2.0f);
+    }
+
+    private void HandleOnHitWallAction (PlayerStatusProvider.WallCollisionType collisionType, Vector2 velocity)
+    {
+        if (collisionType == PlayerStatusProvider.WallCollisionType.SPECIAL_ATTACK)
+        {
+            ScreenShake.ShakeX(0.3f, 1.5f);
+        }
+        else if (collisionType == PlayerStatusProvider.WallCollisionType.ATTACK)
+        {
+            ScreenShake.ShakeX(0.15f, 1.5f);
+        }
+    }
+    
+    private void HandleOnHitGroundAction (PlayerStatusProvider.GroundCollisionType collisionType, Vector2 velocity)
+    {
+        if (collisionType == PlayerStatusProvider.GroundCollisionType.ATTACK)
+        {
+            ScreenShake.ShakeY(0.25f, 1.5f);
+        }
     }
 
     //

@@ -1,0 +1,3 @@
+- hitwall, hitground velocity
+- add knockback to hitwall and hitground type
+- fix onewayplatform bug

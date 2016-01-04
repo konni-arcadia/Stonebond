@@ -36,6 +36,9 @@ public class PlayerStateController : MonoBehaviour
     private bool isBond = false;
     private bool visible = true;
 
+    private bool onGround = false;
+    private bool onWall = false;
+
     //
     // COLLIDERS
     //
@@ -348,8 +351,6 @@ public class PlayerStateController : MonoBehaviour
 
     private void EnterSpawn()
     {
-        state = State.SPAWN;
-
         stateTime = initialSpawn ? initialSpawnTime : respawnTime;
         movementController.setMovementFactor(0.0f);
         movementController.setJumpEnabled(false);
@@ -387,8 +388,6 @@ public class PlayerStateController : MonoBehaviour
 
     private void EnterCrystaled()
     {
-        state = State.CRYSTALED;
-
         stateTime = crystaledTime;
         movementController.setMovementFactor(0.0f);
         movementController.setJumpEnabled(false);
@@ -415,7 +414,6 @@ public class PlayerStateController : MonoBehaviour
 
     private void EnterIdle()
     {
-        state = State.IDLE;
     }
 
     private void LeaveIdle()
@@ -492,9 +490,7 @@ public class PlayerStateController : MonoBehaviour
     //
 
     private void EnterAttack()
-    {
-        state = State.ATTACK;
-
+    { 
         stateTime = 0.0f;
         
         movementController.resetForces();
@@ -505,8 +501,17 @@ public class PlayerStateController : MonoBehaviour
                 statusProvider.setAttackUp();
                 break;
             case AimDirection.DOWN:
-                attackColliderDown.enabled = true;
-                statusProvider.setAttackDown();
+                if(onGround)
+                {
+                    // can't perform down attack while on ground
+                    statusProvider.setAttackFailed();
+                    SetState(State.IDLE);
+                }
+                else
+                {
+                    attackColliderDown.enabled = true;
+                    statusProvider.setAttackDown();
+                }
                 break;
             case AimDirection.FORWARD:
                 movementController.setMovementFactor(0.0f);
@@ -515,6 +520,12 @@ public class PlayerStateController : MonoBehaviour
                 movementController.setFixedFrictionFactor(movementController.frictionFactorAir);
                 attackColliderForward.enabled = true;
                 statusProvider.setAttackForward();
+
+                if(onWall)
+                {
+                    // was already on wall, fire an hit event (hit event wouldn't be triggered otherwise)
+                    statusProvider.setHitWall(PlayerStatusProvider.WallCollisionType.ATTACK, new Vector2());
+                }
                 break;
         }
     }
@@ -602,8 +613,6 @@ public class PlayerStateController : MonoBehaviour
     
     private void EnterCharge()
     {
-        state = State.CHARGE;
-
         stateTime = 0.0f;
         
         movementController.setMovementFactor(0.0f);
@@ -656,10 +665,8 @@ public class PlayerStateController : MonoBehaviour
 
     private void EnterSpecialAttack()
     {
-        state = State.SPECIAL_ATTACK;
-
         stateTime = 0.0f;
-        
+
         movementController.resetForces();
         movementController.setMovementFactor(0.0f);
         movementController.setJumpEnabled(false);
@@ -667,11 +674,17 @@ public class PlayerStateController : MonoBehaviour
 
         attackColliderForward.enabled = true;
         statusProvider.setAttackSpecial();
+
+        if (onWall)
+        {
+            // fire hit event and cancel attack (hit event wouldn't be triggered otherwise)
+            statusProvider.setHitWall(PlayerStatusProvider.WallCollisionType.SPECIAL_ATTACK, new Vector2());
+            SetState(State.IDLE);
+        }
     }
 
     private void LeaveSpecialAttack()
     {
-        //movementController.resetForces ();
         movementController.setMovementFactor(1.0f);
         movementController.setJumpEnabled(true);
         movementController.setFixedFrictionFactor(0.0f);
@@ -707,8 +720,6 @@ public class PlayerStateController : MonoBehaviour
 
     private void EnterKnockback()
     {
-        state = State.KNOCKBACK;
-
         stateTime = knockbackTime;
 
         movementController.setMovementFactor(0.0f);
@@ -769,8 +780,6 @@ public class PlayerStateController : MonoBehaviour
 
     private void EnterInvincible()
     {
-        state = State.INVINCIBLE;
-
         invisibleBlinkCounter = invinsibleBlinkInterval;
 
         statusProvider.setInvincibleStatus(true);
@@ -872,6 +881,8 @@ public class PlayerStateController : MonoBehaviour
 
     private void HandleOnGroundedStatusChanged (bool isGrounded)
     {
+        onGround = isGrounded;
+
         if (!isGrounded)
         {
             return;
@@ -879,19 +890,19 @@ public class PlayerStateController : MonoBehaviour
 
         if (state == State.ATTACK && aimDirection == AimDirection.DOWN)
         {
-            //LogDebug("hit ground attack=true");
             SetState(State.IDLE);
             statusProvider.setHitGround(PlayerStatusProvider.GroundCollisionType.ATTACK, new Vector2());
         }
         else
         {
-            //LogDebug("hit ground attack=false");
             statusProvider.setHitGround(PlayerStatusProvider.GroundCollisionType.NORMAL, new Vector2());
         }
     }
 
     private void HandleOnOnWallStatusChanged (bool isOnWall)
     {    
+        onWall = isOnWall;
+
         if (!isOnWall)
         {
             return;
@@ -899,18 +910,15 @@ public class PlayerStateController : MonoBehaviour
 
         if (state == State.ATTACK && aimDirection == AimDirection.FORWARD)
         {
-            SetState(State.IDLE);
             statusProvider.setHitWall(PlayerStatusProvider.WallCollisionType.ATTACK, new Vector2());
         }
         else if (state == State.SPECIAL_ATTACK)
         {
-            //LogDebug("hit wall attack=true");
             SetState(State.IDLE);
             statusProvider.setHitWall(PlayerStatusProvider.WallCollisionType.SPECIAL_ATTACK, new Vector2());
         }
         else
         {
-            //LogDebug("hit wall attack=false");
             statusProvider.setHitWall(PlayerStatusProvider.WallCollisionType.NORMAL, new Vector2());
         }
     }

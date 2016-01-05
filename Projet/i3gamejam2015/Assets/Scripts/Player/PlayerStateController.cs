@@ -35,7 +35,6 @@ public class PlayerStateController : MonoBehaviour
     private float stateTime = 0.0f;
     private bool isBond = false;
     private bool visible = true;
-
     private bool onGround = false;
     private bool onWall = false;
 
@@ -116,6 +115,7 @@ public class PlayerStateController : MonoBehaviour
     // CRYSTALED
     //
 
+    public float diePauseTime = 0.2f;
     public float crystaledTime = 2.0f;
 
     //
@@ -434,8 +434,7 @@ public class PlayerStateController : MonoBehaviour
         {
             aimDirection = AimDirection.UP;
         }
-        else
-        if (aimAngle > 90.0f - (verticalAimThresholdDegree / 2.0f) && aimAngle < 90.0f + (verticalAimThresholdDegree / 2.0f))
+        else if (aimAngle > 90.0f - (verticalAimThresholdDegree / 2.0f) && aimAngle < 90.0f + (verticalAimThresholdDegree / 2.0f))
         {
             aimDirection = AimDirection.DOWN;
         }
@@ -501,7 +500,7 @@ public class PlayerStateController : MonoBehaviour
                 statusProvider.setAttackUp();
                 break;
             case AimDirection.DOWN:
-                if(onGround)
+                if (onGround)
                 {
                     // can't perform down attack while on ground
                     statusProvider.setAttackFailed();
@@ -521,7 +520,7 @@ public class PlayerStateController : MonoBehaviour
                 attackColliderForward.enabled = true;
                 statusProvider.setAttackForward();
 
-                if(onWall)
+                if (onWall)
                 {
                     // was already on wall, fire an hit event (hit event wouldn't be triggered otherwise)
                     statusProvider.setHitWall(PlayerStatusProvider.WallCollisionType.ATTACK, new Vector2());
@@ -860,10 +859,9 @@ public class PlayerStateController : MonoBehaviour
                 enemy.Knockback(aimDirection);
                 Knockback(enemy.aimDirection);
             }
-            else
-                if (enemy.IsAttackable())
+            else if (enemy.IsAttackable())
             {
-                enemy.HitWithAttack(aimDirection);
+                enemy.HitWithAttack(transform, aimDirection);
             }
             return;
         }
@@ -879,7 +877,7 @@ public class PlayerStateController : MonoBehaviour
         LogWarn("unexpected collision");
     }
 
-    private void HandleOnGroundedStatusChanged (bool isGrounded)
+    private void HandleOnGroundedStatusChanged(bool isGrounded)
     {
         onGround = isGrounded;
 
@@ -899,7 +897,7 @@ public class PlayerStateController : MonoBehaviour
         }
     }
 
-    private void HandleOnOnWallStatusChanged (bool isOnWall)
+    private void HandleOnOnWallStatusChanged(bool isOnWall)
     {    
         onWall = isOnWall;
 
@@ -927,22 +925,35 @@ public class PlayerStateController : MonoBehaviour
     // HELPERS
     //
 
-    private void HitWithAttack(AimDirection dir)
+    private void HitWithAttack(Transform source, AimDirection dir)
     {
+        Vector2 attackVector;
         switch (aimDirection)
         {
             case AimDirection.UP:
-                statusProvider.setDie(new Vector2(0.0f, 1.0f));
+                attackVector = new Vector2(0.0f, 1.0f);
                 break;
             case AimDirection.DOWN:
-                statusProvider.setDie(new Vector2(0.0f, -1.0f));
+                attackVector = new Vector2(0.0f, -1.0f);
                 break;
             case AimDirection.FORWARD:      
-                statusProvider.setDie(new Vector2(movementController.isFacingRight() ? 1.0f : -1.0f, 0.0f));
+                attackVector = new Vector2(movementController.isFacingRight() ? 1.0f : -1.0f, 0.0f);
+                break;
+            default:
+                attackVector = new Vector2(0.0f, 0.0f); // unreachable
                 break;
         }
 
         SetState(State.CRYSTALED);
+
+        // this is kind of mixing logic and display but cannot rely on other component to trigger die event
+        SlowMotion.Pause(diePauseTime, delegate()
+        {
+            statusProvider.setDieWarning(source, attackVector);
+        }, delegate()
+        {
+            statusProvider.setDie(source, attackVector);
+        });
     }
 
     private void Knockback(AimDirection dir)

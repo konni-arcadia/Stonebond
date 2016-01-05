@@ -94,7 +94,7 @@ public class PlayerSoundManager : MonoBehaviour
 		}
     }
 
-    private void onPlayerDied(Vector2 deathVector)
+    private void onPlayerDied(Transform source, Vector2 deathVector)
     {
 		if (SoundManager.Instance != null) {
 			SoundManager.Instance.GAMEPLAY_Death ();

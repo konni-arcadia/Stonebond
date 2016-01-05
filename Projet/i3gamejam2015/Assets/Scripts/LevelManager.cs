@@ -102,8 +102,6 @@ public class LevelManager : MonoBehaviour {
 		activePlayers[1].SetBondLink(bondLink);
 		bondLinkGauge = 0;
 		appearedSinceSec = 0;
-
-		SlowMotion.StartSlowMotion ();
 	}
 
 	private void ExitBondMode(PlayerStateController p1, PlayerStateController p2) {

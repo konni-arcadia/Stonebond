@@ -670,6 +670,8 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+  overlaySortingLayerName: HUD
+  overlaySortingOrder: 100
 --- !u!114 &11421360
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -877,6 +879,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+  diePauseTime: .100000001
   crystaledTime: 2
   invincibleAfterSpawnTime: 3
   invinsibleBlinkInterval: .119999997
@@ -1662,6 +1665,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: specialAttackCurve.m_Curve.Array.data[1].time
       value: .999988079
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: diePauseTime
+      value: .100000001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

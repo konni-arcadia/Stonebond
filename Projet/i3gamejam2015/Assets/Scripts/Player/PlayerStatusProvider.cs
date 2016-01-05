@@ -140,11 +140,19 @@ public class PlayerStatusProvider : MonoBehaviour {
 		if (OnHorizontalKnockbackAction != null) OnHorizontalKnockbackAction();
 	}
 
-	public delegate void DieAction(Vector2 attackDirection);
-    public event DieAction OnDieAction;
-	public void setDie(Vector2 attackDirection)
+    // triggered before the attack pause
+    public delegate void DieWarningAction(Transform source, Vector2 attackDirection);
+    public event DieAction OnDieWarningAction;
+    public void setDieWarning(Transform source, Vector2 attackDirection)
     {
-		if (OnDieAction != null) OnDieAction(attackDirection);
+        if (OnDieWarningAction != null) OnDieWarningAction(source, attackDirection);
+    }
+
+    public delegate void DieAction(Transform source, Vector2 attackDirection);
+    public event DieAction OnDieAction;
+    public void setDie(Transform source, Vector2 attackDirection)
+    {
+		if (OnDieAction != null) OnDieAction(source, attackDirection);
     }
 
     public delegate void RespawnAction(bool initial);

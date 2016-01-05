@@ -2,18 +2,10 @@ using UnityEngine;
 
 public class PlayerFXManager : MonoBehaviour
 {
-    //
-    // REFERENCES
-    //
-
-    private PlayerStatusProvider statusProvider;
-    private PlayerStateController stateController;
-    private SpriteRenderer bodyRenderer;
-
     // 
-    // GLOBAL STATE
+    // PARAMETERS
     //
-
+    
     public float bodyColorDarkPct = 0.1f;
     public float bodyColorBrightPct = 0.1f;
     public float chromaColorDarkPct = 1.0f;
@@ -24,12 +16,31 @@ public class PlayerFXManager : MonoBehaviour
     public AnimationCurve attackSpecialChromaCurve;
     public AnimationCurve chargeChromaCurve;
     public AnimationCurve attackCooldownChromaCurve;
+    public string overlaySortingLayerName = "HUD";
+    public int overlaySortingOrder = 100;
+
+    //
+    // REFERENCES
+    //
+
+    private PlayerStatusProvider statusProvider;
+    private PlayerStateController stateController;
+    private SpriteRenderer bodyRenderer;
+    private string originalSortingLayerName;
+    private int originalSortingOrder;
+
+    // 
+    // GLOBAL STATE
+    //
+
     private Color bodyColorNormal;
     private Color bodyColorMin;
     private Color bodyColorMax;
     private Color chromaColorNormal;
     private Color chromaColorMin;
     private Color chromaColorMax;
+    private bool overlay = false;
+
     
     //
     // INIT
@@ -43,9 +54,13 @@ public class PlayerFXManager : MonoBehaviour
 
         statusProvider.OnHorizontalKnockbackAction += HandleOnHorizontalKnockback;
         statusProvider.OnVerticalKnockbackAction += HandleOnVerticalKnockback;
+        statusProvider.OnDieWarningAction += HandleOnDieWarning;
         statusProvider.OnDieAction += HandleOnDie;
         statusProvider.OnHitGroundAction += HandleOnHitGroundAction;
         statusProvider.OnHitWallAction += HandleOnHitWallAction;
+
+        originalSortingLayerName = bodyRenderer.sortingLayerName;
+        originalSortingOrder = bodyRenderer.sortingOrder;
     }
 
     void Start()
@@ -66,7 +81,11 @@ public class PlayerFXManager : MonoBehaviour
 
     void Update()
     {
-        if (stateController.GetAttackPct() > 0.0f)
+        if (overlay)
+        {
+            // don't change the sprite color while in overlay mode
+        }
+        else if (stateController.GetAttackPct() > 0.0f)
         {
             //SetBodyColor (Color.Lerp (bodyColorMax, bodyColorMin, stateController.GetAttackPct ()));
 
@@ -87,20 +106,17 @@ public class PlayerFXManager : MonoBehaviour
             }
 
         }
-        else
-        if (stateController.GetChargePct() > 0.0f)
+        else if (stateController.GetChargePct() > 0.0f)
         {
             SetBodyColor(stateController.GetChargePct(), chargeChromaCurve);
             SetChromaColor(stateController.GetChargePct(), chargeChromaCurve);
         }
-        else
-        if (stateController.GetSpecialAttackPct() > 0.0f)
+        else if (stateController.GetSpecialAttackPct() > 0.0f)
         {
             SetBodyColor(stateController.GetSpecialAttackPct(), attackSpecialChromaCurve);
             SetChromaColor(stateController.GetSpecialAttackPct(), attackSpecialChromaCurve);
         }
-        else
-        if (stateController.GetAttackCooldownPct() > 0.0f)
+        else if (stateController.GetAttackCooldownPct() > 0.0f)
         {
             SetBodyColor(stateController.GetAttackCooldownPct(), attackCooldownChromaCurve);
             SetChromaColor(stateController.GetAttackCooldownPct(), attackCooldownChromaCurve);
@@ -126,14 +142,31 @@ public class PlayerFXManager : MonoBehaviour
         ScreenShake.ShakeY(0.5f, 2.0f);
     }
 
-    private void HandleOnDie(Vector2 attackDirection)
+    private void HandleOnDieWarning(Transform source, Vector2 attackDirection)
     {   
+        ScreenShake.SetEnabled(false);
         Flash.flash();
-        SlowMotion.StartSlowMotion();
-        ScreenShake.ShakeXY(0.5f, 2.0f, 0.5f, 2.0f);
+        SetOverlay(true);
+        SetBodyColor(Color.black);
+        SetChromaColor(Color.black);
+
+        PlayerFXManager sourceFXManager = source.GetComponent<PlayerFXManager>();
+        sourceFXManager.SetOverlay(true);
+        sourceFXManager.SetBodyColor(Color.black);
+        sourceFXManager.SetChromaColor(Color.black);
     }
 
-    private void HandleOnHitWallAction (PlayerStatusProvider.WallCollisionType collisionType, Vector2 velocity)
+    private void HandleOnDie(Transform source, Vector2 attackDirection)
+    {
+        ScreenShake.SetEnabled(true);
+        ScreenShake.ShakeXY(0.5f, 2.0f, 0.5f, 2.0f);
+        SetOverlay(false);
+
+        PlayerFXManager sourceFXManager = source.GetComponent<PlayerFXManager>();
+        sourceFXManager.SetOverlay(false);
+    }
+
+    private void HandleOnHitWallAction(PlayerStatusProvider.WallCollisionType collisionType, Vector2 velocity)
     {
         if (collisionType == PlayerStatusProvider.WallCollisionType.SPECIAL_ATTACK)
         {
@@ -145,7 +178,7 @@ public class PlayerFXManager : MonoBehaviour
         }
     }
     
-    private void HandleOnHitGroundAction (PlayerStatusProvider.GroundCollisionType collisionType, Vector2 velocity)
+    private void HandleOnHitGroundAction(PlayerStatusProvider.GroundCollisionType collisionType, Vector2 velocity)
     {
         if (collisionType == PlayerStatusProvider.GroundCollisionType.ATTACK)
         {
@@ -164,8 +197,7 @@ public class PlayerFXManager : MonoBehaviour
         {
             SetChromaColor(Color.Lerp(chromaColorNormal, chromaColorMin, Mathf.Min(1.0f, Mathf.Abs(value))));
         }
-        else
-        if (value > 0.0f)
+        else if (value > 0.0f)
         {
             SetChromaColor(Color.Lerp(chromaColorNormal, chromaColorMax, Mathf.Min(1.0f, value)));
         }
@@ -182,8 +214,7 @@ public class PlayerFXManager : MonoBehaviour
         {
             SetBodyColor(Color.Lerp(bodyColorNormal, bodyColorMin, Mathf.Min(1.0f, Mathf.Abs(value))));
         }
-        else
-        if (value > 0.0f)
+        else if (value > 0.0f)
         {
             SetBodyColor(Color.Lerp(bodyColorNormal, bodyColorMax, Mathf.Min(1.0f, value)));
         }
@@ -201,5 +232,21 @@ public class PlayerFXManager : MonoBehaviour
     private void SetChromaColor(Color color)
     {
         bodyRenderer.material.SetColor("_ChromaTexColor", color);
+    }
+
+    private void SetOverlay(bool overlay)
+    {
+        if (overlay)
+        {
+            bodyRenderer.sortingLayerName = overlaySortingLayerName;
+            bodyRenderer.sortingOrder = overlaySortingOrder;
+        }
+        else
+        {
+            bodyRenderer.sortingLayerName = originalSortingLayerName;
+            bodyRenderer.sortingOrder = originalSortingOrder;
+        }
+
+        this.overlay = overlay;
     }
 }

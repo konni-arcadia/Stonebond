@@ -114,7 +114,7 @@ public class PlayerAnimationStateVarsProvider : MonoBehaviour {
 			myAnimator.SetTrigger("KnockBack");
 	}
 
-    public void DieAction(Vector2 deathVector)
+    public void DieAction(Transform source, Vector2 deathVector)
     {
         if (myAnimator != null)
             myAnimator.SetTrigger("Die");

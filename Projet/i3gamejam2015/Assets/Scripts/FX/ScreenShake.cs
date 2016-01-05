@@ -117,7 +117,7 @@ public class ScreenShake : MonoBehaviour
             originZ = transform.localPosition.z;
             init = false;
         }
-    
+
         shakeOffset.Set(0.0f, 0.0f, 0.0f);
 
         for (int i = shakers.Count - 1; i >= 0; i--)
@@ -127,19 +127,22 @@ public class ScreenShake : MonoBehaviour
                 shakers.RemoveAt(i);
         }
 
-        if (Mathf.Abs(shakeOffset.x) > maxX)
+        if (enabled)
         {
-            shakeOffset.x = Mathf.Sign(shakeOffset.x) * maxX;
-        }
+            if (Mathf.Abs(shakeOffset.x) > maxX)
+            {
+                shakeOffset.x = Mathf.Sign(shakeOffset.x) * maxX;
+            }
 
-        if (Mathf.Abs(shakeOffset.y) > maxY)
-        {
-            shakeOffset.y = Mathf.Sign(shakeOffset.y) * maxY;
-        }
+            if (Mathf.Abs(shakeOffset.y) > maxY)
+            {
+                shakeOffset.y = Mathf.Sign(shakeOffset.y) * maxY;
+            }
 
-        if (Mathf.Abs(shakeOffset.z) > maxZ)
-        {
-            shakeOffset.z = Mathf.Sign(shakeOffset.z) * maxZ;
+            if (Mathf.Abs(shakeOffset.z) > maxZ)
+            {
+                shakeOffset.z = Mathf.Sign(shakeOffset.z) * maxZ;
+            }
         }
 
         shakeOffset.x += originX;
@@ -194,5 +197,15 @@ public class ScreenShake : MonoBehaviour
 
         Shaker shaker = new Shaker(strenghtX, decayX, strenghtY, decayY, 0.0f, 0.0f);
         instance.shakers.Add(shaker);
+    }
+
+    public static void SetEnabled(bool enabled)
+    {
+        if (instance == null)
+        {
+            return;
+        }
+
+        instance.enabled = enabled;
     }
 }

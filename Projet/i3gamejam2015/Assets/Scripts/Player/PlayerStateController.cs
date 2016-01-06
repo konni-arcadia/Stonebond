@@ -491,11 +491,11 @@ public class PlayerStateController : MonoBehaviour
     private void EnterAttack()
     { 
         stateTime = 0.0f;
-        
-        movementController.resetForces();
+
         switch (aimDirection)
         {
             case AimDirection.UP:
+                movementController.resetVelocity(false, true);
                 attackColliderUp.enabled = true;
                 statusProvider.setAttackUp();
                 break;
@@ -508,15 +508,17 @@ public class PlayerStateController : MonoBehaviour
                 }
                 else
                 {
+                    movementController.resetVelocity(false, true);
                     attackColliderDown.enabled = true;
                     statusProvider.setAttackDown();
                 }
                 break;
             case AimDirection.FORWARD:
+                movementController.resetVelocity(true, false);
                 movementController.setMovementFactor(0.0f);
                 movementController.setJumpEnabled(false);
                 movementController.setGravityFactor(0.0f);
-                movementController.setFixedFrictionFactor(movementController.frictionFactorAir);
+                //movementController.setFixedFrictionFactor(movementController.frictionFactorAir);
                 attackColliderForward.enabled = true;
                 statusProvider.setAttackForward();
 
@@ -601,6 +603,7 @@ public class PlayerStateController : MonoBehaviour
                 {
                     float force = (attackForwardForceMin + attackForwardCurve.Evaluate(attackPct) * (attackForwardForceMax - attackForwardForceMin)) * Time.deltaTime;
                     movementController.applyForce(new Vector2(movementController.isFacingRight() ? force : -force, 0.0f));
+                    movementController.setGravityFactor(attackPct);
                     break;
                 }
         }
@@ -634,7 +637,7 @@ public class PlayerStateController : MonoBehaviour
         float statePct = stateTime / chargeTime;
         if (statePct > 0.5f)
         {
-            movementController.resetForces();
+            movementController.resetVelocity();
             movementController.setGravityFactor(0.0f);
         }
         else
@@ -666,7 +669,7 @@ public class PlayerStateController : MonoBehaviour
     {
         stateTime = 0.0f;
 
-        movementController.resetForces();
+        movementController.resetVelocity();
         movementController.setMovementFactor(0.0f);
         movementController.setJumpEnabled(false);
         movementController.setFixedFrictionFactor(movementController.frictionFactorAir);

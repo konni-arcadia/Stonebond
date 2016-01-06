@@ -202,9 +202,9 @@ public class PlayerMovementController : MonoBehaviour
         myStatusProvider.setVelocityYValue(body.velocity.y);
     }
 
-	public void resetForces()
+	public void resetVelocity(bool resetX = true, bool resetY = true)
 	{
-		body.velocity = new Vector2(0, 0);
+		body.velocity = new Vector2(resetX ? 0.0f : body.velocity.x, resetY ? 0.0f : body.velocity.y);
 		wantJumpExtension = false;
 	}
 

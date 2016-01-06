@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class SlowMotion : MonoBehaviour
+public class TimeManager : MonoBehaviour
 {
     public delegate void BeginCallback();
     public delegate void EndCallback();
@@ -50,7 +50,7 @@ public class SlowMotion : MonoBehaviour
         }
     }
 
-    private static SlowMotion instance = null;
+    private static TimeManager instance = null;
    
     private float lastFrameTime = 0.0f;
 

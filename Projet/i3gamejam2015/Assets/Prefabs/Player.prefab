@@ -563,7 +563,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bodyColorDarkPct: .100000001
   bodyColorBrightPct: .100000001
-  chromaColorDarkPct: .800000012
+  chromaColorDarkPct: .400000006
   chromaColorBrightPct: .800000012
   attackForwardChromaCurve:
     serializedVersion: 2
@@ -1344,7 +1344,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: chromaColorDarkPct
-      value: .800000012
+      value: .400000006
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: chromaColorBrightPct
@@ -1668,6 +1668,10 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: diePauseTime
+      value: .100000001
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: bodyColorDarkPct
       value: .100000001
       objectReference: {fileID: 0}
     m_RemovedComponents: []

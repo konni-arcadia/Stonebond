@@ -947,7 +947,7 @@ public class PlayerStateController : MonoBehaviour
         SetState(State.CRYSTALED);
 
         // this is kind of mixing logic and display but cannot rely on other component to trigger die event
-        SlowMotion.Pause(diePauseTime, delegate()
+        TimeManager.Pause(diePauseTime, delegate()
         {
             statusProvider.setDieWarning(source, attackVector);
         }, delegate()

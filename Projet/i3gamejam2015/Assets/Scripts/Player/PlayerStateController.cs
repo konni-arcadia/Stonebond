@@ -927,8 +927,10 @@ public class PlayerStateController : MonoBehaviour
 
     private void HitWithAttack(Transform source, AimDirection dir)
     {
+        PlayerStateController sourceState = source.GetComponent<PlayerStateController>();
+
         Vector2 attackVector;
-        switch (aimDirection)
+        switch (sourceState.aimDirection)
         {
             case AimDirection.UP:
                 attackVector = new Vector2(0.0f, 1.0f);
@@ -937,10 +939,11 @@ public class PlayerStateController : MonoBehaviour
                 attackVector = new Vector2(0.0f, -1.0f);
                 break;
             case AimDirection.FORWARD:      
-                attackVector = new Vector2(movementController.isFacingRight() ? 1.0f : -1.0f, 0.0f);
+                attackVector = new Vector2(sourceState.movementController.isFacingRight() ? 1.0f : -1.0f, 0.0f);
                 break;
             default:
                 attackVector = new Vector2(0.0f, 0.0f); // unreachable
+                LogWarn("unreachable code");
                 break;
         }
 

@@ -120,15 +120,15 @@ public class ScreenShake : MonoBehaviour
 
         shakeOffset.Set(0.0f, 0.0f, 0.0f);
 
-        for (int i = shakers.Count - 1; i >= 0; i--)
+        if(enabled)
         {
-            Shaker shaker = (Shaker)shakers [i];
-            if (!shaker.update(ref shakeOffset))
-                shakers.RemoveAt(i);
-        }
-
-        if (enabled)
-        {
+            for (int i = shakers.Count - 1; i >= 0; i--)
+            {
+                Shaker shaker = (Shaker)shakers [i];
+                if (!shaker.update(ref shakeOffset))
+                    shakers.RemoveAt(i);
+            }
+      
             if (Mathf.Abs(shakeOffset.x) > maxX)
             {
                 shakeOffset.x = Mathf.Sign(shakeOffset.x) * maxX;

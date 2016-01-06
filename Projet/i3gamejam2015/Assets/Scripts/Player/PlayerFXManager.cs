@@ -134,12 +134,12 @@ public class PlayerFXManager : MonoBehaviour
 
     private void HandleOnHorizontalKnockback()
     {
-        ScreenShake.ShakeX(0.5f, 2.0f);
+        ScreenShake.ShakeX(0.75f, 2.0f);
     }
 
     private void HandleOnVerticalKnockback()
     {
-        ScreenShake.ShakeY(0.5f, 2.0f);
+        ScreenShake.ShakeY(0.75f, 2.0f);
     }
 
     private void HandleOnDieWarning(Transform source, Vector2 attackDirection)
@@ -159,7 +159,7 @@ public class PlayerFXManager : MonoBehaviour
     private void HandleOnDie(Transform source, Vector2 attackDirection)
     {
         ScreenShake.SetEnabled(true);
-        ScreenShake.ShakeXY(0.5f, 2.0f, 0.5f, 2.0f);
+        ScreenShake.ShakeXY(Mathf.Abs(attackDirection.x) * 0.4f, 0.5f, Mathf.Abs(attackDirection.y) * 0.4f, 0.5f);
         SetOverlay(false);
 
         PlayerFXManager sourceFXManager = source.GetComponent<PlayerFXManager>();
@@ -170,11 +170,11 @@ public class PlayerFXManager : MonoBehaviour
     {
         if (collisionType == PlayerStatusProvider.WallCollisionType.SPECIAL_ATTACK)
         {
-            ScreenShake.ShakeX(0.3f, 1.5f);
+            ScreenShake.ShakeX(0.32f, 1.7f);
         }
         else if (collisionType == PlayerStatusProvider.WallCollisionType.ATTACK)
         {
-            ScreenShake.ShakeX(0.15f, 1.5f);
+            ScreenShake.ShakeX(0.2f, 1.7f);
         }
     }
     
@@ -182,7 +182,7 @@ public class PlayerFXManager : MonoBehaviour
     {
         if (collisionType == PlayerStatusProvider.GroundCollisionType.ATTACK)
         {
-            ScreenShake.ShakeY(0.25f, 1.5f);
+            ScreenShake.ShakeY(0.32f, 1.7f);
         }
     }
 

@@ -837,10 +837,12 @@ MonoBehaviour:
   verticalAimThresholdDegree: 100
   initialSpawnTime: 1.79999995
   respawnTime: 1.20000005
-  attackUpTimeMin: .25
-  attackUpTimeMax: .25
+  attackUpTimeMin: .25999999
+  attackUpTimeMax: .25999999
   attackUpForceMin: 0
-  attackUpForceMax: 38000
+  attackUpForceMax: 37500
+  attackUpHitboxStart: 0
+  attackUpHitboxEnd: .949999988
   attackUpCurve:
     serializedVersion: 2
     m_Curve:
@@ -860,6 +862,8 @@ MonoBehaviour:
   attackDownTimeMax: .300000012
   attackDownForceMin: 8000
   attackDownForceMax: 46000
+  attackDownHitboxStart: 0
+  attackDownHitboxEnd: 1
   attackDownCurve:
     serializedVersion: 2
     m_Curve:
@@ -875,10 +879,12 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-  attackForwardTimeMin: .180000007
-  attackForwardTimeMax: .180000007
+  attackForwardTimeMin: .159999996
+  attackForwardTimeMax: .159999996
   attackForwardForceMin: 0
-  attackForwardForceMax: 8000
+  attackForwardForceMax: 9000
+  attackForwardHitboxStart: 0
+  attackForwardHitboxEnd: .649999976
   attackForwardCurve:
     serializedVersion: 2
     m_Curve:
@@ -899,6 +905,8 @@ MonoBehaviour:
   specialAttackTime: .550000012
   specialAttackForceMin: 0
   specialAttackForceMax: 42000
+  specialAttackHitboxStart: 0
+  specialAttackHitboxEnd: .949999988
   specialAttackCurve:
     serializedVersion: 2
     m_Curve:
@@ -1366,11 +1374,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: attackUpTimeMax
-      value: .25
+      value: .25999999
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: attackUpTimeMin
-      value: .25
+      value: .25999999
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: attackDownTimeMin
@@ -1382,11 +1390,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: attackForwardTimeMin
-      value: .180000007
+      value: .159999996
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: attackForwardTimeMax
-      value: .180000007
+      value: .159999996
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: attackDownVelocityMin
@@ -1430,7 +1438,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: attackForwardForceMax
-      value: 8000
+      value: 9000
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: specialAttackCurve.m_Curve.Array.data[0].inSlope
@@ -1762,7 +1770,19 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: attackUpForceMax
-      value: 38000
+      value: 37500
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackUpHitboxEnd
+      value: .949999988
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackForwardHitboxEnd
+      value: .649999976
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: specialAttackHitboxEnd
+      value: .949999988
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

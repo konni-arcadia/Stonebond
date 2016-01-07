@@ -43,10 +43,10 @@ public class PlayerStateController : MonoBehaviour
     //
 
     private Collider2D bodyCollider;
-    private Collider2D attackColliderForward;
-    private Collider2D attackColliderUp;
-    private Collider2D attackColliderDown;
-    private Collider2D attackColliderSpecial;
+    private Collider2D attackForwardCollider;
+    private Collider2D attackUpCollider;
+    private Collider2D attackDownCollider;
+    private Collider2D specialAttackCollider;
 
 
     public enum AimDirection
@@ -75,16 +75,22 @@ public class PlayerStateController : MonoBehaviour
     public float attackUpTimeMax = 0.25f;
     public float attackUpForceMin = 0.0f;
     public float attackUpForceMax = 46000.0f;
+    public float attackUpHitboxStart = 0.0f;
+    public float attackUpHitboxEnd = 0.9f;
     public AnimationCurve attackUpCurve;
     public float attackDownTimeMin = 0.25f;
     public float attackDownTimeMax = 0.25f;
     public float attackDownForceMin = 0.0f;
     public float attackDownForceMax = 46000.0f;
+    public float attackDownHitboxStart = 0.0f;
+    public float attackDownHitboxEnd = 1.0f;
     public AnimationCurve attackDownCurve;
     public float attackForwardTimeMin = 0.2f;
     public float attackForwardTimeMax = 0.2f;
     public float attackForwardForceMin = 0.0f;
     public float attackForwardForceMax = 30000.0f;
+    public float attackForwardHitboxStart = 0.0f;
+    public float attackForwardHitboxEnd = 0.6f;
     public AnimationCurve attackForwardCurve;
     public float attackCooldownTime = 0.3f;
 
@@ -101,6 +107,8 @@ public class PlayerStateController : MonoBehaviour
     public float specialAttackTime = 0.35f;
     public float specialAttackForceMin = 0.0f;
     public float specialAttackForceMax = 30000.0f;
+    public float specialAttackHitboxStart = 0.0f;
+    public float specialAttackHitboxEnd = 0.95f;
     public AnimationCurve specialAttackCurve;
 
     //
@@ -139,14 +147,14 @@ public class PlayerStateController : MonoBehaviour
 
         bodyCollider = transform.Find("bodyCollider").GetComponent<Collider2D>();
 
-        attackColliderForward = transform.Find("attackColliderForward").GetComponent<Collider2D>();
-        attackColliderUp = transform.Find("attackColliderUp").GetComponent<Collider2D>();
-        attackColliderDown = transform.Find("attackColliderDown").GetComponent<Collider2D>();
-        attackColliderSpecial = transform.Find("attackColliderSpecial").GetComponent<Collider2D>();
-        attackColliderUp.enabled = false;
-        attackColliderDown.enabled = false;
-        attackColliderForward.enabled = false;
-        attackColliderSpecial.enabled = false;
+        attackForwardCollider = transform.Find("attackColliderForward").GetComponent<Collider2D>();
+        attackUpCollider = transform.Find("attackColliderUp").GetComponent<Collider2D>();
+        attackDownCollider = transform.Find("attackColliderDown").GetComponent<Collider2D>();
+        specialAttackCollider = transform.Find("attackColliderSpecial").GetComponent<Collider2D>();
+        attackUpCollider.enabled = false;
+        attackDownCollider.enabled = false;
+        attackForwardCollider.enabled = false;
+        specialAttackCollider.enabled = false;
 
         inputManager = FindObjectOfType<InputManager>();
         movementController = GetComponent<PlayerMovementController>();
@@ -492,6 +500,10 @@ public class PlayerStateController : MonoBehaviour
     // ATTACK
     //
 
+    private Collider2D attackCollider;
+    private float attackHitboxStart;
+    private float attackHitboxEnd;
+
     private void EnterAttack()
     { 
         stateTime = 0.0f;
@@ -499,11 +511,18 @@ public class PlayerStateController : MonoBehaviour
         switch (aimDirection)
         {
             case AimDirection.UP:
+                attackCollider = attackUpCollider;
+                attackHitboxStart = attackUpHitboxStart;
+                attackHitboxEnd = attackUpHitboxEnd;
+
                 movementController.resetVelocity(false, true);
-                attackColliderUp.enabled = true;
                 statusProvider.setAttackUp();
                 break;
             case AimDirection.DOWN:
+                attackCollider = attackDownCollider;
+                attackHitboxStart = attackDownHitboxStart;
+                attackHitboxEnd = attackDownHitboxEnd;
+
                 if (onGround)
                 {
                     // can't perform down attack while on ground
@@ -513,17 +532,18 @@ public class PlayerStateController : MonoBehaviour
                 else
                 {
                     movementController.resetVelocity(false, true);
-                    attackColliderDown.enabled = true;
                     statusProvider.setAttackDown();
                 }
                 break;
             case AimDirection.FORWARD:
+                attackCollider = attackForwardCollider;
+                attackHitboxStart = attackForwardHitboxStart;
+                attackHitboxEnd = attackForwardHitboxEnd;
+
                 movementController.resetVelocity(true, false);
                 movementController.setMovementFactor(0.0f);
                 movementController.setJumpEnabled(false);
                 movementController.setGravityFactor(0.0f);
-                //movementController.setFixedFrictionFactor(movementController.frictionFactorAir);
-                attackColliderForward.enabled = true;
                 statusProvider.setAttackForward();
 
                 if (onWall)
@@ -537,20 +557,18 @@ public class PlayerStateController : MonoBehaviour
     
     private void LeaveAttack()
     {
+        attackCollider.enabled = false;
         switch (aimDirection)
         {
             case AimDirection.UP:
-                attackColliderUp.enabled = false;
                 break;
             case AimDirection.DOWN:
-                attackColliderDown.enabled = false;
                 break;
             case AimDirection.FORWARD:
                 movementController.setMovementFactor(1.0f);
                 movementController.setJumpEnabled(true);
                 movementController.setGravityFactor(1.0f);
                 movementController.setFixedFrictionFactor(0.0f);
-                attackColliderForward.enabled = false;
                 break;
         }
         
@@ -588,6 +606,15 @@ public class PlayerStateController : MonoBehaviour
         }
 
         float attackPct = stateTime / attackMaxTime;
+
+        if (!attackCollider.enabled && attackPct >= attackHitboxStart && attackPct < attackHitboxEnd)
+        {
+            attackCollider.enabled = true;
+        }
+        else if (attackCollider.enabled && attackPct >= attackHitboxEnd)
+        {
+            attackCollider.enabled = false;
+        }
 
         switch (aimDirection)
         {
@@ -678,7 +705,6 @@ public class PlayerStateController : MonoBehaviour
         movementController.setJumpEnabled(false);
         movementController.setFixedFrictionFactor(movementController.frictionFactorAir);
 
-        attackColliderSpecial.enabled = true;
         statusProvider.setAttackSpecial();
 
         aimDirection = AimDirection.FORWARD;
@@ -697,7 +723,7 @@ public class PlayerStateController : MonoBehaviour
         movementController.setJumpEnabled(true);
         movementController.setFixedFrictionFactor(0.0f);
 
-        attackColliderSpecial.enabled = false;
+        specialAttackCollider.enabled = false;
         
         attackCooldown = attackCooldownTime;
     }
@@ -714,6 +740,15 @@ public class PlayerStateController : MonoBehaviour
         }
         
         float attackPct = stateTime / specialAttackTime;
+
+        if (!specialAttackCollider.enabled && attackPct >= specialAttackHitboxStart && attackPct < specialAttackHitboxEnd)
+        {
+            specialAttackCollider.enabled = true;
+        }
+        else if (specialAttackCollider.enabled && attackPct >= specialAttackHitboxEnd)
+        {
+            specialAttackCollider.enabled = false;
+        }
 
         float hForce = (specialAttackForceMin + specialAttackCurve.Evaluate(attackPct) * (specialAttackForceMax - specialAttackForceMin)) * Time.deltaTime;
         float vForce = 0.0f;
@@ -732,7 +767,7 @@ public class PlayerStateController : MonoBehaviour
 
         movementController.setMovementFactor(0.0f);
         movementController.setJumpEnabled(false);
-        movementController.setGravityFactor(0.0f);
+        //movementController.setGravityFactor(0.0f);
         movementController.setFixedFrictionFactor(movementController.frictionFactorAir);
         
         if (knockbackDirection == AimDirection.FORWARD)
@@ -749,7 +784,7 @@ public class PlayerStateController : MonoBehaviour
     {
         movementController.setMovementFactor(1.0f);
         movementController.setJumpEnabled(true);
-        movementController.setGravityFactor(1.0f);
+        //movementController.setGravityFactor(1.0f);
         movementController.setFixedFrictionFactor(0.0f);
     }
 
@@ -1012,22 +1047,17 @@ public class PlayerStateController : MonoBehaviour
                 break;
             case State.ATTACK:
                 DrawColliderRect(bodyCollider, Color.white);
-                switch (aimDirection)
+                if(attackCollider.enabled)
                 {
-                    case AimDirection.UP:
-                        DrawColliderRect(attackColliderUp, Color.red);
-                        break;
-                    case AimDirection.DOWN:
-                        DrawColliderRect(attackColliderDown, Color.red);
-                        break;
-                    case AimDirection.FORWARD:
-                        DrawColliderRect(attackColliderForward, Color.red);
-                        break;
+                    DrawColliderRect(attackCollider, Color.red);
                 }
                 break;
             case State.SPECIAL_ATTACK:
                 DrawColliderRect(bodyCollider, Color.white);
-                DrawColliderRect(attackColliderSpecial, Color.red);
+                if(specialAttackCollider.enabled)
+                {
+                    DrawColliderRect(specialAttackCollider, Color.red);
+                }
                 break;
             case State.CHARGE:
                 DrawColliderRect(bodyCollider, Color.white);

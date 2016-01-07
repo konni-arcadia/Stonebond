@@ -21,7 +21,7 @@ public class PlayerMovementController : MonoBehaviour
     public AudioClip jumpClip;
     public AudioClip landClip;
 
-    private bool grounded = false;			// Whether or not the player is grounded.
+    private bool grounded = true;			// Whether or not the player is grounded.
     private bool isGrinding = false;
     private bool onWall = false;
 

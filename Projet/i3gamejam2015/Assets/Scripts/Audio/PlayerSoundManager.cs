@@ -5,12 +5,11 @@ public class PlayerSoundManager : MonoBehaviour
 {
     public PlayerStatusProvider statusProvider;
 
-    bool prevIsGroundedFlag = true;
-
     void Start()
     {
         statusProvider.OnBoundChangedAction += OnBounded;
-        statusProvider.OnGroundedStatusChanged += OnGrounded;
+        statusProvider.OnHitGroundAction += OnHitGround;
+        statusProvider.OnHitWallAction += OnHitWall;
         statusProvider.OnGrindingStatusChanged += OnWallrided;
         statusProvider.OnHorizontalKnockbackAction += onKnockbacked;
 		statusProvider.OnVerticalKnockbackAction += onKnockbacked;
@@ -63,16 +62,43 @@ public class PlayerSoundManager : MonoBehaviour
 		}
     }
 
-    private void OnGrounded(bool isGrounded)
+    private void OnHitGround(PlayerStatusProvider.GroundCollisionType collisionType, Vector2 velocity)
     {
-        if (isGrounded && !prevIsGroundedFlag)
+        if (SoundManager.Instance == null)
         {
-            if (SoundManager.Instance != null)
-            {
-                SoundManager.Instance.GAMEPLAY_Land();
-            }
+            return;
         }
-        prevIsGroundedFlag = isGrounded;
+
+        switch (collisionType)
+        {
+           case PlayerStatusProvider.GroundCollisionType.NORMAL:
+                SoundManager.Instance.GAMEPLAY_Land();
+                break;
+            case PlayerStatusProvider.GroundCollisionType.ATTACK:
+                SoundManager.Instance.GAMEPLAY_Land();
+                break;
+        }
+    }
+
+    private void OnHitWall(PlayerStatusProvider.WallCollisionType collisionType, Vector2 velocity)
+    {
+        if (SoundManager.Instance == null)
+        {
+            return;
+        }
+ 
+        switch (collisionType)
+        {
+            case PlayerStatusProvider.WallCollisionType.NORMAL:
+                // don't play any sound for normal wall collision
+                break;
+            case PlayerStatusProvider.WallCollisionType.ATTACK:
+                SoundManager.Instance.GAMEPLAY_Land();
+                break;
+            case PlayerStatusProvider.WallCollisionType.SPECIAL_ATTACK:
+                SoundManager.Instance.GAMEPLAY_Land();
+                break;
+        }
     }
 
     private void OnWallrided(bool isOnWall)

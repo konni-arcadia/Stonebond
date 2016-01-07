@@ -840,7 +840,7 @@ MonoBehaviour:
   attackUpTimeMin: .25
   attackUpTimeMax: .25
   attackUpForceMin: 0
-  attackUpForceMax: 46000
+  attackUpForceMax: 38000
   attackUpCurve:
     serializedVersion: 2
     m_Curve:
@@ -1759,6 +1759,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: attackDownForceMin
       value: 8000
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackUpForceMax
+      value: 38000
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

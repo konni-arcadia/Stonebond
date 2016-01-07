@@ -3,21 +3,21 @@ using System.Collections;
 
 public class TimeManager : MonoBehaviour
 {
+    public float timeScale = 1.0f;
+
     public delegate void BeginCallback();
     public delegate void EndCallback();
-
-    //
-    // PRIVATE CLASS
-    //
     
     private class PauseEvent
     {
-        float counter;
-        BeginCallback beginCallback;
-        EndCallback endCallback;
+        private TimeManager manager;
+        private float counter;
+        private BeginCallback beginCallback;
+        private EndCallback endCallback;
 
-        public PauseEvent(float duration, BeginCallback beginCallback, EndCallback endCallback)
+        public PauseEvent(TimeManager manager, float duration, BeginCallback beginCallback, EndCallback endCallback)
         {
+            this.manager = manager;
             counter = duration;
             this.beginCallback = beginCallback;
             this.endCallback = endCallback;
@@ -38,7 +38,7 @@ public class TimeManager : MonoBehaviour
             counter -= delta;
             if (counter <= 0.0f)
             {
-                Time.timeScale = 1.0f;
+                Time.timeScale = manager.timeScale;
                 if(endCallback != null)
                 {
                     endCallback();
@@ -65,6 +65,7 @@ public class TimeManager : MonoBehaviour
     void Start()
     {
         lastFrameTime = Time.realtimeSinceStartup;
+        Time.timeScale = timeScale;
     }
     
     void Update()
@@ -97,6 +98,6 @@ public class TimeManager : MonoBehaviour
             return;
         }
 
-        instance.pauses.Add(new PauseEvent(duration, beginCallback, endCallback));
+        instance.pauses.Add(new PauseEvent(instance, duration, beginCallback, endCallback));
     }
 }

@@ -46,6 +46,8 @@ public class PlayerStateController : MonoBehaviour
     private Collider2D attackColliderForward;
     private Collider2D attackColliderUp;
     private Collider2D attackColliderDown;
+    private Collider2D attackColliderSpecial;
+
 
     public enum AimDirection
     {
@@ -140,9 +142,11 @@ public class PlayerStateController : MonoBehaviour
         attackColliderForward = transform.Find("attackColliderForward").GetComponent<Collider2D>();
         attackColliderUp = transform.Find("attackColliderUp").GetComponent<Collider2D>();
         attackColliderDown = transform.Find("attackColliderDown").GetComponent<Collider2D>();
+        attackColliderSpecial = transform.Find("attackColliderSpecial").GetComponent<Collider2D>();
         attackColliderUp.enabled = false;
         attackColliderDown.enabled = false;
         attackColliderForward.enabled = false;
+        attackColliderSpecial.enabled = false;
 
         inputManager = FindObjectOfType<InputManager>();
         movementController = GetComponent<PlayerMovementController>();
@@ -674,8 +678,10 @@ public class PlayerStateController : MonoBehaviour
         movementController.setJumpEnabled(false);
         movementController.setFixedFrictionFactor(movementController.frictionFactorAir);
 
-        attackColliderForward.enabled = true;
+        attackColliderSpecial.enabled = true;
         statusProvider.setAttackSpecial();
+
+        aimDirection = AimDirection.FORWARD;
 
         if (onWall)
         {
@@ -691,7 +697,7 @@ public class PlayerStateController : MonoBehaviour
         movementController.setJumpEnabled(true);
         movementController.setFixedFrictionFactor(0.0f);
 
-        attackColliderForward.enabled = false;
+        attackColliderSpecial.enabled = false;
         
         attackCooldown = attackCooldownTime;
     }
@@ -819,40 +825,7 @@ public class PlayerStateController : MonoBehaviour
 
     public void HandleOnCollide(Collider2D source, Collider2D other)
     {
-        //LogDebug ("onCollide");
-        
-        if (state != State.ATTACK && state != State.SPECIAL_ATTACK)
-        {
-            LogWarn("collision outside of attack state");
-            return;
-        }
-        
-        switch (aimDirection)
-        {
-            case AimDirection.UP:
-                if (source != attackColliderUp)
-                {
-                    LogWarn("source is not up");
-                    return;
-                }
-                break;
-            case AimDirection.DOWN:
-                if (source != attackColliderDown)
-                {
-                    LogWarn("source is not down");
-                    return;
-                }
-                break;
-            case AimDirection.FORWARD:
-                if (source != attackColliderForward)
-                {
-                    LogWarn("source is not forward");
-                    return;
-                }
-                break;
-        }
-        
-        //LogDebug ("collide");
+        //LogDebug ("HandleOnCollide");
         PlayerStateController enemy = other.GetComponentInParent<PlayerStateController>();
         if (enemy != null)
         {
@@ -1023,6 +996,8 @@ public class PlayerStateController : MonoBehaviour
     // Debug DRAW
     //
 
+    private static float DEBUG_ALPHA = 0.3f;
+
     public void OnDrawGizmos()
     {
         if (!awake)
@@ -1050,8 +1025,15 @@ public class PlayerStateController : MonoBehaviour
                         break;
                 }
                 break;
-            case State.KNOCKBACK:
+            case State.SPECIAL_ATTACK:
                 DrawColliderRect(bodyCollider, Color.white);
+                DrawColliderRect(attackColliderSpecial, Color.red);
+                break;
+            case State.CHARGE:
+                DrawColliderRect(bodyCollider, Color.white);
+                break;
+            case State.KNOCKBACK:
+                DrawColliderRect(bodyCollider, Color.grey);
                 break;
             case State.CRYSTALED:
                 DrawColliderRect(bodyCollider, Color.gray);
@@ -1066,13 +1048,14 @@ public class PlayerStateController : MonoBehaviour
     {
         float x = collider.transform.position.x + collider.offset.x;
         float y = collider.transform.position.y + collider.offset.y;
-        Gizmos.color = color;
-        Gizmos.DrawCube(new Vector3(x, y, 0.0f), new Vector3(((BoxCollider2D)collider).size.x, ((BoxCollider2D)collider).size.y, 0.0f));
+        float width = ((BoxCollider2D)collider).size.x * collider.transform.localScale.x;
+        float height = ((BoxCollider2D)collider).size.y * collider.transform.localScale.y;
+        DrawRect(x, y, width, height, color);
     }
 
     private static void DrawRect(float x, float y, float width, float height, Color color)
     {
-        Gizmos.color = color;
+        Gizmos.color = new Color(color.r, color.g, color.b, DEBUG_ALPHA);
         Gizmos.DrawCube(new Vector3(x, y, 0.0f), new Vector3(width, height, 0.0f));
     }
 }

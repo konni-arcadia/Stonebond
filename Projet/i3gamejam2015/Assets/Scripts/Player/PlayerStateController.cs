@@ -765,7 +765,6 @@ public class PlayerStateController : MonoBehaviour
 
         movementController.setMovementFactor(0.0f);
         movementController.setJumpEnabled(false);
-        //movementController.setGravityFactor(0.0f);
         movementController.setFixedFrictionFactor(movementController.frictionFactorAir);
         
         if (knockbackDirection == AimDirection.FORWARD)
@@ -782,7 +781,6 @@ public class PlayerStateController : MonoBehaviour
     {
         movementController.setMovementFactor(1.0f);
         movementController.setJumpEnabled(true);
-        //movementController.setGravityFactor(1.0f);
         movementController.setFixedFrictionFactor(0.0f);
     }
 
@@ -976,7 +974,15 @@ public class PlayerStateController : MonoBehaviour
 
     private bool IsPerformingAttack()
     {
-        return state == State.ATTACK;
+        switch (state)
+        {
+            case State.ATTACK:
+                return attackCollider.enabled;
+            case State.SPECIAL_ATTACK:
+                return specialAttackCollider.enabled;
+            default:
+                return false;
+        }
     }
 
     private bool IsAttackable()

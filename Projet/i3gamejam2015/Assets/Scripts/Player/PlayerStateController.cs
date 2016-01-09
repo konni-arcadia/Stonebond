@@ -516,6 +516,7 @@ public class PlayerStateController : MonoBehaviour
                 attackHitboxEnd = attackUpHitboxEnd;
 
                 movementController.resetVelocity(false, true);
+                movementController.setJumpEnabled(false);
                 statusProvider.setAttackUp();
                 break;
             case AimDirection.DOWN:
@@ -543,7 +544,6 @@ public class PlayerStateController : MonoBehaviour
                 movementController.resetVelocity(true, false);
                 movementController.setMovementFactor(0.0f);
                 movementController.setJumpEnabled(false);
-                movementController.setGravityFactor(0.0f);
                 statusProvider.setAttackForward();
 
                 if (onWall)
@@ -561,14 +561,13 @@ public class PlayerStateController : MonoBehaviour
         switch (aimDirection)
         {
             case AimDirection.UP:
+                movementController.setJumpEnabled(true);
                 break;
             case AimDirection.DOWN:
                 break;
             case AimDirection.FORWARD:
                 movementController.setMovementFactor(1.0f);
                 movementController.setJumpEnabled(true);
-                movementController.setGravityFactor(1.0f);
-                movementController.setFixedFrictionFactor(0.0f);
                 break;
         }
         
@@ -634,7 +633,6 @@ public class PlayerStateController : MonoBehaviour
                 {
                     float force = (attackForwardForceMin + attackForwardCurve.Evaluate(attackPct) * (attackForwardForceMax - attackForwardForceMin)) * Time.deltaTime;
                     movementController.applyForce(new Vector2(movementController.isFacingRight() ? force : -force, 0.0f));
-                    movementController.setGravityFactor(attackPct);
                     break;
                 }
         }

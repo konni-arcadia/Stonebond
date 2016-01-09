@@ -18,9 +18,6 @@ public class PlayerMovementController : MonoBehaviour
 	public float frictionFactorGround = 0.5f;
 	public float frictionFactorAir = 0.1f;
 
-    public AudioClip jumpClip;
-    public AudioClip landClip;
-
     private bool grounded = true;			// Whether or not the player is grounded.
     private bool isGrinding = false;
     private bool onWall = false;
@@ -122,7 +119,7 @@ public class PlayerMovementController : MonoBehaviour
             else if (isGrinding)
                 wantWallJump = true;
         }
-        if (inputManager.IsHeld(playerId, InputManager.A) && wantJumpExtension)
+        if (isJumpEnabled && inputManager.IsHeld(playerId, InputManager.A) && wantJumpExtension)
             wantJumpExtension &= body.velocity.y > 0;		// not able to extend jump anymore when grounded
         else
             wantJumpExtension = false;
@@ -205,7 +202,10 @@ public class PlayerMovementController : MonoBehaviour
 	public void resetVelocity(bool resetX = true, bool resetY = true)
 	{
 		body.velocity = new Vector2(resetX ? 0.0f : body.velocity.x, resetY ? 0.0f : body.velocity.y);
-		wantJumpExtension = false;
+        if (resetY)
+        {
+            wantJumpExtension = false;
+        }
 	}
 
     public void setMovementFactor(float factor)
@@ -216,6 +216,12 @@ public class PlayerMovementController : MonoBehaviour
 	public void setJumpEnabled(bool enabled)
 	{
 		isJumpEnabled = enabled;
+        if(!enabled)
+        {
+            wantJump = false;
+            wantWallJump = false;
+            wantJumpExtension = false;
+        }
 	}
 
 	public void setGravityFactor(float factor)
@@ -245,13 +251,6 @@ public class PlayerMovementController : MonoBehaviour
     {
         return grounded;
     }
-
-    // Freezes the player until an applyForce is called
-  //  public void resetForces()
-    //{
-      //  body.velocity = new Vector2(0, 0);
-        //wantJumpExtension = false;
-    //}
 
     public void setFacingRight(bool facingRight)
     {

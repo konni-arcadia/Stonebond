@@ -364,7 +364,7 @@ public class PlayerStateController : MonoBehaviour
     private void EnterSpawn()
     {
         stateTime = initialSpawn ? initialSpawnTime : respawnTime;
-        movementController.setMovementFactor(0.0f);
+        movementController.setMovementEnabled(false);
         movementController.setJumpEnabled(false);
 
         statusProvider.setRespawn(initialSpawn);
@@ -372,7 +372,7 @@ public class PlayerStateController : MonoBehaviour
 
     private void LeaveSpawn()
     {
-        movementController.setMovementFactor(1.0f);
+        movementController.setMovementEnabled(true);
         movementController.setJumpEnabled(true);
     }
 
@@ -401,13 +401,13 @@ public class PlayerStateController : MonoBehaviour
     private void EnterCrystaled()
     {
         stateTime = crystaledTime;
-        movementController.setMovementFactor(0.0f);
+        movementController.setMovementEnabled(false);
         movementController.setJumpEnabled(false);
     }
 
     private void LeaveCrystaled()
     {
-        movementController.setMovementFactor(1.0f);
+        movementController.setMovementEnabled(true);
         movementController.setJumpEnabled(true);
     }
 
@@ -542,14 +542,15 @@ public class PlayerStateController : MonoBehaviour
                 attackHitboxEnd = attackForwardHitboxEnd;
 
                 movementController.resetVelocity(true, false);
-                movementController.setMovementFactor(0.0f);
+                movementController.setMovementEnabled(false);
+                movementController.setGravityFactor(0.0f);
                 movementController.setJumpEnabled(false);
                 statusProvider.setAttackForward();
 
                 if (onWall)
                 {
                     // was already on wall, fire an hit event (hit event wouldn't be triggered otherwise)
-                    statusProvider.setHitWall(PlayerStatusProvider.WallCollisionType.ATTACK, new Vector2());
+                    statusProvider.setCollision(PlayerStatusProvider.CollisionType.WALL_ATTACK, new Vector2());
                 }
                 break;
         }
@@ -566,7 +567,8 @@ public class PlayerStateController : MonoBehaviour
             case AimDirection.DOWN:
                 break;
             case AimDirection.FORWARD:
-                movementController.setMovementFactor(1.0f);
+                movementController.setGravityFactor(1.0f);
+                movementController.setMovementEnabled(true);
                 movementController.setJumpEnabled(true);
                 break;
         }
@@ -619,20 +621,21 @@ public class PlayerStateController : MonoBehaviour
         {
             case AimDirection.UP:
                 {
-                    float force = (attackUpForceMin + attackUpCurve.Evaluate(attackPct) * (attackUpForceMax - attackUpForceMin)) * Time.deltaTime;
+                    float force = (attackUpForceMin + attackUpCurve.Evaluate(attackPct) * (attackUpForceMax - attackUpForceMin)) * Time.fixedDeltaTime;
                     movementController.applyForce(new Vector2(0.0f, force));
                     break;
                 }
             case AimDirection.DOWN:
                 {
-                    float force = (attackDownForceMin + attackDownCurve.Evaluate(attackPct) * (attackDownForceMax - attackDownForceMin)) * Time.deltaTime;
+                    float force = (attackDownForceMin + attackDownCurve.Evaluate(attackPct) * (attackDownForceMax - attackDownForceMin)) * Time.fixedDeltaTime;
                     movementController.applyForce(new Vector2(0.0f, -force));
                     break;
                 }
             case AimDirection.FORWARD:
                 {
-                    float force = (attackForwardForceMin + attackForwardCurve.Evaluate(attackPct) * (attackForwardForceMax - attackForwardForceMin)) * Time.deltaTime;
+                    float force = (attackForwardForceMin + attackForwardCurve.Evaluate(attackPct) * (attackForwardForceMax - attackForwardForceMin)) * Time.fixedDeltaTime;
                     movementController.applyForce(new Vector2(movementController.isFacingRight() ? force : -force, 0.0f));
+                    movementController.setGravityFactor(attackPct);
                     break;
                 }
         }
@@ -646,7 +649,7 @@ public class PlayerStateController : MonoBehaviour
     {
         stateTime = 0.0f;
         
-        movementController.setMovementFactor(0.0f);
+        movementController.setMovementEnabled(false);
         movementController.setJumpEnabled(false);
         
         statusProvider.setChargeStart();
@@ -654,7 +657,7 @@ public class PlayerStateController : MonoBehaviour
     
     private void LeaveCharge()
     {
-        movementController.setMovementFactor(1.0f);
+        movementController.setMovementEnabled(true);
         movementController.setJumpEnabled(true);
         movementController.setGravityFactor(1.0f);
 
@@ -694,36 +697,56 @@ public class PlayerStateController : MonoBehaviour
     // SPECIAL ATTACK
     //
 
+    private Vector2 specialAttackVector = new Vector2();
+
     private void EnterSpecialAttack()
     {
         stateTime = 0.0f;
 
         movementController.resetVelocity();
-        movementController.setMovementFactor(0.0f);
+        movementController.setGravityFactor(0.0f);
+        movementController.setFrictionEnabled(false);
+        movementController.setMovementEnabled(false);
         movementController.setJumpEnabled(false);
-        movementController.setFixedFrictionFactor(movementController.frictionFactorAir);
-
-        statusProvider.setAttackSpecial();
-
-        aimDirection = AimDirection.FORWARD;
-
-        if (onWall)
+        
+        specialAttackVector.x = inputManager.AxisValue(playerId, InputManager.Horizontal);
+        specialAttackVector.y = -inputManager.AxisValue(playerId, InputManager.Vertical);
+        if (Mathf.Abs(specialAttackVector.x) < Mathf.Epsilon && Mathf.Abs(specialAttackVector.y) < Mathf.Epsilon)
         {
-            // fire hit event and cancel attack (hit event wouldn't be triggered otherwise)
-            statusProvider.setHitWall(PlayerStatusProvider.WallCollisionType.SPECIAL_ATTACK, new Vector2());
-            SetState(State.IDLE);
+            specialAttackVector.x = movementController.isFacingRight() ? 1.0f : -1.0f;
+            specialAttackVector.y = 0.0f;
         }
+        else
+        {
+            specialAttackVector.Normalize();
+        }
+
+        LogDebug("specialAttackVector=" + specialAttackVector);
+        //TODO aimDirection = AimDirection.FORWARD;
+
+        statusProvider.setAttackSpecialStart(specialAttackVector);
+
+        //TODO if (onWall)
+        //{
+        //    // fire hit event and cancel attack (hit event wouldn't be triggered otherwise)
+        //    statusProvider.setHitWall(PlayerStatusProvider.WallCollisionType.SPECIAL_ATTACK, new Vector2());
+        //    SetState(State.IDLE);
+        //}
     }
 
     private void LeaveSpecialAttack()
     {
-        movementController.setMovementFactor(1.0f);
+        movementController.resetVelocity();
+        movementController.setGravityFactor(1.0f);
+        movementController.setFrictionEnabled(true);
+        movementController.setMovementEnabled(true);
         movementController.setJumpEnabled(true);
-        movementController.setFixedFrictionFactor(0.0f);
 
         specialAttackCollider.enabled = false;
         
         attackCooldown = attackCooldownTime;
+
+        statusProvider.setAttackSpecialStop();
     }
 
     private void FixedUpdateSpecialAttack()
@@ -748,9 +771,12 @@ public class PlayerStateController : MonoBehaviour
             specialAttackCollider.enabled = false;
         }
 
-        float hForce = (specialAttackForceMin + specialAttackCurve.Evaluate(attackPct) * (specialAttackForceMax - specialAttackForceMin)) * Time.deltaTime;
-        float vForce = 0.0f;
-        movementController.applyForce(new Vector2(movementController.isFacingRight() ? hForce : -hForce, vForce));
+        float forcePct = specialAttackCurve.Evaluate(attackPct);
+        float hForce = (Mathf.Sign(specialAttackVector.x) * specialAttackForceMin + specialAttackVector.x * forcePct * (specialAttackForceMax - specialAttackForceMin)) * Time.fixedDeltaTime;
+        float vForce = (Mathf.Sign(specialAttackVector.y) * specialAttackForceMin + specialAttackVector.y * forcePct * (specialAttackForceMax - specialAttackForceMin)) * Time.fixedDeltaTime;
+        //LogDebug("hFroce=" + hForce + " vForce=" + vForce);
+       // movementController.applyForce(new Vector2(hForce, vForce));
+        movementController.setVelocity(new Vector2(hForce, vForce));
     }
 
     //
@@ -763,9 +789,8 @@ public class PlayerStateController : MonoBehaviour
     {
         stateTime = knockbackTime;
 
-        movementController.setMovementFactor(0.0f);
+        movementController.setMovementEnabled(false);
         movementController.setJumpEnabled(false);
-        movementController.setFixedFrictionFactor(movementController.frictionFactorAir);
         
         if (knockbackDirection == AimDirection.FORWARD)
         {
@@ -779,9 +804,8 @@ public class PlayerStateController : MonoBehaviour
 
     private void LeaveKnockback()
     {
-        movementController.setMovementFactor(1.0f);
+        movementController.setMovementEnabled(true);
         movementController.setJumpEnabled(true);
-        movementController.setFixedFrictionFactor(0.0f);
     }
 
     private void FixedUpdateKnockback()
@@ -896,11 +920,11 @@ public class PlayerStateController : MonoBehaviour
         if (state == State.ATTACK && aimDirection == AimDirection.DOWN)
         {
             SetState(State.IDLE);
-            statusProvider.setHitGround(PlayerStatusProvider.GroundCollisionType.ATTACK, new Vector2());
+            statusProvider.setCollision(PlayerStatusProvider.CollisionType.GROUND_ATTACK, new Vector2());
         }
         else
         {
-            statusProvider.setHitGround(PlayerStatusProvider.GroundCollisionType.NORMAL, new Vector2());
+            statusProvider.setCollision(PlayerStatusProvider.CollisionType.GROUND, new Vector2());
         }
     }
 
@@ -915,16 +939,11 @@ public class PlayerStateController : MonoBehaviour
 
         if (state == State.ATTACK && aimDirection == AimDirection.FORWARD)
         {
-            statusProvider.setHitWall(PlayerStatusProvider.WallCollisionType.ATTACK, new Vector2());
-        }
-        else if (state == State.SPECIAL_ATTACK)
-        {
-            SetState(State.IDLE);
-            statusProvider.setHitWall(PlayerStatusProvider.WallCollisionType.SPECIAL_ATTACK, new Vector2());
+            statusProvider.setCollision(PlayerStatusProvider.CollisionType.WALL_ATTACK, new Vector2());
         }
         else
         {
-            statusProvider.setHitWall(PlayerStatusProvider.WallCollisionType.NORMAL, new Vector2());
+            statusProvider.setCollision(PlayerStatusProvider.CollisionType.WALL, new Vector2());
         }
     }
 

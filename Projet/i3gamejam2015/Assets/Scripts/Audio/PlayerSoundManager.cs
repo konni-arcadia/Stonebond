@@ -8,8 +8,7 @@ public class PlayerSoundManager : MonoBehaviour
     void Start()
     {
         statusProvider.OnBoundChangedAction += OnBounded;
-        statusProvider.OnHitGroundAction += OnHitGround;
-        statusProvider.OnHitWallAction += OnHitWall;
+        statusProvider.OnCollisionAction += OnCollision;
         statusProvider.OnGrindingStatusChanged += OnWallrided;
         statusProvider.OnHorizontalKnockbackAction += onKnockbacked;
 		statusProvider.OnVerticalKnockbackAction += onKnockbacked;
@@ -17,7 +16,8 @@ public class PlayerSoundManager : MonoBehaviour
         statusProvider.onJumpAction += OnJumped;
         statusProvider.onWallJumpAction += OnWallJumped;
         statusProvider.OnAttackUpAction += OnAttack;
-        statusProvider.OnAttackSpecialAction += OnAttack;
+        statusProvider.OnAttackSpecialStartAction += OnAttackSpecialStart;
+        statusProvider.OnAttackSpecialStopAction += OnAttackSpecialStop;
         statusProvider.OnAttackForwardAction += OnAttack;
         statusProvider.OnAttackDownAction += OnAttack;
         statusProvider.OnRespawnAction += OnRespawned;
@@ -35,6 +35,20 @@ public class PlayerSoundManager : MonoBehaviour
 		if (SoundManager.Instance != null) {
 			SoundManager.Instance.GAMEPLAY_Attack ();
 		}
+    }
+
+    private void OnAttackSpecialStart(Vector2 direction)
+    {
+        if (SoundManager.Instance != null) {
+            SoundManager.Instance.GAMEPLAY_Attack ();
+        }
+    }
+
+    private void OnAttackSpecialStop()
+    {
+        if (SoundManager.Instance != null) {
+            SoundManager.Instance.GAMEPLAY_Land ();
+        }
     }
 
     private void OnWallJumped()
@@ -62,7 +76,7 @@ public class PlayerSoundManager : MonoBehaviour
 		}
     }
 
-    private void OnHitGround(PlayerStatusProvider.GroundCollisionType collisionType, Vector2 velocity)
+    private void OnCollision(PlayerStatusProvider.CollisionType collisionType, Vector2 velocity)
     {
         if (SoundManager.Instance == null)
         {
@@ -71,31 +85,19 @@ public class PlayerSoundManager : MonoBehaviour
 
         switch (collisionType)
         {
-           case PlayerStatusProvider.GroundCollisionType.NORMAL:
+            case PlayerStatusProvider.CollisionType.GROUND:
                 SoundManager.Instance.GAMEPLAY_Land();
                 break;
-            case PlayerStatusProvider.GroundCollisionType.ATTACK:
+            case PlayerStatusProvider.CollisionType.GROUND_ATTACK:
                 SoundManager.Instance.GAMEPLAY_Land();
                 break;
-        }
-    }
-
-    private void OnHitWall(PlayerStatusProvider.WallCollisionType collisionType, Vector2 velocity)
-    {
-        if (SoundManager.Instance == null)
-        {
-            return;
-        }
- 
-        switch (collisionType)
-        {
-            case PlayerStatusProvider.WallCollisionType.NORMAL:
+            case PlayerStatusProvider.CollisionType.WALL:
                 // don't play any sound for normal wall collision
                 break;
-            case PlayerStatusProvider.WallCollisionType.ATTACK:
+            case PlayerStatusProvider.CollisionType.WALL_ATTACK:
                 SoundManager.Instance.GAMEPLAY_Land();
                 break;
-            case PlayerStatusProvider.WallCollisionType.SPECIAL_ATTACK:
+            case PlayerStatusProvider.CollisionType.SPECIAL_ATTACK:
                 SoundManager.Instance.GAMEPLAY_Land();
                 break;
         }

@@ -185,11 +185,7 @@ public class PlayerFXManager : MonoBehaviour
 
     void HandleOnAttackSpecialStartAction (Vector2 direction)
     {
-        float angle = Vector2.Angle(direction.x < 0.0f ? Vector2.left : Vector2.right, direction);
-        if (direction.y < 0.0f)
-        {
-            angle = -angle;
-        }
+        float angle = Mathf.Sign(direction.y) * Vector2.Angle(direction.x < 0.0f ? Vector2.left : Vector2.right, direction);
         bodyRenderer.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
     }
     

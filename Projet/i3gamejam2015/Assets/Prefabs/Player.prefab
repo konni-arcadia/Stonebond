@@ -49,7 +49,7 @@ GameObject:
   m_IsActive: 1
 --- !u!1 &109892
 GameObject:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
@@ -58,7 +58,7 @@ GameObject:
   - 61: {fileID: 6147806}
   - 114: {fileID: 11438052}
   m_Layer: 11
-  m_Name: attackColliderSpecial
+  m_Name: attackCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -174,6 +174,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &147728
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 400890}
+  m_Layer: 9
+  m_Name: SpecialAttack
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &155684
 GameObject:
   m_ObjectHideFlags: 0
@@ -231,6 +246,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!4 &400890
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 147728}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 476360}
+  m_Father: {fileID: 445492}
+  m_RootOrder: 6
 --- !u!4 &404064
 Transform:
   m_ObjectHideFlags: 1
@@ -355,7 +383,7 @@ Transform:
   - {fileID: 430852}
   - {fileID: 485994}
   - {fileID: 442656}
-  - {fileID: 476360}
+  - {fileID: 400890}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!4 &476360
@@ -365,11 +393,11 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 109892}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .400000006, y: .0199999996, z: 0}
-  m_LocalScale: {x: 2.12132549, y: 1.65078104, z: 1.06491756}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 2.28042483, y: 1.32062507, z: 1.06491756}
   m_Children: []
-  m_Father: {fileID: 445492}
-  m_RootOrder: 6
+  m_Father: {fileID: 400890}
+  m_RootOrder: 0
 --- !u!4 &477898
 Transform:
   m_ObjectHideFlags: 1

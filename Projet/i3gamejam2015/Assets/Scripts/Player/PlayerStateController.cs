@@ -12,6 +12,7 @@ public class PlayerStateController : MonoBehaviour
     private PlayerMovementController movementController;
     private PlayerStatusProvider statusProvider;
     private List<PlayerStateController> enemies = new List<PlayerStateController>();
+    private Transform specialAttackTransform;
     
     // 
     // GLOBAL STATE
@@ -150,7 +151,8 @@ public class PlayerStateController : MonoBehaviour
         attackForwardCollider = transform.Find("attackColliderForward").GetComponent<Collider2D>();
         attackUpCollider = transform.Find("attackColliderUp").GetComponent<Collider2D>();
         attackDownCollider = transform.Find("attackColliderDown").GetComponent<Collider2D>();
-        specialAttackCollider = transform.Find("attackColliderSpecial").GetComponent<Collider2D>();
+        specialAttackTransform = transform.Find("SpecialAttack");
+        specialAttackCollider = specialAttackTransform.Find("attackCollider").GetComponent<Collider2D>();
         attackUpCollider.enabled = false;
         attackDownCollider.enabled = false;
         attackForwardCollider.enabled = false;
@@ -721,8 +723,9 @@ public class PlayerStateController : MonoBehaviour
             specialAttackVector.Normalize();
         }
 
-        LogDebug("specialAttackVector=" + specialAttackVector);
-        //TODO aimDirection = AimDirection.FORWARD;
+
+        float angle = Mathf.Sign(specialAttackVector.y) * Vector2.Angle(specialAttackVector.x < 0.0f ? Vector2.left : Vector2.right, specialAttackVector);
+        specialAttackTransform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
         statusProvider.setAttackSpecialStart(specialAttackVector);
 

@@ -30,8 +30,8 @@ public class PlayerMovementController : MonoBehaviour
     private float allowJumpTime = 0, disallowDirectionTime = 0;
     private bool inWallJump = false;
 	private bool isJumpEnabled = true;
-	private float fixedFrictionFactor = 0.0f;
-	private float movementFactor = 1.0f;
+	private bool isMovementEnabled = true;
+    private bool isFrictionEnabled = true;
 
     private Rigidbody2D body;
     private InputManager inputManager;
@@ -128,8 +128,7 @@ public class PlayerMovementController : MonoBehaviour
     void FixedUpdate()
     {
         // Cache the horizontal input.
-        float h = disallowDirectionTime == 0 ? inputManager.AxisValue(playerId, InputManager.Horizontal) : 0;
-		h *= movementFactor;
+        float h = isMovementEnabled && disallowDirectionTime == 0 ? inputManager.AxisValue(playerId, InputManager.Horizontal) : 0;
 
         // Facing right?
         if (Mathf.Abs(h) >= Mathf.Epsilon)
@@ -142,19 +141,18 @@ public class PlayerMovementController : MonoBehaviour
         //		body.AddForce(Vector2.right * h * moveForce);
 
         Vector2 velocity = body.velocity;
-		float targetSpeed = h * maxSpeed;
-		float frictionFactor;
-		if (fixedFrictionFactor == 0.0f)
-		{
-			frictionFactor = grounded && !inWallJump ? frictionFactorGround : frictionFactorAir;
-		}
-		else
-		{
-			frictionFactor = fixedFrictionFactor;
-		}
-
-        // In the air, there is less friction
-        velocity.x += (targetSpeed - velocity.x) * frictionFactor;
+		
+        float frictionFactor = grounded && !inWallJump ? frictionFactorGround : frictionFactorAir;
+        if (isMovementEnabled)
+        {
+            float targetSpeed = h * maxSpeed;
+            velocity.x += (targetSpeed - velocity.x) * (isFrictionEnabled ? frictionFactor : 1.0f);
+        }
+        else if (isFrictionEnabled)
+        {
+            velocity.x -= velocity.x * frictionFactor;
+        }
+ 
         // When grinding, limit the velocity
         if (isGrinding && velocity.y < maxVelocityWhenGrinding)
             velocity.y = maxVelocityWhenGrinding;
@@ -208,9 +206,14 @@ public class PlayerMovementController : MonoBehaviour
         }
 	}
 
-    public void setMovementFactor(float factor)
+    public void setVelocity(Vector2 velocity)
     {
-		movementFactor = factor;
+        body.velocity = velocity;
+    }
+
+    public void setMovementEnabled(bool enabled)
+    {
+        isMovementEnabled = enabled;
     }
 
 	public void setJumpEnabled(bool enabled)
@@ -224,16 +227,14 @@ public class PlayerMovementController : MonoBehaviour
         }
 	}
 
+    public void setFrictionEnabled(bool enabled)
+    {
+        isFrictionEnabled = enabled;
+    }
+
 	public void setGravityFactor(float factor)
 	{
 		body.gravityScale = factor * originalGravityScale;
-	}
-
-	// must be set between 0.0f and 1.0f
-	// set to 0.0f to disable fixed friction and have friction depend on the fact the player is on air or ground
-	public void setFixedFrictionFactor(float factor)
-	{
-		fixedFrictionFactor = factor;
 	}
 
     // must be called within FixedUpdate()

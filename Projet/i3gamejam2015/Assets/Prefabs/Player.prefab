@@ -764,7 +764,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxSpeed: 9
   maxFallSpeed: 200
-  breakForce: 100
+  breakForce: 0
   initialJumpForce: 1000
   extensionJumpForce: 4100
   wallJumpLateralForce: 1000
@@ -927,7 +927,7 @@ MonoBehaviour:
   chargeTime: .300000012
   specialAttackTime: .550000012
   specialAttackForceMin: 0
-  specialAttackForceMax: 42000
+  specialAttackForceMax: 3000
   specialAttackHitboxStart: 0
   specialAttackHitboxEnd: .949999988
   specialAttackCurve:
@@ -935,8 +935,8 @@ MonoBehaviour:
     m_Curve:
     - time: 0
       value: 1
-      inSlope: -3.32232261
-      outSlope: -3.32232261
+      inSlope: -.211345583
+      outSlope: -.211345583
       tangentMode: 0
     - time: 1
       value: 0
@@ -1465,11 +1465,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: specialAttackCurve.m_Curve.Array.data[0].inSlope
-      value: -3.32232261
+      value: -.211345583
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: specialAttackCurve.m_Curve.Array.data[0].outSlope
-      value: -3.32232261
+      value: -.211345583
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: specialAttackCurve.m_Curve.Array.data[1].inSlope
@@ -1489,7 +1489,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: specialAttackForceMax
-      value: 42000
+      value: 3000
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: chargeTime

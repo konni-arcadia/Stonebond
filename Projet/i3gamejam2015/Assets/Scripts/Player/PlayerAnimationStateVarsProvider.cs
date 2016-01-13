@@ -28,13 +28,12 @@ public class PlayerAnimationStateVarsProvider : MonoBehaviour {
         myStatusProvider.OnAttackDownAction += AttackDownAction;
 		myStatusProvider.OnChargeStartAction += ChargeStartAction;
 		myStatusProvider.OnChargeStopAction += ChargeStopAction;
-		myStatusProvider.OnAttackSpecialAction += AttackSpecialAction;
+		myStatusProvider.OnAttackSpecialStartAction += AttackSpecialStartAction;
         myStatusProvider.OnVerticalKnockbackAction += VerticalKnockbackAction;
 		myStatusProvider.OnHorizontalKnockbackAction += HorizontalKnockbackAction;
         myStatusProvider.OnDieAction += DieAction;
         myStatusProvider.OnRespawnAction += RespawnAction;
-        myStatusProvider.OnHitGroundAction += HandleOnHitGroundAction;
-        myStatusProvider.OnHitWallAction += HandleOnHitWallAction;
+        myStatusProvider.OnCollisionAction += HandleOnCollisionAction;
 	}
 
     public void AxisHChangedAction(float axisHValue)
@@ -96,7 +95,7 @@ public class PlayerAnimationStateVarsProvider : MonoBehaviour {
 			myAnimator.SetBool("Charge", false);
 	}
 
-	public void AttackSpecialAction()
+	public void AttackSpecialStartAction(Vector2 direction)
 	{
 		if (myAnimator != null)
 			myAnimator.SetTrigger("SpecialAttack");
@@ -132,9 +131,9 @@ public class PlayerAnimationStateVarsProvider : MonoBehaviour {
             myAnimator.SetBool("Invincible", isInvicible);
     }
 
-    private void HandleOnHitWallAction (PlayerStatusProvider.WallCollisionType collisionType, Vector2 velocity)
+    private void HandleOnCollisionAction (PlayerStatusProvider.CollisionType collisionType, Vector2 velocity)
     {
-        if (collisionType != PlayerStatusProvider.WallCollisionType.NORMAL)
+        if (collisionType == PlayerStatusProvider.CollisionType.GROUND_ATTACK || collisionType == PlayerStatusProvider.CollisionType.SPECIAL_ATTACK)
         {
             if (myAnimator != null)
             {
@@ -142,16 +141,4 @@ public class PlayerAnimationStateVarsProvider : MonoBehaviour {
             }
         }
     }
-    
-    private void HandleOnHitGroundAction (PlayerStatusProvider.GroundCollisionType collisionType, Vector2 velocity)
-    {
-        if (collisionType != PlayerStatusProvider.GroundCollisionType.NORMAL)
-        {
-            if (myAnimator != null)
-            {
-                myAnimator.SetTrigger("CancelAttack");
-            }
-        }
-    }
-
 }

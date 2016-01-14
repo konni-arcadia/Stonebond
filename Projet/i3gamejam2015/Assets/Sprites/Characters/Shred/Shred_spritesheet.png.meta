@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 7a12ce4704e44de4e9af83c9f804522c
-timeCreated: 1437925683
+timeCreated: 1452786276
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -254,6 +254,7 @@ TextureImporter:
   lightmap: 0
   rGBM: 0
   compressionQuality: 50
+  allowsAlphaSplitting: 0
   spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
@@ -493,8 +494,8 @@ TextureImporter:
         y: 370
         width: 40
         height: 41
-      alignment: 7
-      pivot: {x: .5, y: 0}
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Shred_dash_002
       rect:
@@ -503,8 +504,8 @@ TextureImporter:
         y: 371
         width: 32
         height: 40
-      alignment: 7
-      pivot: {x: .5, y: 0}
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Shred_dash_003
       rect:
@@ -513,8 +514,8 @@ TextureImporter:
         y: 380
         width: 65
         height: 31
-      alignment: 9
-      pivot: {x: .507662952, y: -.224942118}
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Shred_dash_004
       rect:
@@ -523,8 +524,8 @@ TextureImporter:
         y: 384
         width: 59
         height: 27
-      alignment: 9
-      pivot: {x: .508442223, y: -.295161486}
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Shred_dash_005
       rect:
@@ -533,8 +534,8 @@ TextureImporter:
         y: 391
         width: 66
         height: 20
-      alignment: 9
-      pivot: {x: .507546842, y: -.448277295}
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Shred_dash_006
       rect:
@@ -543,8 +544,8 @@ TextureImporter:
         y: 385
         width: 61
         height: 26
-      alignment: 9
-      pivot: {x: .532661796, y: -.287357032}
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Shred_dash_007
       rect:
@@ -553,8 +554,8 @@ TextureImporter:
         y: 368
         width: 45
         height: 43
-      alignment: 7
-      pivot: {x: .5, y: 0}
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Shred_dash_008
       rect:
@@ -563,8 +564,8 @@ TextureImporter:
         y: 368
         width: 44
         height: 43
-      alignment: 7
-      pivot: {x: .5, y: 0}
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Shred_dash_009
       rect:
@@ -573,8 +574,8 @@ TextureImporter:
         y: 368
         width: 42
         height: 43
-      alignment: 7
-      pivot: {x: .5, y: 0}
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Shred_dash_010
       rect:
@@ -583,8 +584,8 @@ TextureImporter:
         y: 326
         width: 39
         height: 40
-      alignment: 9
-      pivot: {x: .487179488, y: -.174999997}
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Shred_dash_011
       rect:
@@ -593,8 +594,8 @@ TextureImporter:
         y: 332
         width: 30
         height: 34
-      alignment: 9
-      pivot: {x: .800000012, y: -.117647059}
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Shred_falling_001
       rect:

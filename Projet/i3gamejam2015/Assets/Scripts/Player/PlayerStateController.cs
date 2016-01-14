@@ -13,6 +13,8 @@ public class PlayerStateController : MonoBehaviour
     private PlayerStatusProvider statusProvider;
     private List<PlayerStateController> enemies = new List<PlayerStateController>();
     private Transform specialAttackTransform;
+	private Transform specialAttackSolidCastA;
+	private Transform specialAttackSolidCastB;
     
     // 
     // GLOBAL STATE
@@ -150,13 +152,16 @@ public class PlayerStateController : MonoBehaviour
 
         attackForwardCollider = transform.Find("attackColliderForward").GetComponent<Collider2D>();
         attackUpCollider = transform.Find("attackColliderUp").GetComponent<Collider2D>();
-        attackDownCollider = transform.Find("attackColliderDown").GetComponent<Collider2D>();
-        specialAttackTransform = transform.Find("SpecialAttack");
-        specialAttackCollider = specialAttackTransform.Find("attackCollider").GetComponent<Collider2D>();
+        attackDownCollider = transform.Find("attackColliderDown").GetComponent<Collider2D>();        
         attackUpCollider.enabled = false;
         attackDownCollider.enabled = false;
         attackForwardCollider.enabled = false;
-        specialAttackCollider.enabled = false;
+
+		specialAttackTransform = transform.Find("SpecialAttack");
+		specialAttackCollider = specialAttackTransform.Find("attackCollider").GetComponent<Collider2D>();
+		specialAttackCollider.enabled = false;
+		specialAttackSolidCastA = specialAttackTransform.Find ("solidColliderA");
+		specialAttackSolidCastB = specialAttackTransform.Find ("solidColliderB");
 
         inputManager = FindObjectOfType<InputManager>();
         movementController = GetComponent<PlayerMovementController>();
@@ -727,14 +732,7 @@ public class PlayerStateController : MonoBehaviour
         float angle = Mathf.Sign(specialAttackVector.y) * Vector2.Angle(specialAttackVector.x < 0.0f ? Vector2.left : Vector2.right, specialAttackVector);
         specialAttackTransform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
-        statusProvider.setAttackSpecialStart(specialAttackVector);
-
-        //TODO if (onWall)
-        //{
-        //    // fire hit event and cancel attack (hit event wouldn't be triggered otherwise)
-        //    statusProvider.setHitWall(PlayerStatusProvider.WallCollisionType.SPECIAL_ATTACK, new Vector2());
-        //    SetState(State.IDLE);
-        //}
+        statusProvider.setAttackSpecialStart(specialAttackVector);		       
     }
 
     private void LeaveSpecialAttack()
@@ -763,6 +761,13 @@ public class PlayerStateController : MonoBehaviour
             return;
         }
         
+		// if special attack hit solid
+		if (Physics2D.Linecast(specialAttackSolidCastA.position, specialAttackSolidCastB.position, 1 << LayerMask.NameToLayer("Ground"))) {
+			statusProvider.setCollision (PlayerStatusProvider.CollisionType.SPECIAL_ATTACK, specialAttackVector);
+			SetState (State.IDLE);
+			return;
+		}
+
         float attackPct = stateTime / specialAttackTime;
 
         if (!specialAttackCollider.enabled && attackPct >= specialAttackHitboxStart && attackPct < specialAttackHitboxEnd)
@@ -999,9 +1004,7 @@ public class PlayerStateController : MonoBehaviour
         switch (state)
         {
             case State.ATTACK:
-                return attackCollider.enabled;
-            case State.SPECIAL_ATTACK:
-                return specialAttackCollider.enabled;
+                return attackCollider.enabled;          
             default:
                 return false;
         }
@@ -1014,7 +1017,7 @@ public class PlayerStateController : MonoBehaviour
             return false;
         }
     
-        return state == State.IDLE;
+		return state == State.IDLE || state == State.CHARGE || state == State.ATTACK || state == State.KNOCKBACK;
     }
 
     private bool IsAimingOppositeDirection(PlayerStateController enemy)

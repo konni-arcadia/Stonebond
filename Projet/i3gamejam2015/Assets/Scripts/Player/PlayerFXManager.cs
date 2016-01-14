@@ -167,12 +167,12 @@ public class PlayerFXManager : MonoBehaviour
         sourceFXManager.SetOverlay(false);
     }
 
-    private void HandleOnCollisionAction(PlayerStatusProvider.CollisionType collisionType, Vector2 velocity)
+    private void HandleOnCollisionAction(PlayerStatusProvider.CollisionType collisionType, Vector2 normal)
     {
         switch (collisionType)
         {
             case PlayerStatusProvider.CollisionType.SPECIAL_ATTACK:
-                ScreenShake.ShakeX(0.32f, 1.7f);
+				ScreenShake.ShakeXY(normal.x * 0.32f, normal.x * 1.7f, normal.y * 0.32f, normal.y * 1.7f);
                 break;
             case PlayerStatusProvider.CollisionType.WALL_ATTACK:
                 ScreenShake.ShakeX(0.24f, 1.7f);

@@ -187,11 +187,13 @@ public class PlayerFXManager : MonoBehaviour
     {
         float angle = Mathf.Sign(direction.y) * Vector2.Angle(direction.x < 0.0f ? Vector2.left : Vector2.right, direction);
         bodyRenderer.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+		bodyRenderer.transform.parent.Translate (new Vector3 (0.0f, 1.0f, 0.0f));
     }
     
     void HandleOnAttackSpecialStopAction ()
     {
         bodyRenderer.transform.rotation = Quaternion.AngleAxis(0.0f, Vector3.forward);
+		bodyRenderer.transform.parent.Translate (new Vector3 (0.0f, -1.0f, 0.0f));
     }
 
     //

@@ -924,7 +924,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
   attackCooldownTime: .349999994
-  chargeTime: .300000012
+  chargeTime: .449999988
   specialAttackTime: .550000012
   specialAttackForceMin: 0
   specialAttackForceMax: 42000
@@ -1493,7 +1493,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: chargeTime
-      value: .300000012
+      value: .449999988
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: specialAttackTime

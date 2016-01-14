@@ -992,7 +992,7 @@ public class PlayerStateController : MonoBehaviour
             return false;
         }
     
-        return state == State.IDLE;
+        return state == State.IDLE || state == State.ATTACK || state == State.SPECIAL_ATTACK || state == State.CHARGE || state == State.KNOCKBACK;
     }
 
     private bool IsAimingOppositeDirection(PlayerStateController enemy)

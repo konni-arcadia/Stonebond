@@ -93,6 +93,9 @@ public class InputManager : MonoBehaviour {
 			case InputManager.BUTTON_ATTACK:
 				axisValue = axisValue || inputDevice.Action3.WasPressed;
 				break;
+            case InputManager.BUTTON_CHARGE:
+                axisValue = axisValue || inputDevice.Action4.WasPressed;
+                break;
 			case InputManager.START:
 				axisValue = axisValue || inputDevice.MenuWasPressed;
 				break;

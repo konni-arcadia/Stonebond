@@ -38,29 +38,19 @@ public class PlayerStatusProvider : MonoBehaviour {
         if (OnGrindingStatusChanged != null) OnGrindingStatusChanged(isGrinding);
     }
 
-    public enum GroundCollisionType
+    public enum CollisionType
     {
-        NORMAL,
-        ATTACK
-    }
-    public delegate void HitGroundAction(GroundCollisionType collisionType, Vector2 velocity);
-    public event HitGroundAction OnHitGroundAction;
-    public void setHitGround(GroundCollisionType collisionType, Vector2 velocity)
-    {
-        if (OnHitGroundAction != null) OnHitGroundAction(collisionType, velocity);
-    }
-
-    public enum WallCollisionType
-    {
-        NORMAL,
-        ATTACK,
+        GROUND,
+        GROUND_ATTACK,
+        WALL,
+        WALL_ATTACK,
         SPECIAL_ATTACK
     }
-    public delegate void HitWallAction(WallCollisionType collisionType, Vector2 velocity);
-    public event HitWallAction OnHitWallAction;
-    public void setHitWall(WallCollisionType collisionType, Vector2 velocity)
+    public delegate void CollisionAction(CollisionType collisionType, Vector2 velocity);
+    public event CollisionAction OnCollisionAction;
+    public void setCollision(CollisionType collisionType, Vector2 velocity)
     {
-        if (OnHitWallAction != null) OnHitWallAction(collisionType, velocity);
+        if (OnCollisionAction != null) OnCollisionAction(collisionType, velocity);
     }
 
 	public delegate void JumpAction();
@@ -112,12 +102,19 @@ public class PlayerStatusProvider : MonoBehaviour {
 		if (OnChargeStopAction != null) OnChargeStopAction(complete);
 	}
 
-	public delegate void AttackSpecialAction();
-	public event AttackForwardAction OnAttackSpecialAction;
-	public void setAttackSpecial()
+	public delegate void AttackSpecialStartAction(Vector2 direction);
+    public event AttackSpecialStartAction OnAttackSpecialStartAction;
+	public void setAttackSpecialStart(Vector2 direction)
 	{
-		if (OnAttackSpecialAction != null) OnAttackSpecialAction();
+        if (OnAttackSpecialStartAction != null) OnAttackSpecialStartAction(direction);
 	}
+
+    public delegate void AttackSpecialStopAction();
+    public event AttackSpecialStopAction OnAttackSpecialStopAction;
+    public void setAttackSpecialStop()
+    {
+        if (OnAttackSpecialStopAction != null) OnAttackSpecialStopAction();
+    }
 
 	public delegate void AttackFailedAction();
 	public event AttackFailedAction OnAttackFailedAction;

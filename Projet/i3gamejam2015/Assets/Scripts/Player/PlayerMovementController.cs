@@ -17,6 +17,7 @@ public class PlayerMovementController : MonoBehaviour
     public bool startsFacingRight = true;
 	public float frictionFactorGround = 0.5f;
 	public float frictionFactorAir = 0.1f;
+    public float oneWayPlatformHitAngle = 20.0f;
 
     private bool grounded = true;			// Whether or not the player is grounded.
     private bool isGrinding = false;
@@ -30,8 +31,8 @@ public class PlayerMovementController : MonoBehaviour
     private float allowJumpTime = 0, disallowDirectionTime = 0;
     private bool inWallJump = false;
 	private bool isJumpEnabled = true;
-	private float fixedFrictionFactor = 0.0f;
-	private float movementFactor = 1.0f;
+	private bool isMovementEnabled = true;
+    private bool isFrictionEnabled = true;
 
     private Rigidbody2D body;
     private InputManager inputManager;
@@ -58,18 +59,11 @@ public class PlayerMovementController : MonoBehaviour
 
     void Update()
     {
-        // The player is grounded if a linecast to the groundcheck position hits anything on the ground layer.
         bool wasGrounded = grounded;
-        grounded = false;
-        if (body.velocity.y <= 0)
-        {
-            for (int i = 0; i < groundChecks.Length; i++)
-                grounded = grounded || Physics2D.Linecast(raycastBase.position, groundChecks[i].position, 1 << LayerMask.NameToLayer("Ground"));
-        }
+        grounded = body.velocity.y <= 0 && IsHittingSolid(raycastBase, groundChecks, Vector2.down);
 
         if (wasGrounded != grounded)
         {
-            //Update grounded status in player status component
             myStatusProvider.setGroundedStatus(grounded);
         }
 
@@ -84,16 +78,7 @@ public class PlayerMovementController : MonoBehaviour
         inWallJump = inWallJump && !grounded;
 
         bool wasOnWall = onWall;
-        RaycastHit2D wallHit = Physics2D.Linecast(raycastBase.position, wallJumpCheck.position, 1 << LayerMask.NameToLayer("Ground"));
-        if (wallHit.collider != null)
-        {
-            // don't consider onewayplatform as walls
-            onWall = wallHit.collider.transform.GetComponent<OneWayPlatform>() == null;
-        }
-        else
-        {
-            onWall = false;
-        }
+        onWall = IsHittingSolid(raycastBase.position, wallJumpCheck.position, isFacingRight() ? Vector2.right : Vector2.left);
 
         if (wasOnWall != onWall)
         {
@@ -128,8 +113,7 @@ public class PlayerMovementController : MonoBehaviour
     void FixedUpdate()
     {
         // Cache the horizontal input.
-        float h = disallowDirectionTime == 0 ? inputManager.AxisValue(playerId, InputManager.Horizontal) : 0;
-		h *= movementFactor;
+        float h = isMovementEnabled && disallowDirectionTime == 0 ? inputManager.AxisValue(playerId, InputManager.Horizontal) : 0;
 
         // Facing right?
         if (Mathf.Abs(h) >= Mathf.Epsilon)
@@ -142,19 +126,18 @@ public class PlayerMovementController : MonoBehaviour
         //		body.AddForce(Vector2.right * h * moveForce);
 
         Vector2 velocity = body.velocity;
-		float targetSpeed = h * maxSpeed;
-		float frictionFactor;
-		if (fixedFrictionFactor == 0.0f)
-		{
-			frictionFactor = grounded && !inWallJump ? frictionFactorGround : frictionFactorAir;
-		}
-		else
-		{
-			frictionFactor = fixedFrictionFactor;
-		}
-
-        // In the air, there is less friction
-        velocity.x += (targetSpeed - velocity.x) * frictionFactor;
+		
+        float frictionFactor = grounded && !inWallJump ? frictionFactorGround : frictionFactorAir;
+        if (isMovementEnabled)
+        {
+            float targetSpeed = h * maxSpeed;
+            velocity.x += (targetSpeed - velocity.x) * (isFrictionEnabled ? frictionFactor : 1.0f);
+        }
+        else if (isFrictionEnabled)
+        {
+            velocity.x -= velocity.x * frictionFactor;
+        }
+ 
         // When grinding, limit the velocity
         if (isGrinding && velocity.y < maxVelocityWhenGrinding)
             velocity.y = maxVelocityWhenGrinding;
@@ -208,9 +191,14 @@ public class PlayerMovementController : MonoBehaviour
         }
 	}
 
-    public void setMovementFactor(float factor)
+    public void setVelocity(Vector2 velocity)
     {
-		movementFactor = factor;
+        body.velocity = velocity;
+    }
+
+    public void setMovementEnabled(bool enabled)
+    {
+        isMovementEnabled = enabled;
     }
 
 	public void setJumpEnabled(bool enabled)
@@ -224,16 +212,14 @@ public class PlayerMovementController : MonoBehaviour
         }
 	}
 
+    public void setFrictionEnabled(bool enabled)
+    {
+        isFrictionEnabled = enabled;
+    }
+
 	public void setGravityFactor(float factor)
 	{
 		body.gravityScale = factor * originalGravityScale;
-	}
-
-	// must be set between 0.0f and 1.0f
-	// set to 0.0f to disable fixed friction and have friction depend on the fact the player is on air or ground
-	public void setFixedFrictionFactor(float factor)
-	{
-		fixedFrictionFactor = factor;
 	}
 
     // must be called within FixedUpdate()
@@ -257,5 +243,46 @@ public class PlayerMovementController : MonoBehaviour
         Vector2 val = transform.localScale;
         val.x = facingRight ? 1 : -1;
         transform.localScale = val;
+    }
+
+    private RaycastHit2D[] raycastHits = new RaycastHit2D[32];
+    public bool IsHittingSolid(Vector2 a, Vector2 b, Vector2 movementDirection)
+    {
+        int hitCount = Physics2D.LinecastNonAlloc(a, b, raycastHits, 1 << LayerMask.NameToLayer("Ground"));
+        for(int i  = 0; i < hitCount; ++i)
+        {
+            RaycastHit2D hit = raycastHits[i];
+            
+            if (hit.collider == null || hit.collider.isTrigger)
+            {
+                continue;
+            }
+            
+            if (hit.collider.transform.GetComponent<OneWayPlatform>() == null)
+            {
+                // not a one way platform, this is an hit
+                return true;
+            }
+            
+            // only collide with one way platform if the player is going down
+            if(Vector2.Angle(movementDirection, Vector2.down) < oneWayPlatformHitAngle)
+            {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+
+    public bool IsHittingSolid(Transform start, Transform[] ends, Vector2 movementDirection)
+    {
+        for (int i = 0; i < ends.Length; i++)
+        {
+            if(IsHittingSolid(start.position, ends [i].position, movementDirection))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }

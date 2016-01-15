@@ -172,7 +172,7 @@ public class PlayerFXManager : MonoBehaviour
         switch (collisionType)
         {
             case PlayerStatusProvider.CollisionType.SPECIAL_ATTACK:
-				ScreenShake.ShakeXY(normal.x * 0.32f, normal.x * 1.7f, normal.y * 0.32f, normal.y * 1.7f);
+				ScreenShake.ShakeXY(Mathf.Abs(normal.x) * 0.32f, Mathf.Abs(normal.x) * 1.7f, Mathf.Abs(normal.y) * 0.32f, Mathf.Abs(normal.y) * 1.7f);
                 break;
             case PlayerStatusProvider.CollisionType.WALL_ATTACK:
                 ScreenShake.ShakeX(0.24f, 1.7f);

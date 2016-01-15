@@ -12,9 +12,6 @@ public class PlayerStateController : MonoBehaviour
     private PlayerMovementController movementController;
     private PlayerStatusProvider statusProvider;
     private List<PlayerStateController> enemies = new List<PlayerStateController>();
-    private Transform specialAttackTransform;
-	private Transform specialAttackSolidCastA;
-	private Transform specialAttackSolidCastB;
     
     // 
     // GLOBAL STATE
@@ -41,16 +38,7 @@ public class PlayerStateController : MonoBehaviour
     private bool onGround = false;
     private bool onWall = false;
 
-    //
-    // COLLIDERS
-    //
-
-    private Collider2D bodyCollider;
-    private Collider2D attackForwardCollider;
-    private Collider2D attackUpCollider;
-    private Collider2D attackDownCollider;
-    private Collider2D specialAttackCollider;
-
+    public Collider2D bodyCollider;
 
     public enum AimDirection
     {
@@ -81,6 +69,8 @@ public class PlayerStateController : MonoBehaviour
     public float attackUpHitboxStart = 0.0f;
     public float attackUpHitboxEnd = 0.9f;
     public AnimationCurve attackUpCurve;
+    public Collider2D attackUpCollider;
+
     public float attackDownTimeMin = 0.25f;
     public float attackDownTimeMax = 0.25f;
     public float attackDownForceMin = 0.0f;
@@ -88,6 +78,8 @@ public class PlayerStateController : MonoBehaviour
     public float attackDownHitboxStart = 0.0f;
     public float attackDownHitboxEnd = 1.0f;
     public AnimationCurve attackDownCurve;
+    public Collider2D attackDownCollider;
+
     public float attackForwardTimeMin = 0.2f;
     public float attackForwardTimeMax = 0.2f;
     public float attackForwardForceMin = 0.0f;
@@ -95,6 +87,7 @@ public class PlayerStateController : MonoBehaviour
     public float attackForwardHitboxStart = 0.0f;
     public float attackForwardHitboxEnd = 0.6f;
     public AnimationCurve attackForwardCurve;
+    public Collider2D attackForwardCollider;
     public float attackCooldownTime = 0.3f;
 
     // 
@@ -113,6 +106,9 @@ public class PlayerStateController : MonoBehaviour
     public float specialAttackHitboxStart = 0.0f;
     public float specialAttackHitboxEnd = 0.95f;
     public AnimationCurve specialAttackCurve;
+    public Collider2D specialAttackCollider;
+    public Transform specialAttackBase;
+    public Transform[] specialAttackSolidChecks;
 
     //
     // KNOCKBACK
@@ -148,20 +144,10 @@ public class PlayerStateController : MonoBehaviour
     {
         //print("p" + playerId + ": awake");
 
-        bodyCollider = transform.Find("bodyCollider").GetComponent<Collider2D>();
-
-        attackForwardCollider = transform.Find("attackColliderForward").GetComponent<Collider2D>();
-        attackUpCollider = transform.Find("attackColliderUp").GetComponent<Collider2D>();
-        attackDownCollider = transform.Find("attackColliderDown").GetComponent<Collider2D>();        
         attackUpCollider.enabled = false;
         attackDownCollider.enabled = false;
-        attackForwardCollider.enabled = false;
-
-		specialAttackTransform = transform.Find("SpecialAttack");
-		specialAttackCollider = specialAttackTransform.Find("attackCollider").GetComponent<Collider2D>();
-		specialAttackCollider.enabled = false;
-		specialAttackSolidCastA = specialAttackTransform.Find ("solidColliderA");
-		specialAttackSolidCastB = specialAttackTransform.Find ("solidColliderB");
+            attackForwardCollider.enabled = false;
+        specialAttackCollider.enabled = false;
 
         inputManager = FindObjectOfType<InputManager>();
         movementController = GetComponent<PlayerMovementController>();
@@ -730,7 +716,7 @@ public class PlayerStateController : MonoBehaviour
 
 
         float angle = Mathf.Sign(specialAttackVector.y) * Vector2.Angle(specialAttackVector.x < 0.0f ? Vector2.left : Vector2.right, specialAttackVector);
-        specialAttackTransform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        specialAttackBase.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
         statusProvider.setAttackSpecialStart(specialAttackVector);		       
     }
@@ -762,11 +748,12 @@ public class PlayerStateController : MonoBehaviour
         }
         
 		// if special attack hit solid
-		if (Physics2D.Linecast(specialAttackSolidCastA.position, specialAttackSolidCastB.position, 1 << LayerMask.NameToLayer("Ground"))) {
-			statusProvider.setCollision (PlayerStatusProvider.CollisionType.SPECIAL_ATTACK, specialAttackVector);
-			SetState (State.IDLE);
-			return;
-		}
+        if (movementController.IsHittingSolid(specialAttackBase, specialAttackSolidChecks, specialAttackVector))
+        {
+            statusProvider.setCollision (PlayerStatusProvider.CollisionType.SPECIAL_ATTACK, specialAttackVector);
+            SetState (State.IDLE);
+            return;
+        }
 
         float attackPct = stateTime / specialAttackTime;
 
@@ -782,8 +769,6 @@ public class PlayerStateController : MonoBehaviour
         float forcePct = specialAttackCurve.Evaluate(attackPct);
         float hForce = (Mathf.Sign(specialAttackVector.x) * specialAttackForceMin + specialAttackVector.x * forcePct * (specialAttackForceMax - specialAttackForceMin)) * Time.fixedDeltaTime;
         float vForce = (Mathf.Sign(specialAttackVector.y) * specialAttackForceMin + specialAttackVector.y * forcePct * (specialAttackForceMax - specialAttackForceMin)) * Time.fixedDeltaTime;
-        //LogDebug("hFroce=" + hForce + " vForce=" + vForce);
-       // movementController.applyForce(new Vector2(hForce, vForce));
         movementController.setVelocity(new Vector2(hForce, vForce));
     }
 
@@ -888,11 +873,11 @@ public class PlayerStateController : MonoBehaviour
 
     public void HandleOnCollide(Collider2D source, Collider2D other)
     {
-        //LogDebug ("HandleOnCollide");
+        LogDebug ("HandleOnCollide");
         PlayerStateController enemy = other.GetComponentInParent<PlayerStateController>();
         if (enemy != null)
         {
-            //LogDebug ("collide with enemy " + enemy.playerId);
+            LogDebug ("collide with enemy " + enemy.playerId);
             if (enemy.IsPerformingAttack() && IsAimingOppositeDirection(enemy))
             {
                 enemy.Knockback(aimDirection);
@@ -908,6 +893,7 @@ public class PlayerStateController : MonoBehaviour
         BondLink bondLink = other.GetComponentInParent<BondLink>();
         if (bondLink != null)
         {
+            LogDebug ("collide with link");
             LevelManager levelManager = FindObjectOfType<LevelManager>();
             levelManager.bondHasBeenBrokenBy(this);
             return;
@@ -1060,7 +1046,7 @@ public class PlayerStateController : MonoBehaviour
     // Debug DRAW
     //
 
-    private static float DEBUG_ALPHA = 0.3f;
+    private static float DEBUG_ALPHA = 0.5f;
 
     public void OnDrawGizmos()
     {
@@ -1087,6 +1073,10 @@ public class PlayerStateController : MonoBehaviour
                 {
                     DrawColliderRect(specialAttackCollider, Color.red);
                 }
+                foreach(Transform solidCheck in specialAttackSolidChecks)
+                {
+                    DrawRect(solidCheck.position.x, solidCheck.position.y, 0.2f, 0.2f, Color.yellow);
+                }
                 break;
             case State.CHARGE:
                 DrawColliderRect(bodyCollider, Color.white);
@@ -1105,15 +1095,15 @@ public class PlayerStateController : MonoBehaviour
 
     private static void DrawColliderRect(Collider2D collider, Color color)
     {
-        float x = collider.transform.position.x + collider.offset.x;
-        float y = collider.transform.position.y + collider.offset.y;
-        float width = ((BoxCollider2D)collider).size.x * collider.transform.localScale.x;
-        float height = ((BoxCollider2D)collider).size.y * collider.transform.localScale.y;
-        DrawRect(x, y, width, height, color);
+        Matrix4x4 rotationMatrix = Matrix4x4.TRS(collider.transform.position, collider.transform.rotation, collider.transform.lossyScale);
+        Gizmos.matrix = rotationMatrix; 
+        Gizmos.color = new Color(color.r, color.g, color.b, DEBUG_ALPHA);
+        Gizmos.DrawCube(collider.offset, ((BoxCollider2D)collider).size);
     }
 
     private static void DrawRect(float x, float y, float width, float height, Color color)
     {
+        Gizmos.matrix = Matrix4x4.identity; 
         Gizmos.color = new Color(color.r, color.g, color.b, DEBUG_ALPHA);
         Gizmos.DrawCube(new Vector3(x, y, 0.0f), new Vector3(width, height, 0.0f));
     }

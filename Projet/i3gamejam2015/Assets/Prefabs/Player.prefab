@@ -58,7 +58,7 @@ GameObject:
   - 61: {fileID: 6147806}
   - 114: {fileID: 11438052}
   m_Layer: 11
-  m_Name: attackCollider
+  m_Name: specialAttackCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -73,7 +73,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 402842}
   m_Layer: 9
-  m_Name: solidColliderB
+  m_Name: specialAttackSolidCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -136,7 +136,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 495480}
   m_Layer: 9
-  m_Name: solidColliderA
+  m_Name: specialAttackSolidCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -213,7 +213,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 400890}
   m_Layer: 9
-  m_Name: SpecialAttack
+  m_Name: SpecialAttackBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -298,7 +298,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 111940}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.22000003, y: -.379999995, z: 0}
+  m_LocalPosition: {x: 1.22000003, y: -.352999985, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400890}
@@ -491,7 +491,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 119492}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.22000003, y: .379999995, z: 0}
+  m_LocalPosition: {x: 1.22000003, y: .326000005, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400890}
@@ -862,6 +862,7 @@ MonoBehaviour:
   startsFacingRight: 1
   frictionFactorGround: .5
   frictionFactorAir: .100000001
+  oneWayPlatformHitAngle: 20
 --- !u!114 &11438052
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -941,6 +942,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerId: 1
+  bodyCollider: {fileID: 6151464}
   verticalAimThresholdDegree: 100
   initialSpawnTime: 1.79999995
   respawnTime: 1.20000005
@@ -965,27 +967,29 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-  attackDownTimeMin: .300000012
-  attackDownTimeMax: .300000012
-  attackDownForceMin: 8000
-  attackDownForceMax: 46000
+  attackUpCollider: {fileID: 6124196}
+  attackDownTimeMin: .25999999
+  attackDownTimeMax: .25999999
+  attackDownForceMin: 0
+  attackDownForceMax: 10000
   attackDownHitboxStart: 0
   attackDownHitboxEnd: 1
   attackDownCurve:
     serializedVersion: 2
     m_Curve:
     - time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
+      value: 1
+      inSlope: -3.54302144
+      outSlope: -3.54302144
       tangentMode: 0
     - time: 1
-      value: 1
-      inSlope: 2
-      outSlope: 2
+      value: 0
+      inSlope: -.118604958
+      outSlope: -.118604958
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+  attackDownCollider: {fileID: 6103116}
   attackForwardTimeMin: .159999996
   attackForwardTimeMax: .159999996
   attackForwardForceMin: 0
@@ -1007,8 +1011,9 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+  attackForwardCollider: {fileID: 6193008}
   attackCooldownTime: .349999994
-  chargeTime: .300000012
+  chargeTime: .449999988
   specialAttackTime: .550000012
   specialAttackForceMin: 0
   specialAttackForceMax: 3000
@@ -1029,6 +1034,11 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+  specialAttackCollider: {fileID: 6147806}
+  specialAttackBase: {fileID: 400890}
+  specialAttackSolidChecks:
+  - {fileID: 402842}
+  - {fileID: 495480}
   knockbackTime: .349999994
   knockbackForceUp: 14000
   knockbackForceDown: 14000
@@ -1457,23 +1467,23 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: attackDownCurve.m_Curve.Array.data[0].inSlope
-      value: 0
+      value: -3.54302144
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: attackDownCurve.m_Curve.Array.data[0].outSlope
-      value: 0
+      value: -3.54302144
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: attackDownCurve.m_Curve.Array.data[1].value
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: attackDownCurve.m_Curve.Array.data[1].inSlope
-      value: 2
+      value: -.118604958
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: attackDownCurve.m_Curve.Array.data[1].outSlope
-      value: 2
+      value: -.118604958
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: attackForwardCurve.m_Curve.Array.data[0].time
@@ -1489,11 +1499,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: attackDownTimeMin
-      value: .300000012
+      value: .25999999
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: attackDownTimeMax
-      value: .300000012
+      value: .25999999
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: attackForwardTimeMin
@@ -1537,7 +1547,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: attackDownForceMax
-      value: 46000
+      value: 10000
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: attackForwardForceMin
@@ -1577,7 +1587,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: chargeTime
-      value: .300000012
+      value: .449999988
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: specialAttackTime
@@ -1845,7 +1855,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: attackDownCurve.m_Curve.Array.data[0].value
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: attackDownCurve.m_Curve.Array.data[1].time
@@ -1873,7 +1883,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: attackDownForceMin
-      value: 8000
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: attackUpForceMax

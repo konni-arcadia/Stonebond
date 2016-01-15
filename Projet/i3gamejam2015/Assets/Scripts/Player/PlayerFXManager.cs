@@ -56,8 +56,9 @@ public class PlayerFXManager : MonoBehaviour
         statusProvider.OnVerticalKnockbackAction += HandleOnVerticalKnockback;
         statusProvider.OnDieWarningAction += HandleOnDieWarning;
         statusProvider.OnDieAction += HandleOnDie;
-        statusProvider.OnHitGroundAction += HandleOnHitGroundAction;
-        statusProvider.OnHitWallAction += HandleOnHitWallAction;
+        statusProvider.OnCollisionAction += HandleOnCollisionAction;
+        statusProvider.OnAttackSpecialStartAction += HandleOnAttackSpecialStartAction;
+        statusProvider.OnAttackSpecialStopAction += HandleOnAttackSpecialStopAction;
 
         originalSortingLayerName = bodyRenderer.sortingLayerName;
         originalSortingOrder = bodyRenderer.sortingOrder;
@@ -166,24 +167,33 @@ public class PlayerFXManager : MonoBehaviour
         sourceFXManager.SetOverlay(false);
     }
 
-    private void HandleOnHitWallAction(PlayerStatusProvider.WallCollisionType collisionType, Vector2 velocity)
+    private void HandleOnCollisionAction(PlayerStatusProvider.CollisionType collisionType, Vector2 normal)
     {
-        if (collisionType == PlayerStatusProvider.WallCollisionType.SPECIAL_ATTACK)
+        switch (collisionType)
         {
-            ScreenShake.ShakeX(0.32f, 1.7f);
-        }
-        else if (collisionType == PlayerStatusProvider.WallCollisionType.ATTACK)
-        {
-            ScreenShake.ShakeX(0.2f, 1.7f);
+            case PlayerStatusProvider.CollisionType.SPECIAL_ATTACK:
+				ScreenShake.ShakeXY(Mathf.Abs(normal.x) * 0.32f, Mathf.Abs(normal.x) * 1.7f, Mathf.Abs(normal.y) * 0.32f, Mathf.Abs(normal.y) * 1.7f);
+                break;
+            case PlayerStatusProvider.CollisionType.WALL_ATTACK:
+                ScreenShake.ShakeX(0.24f, 1.7f);
+                break;
+            case PlayerStatusProvider.CollisionType.GROUND_ATTACK:
+                ScreenShake.ShakeY(0.3f, 1.7f);
+                break;
         }
     }
-    
-    private void HandleOnHitGroundAction(PlayerStatusProvider.GroundCollisionType collisionType, Vector2 velocity)
+
+    void HandleOnAttackSpecialStartAction (Vector2 direction)
     {
-        if (collisionType == PlayerStatusProvider.GroundCollisionType.ATTACK)
-        {
-            ScreenShake.ShakeY(0.32f, 1.7f);
-        }
+        float angle = Mathf.Sign(direction.y) * Vector2.Angle(direction.x < 0.0f ? Vector2.left : Vector2.right, direction);
+        bodyRenderer.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+		bodyRenderer.transform.parent.Translate (new Vector3 (0.0f, 1.0f, 0.0f));
+    }
+    
+    void HandleOnAttackSpecialStopAction ()
+    {
+        bodyRenderer.transform.rotation = Quaternion.AngleAxis(0.0f, Vector3.forward);
+		bodyRenderer.transform.parent.Translate (new Vector3 (0.0f, -1.0f, 0.0f));
     }
 
     //

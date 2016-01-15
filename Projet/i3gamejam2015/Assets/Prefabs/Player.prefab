@@ -792,13 +792,13 @@ MonoBehaviour:
     m_Curve:
     - time: 0
       value: 0
-      inSlope: 0
-      outSlope: 0
+      inSlope: 2.60877848
+      outSlope: 2.60877848
       tangentMode: 0
     - time: 1
       value: 1
-      inSlope: 2
-      outSlope: 2
+      inSlope: 1.42528522
+      outSlope: 1.42528522
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -1683,11 +1683,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: chargeChromaCurve.m_Curve.Array.data[0].inSlope
-      value: 0
+      value: 2.60877848
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: chargeChromaCurve.m_Curve.Array.data[0].outSlope
-      value: 0
+      value: 2.60877848
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: attackUpChromaCurve.m_Curve.Array.data[1].value
@@ -1723,11 +1723,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: chargeChromaCurve.m_Curve.Array.data[1].inSlope
-      value: 2
+      value: 1.42528522
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: chargeChromaCurve.m_Curve.Array.data[1].outSlope
-      value: 2
+      value: 1.42528522
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: attackCooldownChromaCurve.m_Curve.Array.data[0].inSlope

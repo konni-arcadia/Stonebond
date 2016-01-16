@@ -78,14 +78,17 @@ public class BondLink : MonoBehaviour {
 		fxA.GetLineParticles ().gameObject.SetActive(true);
 		fxB.GetLineParticles ().gameObject.SetActive(true);
 
-//		forwardParticlesAsystem = 
-//		forwardParticlesAsystem
-//		fxB.GetLineParticles ();
+		// disable all magical particles
+		for(int i=0; i<fxA.magicalParticles.Count;++i)
+			fxA.magicalParticles[i].IsAlive(false);
+		for(int i=0; i<fxB.magicalParticles.Count;++i)
+			fxB.magicalParticles[i].IsAlive(false);
 
-		//magicalParticlesAcontainer
-		//magicalParticlesBcontainer
-//		magicalParticlesAsystem
-//		magicalParticlesBsystem
+		// activate player specific magical particles
+		if(fxA.magicalParticles.Count >= playerAStateController.playerId)
+			fxA.magicalParticles[playerAStateController.playerId-1].gameObject.SetActive(true);
+		if(fxB.magicalParticles.Count >= playerAStateController.playerId)
+			fxB.magicalParticles[playerBStateController.playerId-1].gameObject.SetActive(true);
 	}
 	
 	Vector3 castLine() {

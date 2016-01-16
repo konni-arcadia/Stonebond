@@ -1,0 +1,252 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!241 &24100000
+AudioMixerController:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Music
+  m_OutputGroup: {fileID: 24339402, guid: 8fd68e0f408954541820745bd1e935e1, type: 2}
+  m_MasterGroup: {fileID: 24300001}
+  m_Snapshots:
+  - {fileID: 24500003}
+  - {fileID: 24563452}
+  - {fileID: 24515086}
+  - {fileID: 24588862}
+  - {fileID: 24593520}
+  m_StartSnapshot: {fileID: 24500003}
+  m_SuspendThreshold: -80
+  m_EnableSuspend: 1
+  m_ExposedParameters: []
+  m_AudioMixerGroupViews:
+  - guids:
+    - 78d18bc9136094d568c3340abc4ad982
+    - 01813a482aeba45d9a369ef445cda7e3
+    - 687519581d54941be9c5368e0474b2b4
+    - d7a868be0d326483ca6cbd4c519c328f
+    - b582e862c507d438fa397f7c8b07e607
+    name: View
+  m_CurrentViewIndex: 0
+  m_TargetSnapshot: {fileID: 24588862}
+--- !u!243 &24300001
+AudioMixerGroupController:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Master
+  m_AudioMixer: {fileID: 24100000}
+  m_GroupID: 78d18bc9136094d568c3340abc4ad982
+  m_Children:
+  - {fileID: 24339652}
+  - {fileID: 24323448}
+  - {fileID: 24354224}
+  - {fileID: 24395910}
+  m_Volume: 7db051e32f1fa4931ad110e04d45f50c
+  m_Pitch: 0698fda38ecd049eda3aece26b431077
+  m_Effects:
+  - {fileID: 24400002}
+  m_UserColorIndex: 0
+  m_Mute: 0
+  m_Solo: 0
+  m_BypassEffects: 0
+--- !u!243 &24323448
+AudioMixerGroupController:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: PipesOfAwakenig
+  m_AudioMixer: {fileID: 24100000}
+  m_GroupID: 687519581d54941be9c5368e0474b2b4
+  m_Children: []
+  m_Volume: 10846ceba793546b5868519b3f0405e3
+  m_Pitch: ec99f03f375e94d868076e51f995e413
+  m_Effects:
+  - {fileID: 24445768}
+  m_UserColorIndex: 0
+  m_Mute: 0
+  m_Solo: 0
+  m_BypassEffects: 0
+--- !u!243 &24339652
+AudioMixerGroupController:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: SpireHigh
+  m_AudioMixer: {fileID: 24100000}
+  m_GroupID: 01813a482aeba45d9a369ef445cda7e3
+  m_Children: []
+  m_Volume: f3a43c9da5fbb4efd81533a9f460474c
+  m_Pitch: 13b7e45b14cca4a9e8347e9ba91f1438
+  m_Effects:
+  - {fileID: 24430842}
+  m_UserColorIndex: 0
+  m_Mute: 0
+  m_Solo: 0
+  m_BypassEffects: 0
+--- !u!243 &24354224
+AudioMixerGroupController:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: CloisterOfTheSilence
+  m_AudioMixer: {fileID: 24100000}
+  m_GroupID: d7a868be0d326483ca6cbd4c519c328f
+  m_Children: []
+  m_Volume: ac2377155645b4972ac55ddf85106ce3
+  m_Pitch: f07a5fc7b95f3491b89ebc314b517545
+  m_Effects:
+  - {fileID: 24417904}
+  m_UserColorIndex: 0
+  m_Mute: 0
+  m_Solo: 0
+  m_BypassEffects: 0
+--- !u!243 &24395910
+AudioMixerGroupController:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: RosetteOfTheWingedOnes
+  m_AudioMixer: {fileID: 24100000}
+  m_GroupID: b582e862c507d438fa397f7c8b07e607
+  m_Children: []
+  m_Volume: 7620e4e2ce369463dafe893b313ef678
+  m_Pitch: 2e694e90df09c4ceb8b33844afa4ccd8
+  m_Effects:
+  - {fileID: 24486538}
+  m_UserColorIndex: 0
+  m_Mute: 0
+  m_Solo: 0
+  m_BypassEffects: 0
+--- !u!244 &24400002
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: 
+  m_EffectID: 68a06563ec8b94425af9ac0787d080fb
+  m_EffectName: Attenuation
+  m_MixLevel: c43731db31c1d41939bda917c619a1af
+  m_Parameters: []
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
+--- !u!244 &24417904
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: 
+  m_EffectID: e1aba1003a51545f19483bed30c07c10
+  m_EffectName: Attenuation
+  m_MixLevel: 32f716f2312844ce6b9780eb895037fc
+  m_Parameters: []
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
+--- !u!244 &24430842
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: 
+  m_EffectID: 403ed2fd84807434d91835a88d4165a3
+  m_EffectName: Attenuation
+  m_MixLevel: 2cdde2a76845d4486aaff3e30ae95ee5
+  m_Parameters: []
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
+--- !u!244 &24445768
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: 
+  m_EffectID: de7438a101d924159adea8de550a15a3
+  m_EffectName: Attenuation
+  m_MixLevel: 49e0071185a64472a85e79c6432f8d49
+  m_Parameters: []
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
+--- !u!244 &24486538
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: 
+  m_EffectID: 5e13cc9ec5e46434ab8919bfad449ff2
+  m_EffectName: Attenuation
+  m_MixLevel: 9960ed5bab6b8494b915b0a3b5ebf19a
+  m_Parameters: []
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
+--- !u!245 &24500003
+AudioMixerSnapshotController:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: DefaultMusic
+  m_AudioMixer: {fileID: 24100000}
+  m_SnapshotID: b61c9989f45c641bb8ff42d3a8ba8a78
+  m_FloatValues:
+    7620e4e2ce369463dafe893b313ef678: -80
+    ac2377155645b4972ac55ddf85106ce3: -80
+    10846ceba793546b5868519b3f0405e3: -80
+    f3a43c9da5fbb4efd81533a9f460474c: -80
+  m_TransitionOverrides: {}
+--- !u!245 &24515086
+AudioMixerSnapshotController:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: CloisterOfTheSilence
+  m_AudioMixer: {fileID: 24100000}
+  m_SnapshotID: b234c4cf500194564a68269ce8d89912
+  m_FloatValues:
+    7620e4e2ce369463dafe893b313ef678: -80
+    10846ceba793546b5868519b3f0405e3: -80
+    f3a43c9da5fbb4efd81533a9f460474c: -80
+  m_TransitionOverrides: {}
+--- !u!245 &24563452
+AudioMixerSnapshotController:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: SpireHigh
+  m_AudioMixer: {fileID: 24100000}
+  m_SnapshotID: f2aa387ac02b5450d98166046fe91770
+  m_FloatValues:
+    7620e4e2ce369463dafe893b313ef678: -80
+    ac2377155645b4972ac55ddf85106ce3: -80
+    10846ceba793546b5868519b3f0405e3: -80
+    f3a43c9da5fbb4efd81533a9f460474c: -1.5191216
+  m_TransitionOverrides: {}
+--- !u!245 &24588862
+AudioMixerSnapshotController:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: RosetteOfTheWingedOnes
+  m_AudioMixer: {fileID: 24100000}
+  m_SnapshotID: 07dd08e3940104d96b6e67ff740d4a62
+  m_FloatValues:
+    ac2377155645b4972ac55ddf85106ce3: -80
+    10846ceba793546b5868519b3f0405e3: -80
+    f3a43c9da5fbb4efd81533a9f460474c: -80
+  m_TransitionOverrides: {}
+--- !u!245 &24593520
+AudioMixerSnapshotController:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: PipesOfAwakening
+  m_AudioMixer: {fileID: 24100000}
+  m_SnapshotID: 2949095bf16c24533bc35ae02d2a43a3
+  m_FloatValues:
+    7620e4e2ce369463dafe893b313ef678: -80
+    ac2377155645b4972ac55ddf85106ce3: -80
+    10846ceba793546b5868519b3f0405e3: -1.8241322
+    f3a43c9da5fbb4efd81533a9f460474c: -80
+  m_TransitionOverrides: {}

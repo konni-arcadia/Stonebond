@@ -25,7 +25,7 @@ public class MenuManager : MonoBehaviour {
         buttonList = StartButtonArea.GetComponentsInChildren<Outline>(true);
 
         PlayerPrefs.DeleteAll();
-        SoundManager.Instance.PressStart_Play();
+		AudioSingleton<MenuAudioManager>.Instance.SetMainMenuSnapshot();
 		StartButtonArea.SetActive(false);
 		PressStartButtonArea.SetActive(true);
 		StartCoroutine(ShowPressStartAfterDelay());
@@ -49,7 +49,7 @@ public class MenuManager : MonoBehaviour {
 
 	IEnumerator ShowMenuAfterDelay() {
 		PressStartButtonArea.SetActive(false);
-		SoundManager.Instance.VOICE_Title_Play();
+		AudioSingleton<VoiceAudioManager>.Instance.PlayTitle();
 		yield return new WaitForSeconds(0.2f);
 		StartButtonArea.SetActive(true);
 	}
@@ -69,16 +69,16 @@ public class MenuManager : MonoBehaviour {
 						break;
 
 					case StartMenuItem.GameStart: Application.LoadLevelAdditiveAsync("SelectPlayers");
-						SoundManager.Instance.PressStart_Stop();
+						AudioSingleton<MenuAudioManager>.Instance.SetDefaultSnapshot();
 						break;
 
 					case StartMenuItem.Credits: Application.LoadLevelAdditiveAsync("Credits");
-						SoundManager.Instance.PressStart_Stop();
+					AudioSingleton<MenuAudioManager>.Instance.SetDefaultSnapshot();
 						break;
 
 					case StartMenuItem.HowTo: return;
 				}
-				SoundManager.Instance.Validate_Play();
+				AudioSingleton<SfxAudioManager>.Instance.PlayValidate();
 				Destroy(gameObject);
 			}            
         }
@@ -94,7 +94,7 @@ public class MenuManager : MonoBehaviour {
                     menuSelectedItem -= 1;
                     buttonList[(int)menuSelectedItem].effectColor = highlithed;
                     wasPressed[noControler - 1] = true;
-                    SoundManager.Instance.Cursor_Play();
+                    AudioSingleton<SfxAudioManager>.Instance.PlayCursor();
                 }
 
             }
@@ -106,7 +106,7 @@ public class MenuManager : MonoBehaviour {
                     menuSelectedItem += 1;
                     buttonList[(int)menuSelectedItem].effectColor = highlithed;
                     wasPressed[noControler - 1] = true;
-                    SoundManager.Instance.Cursor_Play();
+                    AudioSingleton<SfxAudioManager>.Instance.PlayCursor();
                 }
 
             }

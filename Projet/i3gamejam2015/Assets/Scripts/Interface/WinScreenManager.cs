@@ -114,7 +114,7 @@ public class WinScreenManager : MonoBehaviour {
                                                 break;
                 }
                 Time.timeScale = 1.0f;
-                SoundManager.Instance.Validate_Play();
+				AudioSingleton<SfxAudioManager>.Instance.PlayValidate();
             }
 
 			// Select previous button
@@ -126,7 +126,7 @@ public class WinScreenManager : MonoBehaviour {
                     menuSelectedItem -= 1;
                     buttonList[(int)menuSelectedItem].effectColor = highlithed;
                     wasPressed[noControler - 1] = true;
-                    SoundManager.Instance.Cursor_Play();
+					AudioSingleton<SfxAudioManager>.Instance.PlayCursor();
                 }
 
             }
@@ -139,7 +139,7 @@ public class WinScreenManager : MonoBehaviour {
                     menuSelectedItem += 1;
                     buttonList[(int)menuSelectedItem].effectColor = highlithed;
                     wasPressed[noControler - 1] = true;
-                    SoundManager.Instance.Cursor_Play();
+					AudioSingleton<SfxAudioManager>.Instance.PlayCursor();
                 }
 
             }

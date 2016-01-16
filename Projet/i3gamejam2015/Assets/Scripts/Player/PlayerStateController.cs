@@ -95,6 +95,10 @@ public class PlayerStateController : MonoBehaviour
     //
 
     public float chargeTime = 1.0f;
+	public float chargeGravityReductionTime = 0.08f; // secs
+	public bool chargeReady = false;
+	public float chargeReadyTime; // secs
+	public float chargeReadyMaxTime = 2.0f; // max time player can stay with charge ready in secs
 
     //
     // SPECIAL ATTACK
@@ -658,32 +662,51 @@ public class PlayerStateController : MonoBehaviour
     }
     
     private void UpdateCharge()
-    {   
-        float statePct = stateTime / chargeTime;
-        if (statePct > 0.5f)
-        {
-            movementController.resetVelocity();
-            movementController.setGravityFactor(0.0f);
-        }
-        else
-        {
-            // gradually reduce gravity
-            movementController.setGravityFactor((0.5f - statePct) * 1.5f);
-        }
+    {
+		// increase state time
+		stateTime += Time.deltaTime;
 
-        if (!inputManager.IsHeld(playerId, InputManager.BUTTON_CHARGE))
-        {
+		// increase charge ready time if ready
+		if(chargeReady)
+			chargeReadyTime += Time.deltaTime;
+
+		// gradually reduce gravity
+		if(stateTime < chargeGravityReductionTime)
+		{
+			movementController.setGravityFactor(stateTime / chargeGravityReductionTime);
+		} 
+		else 
+		{
+			movementController.resetVelocity();
+			movementController.setGravityFactor(0.0f);
+		}
+
+		// stop charge if charge button is released before charge is ready
+		// or charge ready time exceeds max charge time
+		if (!chargeReady && !inputManager.IsHeld(playerId, InputManager.BUTTON_CHARGE)
+			|| (chargeReady && chargeReadyTime >= chargeReadyMaxTime))
+		{
+			chargeReady = false;
             statusProvider.setChargeStop(false);
             SetState(State.IDLE);
             return;
         }
 
-        stateTime += Time.deltaTime;
-        if (stateTime >= chargeTime)
+		// detect if charge is ready ?
+        if (stateTime >= chargeTime && !chargeReady)
         {
-            statusProvider.setChargeStop(true);
-            SetState(State.SPECIAL_ATTACK);
+			chargeReady = true;
+			chargeReadyTime = 0;
+            statusProvider.setChargeReady();
         }
+
+		// trigger special attack if charge button is released when charge is ready
+		if(chargeReady && !inputManager.IsHeld(playerId, InputManager.BUTTON_CHARGE))
+		{
+			chargeReady = false;
+			statusProvider.setChargeStop(true);
+			SetState(State.SPECIAL_ATTACK);
+		}
     }
 
     //

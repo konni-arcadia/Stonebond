@@ -1107,4 +1107,9 @@ public class PlayerStateController : MonoBehaviour
         Gizmos.color = new Color(color.r, color.g, color.b, DEBUG_ALPHA);
         Gizmos.DrawCube(new Vector3(x, y, 0.0f), new Vector3(width, height, 0.0f));
     }
+
+    public void SetGameOver()
+    {
+        movementController.gameOver = true;
+    }
 }

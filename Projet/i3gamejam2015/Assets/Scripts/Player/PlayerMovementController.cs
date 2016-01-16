@@ -19,6 +19,8 @@ public class PlayerMovementController : MonoBehaviour
 	public float frictionFactorAir = 0.1f;
     public float oneWayPlatformHitAngle = 20.0f;
 
+    public bool gameOver = false;
+
     private bool grounded = true;			// Whether or not the player is grounded.
     private bool isGrinding = false;
     private bool onWall = false;
@@ -59,6 +61,10 @@ public class PlayerMovementController : MonoBehaviour
 
     void Update()
     {
+
+        if (gameOver)
+            return;
+
         bool wasGrounded = grounded;
         grounded = body.velocity.y <= 0 && IsHittingSolid(raycastBase, groundChecks, Vector2.down);
 
@@ -112,6 +118,10 @@ public class PlayerMovementController : MonoBehaviour
 
     void FixedUpdate()
     {
+
+        if (gameOver)
+            return;
+
         // Cache the horizontal input.
         float h = isMovementEnabled && disallowDirectionTime == 0 ? inputManager.AxisValue(playerId, InputManager.Horizontal) : 0;
 

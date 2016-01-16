@@ -25,7 +25,7 @@ public class CountDownManager : MonoBehaviour {
 	
 	public void OnFightTextShown()
 	{
-		Flash.flash ();
+		Flash.Show ();
 		// TODO add sound
 		//Debug.Log("OnFightTextShown");
 		AudioSingleton<VoiceAudioManager>.Instance.PlayFight();

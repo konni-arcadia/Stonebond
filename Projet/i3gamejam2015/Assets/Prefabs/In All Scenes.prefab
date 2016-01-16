@@ -433,6 +433,7 @@ MonoBehaviour:
   gaugeDecreaseFactor: 0.00025
   increaseStartCooldownSecs: 2.5
   introDuration: 2.5
+  bondPauseTime: 2
 --- !u!212 &21200886
 SpriteRenderer:
   m_ObjectHideFlags: 1

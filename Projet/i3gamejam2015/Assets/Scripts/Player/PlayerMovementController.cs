@@ -141,7 +141,7 @@ public class PlayerMovementController : MonoBehaviour
         // When grinding, limit the velocity
         if (isGrinding && velocity.y < maxVelocityWhenGrinding)
             velocity.y = maxVelocityWhenGrinding;
-        body.velocity = velocity;
+		setVelocity(velocity);
 
         // If the player should jump...
         if (wantJump || wantWallJump)
@@ -156,7 +156,7 @@ public class PlayerMovementController : MonoBehaviour
             // Ensure that the current vy doesn't take in account
             Vector2 vel = body.velocity;
             vel.y = 0;
-            body.velocity = vel;
+			setVelocity(vel);
             // Add a vertical force to the player.
             body.AddForce(new Vector2(0.0f, initialJumpForce));
 

@@ -59,7 +59,10 @@ public class LevelManager : MonoBehaviour {
 					bondLinkGauge = 1;
 					if (!hasAlreadyShownWinScreen) {
 						// TODO create event for that
-						if(SoundManager.Instance != null) SoundManager.Instance.TriggerGameFinished();
+						AudioSingleton<MusicAudioManager>.Instance.SetMusicDefaultSnapshot();
+						AudioSingleton<SfxAudioManager>.Instance.PlayStopBound();
+						AudioSingleton<SfxAudioManager>.Instance.PlayVictoryJingle();
+						AudioSingleton<MenuAudioManager>.Instance.SetMainMenuSnapshot();
 
 						var p1 = bondLink.playerAStateController;
 						var p2 = bondLink.playerBStateController;

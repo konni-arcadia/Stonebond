@@ -17,7 +17,7 @@ public class PlayersSelectorManager : MonoBehaviour {
         listPlayerSelector = GetComponentsInChildren<PlayerSelectorManager>();
 
         InitializePlayerSelection();
-        SoundManager.Instance.CharacterSelect_Play();
+		AudioSingleton<MenuAudioManager>.Instance.SetSelectCharacterSnapshot();
 
 		selectedControllers = new bool[listPlayerSelector.Length];
 	}
@@ -84,7 +84,7 @@ public class PlayersSelectorManager : MonoBehaviour {
 		if (inputManager.WasPressedCtrl(noControler, InputManager.B))
         {
             Application.LoadLevelAdditiveAsync("SelectOption");
-            SoundManager.Instance.Cancel_Play();
+			AudioSingleton<SfxAudioManager>.Instance.PlayCancel();
             Destroy(gameObject);
         }
     }

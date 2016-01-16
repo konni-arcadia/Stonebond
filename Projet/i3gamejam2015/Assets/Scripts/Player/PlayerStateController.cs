@@ -13,6 +13,8 @@ public class PlayerStateController : MonoBehaviour
     private PlayerStatusProvider statusProvider;
     private List<PlayerStateController> enemies = new List<PlayerStateController>();
     
+	private Shield shield;
+
     // 
     // GLOBAL STATE
     //
@@ -146,12 +148,18 @@ public class PlayerStateController : MonoBehaviour
 
         attackUpCollider.enabled = false;
         attackDownCollider.enabled = false;
-            attackForwardCollider.enabled = false;
+		attackForwardCollider.enabled = false;
         specialAttackCollider.enabled = false;
 
         inputManager = FindObjectOfType<InputManager>();
         movementController = GetComponent<PlayerMovementController>();
         statusProvider = GetComponent<PlayerStatusProvider>();
+
+		shield = GetComponentInChildren<Shield> ();
+		if (shield) {
+			shield.SetPlayer (playerId);
+		}
+		shield.gameObject.SetActive (false);
 
         statusProvider.OnGroundedStatusChanged += HandleOnGroundedStatusChanged;
         statusProvider.OnOnWallStatusChanged += HandleOnOnWallStatusChanged;
@@ -827,6 +835,19 @@ public class PlayerStateController : MonoBehaviour
                 break;
         }
     }
+
+	//
+	// SHIELD
+	//
+
+	public void ActivateShield() {
+		shield.gameObject.SetActive (true);
+		shield.Create ();
+	}
+
+	public void DisableShield() {
+		shield.Break ();
+	}
 
     //
     // INVINCIBLE

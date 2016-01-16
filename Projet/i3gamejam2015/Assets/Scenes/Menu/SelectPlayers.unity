@@ -119,9 +119,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_MinimumChartSize: 4
   m_AutoUVMaxDistance: .5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
@@ -293,15 +291,13 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_MinimumChartSize: 4
   m_AutoUVMaxDistance: .5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 21
-  m_Sprite: {fileID: 21300000, guid: cf513ba91f5edaa4c94eae649305ed9e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1bb05ab0f98f0ba498e085da7b842b14, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!4 &413565031
 Transform:
@@ -635,15 +631,13 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_MinimumChartSize: 4
   m_AutoUVMaxDistance: .5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 21
-  m_Sprite: {fileID: 21300000, guid: 77fb3a0bd2fa7634d90ab68fc8b05d50, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4446d4c83f99b244b8b761e335f2552e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1225160628
 GameObject:
@@ -929,15 +923,13 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_MinimumChartSize: 4
   m_AutoUVMaxDistance: .5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 21
-  m_Sprite: {fileID: 21300000, guid: fcc6a45790c7e2848bc8af9eeaad5e3d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6e15f25db2837584daae24115b3c0f56, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!4 &1508331813
 Transform:
@@ -1162,15 +1154,13 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_MinimumChartSize: 4
   m_AutoUVMaxDistance: .5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 21
-  m_Sprite: {fileID: 21300000, guid: 32a6a6aa9858b244f9061416db3547ed, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8d4e8330ca2b6e54c89d7c223a31439d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1838756762
 GameObject:

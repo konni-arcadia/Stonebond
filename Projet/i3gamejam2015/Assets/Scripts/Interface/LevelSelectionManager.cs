@@ -47,20 +47,16 @@ public class LevelSelectionManager : MonoBehaviour {
 			AudioSingleton<MenuAudioManager>.Instance.SetDefaultSnapshot();
             switch (menuSelectedItem)
             {
-                case LvlSelectionItem.Cathedrale: Application.LoadLevel("LevelCathedrale");
-					//AudioSingleton<MusicAudioManager>.Instance.Stage_Play(Constants.StageEnum.RosetteOfTheWingedOnes);
+                case LvlSelectionItem.Cathedrale: Application.LoadLevel("LevelCathedrale");					
                     break;
 
                 case LvlSelectionItem.Forest: Application.LoadLevel("LevelForest"); ;
-					//AudioSingleton<MusicAudioManager>.Instance.Stage_Play(Constants.StageEnum.CloisterOfTheSilence);
                     break;
 
                 case LvlSelectionItem.Pipes: Application.LoadLevel("LevelOrgan"); ;
-					//AudioSingleton<MusicAudioManager>.Instance.Stage_Play(Constants.StageEnum.PipesOfAwakening);
                     break;
 
                 case LvlSelectionItem.Spire: Application.LoadLevel("LevelRoof"); ;
-					//AudioSingleton<MusicAudioManager>.Instance.Stage_Play(Constants.StageEnum.SpireHigh);
                     break;
             }
         }

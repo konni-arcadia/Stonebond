@@ -59,7 +59,6 @@ public class PlayerSelectorManager : MonoBehaviour {
 
     public void SetInitialState()
     {
-		AudioSingleton<SfxAudioManager>.Instance.PlayValidate();
         PlayerSelection.SetActive(false);
         //Name.enabled = false;
         Ready.enabled = false;

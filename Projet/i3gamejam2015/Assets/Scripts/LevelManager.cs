@@ -138,4 +138,9 @@ public class LevelManager : MonoBehaviour {
 				throw new InvalidOperationException("Player ID " + p.GetPlayerId() + " more than once in this scene");
 		}
 	}
+
+	public Constants.StageEnum GetCurrentStageEnum()
+	{
+		return (Constants.StageEnum) Enum.Parse(typeof(Constants.StageEnum), (string)Application.loadedLevelName);
+	}
 }

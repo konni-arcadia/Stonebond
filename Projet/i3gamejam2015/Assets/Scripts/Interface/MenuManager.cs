@@ -83,34 +83,38 @@ public class MenuManager : MonoBehaviour {
 			}            
         }
 
-		if (!wasPressed[noControler-1] && inputManager.AxisValueCtrl(noControler, InputManager.Vertical) < -InputManager.AxisDeadZone)
+
+        if (StartButtonArea.active)
         {
-            if (menuSelectedItem != (StartMenuItem)0)
+            if (!wasPressed[noControler - 1] && inputManager.AxisValueCtrl(noControler, InputManager.Vertical) < -InputManager.AxisDeadZone)
             {
-                buttonList[(int)menuSelectedItem].effectColor = normal;
-                menuSelectedItem -= 1;
-                buttonList[(int)menuSelectedItem].effectColor = highlithed;
-                wasPressed[noControler - 1] = true;
-                SoundManager.Instance.Cursor_Play();
+                if (menuSelectedItem != (StartMenuItem)0)
+                {
+                    buttonList[(int)menuSelectedItem].effectColor = normal;
+                    menuSelectedItem -= 1;
+                    buttonList[(int)menuSelectedItem].effectColor = highlithed;
+                    wasPressed[noControler - 1] = true;
+                    SoundManager.Instance.Cursor_Play();
+                }
+
             }
-            
-        }
-		else if (!wasPressed[noControler - 1] && inputManager.AxisValueCtrl(noControler, InputManager.Vertical) > InputManager.AxisDeadZone)
-        {
-            if (menuSelectedItem != StartMenuItem.Quit)
+            else if (!wasPressed[noControler - 1] && inputManager.AxisValueCtrl(noControler, InputManager.Vertical) > InputManager.AxisDeadZone)
             {
-                buttonList[(int)menuSelectedItem].effectColor = normal;
-                menuSelectedItem += 1;
-                buttonList[(int)menuSelectedItem].effectColor = highlithed;
-                wasPressed[noControler - 1] = true;
-                SoundManager.Instance.Cursor_Play();
+                if (menuSelectedItem != StartMenuItem.Quit)
+                {
+                    buttonList[(int)menuSelectedItem].effectColor = normal;
+                    menuSelectedItem += 1;
+                    buttonList[(int)menuSelectedItem].effectColor = highlithed;
+                    wasPressed[noControler - 1] = true;
+                    SoundManager.Instance.Cursor_Play();
+                }
+
             }
-            
-        }
-		else if (inputManager.AxisValueCtrl(noControler, InputManager.Vertical) < InputManager.AxisDeadZone &&
-		         inputManager.AxisValueCtrl(noControler, InputManager.Vertical) > -InputManager.AxisDeadZone && wasPressed[noControler-1])
-        {
-            wasPressed[noControler - 1] = false;
+            else if (inputManager.AxisValueCtrl(noControler, InputManager.Vertical) < InputManager.AxisDeadZone &&
+                     inputManager.AxisValueCtrl(noControler, InputManager.Vertical) > -InputManager.AxisDeadZone && wasPressed[noControler - 1])
+            {
+                wasPressed[noControler - 1] = false;
+            }
         }
     }
 }

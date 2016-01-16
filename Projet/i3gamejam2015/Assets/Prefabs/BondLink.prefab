@@ -62,7 +62,7 @@ GameObject:
   - 198: {fileID: 19849578}
   - 199: {fileID: 19944870}
   m_Layer: 0
-  m_Name: P3MagicalParticles
+  m_Name: P2MagicalParticles
   m_TagString: Untagged
   m_Icon: {fileID: -3545028842045912814, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -110,7 +110,7 @@ GameObject:
   - 198: {fileID: 19840148}
   - 199: {fileID: 19907220}
   m_Layer: 0
-  m_Name: P3ForwardLineParticles
+  m_Name: P2ForwardLineParticles
   m_TagString: Untagged
   m_Icon: {fileID: -3545028842045912814, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -316,7 +316,7 @@ GameObject:
   - 198: {fileID: 19847338}
   - 199: {fileID: 19964616}
   m_Layer: 0
-  m_Name: P2ForwardLineParticles
+  m_Name: P3ForwardLineParticles
   m_TagString: Untagged
   m_Icon: {fileID: -3545028842045912814, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -333,7 +333,7 @@ GameObject:
   - 198: {fileID: 19894422}
   - 199: {fileID: 19904550}
   m_Layer: 0
-  m_Name: P3ForwardLineParticles
+  m_Name: P2ForwardLineParticles
   m_TagString: Untagged
   m_Icon: {fileID: -3545028842045912814, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -384,7 +384,7 @@ GameObject:
   - 198: {fileID: 19814586}
   - 199: {fileID: 19979490}
   m_Layer: 0
-  m_Name: P2ForwardLineParticles
+  m_Name: P3ForwardLineParticles
   m_TagString: Untagged
   m_Icon: {fileID: -3545028842045912814, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -417,7 +417,7 @@ GameObject:
   - 198: {fileID: 19842278}
   - 199: {fileID: 19979644}
   m_Layer: 0
-  m_Name: P2MagicalParticles
+  m_Name: P3MagicalParticles
   m_TagString: Untagged
   m_Icon: {fileID: -3545028842045912814, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -450,7 +450,7 @@ GameObject:
   - 198: {fileID: 19843708}
   - 199: {fileID: 19978200}
   m_Layer: 0
-  m_Name: P2MagicalParticles
+  m_Name: P3MagicalParticles
   m_TagString: Untagged
   m_Icon: {fileID: -3545028842045912814, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -484,7 +484,7 @@ GameObject:
   - 198: {fileID: 19877388}
   - 199: {fileID: 19994654}
   m_Layer: 0
-  m_Name: P3MagicalParticles
+  m_Name: P2MagicalParticles
   m_TagString: Untagged
   m_Icon: {fileID: -3545028842045912814, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -648,8 +648,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 487952}
-  - {fileID: 497338}
   - {fileID: 456624}
+  - {fileID: 497338}
   - {fileID: 492304}
   m_Father: {fileID: 404090}
   m_RootOrder: 1
@@ -664,8 +664,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 477438}
-  - {fileID: 452984}
   - {fileID: 425326}
+  - {fileID: 452984}
   - {fileID: 485890}
   m_Father: {fileID: 438214}
   m_RootOrder: 1
@@ -694,7 +694,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 422032}
-  m_RootOrder: 2
+  m_RootOrder: 1
 --- !u!4 &426020
 Transform:
   m_ObjectHideFlags: 1
@@ -706,8 +706,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 405680}
-  - {fileID: 465748}
   - {fileID: 427162}
+  - {fileID: 465748}
   - {fileID: 474312}
   m_Father: {fileID: 438214}
   m_RootOrder: 0
@@ -722,7 +722,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 426020}
-  m_RootOrder: 2
+  m_RootOrder: 1
 --- !u!4 &435052
 Transform:
   m_ObjectHideFlags: 1
@@ -775,8 +775,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 411076}
-  - {fileID: 471546}
   - {fileID: 494704}
+  - {fileID: 471546}
   - {fileID: 464680}
   m_Father: {fileID: 404090}
   m_RootOrder: 0
@@ -816,7 +816,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 422032}
-  m_RootOrder: 1
+  m_RootOrder: 2
 --- !u!4 &453738
 Transform:
   m_ObjectHideFlags: 1
@@ -840,7 +840,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 418506}
-  m_RootOrder: 2
+  m_RootOrder: 1
 --- !u!4 &457682
 Transform:
   m_ObjectHideFlags: 1
@@ -900,7 +900,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 426020}
-  m_RootOrder: 1
+  m_RootOrder: 2
 --- !u!4 &471546
 Transform:
   m_ObjectHideFlags: 1
@@ -912,7 +912,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 444834}
-  m_RootOrder: 1
+  m_RootOrder: 2
 --- !u!4 &474312
 Transform:
   m_ObjectHideFlags: 1
@@ -1028,7 +1028,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 444834}
-  m_RootOrder: 2
+  m_RootOrder: 1
 --- !u!4 &497338
 Transform:
   m_ObjectHideFlags: 1
@@ -1040,7 +1040,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 418506}
-  m_RootOrder: 1
+  m_RootOrder: 2
 --- !u!4 &499990
 Transform:
   m_ObjectHideFlags: 1
@@ -1158,13 +1158,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   magicalParticles:
   - {fileID: 19813278}
-  - {fileID: 19843708}
   - {fileID: 19849578}
+  - {fileID: 19843708}
   - {fileID: 19896876}
   lineParticles:
   - {fileID: 19889376}
-  - {fileID: 19847338}
   - {fileID: 19840148}
+  - {fileID: 19847338}
   - {fileID: 19845874}
   contactAnimator: {fileID: 9574716}
 --- !u!114 &11488442
@@ -1180,13 +1180,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   magicalParticles:
   - {fileID: 19868190}
-  - {fileID: 19842278}
   - {fileID: 19877388}
+  - {fileID: 19842278}
   - {fileID: 19843156}
   lineParticles:
   - {fileID: 19823040}
-  - {fileID: 19814586}
   - {fileID: 19894422}
+  - {fileID: 19814586}
   - {fileID: 19876274}
   contactAnimator: {fileID: 9574716}
 --- !u!198 &19813278

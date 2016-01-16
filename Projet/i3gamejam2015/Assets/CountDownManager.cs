@@ -32,8 +32,7 @@ public class CountDownManager : MonoBehaviour {
 	
 	public void OnCountDownOver()
 	{
-        // TODO notify level manager
-        //Debug.Log("OnCountDownOver");
-		//AudioSingleton<VoiceAudioManager>.Instance.PlayGameOver();
+        Debug.Log("OnCountDownOver");
+		AudioSingleton<MusicAudioManager>.Instance.Stage_Play(levelMgr.GetCurrentStageEnum());
     }
 }

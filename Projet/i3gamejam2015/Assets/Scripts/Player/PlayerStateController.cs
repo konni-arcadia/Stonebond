@@ -96,6 +96,7 @@ public class PlayerStateController : MonoBehaviour
 
     public float chargeTime = 1.0f;
 	public float chargeGravityReductionTime = 0.08f; // secs
+	public bool chargeReady = false;
 
     //
     // SPECIAL ATTACK
@@ -660,6 +661,9 @@ public class PlayerStateController : MonoBehaviour
     
     private void UpdateCharge()
     {
+		// increase state time
+		stateTime += Time.deltaTime;
+
 		// gradually reduce gravity
 		if(stateTime < chargeGravityReductionTime)
 		{
@@ -671,19 +675,28 @@ public class PlayerStateController : MonoBehaviour
 			movementController.setGravityFactor(0.0f);
 		}
 
-        if (!inputManager.IsHeld(playerId, InputManager.BUTTON_CHARGE))
-        {
+		// stop charge if charge button is released before charge is ready
+		if (!chargeReady && !inputManager.IsHeld(playerId, InputManager.BUTTON_CHARGE))
+		{
             statusProvider.setChargeStop(false);
             SetState(State.IDLE);
             return;
         }
 
-        stateTime += Time.deltaTime;
-        if (stateTime >= chargeTime)
+		// charge ready ?
+        if (stateTime >= chargeTime && !chargeReady)
         {
-            statusProvider.setChargeStop(true);
-            SetState(State.SPECIAL_ATTACK);
+			chargeReady = true;
+            statusProvider.setChargeReady();
         }
+
+		// attack if charge button is released when charge is ready
+		if(chargeReady && !inputManager.IsHeld(playerId, InputManager.BUTTON_CHARGE))
+		{
+			chargeReady = false;
+			statusProvider.setChargeStop(true);
+			SetState(State.SPECIAL_ATTACK);
+		}
     }
 
     //

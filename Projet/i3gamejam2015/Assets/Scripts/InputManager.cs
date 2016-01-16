@@ -81,7 +81,7 @@ public class InputManager : Singleton<InputManager> {
 					buttonValue = buttonValue || inputDevice.Action3.IsPressed;
 					break;
 				case InputManager.BUTTON_CHARGE:
-					buttonValue = buttonValue || inputDevice.Action4.IsPressed;
+					buttonValue = buttonValue || inputDevice.Action4.IsPressed || inputDevice.Action2.IsPressed;
 					break;
 				}
 			}
@@ -109,7 +109,7 @@ public class InputManager : Singleton<InputManager> {
 					buttonValue = buttonValue || inputDevice.Action3.WasPressed;
 					break;
 				case InputManager.BUTTON_CHARGE:
-					buttonValue = buttonValue || inputDevice.Action4.WasPressed;
+					buttonValue = buttonValue || inputDevice.Action4.WasPressed || inputDevice.Action2.WasPressed;
 					break;
 				case InputManager.START:
 					buttonValue = buttonValue || inputDevice.MenuWasPressed;

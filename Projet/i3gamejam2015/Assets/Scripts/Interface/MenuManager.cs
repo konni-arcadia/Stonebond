@@ -1,4 +1,4 @@
-﻿using UnityEngine;AudioSingleton<SfxAudioManager>.Instance.PlayCursor();
+﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 

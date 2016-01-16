@@ -15,7 +15,7 @@ public class LevelSelectionManager : MonoBehaviour {
     public Image selectedLevelImage;
     public List<Sprite> levelList;
 
-    private LvlSelectionItem menuSelectedItem = LvlSelectionItem.Spire;
+    private LvlSelectionItem menuSelectedItem = LvlSelectionItem.Cathedrale;
 
     private bool[] wasPressed = new bool[4];
 	private InputManager inputManager;

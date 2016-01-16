@@ -102,6 +102,13 @@ public class PlayerStatusProvider : MonoBehaviour {
 		if (OnChargeStopAction != null) OnChargeStopAction(complete);
 	}
 
+	public delegate void ChargeReadyAction();
+	public event ChargeReadyAction OnChargeReadyAction;
+	public void setChargeReady()
+	{
+		if (OnChargeReadyAction != null) OnChargeReadyAction();
+	}
+
 	public delegate void AttackSpecialStartAction(Vector2 direction);
     public event AttackSpecialStartAction OnAttackSpecialStartAction;
 	public void setAttackSpecialStart(Vector2 direction)

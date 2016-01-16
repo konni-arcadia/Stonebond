@@ -18,7 +18,7 @@ public class PlayerSoundManager : MonoBehaviour
         statusProvider.onJumpAction += OnJumped;
         statusProvider.onWallJumpAction += OnWallJumped;
         statusProvider.OnAttackUpAction += OnAttack;
-        statusProvider.OnAttackSpecialAction += OnAttack;
+		statusProvider.OnAttackSpecialStartAction += OnSpecialAttack;
         statusProvider.OnAttackForwardAction += OnAttack;
         statusProvider.OnAttackDownAction += OnAttack;
         statusProvider.OnRespawnAction += OnRespawned;
@@ -33,6 +33,11 @@ public class PlayerSoundManager : MonoBehaviour
     {
 		AudioSingleton<SfxAudioManager>.Instance.PlayAttack();
     }
+
+	private void OnSpecialAttack(Vector2 direction)
+	{
+		AudioSingleton<SfxAudioManager>.Instance.PlayAttack(); // TODO sound for special action
+	}
 
     private void OnWallJumped()
     { 
@@ -82,7 +87,7 @@ public class PlayerSoundManager : MonoBehaviour
 		AudioSingleton<SfxAudioManager>.Instance.PlayKnockBack();
     }
 
-    private void onPlayerDied(Vector2 deathVector)
+	private void onPlayerDied(Transform source, Vector2 attackDirection)
     {
 		AudioSingleton<SfxAudioManager>.Instance.PlayDeath();
     }

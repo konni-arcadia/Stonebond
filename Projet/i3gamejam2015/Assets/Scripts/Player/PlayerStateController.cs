@@ -97,6 +97,7 @@ public class PlayerStateController : MonoBehaviour
     //
 
     public float chargeTime = 1.0f;
+	public float chargeGravityReductionTime = 0.08f; // secs
 
     //
     // SPECIAL ATTACK
@@ -666,18 +667,17 @@ public class PlayerStateController : MonoBehaviour
     }
     
     private void UpdateCharge()
-    {   
-        float statePct = stateTime / chargeTime;
-        if (statePct > 0.5f)
-        {
-            movementController.resetVelocity();
-            movementController.setGravityFactor(0.0f);
-        }
-        else
-        {
-            // gradually reduce gravity
-            movementController.setGravityFactor((0.5f - statePct) * 1.5f);
-        }
+    {
+		// gradually reduce gravity
+		if(stateTime < chargeGravityReductionTime)
+		{
+			movementController.setGravityFactor(stateTime / chargeGravityReductionTime);
+		} 
+		else 
+		{
+			movementController.resetVelocity();
+			movementController.setGravityFactor(0.0f);
+		}
 
         if (!inputManager.IsHeld(playerId, InputManager.BUTTON_CHARGE))
         {

@@ -69,6 +69,8 @@ public class BondLink : MonoBehaviour {
 
 	protected void OnBond() {
 
+        redrawLink();
+
 		playerAStateController = playerA.GetComponent<PlayerStateController>();
 		playerBStateController = playerB.GetComponent<PlayerStateController>();
 

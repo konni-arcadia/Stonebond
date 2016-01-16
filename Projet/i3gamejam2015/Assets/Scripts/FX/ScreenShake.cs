@@ -120,7 +120,7 @@ public class ScreenShake : MonoBehaviour
 
         shakeOffset.Set(0.0f, 0.0f, 0.0f);
 
-        if(enabled)
+        if(enabled && !TimeManager.isPaused)
         {
             for (int i = shakers.Count - 1; i >= 0; i--)
             {

@@ -97,6 +97,8 @@ public class PlayerStateController : MonoBehaviour
     public float chargeTime = 1.0f;
 	public float chargeGravityReductionTime = 0.08f; // secs
 	public bool chargeReady = false;
+	public float chargeReadyTime; // secs
+	public float chargeReadyMaxTime = 2.0f; // max time player can stay with charge ready in secs
 
     //
     // SPECIAL ATTACK
@@ -664,6 +666,10 @@ public class PlayerStateController : MonoBehaviour
 		// increase state time
 		stateTime += Time.deltaTime;
 
+		// increase charge ready time if ready
+		if(chargeReady)
+			chargeReadyTime += Time.deltaTime;
+
 		// gradually reduce gravity
 		if(stateTime < chargeGravityReductionTime)
 		{
@@ -676,21 +682,25 @@ public class PlayerStateController : MonoBehaviour
 		}
 
 		// stop charge if charge button is released before charge is ready
-		if (!chargeReady && !inputManager.IsHeld(playerId, InputManager.BUTTON_CHARGE))
+		// or charge ready time exceeds max charge time
+		if (!chargeReady && !inputManager.IsHeld(playerId, InputManager.BUTTON_CHARGE)
+			|| (chargeReady && chargeReadyTime >= chargeReadyMaxTime))
 		{
+			chargeReady = false;
             statusProvider.setChargeStop(false);
             SetState(State.IDLE);
             return;
         }
 
-		// charge ready ?
+		// detect if charge is ready ?
         if (stateTime >= chargeTime && !chargeReady)
         {
 			chargeReady = true;
+			chargeReadyTime = 0;
             statusProvider.setChargeReady();
         }
 
-		// attack if charge button is released when charge is ready
+		// trigger special attack if charge button is released when charge is ready
 		if(chargeReady && !inputManager.IsHeld(playerId, InputManager.BUTTON_CHARGE))
 		{
 			chargeReady = false;

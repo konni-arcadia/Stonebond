@@ -32,7 +32,7 @@ public class CountDownManager : MonoBehaviour {
 	
 	public void OnCountDownOver()
 	{
-        Debug.Log("OnCountDownOver");
+        //Debug.Log("OnCountDownOver");
 		AudioSingleton<MusicAudioManager>.Instance.Stage_Play(levelMgr.GetCurrentStageEnum());
     }
 }

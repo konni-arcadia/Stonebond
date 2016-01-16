@@ -83,6 +83,7 @@ public class PlayersSelectorManager : MonoBehaviour {
     {
 		if (inputManager.WasPressedCtrl(noControler, InputManager.B))
         {
+            PlayerPrefs.SetString("ComeFromMenu", "");
             Application.LoadLevelAdditiveAsync("SelectOption");
 			AudioSingleton<SfxAudioManager>.Instance.PlayCancel();
             Destroy(gameObject);

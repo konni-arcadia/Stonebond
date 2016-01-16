@@ -72,7 +72,12 @@ public class LevelManager : MonoBehaviour {
 						GameState.Instance.NotifyWinners(p1.GetPlayerId(), p2.GetPlayerId());
 						WinScreenManager.showScreen();
 						hasAlreadyShownWinScreen = true;
-					}
+
+                        foreach (PlayerStateController player in players)
+                        {
+                            player.SetGameOver();
+                        }
+                    }
 				}
 			}
 		}

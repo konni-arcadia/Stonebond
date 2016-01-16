@@ -39,23 +39,26 @@ public class TimeManager : MonoBehaviour
             if (counter <= 0.0f)
             {
                 Time.timeScale = manager.timeScale;
-                if(endCallback != null)
+                if (endCallback != null)
                 {
                     endCallback();
                 }
                 return false;
             }
+            else
+            {
+                //for(Updateable)
+            }
 
             return true;
         }
     }
-
-    private static TimeManager instance = null;
    
     private float lastFrameTime = 0.0f;
 
     private ArrayList pauses = new ArrayList();
-    private PauseEvent currentPause = null; 
+    private PauseEvent currentPause = null;
+    private float delta = 0.0f;
     
     void Awake()
     {
@@ -71,7 +74,7 @@ public class TimeManager : MonoBehaviour
     void Update()
     {
         float now = Time.realtimeSinceStartup;
-        float delta = now - lastFrameTime;
+        delta = now - lastFrameTime;
         lastFrameTime = now;
 
         if (currentPause != null)
@@ -91,13 +94,35 @@ public class TimeManager : MonoBehaviour
         }
     }
 
-    public static void Pause(float duration, BeginCallback beginCallback, EndCallback endCallback)
+    //
+    // STATIC
+    //
+
+    private static TimeManager instance = null;
+    
+    public static float realDeltaTime
+    {
+        get
+        {
+            return instance == null ? 0.0f : instance.delta;
+        }
+    }
+
+    public static bool isPaused
+    {
+        get
+        {
+            return instance == null ? false : instance.currentPause != null;
+        }
+    }
+
+    public static void Pause(float duration, BeginCallback beginCallback = null, EndCallback endCallback = null)
     {
         if (instance == null)
         {
             return;
         }
-
+        
         instance.pauses.Add(new PauseEvent(instance, duration, beginCallback, endCallback));
     }
 }

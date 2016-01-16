@@ -24,12 +24,24 @@ public class MenuManager : MonoBehaviour {
 		inputManager = GetComponent<InputManager> ();
         buttonList = StartButtonArea.GetComponentsInChildren<Outline>(true);
 
-        PlayerPrefs.DeleteAll();
+        
 		AudioSingleton<MenuAudioManager>.Instance.SetMainMenuSnapshot();
-		StartButtonArea.SetActive(false);
-		PressStartButtonArea.SetActive(true);
-		StartCoroutine(ShowPressStartAfterDelay());
-	}
+
+
+        if (PlayerPrefs.HasKey("ComeFromMenu"))
+        {
+            PressStartButtonArea.SetActive(false);
+            StartButtonArea.SetActive(true);
+        }
+        else
+        {
+            StartButtonArea.SetActive(false);
+            PressStartButtonArea.SetActive(true);
+            StartCoroutine(ShowPressStartAfterDelay());
+        }
+
+        PlayerPrefs.DeleteAll();
+    }
 	
 	// Update is called once per frame
 	void Update () {

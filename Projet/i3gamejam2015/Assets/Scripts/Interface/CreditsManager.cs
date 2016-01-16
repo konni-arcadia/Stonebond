@@ -35,6 +35,7 @@ public class CreditsManager : MonoBehaviour {
 
 		if (inputManager.WasPressedCtrl(noControler, InputManager.B))
         {
+            PlayerPrefs.SetString("ComeFromMenu", "");
             Application.LoadLevelAdditiveAsync("SelectOption");
 
             Destroy(gameObject);

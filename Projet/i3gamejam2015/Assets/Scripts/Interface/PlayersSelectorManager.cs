@@ -17,6 +17,7 @@ public class PlayersSelectorManager : MonoBehaviour {
         listPlayerSelector = GetComponentsInChildren<PlayerSelectorManager>();
 
         InitializePlayerSelection();
+		AudioSingleton<VoiceAudioManager>.Instance.SelectCharacterPlay();
 		AudioSingleton<MenuAudioManager>.Instance.SetSelectCharacterSnapshot();
 
 		selectedControllers = new bool[listPlayerSelector.Length];

@@ -145,8 +145,7 @@ public class PlayerFXManager : MonoBehaviour
 
     private void HandleOnDieWarning(Transform source, Vector2 attackDirection)
     {   
-        ScreenShake.SetEnabled(false);
-        Flash.flash();
+        Flash.Show(stateController.diePauseTime);
         SetOverlay(true);
         SetBodyColor(Color.black);
         SetChromaColor(Color.black);
@@ -159,7 +158,6 @@ public class PlayerFXManager : MonoBehaviour
 
     private void HandleOnDie(Transform source, Vector2 attackDirection)
     {
-        ScreenShake.SetEnabled(true);
         ScreenShake.ShakeXY(Mathf.Abs(attackDirection.x) * 0.4f, 0.5f, Mathf.Abs(attackDirection.y) * 0.4f, 0.5f);
         SetOverlay(false);
 

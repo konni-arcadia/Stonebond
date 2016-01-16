@@ -18,16 +18,16 @@ public class MusicAudioManager : BaseAudioManager {
 	{
 		switch (_stage)
 		{
-		case Constants.StageEnum.PipesOfAwakening:
+		case Constants.StageEnum.LevelOrgan:
 			AudioSingleton<MusicAudioManager>.Instance.SetPipesOfAwakeningSnapshot();
 			break;
-		case Constants.StageEnum.SpireHigh:
+		case Constants.StageEnum.LevelRoof:
 			AudioSingleton<MusicAudioManager>.Instance.SetSpireHighSnapshot();
 			break;
-		case Constants.StageEnum.CloisterOfTheSilence:
+		case Constants.StageEnum.LevelForest:
 			AudioSingleton<MusicAudioManager>.Instance.SetCloisterOfTheSilence();
 			break;
-		case Constants.StageEnum.RosetteOfTheWingedOnes:
+		case Constants.StageEnum.LevelCathedrale:
 			AudioSingleton<MusicAudioManager>.Instance.SetRosetteOfTheWingeSnapshot();
 			break;
 		}

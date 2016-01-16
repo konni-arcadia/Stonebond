@@ -12,6 +12,7 @@ public class LevelManager : MonoBehaviour {
 	public float gaugeDecreaseFactor;
 	public float increaseStartCooldownSecs = 2;
 	public float introDuration = 2;
+    public float bondPauseTime = 1.0f;
 	private BondLink bondLink;
 	private float bondLinkGauge, appearedSinceSec;
 	private WinScreenManager WinScreenManager {
@@ -96,7 +97,7 @@ public class LevelManager : MonoBehaviour {
 		ExitBondMode(p1, p2);
 
 		ScreenShake.ShakeXY (1.0f, 2.0f, 1.0f, 2.0f);
-		Flash.flash (0.0f, 0.0f, 0.0f);
+		Flash.Show ();
 	}
 
 	private void EnterBondMode(List<PlayerStateController> activePlayers) {
@@ -112,6 +113,8 @@ public class LevelManager : MonoBehaviour {
 		activePlayers [1].ActivateShield ();
 		bondLinkGauge = 0;
 		appearedSinceSec = 0;
+
+        TimeManager.Pause(bondPauseTime);
 	}
 
 	private void ExitBondMode(PlayerStateController p1, PlayerStateController p2) {

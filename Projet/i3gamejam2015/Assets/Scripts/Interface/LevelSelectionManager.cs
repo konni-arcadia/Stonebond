@@ -24,8 +24,7 @@ public class LevelSelectionManager : MonoBehaviour {
     void Start()
     {
 		inputManager = GetComponent<InputManager> ();
-        SoundManager.Instance.StageSelect_Play();
-
+		AudioSingleton<MenuAudioManager>.Instance.SetSelectStageSnapshot();
     }
 
     // Update is called once per frame
@@ -44,32 +43,33 @@ public class LevelSelectionManager : MonoBehaviour {
 			if(InControlObject != null)
 				Destroy(InControlObject);
 
-            SoundManager.Instance.StageSelect_Stop();
+			AudioSingleton<MenuAudioManager>.Instance.SetDefaultSnapshot();
             switch (menuSelectedItem)
             {
-
                 case LvlSelectionItem.Cathedrale: Application.LoadLevel("LevelCathedrale");
-                    SoundManager.Instance.Stage_Play(SoundManager.StageEnum.RosetteOfTheWingedOnes);
+					AudioSingleton<MusicAudioManager>.Instance.Stage_Play(Constants.StageEnum.RosetteOfTheWingedOnes);
                     break;
 
                 case LvlSelectionItem.Forest: Application.LoadLevel("LevelForest"); ;
-                    SoundManager.Instance.Stage_Play(SoundManager.StageEnum.CloisterOfTheSilence);
+					AudioSingleton<MusicAudioManager>.Instance.Stage_Play(Constants.StageEnum.CloisterOfTheSilence);
                     break;
 
                 case LvlSelectionItem.Pipes: Application.LoadLevel("LevelOrgan"); ;
-                    SoundManager.Instance.Stage_Play(SoundManager.StageEnum.PipesOfAwakening);
+					AudioSingleton<MusicAudioManager>.Instance.Stage_Play(Constants.StageEnum.PipesOfAwakening);
                     break;
 
                 case LvlSelectionItem.Spire: Application.LoadLevel("LevelRoof"); ;
-                    SoundManager.Instance.Stage_Play(SoundManager.StageEnum.SpireHigh);
+					AudioSingleton<MusicAudioManager>.Instance.Stage_Play(Constants.StageEnum.SpireHigh);
                     break;
             }
         }
 		else if (inputManager.WasPressedCtrl(noControler, InputManager.B ))
         {
             Application.LoadLevelAdditiveAsync("SelectPlayers");
-            SoundManager.Instance.StageSelect_Stop();
-            SoundManager.Instance.Cancel_Play();
+            //TODO not sure what it was supposed to do : SoundManager.Instance.StageSelect_Stop();
+			AudioSingleton<MenuAudioManager>.Instance.SetDefaultSnapshot();
+			AudioSingleton<SfxAudioManager>.Instance.PlayCancel();
+
             Destroy(gameObject);
         }
 
@@ -77,7 +77,7 @@ public class LevelSelectionManager : MonoBehaviour {
         {
             if (menuSelectedItem != (LvlSelectionItem)0)
             {
-                SoundManager.Instance.Cursor_Play();
+				AudioSingleton<SfxAudioManager>.Instance.PlayCursor();
                 menuSelectedItem -= 1;
                 selectedLevelImage.sprite = levelList[(int)menuSelectedItem];
                 wasPressed[noControler - 1] = true;
@@ -88,7 +88,7 @@ public class LevelSelectionManager : MonoBehaviour {
         {
             if (menuSelectedItem != LvlSelectionItem.Forest)
             {
-                SoundManager.Instance.Cursor_Play();
+				AudioSingleton<SfxAudioManager>.Instance.PlayCursor();
                 menuSelectedItem += 1;
                 selectedLevelImage.sprite = levelList[(int)menuSelectedItem];
                 wasPressed[noControler - 1] = true;

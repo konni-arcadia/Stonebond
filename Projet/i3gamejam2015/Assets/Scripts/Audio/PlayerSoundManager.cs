@@ -5,10 +5,12 @@ public class PlayerSoundManager : MonoBehaviour
 {
     public PlayerStatusProvider statusProvider;
 
+    bool prevIsGroundedFlag = true;
+
     void Start()
     {
         statusProvider.OnBoundChangedAction += OnBounded;
-        statusProvider.OnCollisionAction += OnCollision;
+        statusProvider.OnGroundedStatusChanged += OnGrounded;
         statusProvider.OnGrindingStatusChanged += OnWallrided;
         statusProvider.OnHorizontalKnockbackAction += onKnockbacked;
 		statusProvider.OnVerticalKnockbackAction += onKnockbacked;
@@ -16,8 +18,7 @@ public class PlayerSoundManager : MonoBehaviour
         statusProvider.onJumpAction += OnJumped;
         statusProvider.onWallJumpAction += OnWallJumped;
         statusProvider.OnAttackUpAction += OnAttack;
-        statusProvider.OnAttackSpecialStartAction += OnAttackSpecialStart;
-        statusProvider.OnAttackSpecialStopAction += OnAttackSpecialStop;
+		statusProvider.OnAttackSpecialStartAction += OnSpecialAttack;
         statusProvider.OnAttackForwardAction += OnAttack;
         statusProvider.OnAttackDownAction += OnAttack;
         statusProvider.OnRespawnAction += OnRespawned;
@@ -25,82 +26,48 @@ public class PlayerSoundManager : MonoBehaviour
 
     private void OnRespawned(bool initial)
     {
-		if (SoundManager.Instance != null) {
-			SoundManager.Instance.GAMEPLAY_Rebirth ();
-		}
+		AudioSingleton<SfxAudioManager>.Instance.PlayReBirth();
     }
 
     private void OnAttack()
     {
-		if (SoundManager.Instance != null) {
-			SoundManager.Instance.GAMEPLAY_Attack ();
-		}
+		AudioSingleton<SfxAudioManager>.Instance.PlayAttack();
     }
 
-    private void OnAttackSpecialStart(Vector2 direction)
-    {
-        if (SoundManager.Instance != null) {
-            SoundManager.Instance.GAMEPLAY_Attack ();
-        }
-    }
-
-    private void OnAttackSpecialStop()
-    {
-        if (SoundManager.Instance != null) {
-            SoundManager.Instance.GAMEPLAY_Land ();
-        }
-    }
+	private void OnSpecialAttack(Vector2 direction)
+	{
+		AudioSingleton<SfxAudioManager>.Instance.PlayAttack(); // TODO sound for special action
+	}
 
     private void OnWallJumped()
     { 
-		if (SoundManager.Instance != null) {
-			SoundManager.Instance.GAMEPLAY_Walljump ();
-		}
+		AudioSingleton<SfxAudioManager>.Instance.PlayWallJump();
     }
 
     private void OnJumped()
     {
-		if (SoundManager.Instance != null) {
-			SoundManager.Instance.GAMEPLAY_Jump ();
-		}
+		AudioSingleton<SfxAudioManager>.Instance.PlayJump();
     }
 
     private void OnBounded(bool isBounded)
     {
-		if (SoundManager.Instance != null) {
-			if (isBounded) {
-				SoundManager.Instance.StartBound ();
-			} else {
-				SoundManager.Instance.StopBound ();
-			}
+		if (isBounded) 
+		{
+			AudioSingleton<SfxAudioManager>.Instance.PlayStartBound();
+		}
+		else 
+		{
+			AudioSingleton<SfxAudioManager>.Instance.PlayStopBound();
 		}
     }
 
-    private void OnCollision(PlayerStatusProvider.CollisionType collisionType, Vector2 velocity)
+    private void OnGrounded(bool isGrounded)
     {
-        if (SoundManager.Instance == null)
+        if (isGrounded && !prevIsGroundedFlag)
         {
-            return;
+			AudioSingleton<SfxAudioManager>.Instance.PlayLand();
         }
-
-        switch (collisionType)
-        {
-            case PlayerStatusProvider.CollisionType.GROUND:
-                SoundManager.Instance.GAMEPLAY_Land();
-                break;
-            case PlayerStatusProvider.CollisionType.GROUND_ATTACK:
-                SoundManager.Instance.GAMEPLAY_Land();
-                break;
-            case PlayerStatusProvider.CollisionType.WALL:
-                // don't play any sound for normal wall collision
-                break;
-            case PlayerStatusProvider.CollisionType.WALL_ATTACK:
-                SoundManager.Instance.GAMEPLAY_Land();
-                break;
-            case PlayerStatusProvider.CollisionType.SPECIAL_ATTACK:
-                SoundManager.Instance.GAMEPLAY_Land();
-                break;
-        }
+        prevIsGroundedFlag = isGrounded;
     }
 
     private void OnWallrided(bool isOnWall)
@@ -117,16 +84,12 @@ public class PlayerSoundManager : MonoBehaviour
 
     private void onKnockbacked()
     {
-		if (SoundManager.Instance != null) {
-			SoundManager.Instance.GAMEPLAY_Knockback ();
-		}
+		AudioSingleton<SfxAudioManager>.Instance.PlayKnockBack();
     }
 
-    private void onPlayerDied(Transform source, Vector2 deathVector)
+	private void onPlayerDied(Transform source, Vector2 attackDirection)
     {
-		if (SoundManager.Instance != null) {
-			SoundManager.Instance.GAMEPLAY_Death ();
-		}
+		AudioSingleton<SfxAudioManager>.Instance.PlayDeath();
     }
 
     //void Update() { }

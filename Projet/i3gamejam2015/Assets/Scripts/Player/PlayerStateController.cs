@@ -13,8 +13,8 @@ public class PlayerStateController : MonoBehaviour
     private PlayerStatusProvider statusProvider;
     private List<PlayerStateController> enemies = new List<PlayerStateController>();
     
-	private Shield shield;
-	private Charge charge;
+	private Shield shieldAnimation;
+	private Charge chargeAnimation;
 
     // 
     // GLOBAL STATE
@@ -161,12 +161,12 @@ public class PlayerStateController : MonoBehaviour
 		attackForwardCollider.enabled = false;
         specialAttackCollider.enabled = false;
 
-		shield = GetComponentInChildren<Shield> ();
-		if (shield != null) {
-			shield.gameObject.SetActive (false);
+		shieldAnimation = GetComponentInChildren<Shield> ();
+		if (shieldAnimation != null) {
+			shieldAnimation.gameObject.SetActive (false);
 		}
 
-		charge = GetComponentInChildren<Charge> ();
+		chargeAnimation = GetComponentInChildren<Charge> ();
 
 		inputManager = FindObjectOfType<InputManager>();
         movementController = GetComponent<PlayerMovementController>();
@@ -202,13 +202,13 @@ public class PlayerStateController : MonoBehaviour
 	//    the playerId programmatically right after), then you have to call this method afterwards.
 	public void OnPlayerIdHasBeenSet() {
 		
-		if (shield != null) {
-			shield.SetPlayer (playerId);
+		if (shieldAnimation != null) {
+			shieldAnimation.SetPlayer (playerId);
 		}
 
-		if (charge != null) {
-			charge.SetPlayer (this);
-			charge.StopCharge ();
+		if (chargeAnimation != null) {
+			chargeAnimation.SetPlayer (this);
+			chargeAnimation.StopCharge ();
 		}
 
 	}
@@ -686,7 +686,7 @@ public class PlayerStateController : MonoBehaviour
         
         statusProvider.setChargeStart();
 
-		charge.StartCharge ();
+		chargeAnimation.StartCharge ();
     }
     
     private void LeaveCharge()
@@ -697,7 +697,7 @@ public class PlayerStateController : MonoBehaviour
 
         attackCooldown = attackCooldownTime;
 
-		charge.StopCharge ();
+		chargeAnimation.StopCharge ();
     }
     
     private void UpdateCharge()
@@ -923,12 +923,12 @@ public class PlayerStateController : MonoBehaviour
 	//
 
 	public void ActivateShield() {
-		shield.gameObject.SetActive (true);
-		shield.Create ();
+		shieldAnimation.gameObject.SetActive (true);
+		shieldAnimation.Create ();
 	}
 
 	public void DisableShield() {
-		shield.Break ();
+		shieldAnimation.Break ();
 	}
 
     //

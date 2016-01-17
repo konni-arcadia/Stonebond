@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class CreditsManager : MonoBehaviour {
@@ -36,7 +37,7 @@ public class CreditsManager : MonoBehaviour {
 		if (inputManager.WasPressedCtrl(noControler, InputManager.B))
         {
             PlayerPrefs.SetString("ComeFromMenu", "");
-            Application.LoadLevelAdditiveAsync("SelectOption");
+			SceneManager.LoadSceneAsync("SelectOption", LoadSceneMode.Additive);
 
             Destroy(gameObject);
 

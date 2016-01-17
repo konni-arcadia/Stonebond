@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 using System;
 using System.Collections.Generic;
@@ -23,8 +24,8 @@ public class LevelManager : MonoBehaviour {
 	// Requires the objects to have already been spawned (PlayerSpawner::Awake, which is executed before)
 	void Start () {
         //Load the pause menu
-        Application.LoadLevelAdditive("Pause");
-		Application.LoadLevelAdditive("WinScreen");
+		SceneManager.LoadScene("Pause", LoadSceneMode.Additive);
+		SceneManager.LoadScene("WinScreen", LoadSceneMode.Additive);
 	}
 
 	void Update() {
@@ -45,7 +46,8 @@ public class LevelManager : MonoBehaviour {
 			EnterBondMode(activePlayers);
 
 		if (bondMode) {
-			gaugeFrame.active = gaugeInner.active = true;
+			gaugeFrame.SetActive(true);
+			gaugeInner.SetActive(true);
 			gaugeInner.transform.localScale = new Vector3(bondLinkGauge, 1, 1);
 			appearedSinceSec += Time.deltaTime;
 
@@ -69,7 +71,7 @@ public class LevelManager : MonoBehaviour {
 						var p2 = bondLink.playerBStateController;
 						WinScreenManager.IdOfWonP1 = p1.GetPlayerId();
 						WinScreenManager.IdOfWonP2 = p2.GetPlayerId();
-						WinScreenManager.IdOfLevelToRestartTo = Application.loadedLevel;
+						WinScreenManager.IdOfLevelToRestartTo = SceneManager.GetActiveScene().buildIndex;
 						GameState.Instance.NotifyWinners(p1.GetPlayerId(), p2.GetPlayerId());
 						WinScreenManager.showScreen();
 						hasAlreadyShownWinScreen = true;
@@ -83,7 +85,8 @@ public class LevelManager : MonoBehaviour {
 			}
 		}
 		else {
-			gaugeFrame.active = gaugeInner.active = false;
+			gaugeFrame.SetActive(false);
+			gaugeInner.SetActive(false);
 		}
 	}
 
@@ -144,6 +147,6 @@ public class LevelManager : MonoBehaviour {
 
 	public Constants.StageEnum GetCurrentStageEnum()
 	{
-		return (Constants.StageEnum) Enum.Parse(typeof(Constants.StageEnum), (string)Application.loadedLevelName);
+		return (Constants.StageEnum) Enum.Parse(typeof(Constants.StageEnum), (string)SceneManager.GetActiveScene().name);
 	}
 }

@@ -28,6 +28,43 @@ public class PlayersSelectorManager : MonoBehaviour {
 	void Update () {
 		int nbReady = 0;
 		bool canStart = true;
+		int nbChosen = 0;
+		for (int i = 0; i < listPlayerSelector.Length; i++) {
+			
+			CheckGoBackPrevious(i + 1);
+			if (listPlayerSelector [i].HasChoosen) {
+				nbChosen++;
+			}
+			if (listPlayerSelector[i].HasPressedStart) {
+				if (listPlayerSelector[i].HasChoosen) {
+					nbReady++;
+				}
+				else {
+					canStart = false;
+				}
+			}
+		}
+
+		if (canStart && (nbReady >= minPlayerNeeded) && (nbReady == nbChosen)) {
+			
+			string playerReadyString = "";
+
+			for (int i = 0; i < listPlayerSelector.Length; i++)
+				if (listPlayerSelector[i].HasChoosen)
+					playerReadyString += "1";
+				else
+					playerReadyString += "0";
+
+			// Assign remaining controllers to non chosen gargoyles
+			for (; alreadySelectedPlayers < GameState.Instance.NumPlayers; alreadySelectedPlayers++) {
+				GameState.Instance.Player(alreadySelectedPlayers + 1).ControllerId = PickNextAvailableController();
+			}
+
+			PlayerPrefs.SetString(PlayerSeleted, playerReadyString);
+			SceneManager.LoadSceneAsync("SelectLvl", LoadSceneMode.Additive);
+
+			Destroy(gameObject);
+		}
 
 		// Check sub-players controllers
 		for (int i = 0; i < selectedControllers.Length; i++) {
@@ -47,38 +84,9 @@ public class PlayersSelectorManager : MonoBehaviour {
 			}
 		}
 
-		for (int i = 0; i < listPlayerSelector.Length; i++) {
-            CheckGoBackPrevious(i + 1);
-            
-            if (listPlayerSelector[i].HasPressedStart) {
-                if (listPlayerSelector[i].HasChoosen) {
-                    nbReady++;
-                }
-                else {
-                    canStart = false;
-                }
-            }
-        }
 
-        if (canStart && (nbReady >= minPlayerNeeded)) {
-            string playerReadyString = "";
 
-            for (int i = 0; i < listPlayerSelector.Length; i++)
-                if (listPlayerSelector[i].HasChoosen)
-                    playerReadyString += "1";
-                else
-                    playerReadyString += "0";
-
-			// Assign remaining controllers to non chosen gargoyles
-			for (; alreadySelectedPlayers < GameState.Instance.NumPlayers; alreadySelectedPlayers++) {
-				GameState.Instance.Player(alreadySelectedPlayers + 1).ControllerId = PickNextAvailableController();
-			}
-
-			PlayerPrefs.SetString(PlayerSeleted, playerReadyString);
-			SceneManager.LoadSceneAsync("SelectLvl", LoadSceneMode.Additive);
-            
-            Destroy(gameObject);
-        }
+        
 	}
 
     void CheckGoBackPrevious(int noControler)
@@ -94,7 +102,7 @@ public class PlayersSelectorManager : MonoBehaviour {
 
 	bool CheckControllerPressedStart(int noController) {
 		// Allow action button too for testing
-		if ((inputManager.WasPressedCtrl(noController, InputManager.START) || inputManager.WasPressedCtrl(noController, InputManager.A))) {
+		if ((inputManager.WasPressedCtrl(noController, InputManager.START)||inputManager.WasPressedCtrl(noController, InputManager.A))) {
 			Debug.Log("Controller " + noController + " was pressed");
 			return true;
 		}

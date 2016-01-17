@@ -15,6 +15,8 @@ public class PlayerSelectorManager : MonoBehaviour {
     public bool HasChoosen = false;
     public bool HasPressedStart = false;
 
+	public GameObject playableChar;
+
 	InputManager inputManager;
 	// Use this for initialization
 	void Start () {
@@ -36,10 +38,12 @@ public class PlayerSelectorManager : MonoBehaviour {
         if (!HasChoosen)
         {
 			// Allow action button too for testing
-			if (HasPressedStart && inputManager.WasPressed(PlayerNumber, InputManager.A))
+			if (HasPressedStart && inputManager.WasPressed(PlayerNumber, InputManager.START))
             {
+				
                 HasChoosen = true;
                 Ready.enabled = true;
+				Ready.text = "READY!";
             }
         }
     }
@@ -47,12 +51,14 @@ public class PlayerSelectorManager : MonoBehaviour {
 	// Called from PlayersSelectorManager
     public void SetChoosenState()
     {
+		playableChar.SetActive (true);
 		AudioSingleton<SfxAudioManager>.Instance.PlayValidate();
         HasPressedStart = true;
         PressStart.enabled = false;
         //Name.enabled = true;
         PlayerSelection.SetActive(true);
-        Ready.enabled = false;
+        Ready.enabled = true;
+		Ready.text = "PRESS START";
 		// Do not allow validating the second time immediately (READY)
 		waitBeforeAllowingSelection = 0.2f;
     }

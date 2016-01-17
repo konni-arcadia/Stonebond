@@ -13,6 +13,9 @@ public class PlayerStateController : MonoBehaviour
     private PlayerStatusProvider statusProvider;
     private List<PlayerStateController> enemies = new List<PlayerStateController>();
     
+	private Shield shield;
+	private Charge charge;
+
     // 
     // GLOBAL STATE
     //
@@ -95,6 +98,7 @@ public class PlayerStateController : MonoBehaviour
     //
 
     public float chargeTime = 1.0f;
+	public float chargeMinTime = 0.5f; // min charge time to launch the special attack
 	public float chargeGravityReductionTime = 0.08f; // secs
 	public bool chargeReady = false;
 	public float chargeReadyTime; // secs
@@ -107,6 +111,10 @@ public class PlayerStateController : MonoBehaviour
     public float specialAttackTime = 0.35f;
     public float specialAttackForceMin = 0.0f;
     public float specialAttackForceMax = 30000.0f;
+	[Range(0.0f, 1.0f)]
+	public float specialAttackForceRatio = 1.0f;
+	[Range(0.0f, 1.0f)]
+	public float specialAttackForceMinRatio = 0.2f;
     public float specialAttackHitboxStart = 0.0f;
     public float specialAttackHitboxEnd = 0.95f;
     public AnimationCurve specialAttackCurve;
@@ -150,14 +158,26 @@ public class PlayerStateController : MonoBehaviour
 
         attackUpCollider.enabled = false;
         attackDownCollider.enabled = false;
-            attackForwardCollider.enabled = false;
+		attackForwardCollider.enabled = false;
         specialAttackCollider.enabled = false;
 
-        inputManager = FindObjectOfType<InputManager>();
+		shield = GetComponentInChildren<Shield> ();
+		if (shield != null) {
+			shield.SetPlayer (playerId);
+			shield.gameObject.SetActive (false);
+		}
+
+		charge = GetComponentInChildren<Charge> ();
+		if (charge != null) {
+			charge.SetPlayer (this);
+			charge.StopCharge ();
+		}
+
+		inputManager = FindObjectOfType<InputManager>();
         movementController = GetComponent<PlayerMovementController>();
         statusProvider = GetComponent<PlayerStatusProvider>();
 
-        statusProvider.OnGroundedStatusChanged += HandleOnGroundedStatusChanged;
+		statusProvider.OnGroundedStatusChanged += HandleOnGroundedStatusChanged;
         statusProvider.OnOnWallStatusChanged += HandleOnOnWallStatusChanged;
         awake = true;
     }
@@ -650,6 +670,8 @@ public class PlayerStateController : MonoBehaviour
         movementController.setJumpEnabled(false);
         
         statusProvider.setChargeStart();
+
+		charge.StartCharge ();
     }
     
     private void LeaveCharge()
@@ -659,6 +681,8 @@ public class PlayerStateController : MonoBehaviour
         movementController.setGravityFactor(1.0f);
 
         attackCooldown = attackCooldownTime;
+
+		charge.StopCharge ();
     }
     
     private void UpdateCharge()
@@ -681,17 +705,6 @@ public class PlayerStateController : MonoBehaviour
 			movementController.setGravityFactor(0.0f);
 		}
 
-		// stop charge if charge button is released before charge is ready
-		// or charge ready time exceeds max charge time
-		if (!chargeReady && !inputManager.IsHeld(playerId, InputManager.BUTTON_CHARGE)
-			|| (chargeReady && chargeReadyTime >= chargeReadyMaxTime))
-		{
-			chargeReady = false;
-            statusProvider.setChargeStop(false);
-            SetState(State.IDLE);
-            return;
-        }
-
 		// detect if charge is ready ?
         if (stateTime >= chargeTime && !chargeReady)
         {
@@ -700,14 +713,53 @@ public class PlayerStateController : MonoBehaviour
             statusProvider.setChargeReady();
         }
 
-		// trigger special attack if charge button is released when charge is ready
-		if(chargeReady && !inputManager.IsHeld(playerId, InputManager.BUTTON_CHARGE))
+		// stop charge if charge ready time exceeds max charge time
+		if (chargeReady && chargeReadyTime >= chargeReadyMaxTime)
 		{
-			chargeReady = false;
-			statusProvider.setChargeStop(true);
-			SetState(State.SPECIAL_ATTACK);
+			StopCharge();
+			return;
+		}
+
+		// charge button is released
+		if(!inputManager.IsHeld(playerId, InputManager.BUTTON_CHARGE))
+		{
+			// trigger special attack if min charge time is reached
+			if(stateTime >= chargeMinTime)
+			{
+				ComputeSpecialAttackForceRatio();
+				LaunchSpecialAttack();
+				return;
+			}
+			else
+			{
+				StopCharge();
+				return;
+			}
 		}
     }
+
+	public void ComputeSpecialAttackForceRatio()
+	{
+		// compute charge ratio according charge time
+		float chargeRatio = Mathf.Min(1.0f, (stateTime - chargeMinTime) / (chargeTime - chargeMinTime));
+
+		// re-normalize to include min ratio
+		specialAttackForceRatio = specialAttackForceMinRatio + (1.0f - specialAttackForceMinRatio) * chargeRatio;
+	}
+
+	public void LaunchSpecialAttack()
+	{
+		chargeReady = false;
+		statusProvider.setChargeStop(true);
+		SetState(State.SPECIAL_ATTACK);
+	}
+
+	public void StopCharge()
+	{
+		chargeReady = false;
+		statusProvider.setChargeStop(false);
+		SetState(State.IDLE);
+	}
 
     //
     // SPECIAL ATTACK
@@ -790,9 +842,9 @@ public class PlayerStateController : MonoBehaviour
         }
 
         float forcePct = specialAttackCurve.Evaluate(attackPct);
-        float hForce = (Mathf.Sign(specialAttackVector.x) * specialAttackForceMin + specialAttackVector.x * forcePct * (specialAttackForceMax - specialAttackForceMin)) * Time.fixedDeltaTime;
-        float vForce = (Mathf.Sign(specialAttackVector.y) * specialAttackForceMin + specialAttackVector.y * forcePct * (specialAttackForceMax - specialAttackForceMin)) * Time.fixedDeltaTime;
-        movementController.setVelocity(new Vector2(hForce, vForce));
+		float hForce = (Mathf.Sign(specialAttackVector.x) * specialAttackForceMin + specialAttackVector.x * forcePct * (specialAttackForceMax - specialAttackForceMin)) * Time.fixedDeltaTime * specialAttackForceRatio;
+		float vForce = (Mathf.Sign(specialAttackVector.y) * specialAttackForceMin + specialAttackVector.y * forcePct * (specialAttackForceMax - specialAttackForceMin)) * Time.fixedDeltaTime * specialAttackForceRatio;
+		movementController.setVelocity(new Vector2(hForce, vForce));
     }
 
     //
@@ -850,6 +902,19 @@ public class PlayerStateController : MonoBehaviour
                 break;
         }
     }
+
+	//
+	// SHIELD
+	//
+
+	public void ActivateShield() {
+		shield.gameObject.SetActive (true);
+		shield.Create ();
+	}
+
+	public void DisableShield() {
+		shield.Break ();
+	}
 
     //
     // INVINCIBLE

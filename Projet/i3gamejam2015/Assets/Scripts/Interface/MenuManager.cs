@@ -101,7 +101,7 @@ public class MenuManager : MonoBehaviour {
 
         if (StartButtonArea.activeSelf)
         {
-            if (!wasPressed[noControler - 1] && inputManager.AxisValueCtrl(noControler, InputManager.Vertical) < -InputManager.AxisDeadZone)
+			if (!wasPressed[noControler - 1] && inputManager.AxisValueCtrl(noControler, InputManager.Vertical) < -InputManager.AxisDeadZone)
             {
                 if (menuSelectedItem != (StartMenuItem)0)
                 {

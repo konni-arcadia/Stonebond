@@ -95,6 +95,7 @@ public class PlayerStateController : MonoBehaviour
     //
 
     public float chargeTime = 1.0f;
+	public float chargeMinTime = 0.5f; // min charge time to launch the special attack
 	public float chargeGravityReductionTime = 0.08f; // secs
 	public bool chargeReady = false;
 	public float chargeReadyTime; // secs
@@ -107,6 +108,10 @@ public class PlayerStateController : MonoBehaviour
     public float specialAttackTime = 0.35f;
     public float specialAttackForceMin = 0.0f;
     public float specialAttackForceMax = 30000.0f;
+	[Range(0.0f, 1.0f)]
+	public float specialAttackForceRatio = 1.0f;
+	[Range(0.0f, 1.0f)]
+	public float specialAttackForceMinRatio = 0.2f;
     public float specialAttackHitboxStart = 0.0f;
     public float specialAttackHitboxEnd = 0.95f;
     public AnimationCurve specialAttackCurve;
@@ -681,17 +686,6 @@ public class PlayerStateController : MonoBehaviour
 			movementController.setGravityFactor(0.0f);
 		}
 
-		// stop charge if charge button is released before charge is ready
-		// or charge ready time exceeds max charge time
-		if (!chargeReady && !inputManager.IsHeld(playerId, InputManager.BUTTON_CHARGE)
-			|| (chargeReady && chargeReadyTime >= chargeReadyMaxTime))
-		{
-			chargeReady = false;
-            statusProvider.setChargeStop(false);
-            SetState(State.IDLE);
-            return;
-        }
-
 		// detect if charge is ready ?
         if (stateTime >= chargeTime && !chargeReady)
         {
@@ -700,14 +694,53 @@ public class PlayerStateController : MonoBehaviour
             statusProvider.setChargeReady();
         }
 
-		// trigger special attack if charge button is released when charge is ready
-		if(chargeReady && !inputManager.IsHeld(playerId, InputManager.BUTTON_CHARGE))
+		// stop charge if charge ready time exceeds max charge time
+		if (chargeReady && chargeReadyTime >= chargeReadyMaxTime)
 		{
-			chargeReady = false;
-			statusProvider.setChargeStop(true);
-			SetState(State.SPECIAL_ATTACK);
+			StopCharge();
+			return;
+		}
+
+		// charge button is released
+		if(!inputManager.IsHeld(playerId, InputManager.BUTTON_CHARGE))
+		{
+			// trigger special attack if min charge time is reached
+			if(stateTime >= chargeMinTime)
+			{
+				ComputeSpecialAttackForceRatio();
+				LaunchSpecialAttack();
+				return;
+			}
+			else
+			{
+				StopCharge();
+				return;
+			}
 		}
     }
+
+	public void ComputeSpecialAttackForceRatio()
+	{
+		// compute charge ratio according charge time
+		float chargeRatio = Mathf.Min(1.0f, (stateTime - chargeMinTime) / (chargeTime - chargeMinTime));
+
+		// re-normalize to include min ratio
+		specialAttackForceRatio = specialAttackForceMinRatio + (1.0f - specialAttackForceMinRatio) * chargeRatio;
+	}
+
+	public void LaunchSpecialAttack()
+	{
+		chargeReady = false;
+		statusProvider.setChargeStop(true);
+		SetState(State.SPECIAL_ATTACK);
+	}
+
+	public void StopCharge()
+	{
+		chargeReady = false;
+		statusProvider.setChargeStop(false);
+		SetState(State.IDLE);
+	}
 
     //
     // SPECIAL ATTACK
@@ -790,9 +823,9 @@ public class PlayerStateController : MonoBehaviour
         }
 
         float forcePct = specialAttackCurve.Evaluate(attackPct);
-        float hForce = (Mathf.Sign(specialAttackVector.x) * specialAttackForceMin + specialAttackVector.x * forcePct * (specialAttackForceMax - specialAttackForceMin)) * Time.fixedDeltaTime;
-        float vForce = (Mathf.Sign(specialAttackVector.y) * specialAttackForceMin + specialAttackVector.y * forcePct * (specialAttackForceMax - specialAttackForceMin)) * Time.fixedDeltaTime;
-        movementController.setVelocity(new Vector2(hForce, vForce));
+		float hForce = (Mathf.Sign(specialAttackVector.x) * specialAttackForceMin + specialAttackVector.x * forcePct * (specialAttackForceMax - specialAttackForceMin)) * Time.fixedDeltaTime * specialAttackForceRatio;
+		float vForce = (Mathf.Sign(specialAttackVector.y) * specialAttackForceMin + specialAttackVector.y * forcePct * (specialAttackForceMax - specialAttackForceMin)) * Time.fixedDeltaTime * specialAttackForceRatio;
+		movementController.setVelocity(new Vector2(hForce, vForce));
     }
 
     //

@@ -43,6 +43,7 @@ public class PlayerSelectorManager : MonoBehaviour {
 				
                 HasChoosen = true;
                 Ready.enabled = true;
+				Ready.text = "READY!";
             }
         }
     }
@@ -56,7 +57,8 @@ public class PlayerSelectorManager : MonoBehaviour {
         PressStart.enabled = false;
         //Name.enabled = true;
         PlayerSelection.SetActive(true);
-        Ready.enabled = false;
+        Ready.enabled = true;
+		Ready.text = "PRESS START!";
 		// Do not allow validating the second time immediately (READY)
 		waitBeforeAllowingSelection = 0.2f;
     }

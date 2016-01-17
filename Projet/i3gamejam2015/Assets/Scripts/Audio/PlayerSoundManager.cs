@@ -74,7 +74,7 @@ public class PlayerSoundManager : MonoBehaviour
     {
         if (isOnWall)
         {
-            //TODO
+			AudioSingleton<SfxAudioManager>.Instance.PlayWallSlide();
         }
         else
         {

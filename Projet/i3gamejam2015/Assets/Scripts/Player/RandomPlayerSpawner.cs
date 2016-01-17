@@ -44,5 +44,6 @@ public class RandomPlayerSpawner : MonoBehaviour {
 		PlayerStateController controller = obj.GetComponent<PlayerStateController>();
 		obj.transform.position = position;
 		controller.playerId = playerId;
+		controller.OnPlayerIdHasBeenSet ();
 	}
 }

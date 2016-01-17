@@ -163,15 +163,10 @@ public class PlayerStateController : MonoBehaviour
 
 		shield = GetComponentInChildren<Shield> ();
 		if (shield != null) {
-			shield.SetPlayer (playerId);
 			shield.gameObject.SetActive (false);
 		}
 
 		charge = GetComponentInChildren<Charge> ();
-		if (charge != null) {
-			charge.SetPlayer (this);
-			charge.StopCharge ();
-		}
 
 		inputManager = FindObjectOfType<InputManager>();
         movementController = GetComponent<PlayerMovementController>();
@@ -194,9 +189,29 @@ public class PlayerStateController : MonoBehaviour
             }
         }
 
+		OnPlayerIdHasBeenSet ();
+
         // start in spawn state
         SetState(State.SPAWN);
     }
+
+	// This method must be called after the playerId has been set.
+	// It is called automatically by Start(), so if the playerId has been set in Unity Editor,
+	//    you don't have to call this method.
+	// But if you create the PlayerStateController programmatically, (which means you have to set
+	//    the playerId programmatically right after), then you have to call this method afterwards.
+	public void OnPlayerIdHasBeenSet() {
+		
+		if (shield != null) {
+			shield.SetPlayer (playerId);
+		}
+
+		if (charge != null) {
+			charge.SetPlayer (this);
+			charge.StopCharge ();
+		}
+
+	}
 
     //
     // PUBLIC

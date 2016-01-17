@@ -476,7 +476,7 @@ public class PlayerStateController : MonoBehaviour
         }
 
         // charge
-        if (inputManager.WasPressed(playerId, InputManager.BUTTON_CHARGE))
+		if (inputManager.IsHeld(playerId, InputManager.BUTTON_CHARGE))
         {
             if (attackCooldown == 0.0f)
             {

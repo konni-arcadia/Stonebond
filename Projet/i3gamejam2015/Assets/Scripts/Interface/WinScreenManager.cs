@@ -32,6 +32,7 @@ public class WinScreenManager : MonoBehaviour {
     public Image Looser4;
 
     public List<Text> Scores;
+	public List<WinChar> winChar;
 
 	// TEMP TODO refactor end of game jam alert
 	public int IdOfWonP1 = 1, IdOfWonP2 = 2, IdOfLevelToRestartTo;
@@ -163,7 +164,9 @@ public class WinScreenManager : MonoBehaviour {
 		canvas.enabled = true;
 		timeSinceStart = 0;
 		isSceneDisplayed = true;
-        Time.timeScale = 0.0f; // Stop the game
+        Time.timeScale = 1.0f; // Stop the game
+
+
 
         Winner1.sprite = playerTextSprites[IdOfWonP1 - 1];
         Scores[0].text = GameState.Instance.Player(IdOfWonP1).TotalScore.ToString() ;
@@ -171,7 +174,8 @@ public class WinScreenManager : MonoBehaviour {
         Scores[1].text = GameState.Instance.Player(IdOfWonP2).TotalScore.ToString();
 
         List<int> idList = new List<int>(new int[] { 1, 2, 3, 4 });
-
+		winChar [0].playerId = IdOfWonP1;
+		winChar [1].playerId = IdOfWonP2;
         idList.Remove(IdOfWonP1);
         idList.Remove(IdOfWonP2);
 
@@ -179,5 +183,9 @@ public class WinScreenManager : MonoBehaviour {
         Scores[2].text = GameState.Instance.Player(idList[0]).TotalScore.ToString();
         Looser4.sprite = playerTextSprites[idList[1] - 1];
         Scores[3].text = GameState.Instance.Player(idList[1]).TotalScore.ToString();
+		winChar [2].playerId = idList[0];
+		winChar [3].playerId = idList[1];
+		foreach (WinChar character in winChar)
+			character.UpdateColor ();
     }
 }

@@ -6,8 +6,8 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: ShredMaterial
-  m_Shader: {fileID: 4800000, guid: c22c3a3928944404a9ebe80b9d78bf0f, type: 3}
+  m_Name: WinChar1Material
+  m_Shader: {fileID: 4800000, guid: d9d73d22f959b47bcba0a86b0152f771, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 5
   m_CustomRenderQueue: 3000
@@ -120,6 +120,27 @@ Material:
           m_Texture: {fileID: 2800000, guid: cfce1e91129a06a478e6f5c869cef884, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _DetailTex
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _MainBump
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _DetailBump
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
     m_Floats:
       data:
         first:
@@ -133,6 +154,10 @@ Material:
         first:
           name: _Cutoff
         second: 0.5
+      data:
+        first:
+          name: _Shininess
+        second: 0.2
       data:
         first:
           name: PixelSnap
@@ -175,12 +200,44 @@ Material:
         second: 0
       data:
         first:
+          name: _Stencil
+        second: 0
+      data:
+        first:
+          name: _StencilComp
+        second: 8
+      data:
+        first:
+          name: _StencilOp
+        second: 0
+      data:
+        first:
+          name: _StencilReadMask
+        second: 255
+      data:
+        first:
+          name: _StencilWriteMask
+        second: 255
+      data:
+        first:
+          name: _ColorMask
+        second: 15
+      data:
+        first:
+          name: _UseUIAlphaClip
+        second: 0
+      data:
+        first:
           name: _AlternateBlend
         second: 0
       data:
         first:
           name: _LightMapBlend
         second: 0
+      data:
+        first:
+          name: _Strength
+        second: 0.2
     m_Colors:
       data:
         first:
@@ -189,7 +246,7 @@ Material:
       data:
         first:
           name: _Color
-        second: {r: 0.7, g: 0.901, b: 0.913, a: 1}
+        second: {r: 0.9103, g: 0.721, b: 0.7693, a: 1}
       data:
         first:
           name: _Emission
@@ -197,4 +254,8 @@ Material:
       data:
         first:
           name: _ChromaTexColor
-        second: {r: 0.022058845, g: 0.94490445, b: 1, a: 1}
+        second: {r: 0.701, g: 0.07, b: 0.231, a: 1}
+      data:
+        first:
+          name: _Specular
+        second: {r: 0, g: 0, b: 0, a: 0}

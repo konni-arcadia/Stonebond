@@ -10,6 +10,11 @@ public class DebugBond_DoNotUseInBuilds : MonoBehaviour {
 
 	protected float debugCompletion = 0.0f;
 
+	private bool shieldHasBroken = false;
+	public bool breakShield = false;
+	public Shield shied;
+
+
 	// Use this for initialization
 	void Start () {
 		bondScript = bondObject.GetComponent<BondLink> ();
@@ -20,5 +25,11 @@ public class DebugBond_DoNotUseInBuilds : MonoBehaviour {
 	void Update () {
 		debugCompletion = Mathf.Min(1.0f, 0.001f + debugCompletion);
 		bondScript.completion = debugCompletion;
+
+		if (shied != null && breakShield && ! shieldHasBroken) {
+			shieldHasBroken = true;
+			shied.Break ();
+		}
+
 	}
 }

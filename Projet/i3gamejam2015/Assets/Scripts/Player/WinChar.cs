@@ -41,4 +41,9 @@ public class WinChar : MonoBehaviour {
 	{
 		winCharImg.material.SetColor("_ChromaTexColor", color);
 	}
+	public void HideCharacter()
+	{
+		winCharImg.enabled = false;
+	}
+
 }

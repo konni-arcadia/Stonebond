@@ -227,7 +227,7 @@ GameObject:
   m_IsActive: 1
 --- !u!1 &121810
 GameObject:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
@@ -291,6 +291,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
+--- !u!1 &137526
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 407398}
+  - 114: {fileID: 11484744}
+  m_Layer: 9
+  m_Name: Charge
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &139724
 GameObject:
   m_ObjectHideFlags: 1
@@ -460,6 +476,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
+--- !u!1 &192122
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 427962}
+  m_Layer: 9
+  m_Name: MagicFX
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!4 &400584
 Transform:
   m_ObjectHideFlags: 1
@@ -474,7 +505,7 @@ Transform:
   - {fileID: 441374}
   - {fileID: 402356}
   - {fileID: 455486}
-  m_Father: {fileID: 444844}
+  m_Father: {fileID: 407398}
   m_RootOrder: 0
 --- !u!4 &400890
 Transform:
@@ -527,6 +558,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 445492}
   m_RootOrder: 3
+--- !u!4 &407398
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 137526}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 400584}
+  m_Father: {fileID: 427962}
+  m_RootOrder: 1
 --- !u!4 &413670
 Transform:
   m_ObjectHideFlags: 1
@@ -578,7 +622,7 @@ Transform:
   - {fileID: 455390}
   - {fileID: 474406}
   m_Father: {fileID: 444844}
-  m_RootOrder: 1
+  m_RootOrder: 0
 --- !u!4 &424556
 Transform:
   m_ObjectHideFlags: 1
@@ -603,6 +647,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 477898}
   m_RootOrder: 2
+--- !u!4 &427962
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 192122}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 444844}
+  - {fileID: 407398}
+  m_Father: {fileID: 445492}
+  m_RootOrder: 0
 --- !u!4 &430852
 Transform:
   m_ObjectHideFlags: 1
@@ -661,9 +719,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 400584}
   - {fileID: 423942}
-  m_Father: {fileID: 445492}
+  m_Father: {fileID: 427962}
   m_RootOrder: 0
 --- !u!4 &445492
 Transform:
@@ -672,10 +729,10 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 170380}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.94, y: -2.41, z: 0}
+  m_LocalPosition: {x: 10.65, y: 10.79, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 444844}
+  - {fileID: 427962}
   - {fileID: 477898}
   - {fileID: 482002}
   - {fileID: 404064}
@@ -1197,11 +1254,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 9575388}
-  circleParticles:
-  - {fileID: 19898494}
-  - {fileID: 19853418}
-  - {fileID: 19889602}
-  - {fileID: 19852862}
   magicalParticles:
   - {fileID: 19868572}
   - {fileID: 19875664}
@@ -1303,6 +1355,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   statusProvider: {fileID: 11421360}
+--- !u!114 &11484744
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 137526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7553e6015e75e40cd9159dd4b8490b08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  circleParticles:
+  - {fileID: 19898494}
+  - {fileID: 19853418}
+  - {fileID: 19889602}
+  - {fileID: 19852862}
 --- !u!114 &11492586
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1343,17 +1411,11 @@ MonoBehaviour:
       value: 1
       inSlope: -3.5430214
       outSlope: -3.5430214
-      value: .200000003
-      inSlope: .718858242
-      outSlope: .718858242
       tangentMode: 0
     - time: 1
       value: 0
       inSlope: -0.11860496
       outSlope: -0.11860496
-      value: -1
-      inSlope: -.118604958
-      outSlope: -.118604958
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -1363,7 +1425,6 @@ MonoBehaviour:
   attackDownTimeMax: 0.26
   attackDownForceMin: 0
   attackDownForceMax: 10000
-  attackDownForceMax: 24000
   attackDownHitboxStart: 0
   attackDownHitboxEnd: 1
   attackDownCurve:
@@ -1373,17 +1434,11 @@ MonoBehaviour:
       value: 1
       inSlope: -3.5430214
       outSlope: -3.5430214
-      value: .200000003
-      inSlope: .718858242
-      outSlope: .718858242
       tangentMode: 0
     - time: 1
       value: 0
       inSlope: -0.11860496
       outSlope: -0.11860496
-      value: -1
-      inSlope: -.118604958
-      outSlope: -.118604958
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -1414,6 +1469,7 @@ MonoBehaviour:
   attackForwardCollider: {fileID: 6193008}
   attackCooldownTime: 0.35
   chargeTime: 1
+  chargeMinTime: 0.5
   chargeGravityReductionTime: 0.08
   chargeReady: 0
   chargeReadyTime: 0
@@ -1421,6 +1477,8 @@ MonoBehaviour:
   specialAttackTime: 0.55
   specialAttackForceMin: 0
   specialAttackForceMax: 3000
+  specialAttackForceRatio: 1
+  specialAttackForceMinRatio: 0.2
   specialAttackHitboxStart: 0
   specialAttackHitboxEnd: 0.95
   specialAttackCurve:

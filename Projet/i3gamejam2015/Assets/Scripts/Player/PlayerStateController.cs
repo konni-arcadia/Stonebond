@@ -14,6 +14,7 @@ public class PlayerStateController : MonoBehaviour
     private List<PlayerStateController> enemies = new List<PlayerStateController>();
     
 	private Shield shield;
+	private Charge charge;
 
     // 
     // GLOBAL STATE
@@ -160,17 +161,23 @@ public class PlayerStateController : MonoBehaviour
 		attackForwardCollider.enabled = false;
         specialAttackCollider.enabled = false;
 
-        inputManager = FindObjectOfType<InputManager>();
+		shield = GetComponentInChildren<Shield> ();
+		if (shield != null) {
+			shield.SetPlayer (playerId);
+			shield.gameObject.SetActive (false);
+		}
+
+		charge = GetComponentInChildren<Charge> ();
+		if (charge != null) {
+			charge.SetPlayer (this);
+			charge.StopCharge ();
+		}
+
+		inputManager = FindObjectOfType<InputManager>();
         movementController = GetComponent<PlayerMovementController>();
         statusProvider = GetComponent<PlayerStatusProvider>();
 
-		shield = GetComponentInChildren<Shield> ();
-		if (shield) {
-			shield.SetPlayer (playerId);
-		}
-		shield.gameObject.SetActive (false);
-
-        statusProvider.OnGroundedStatusChanged += HandleOnGroundedStatusChanged;
+		statusProvider.OnGroundedStatusChanged += HandleOnGroundedStatusChanged;
         statusProvider.OnOnWallStatusChanged += HandleOnOnWallStatusChanged;
         awake = true;
     }
@@ -663,6 +670,8 @@ public class PlayerStateController : MonoBehaviour
         movementController.setJumpEnabled(false);
         
         statusProvider.setChargeStart();
+
+		charge.StartCharge ();
     }
     
     private void LeaveCharge()
@@ -672,6 +681,8 @@ public class PlayerStateController : MonoBehaviour
         movementController.setGravityFactor(1.0f);
 
         attackCooldown = attackCooldownTime;
+
+		charge.StopCharge ();
     }
     
     private void UpdateCharge()

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
@@ -6,8 +7,6 @@ using UnityEngine.UI;
 public class WinScreenManager : MonoBehaviour {
 
     enum StartMenuItem { Restart, LvlSelection, MenuSelection, Quit };
-    private string dpadHorizontal = "Horizontal";
-    private string dpadVertical = "Vertical";
     private Color32 highlithed = new Color32(107, 107, 107, 255);
     private Color32 normal = new Color32(0, 0, 0, 255);
 
@@ -88,31 +87,32 @@ public class WinScreenManager : MonoBehaviour {
 			{
 				GameObject InControlObject = GameObject.Find("InControl");
 
-                switch (menuSelectedItem)
-                {
+				switch (menuSelectedItem)
+				{
+					case StartMenuItem.Quit:
+						Application.Quit();
+					break;
 
-                    case StartMenuItem.Quit: Application.Quit();
-                        break;
+					case StartMenuItem.Restart:
+						if(InControlObject != null)
+							Destroy(InControlObject);
+						SceneManager.LoadScene(IdOfLevelToRestartTo);
+					break;
 
-				case StartMenuItem.Restart: if(InControlObject != null)
-												Destroy(InControlObject);
-											Application.LoadLevel(IdOfLevelToRestartTo);
-												
-                                               break;
+					case StartMenuItem.LvlSelection:
+						PlayerPrefs.SetInt("ComeFromLVL", 0);
+						if(InControlObject != null)
+							Destroy(InControlObject);
+						SceneManager.LoadScene("Menu");
+					break;
 
-                    case StartMenuItem.LvlSelection: PlayerPrefs.SetInt("ComeFromLVL", 0);
-												if(InControlObject != null)
-													Destroy(InControlObject);
-                                                Application.LoadLevel("Menu");
-
-                                                break;
-
-				case StartMenuItem.MenuSelection: if(InControlObject != null)
-													Destroy(InControlObject);
-												Application.LoadLevel("Menu");
-																				
-                                                break;
+					case StartMenuItem.MenuSelection:
+						if(InControlObject != null)
+							Destroy(InControlObject);
+						SceneManager.LoadScene("Menu");	
+					break;
                 }
+
                 Time.timeScale = 1.0f;
 				AudioSingleton<SfxAudioManager>.Instance.PlayValidate();
             }

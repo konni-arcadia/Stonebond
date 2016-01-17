@@ -5,12 +5,12 @@ using UnityEngine.Audio;
 public class SoundManager : MonoBehaviour
 {
     public float BPM = 110;
-    private float quarterNote;
-	private float transitionIn;
-    private float transitionOut;
-    private AudioMixer mainMixer;
+//  private float quarterNote;
+//  private float transitionIn;
+//  private float transitionOut;
+//  private AudioMixer mainMixer;
 
-    private AudioSource audioSource;
+//  private AudioSource audioSource;
     #region AudioClips
 
 
@@ -55,11 +55,11 @@ public class SoundManager : MonoBehaviour
 
     void Start()
     {
-        audioSource = GetComponent<AudioSource>();
-        quarterNote = 60f / BPM;
-        transitionIn = quarterNote / 8f;
-        transitionOut = quarterNote * 8f;
-        mainMixer = Resources.Load<AudioMixer>("Main");
+//      audioSource = GetComponent<AudioSource>();
+//      quarterNote = 60f / BPM;
+//      transitionIn = quarterNote / 8f;
+//      transitionOut = quarterNote * 8f;
+//      mainMixer = Resources.Load<AudioMixer>("Main");
     }
 
     /*public void PressStart_Play()

@@ -13,7 +13,9 @@ public class LevelManager : MonoBehaviour {
 	public float gaugeDecreaseFactor;
 	public float increaseStartCooldownSecs = 2;
 	public float introDuration = 2;
-    public float bondPauseTime = 1.0f;
+    public float bondCreatePauseTime = 0.80f;
+	public float bondBreakPauseTime = 0.25f;
+	public float winPauseTime = 1.0f;
 	private bool pauseWin = false;
 	private float pauseWinTimer = 1.0f;
 	private BondLink bondLink;
@@ -83,7 +85,7 @@ public class LevelManager : MonoBehaviour {
 							foreach (PlayerStateController player in players) {
 								player.SetGameOver ();
 							}
-							TimeManager.Pause (bondPauseTime);
+							TimeManager.Pause (winPauseTime);
 							pauseWin = true;
 
 
@@ -135,7 +137,7 @@ public class LevelManager : MonoBehaviour {
 		bondLinkGauge = 0;
 		appearedSinceSec = 0;
 
-        TimeManager.Pause(bondPauseTime);
+		TimeManager.Pause(bondCreatePauseTime);
 	}
 
 	private void ExitBondMode(PlayerStateController p1, PlayerStateController p2) {
@@ -148,7 +150,7 @@ public class LevelManager : MonoBehaviour {
 		bondMode = false;
 		allowsCreateBond = false;
 
-		TimeManager.Pause(bondPauseTime);
+		TimeManager.Pause(bondBreakPauseTime);
 	}
 
 	private void GatherPlayers() {

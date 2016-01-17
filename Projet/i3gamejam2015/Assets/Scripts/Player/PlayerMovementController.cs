@@ -107,24 +107,25 @@ public class PlayerMovementController : MonoBehaviour
         //Cache the vertical input.
         float v = isMovementEnabled && disallowDirectionTime == 0 ? inputManager.AxisValue(playerId, InputManager.Vertical) : 0;
 
-        // If the jump button is pressed and the player is grounded then the player should jump.
-        if (isJumpEnabled && inputManager.WasPressed(playerId, InputManager.A))
-        {
-            bool isHoldingDown = v < 0.5 ? false : true;
+		if (inputManager.WasPressed(playerId, InputManager.A)) {
+			bool isHoldingDown = v < 0.5 ? false : true;
+			// If the jump button is pressed and the player is grounded then the player should jump.
+			if (isJumpEnabled) {
+				// Standard way of jumping (allowed to jump)
+				if (allowJumpTime > 0 && !isHoldingDown)
+					wantJump = true;
+				// Or by going down while on a wall
+				else if (isGrinding && !isHoldingDown)
+					wantWallJump = true;
 
-            // Standard way of jumping (allowed to jump)
-            if (allowJumpTime > 0 && !isHoldingDown)
-                wantJump = true;
-            // Or by going down while on a wall
-            else if (isGrinding && !isHoldingDown)
-                wantWallJump = true;
-            //Or drop trhough OWP is down is held
-            else if (isHoldingDown)
-                wantDropThru = true;
+				//If he holds down, he doesnt jump
+			}
+			
+			// Drop trhough OWP if down is held
+			if (isHoldingDown)
+				wantDropThru = true;
+		}
 
-            //If he holds down, he doesnt jump
-            
-        }
         if (isJumpEnabled && inputManager.IsHeld(playerId, InputManager.A) && wantJumpExtension)
             wantJumpExtension &= body.velocity.y > 0;		// not able to extend jump anymore when grounded
         else
@@ -208,8 +209,8 @@ public class PlayerMovementController : MonoBehaviour
 
         if (wantDropThru)
         {
-            DropThru();
-            wantDropThru = false;
+			wantDropThru = false;
+			TryDropThru();
         }
 
 
@@ -326,23 +327,19 @@ public class PlayerMovementController : MonoBehaviour
         return false;
     }
 
-    public void DropThru()
+    public void TryDropThru()
     {
-
         RaycastHit2D hit = Physics2D.Raycast(groundChecks[1].transform.position, groundChecks[0].transform.position);
-        RaycastHit2D hit2 = Physics2D.Raycast(groundChecks[1].transform.position, groundChecks[0].transform.position);
-
-       
-        Physics2D.IgnoreCollision(hit.collider, coll);
-        Physics2D.IgnoreCollision(hit2.collider, coll);
-        
+		// Only available on one-way platforms (OWP)
+		if (hit.collider.transform.GetComponent<OneWayPlatform>() != null)
+			StartCoroutine(TemporarilyDeactivateMutualColliders(hit.collider, coll));
     }
 
-    IEnumerator WaitAndSetColliderActive()
+    IEnumerator TemporarilyDeactivateMutualColliders(Collider2D coll1, Collider2D coll2)
     {
-        yield return new WaitForSeconds(0.1f);
-        coll.enabled = true;
-
-    }
+		Physics2D.IgnoreCollision(coll1, coll2, true);
+		yield return new WaitForSeconds(0.1f);
+		Physics2D.IgnoreCollision(coll1, coll2, false);
+	}
     
 }

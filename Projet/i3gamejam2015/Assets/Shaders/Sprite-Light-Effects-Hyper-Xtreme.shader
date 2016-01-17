@@ -106,7 +106,7 @@
 			
 			float tintBurn = 0.2;
 			
-			//o.Albedo = srcTex.rgb * srcTex.a;
+			o.Albedo = srcTex.rgb * srcTex.a;
 			//o.Albedo = ( srcTex.rgb * IN.color * srcTex.a )
 				//+ ( _ChromaTexColor * chrTex.a );
 			o.Albedo = lerp( srcTex.rgb * _Color.rgb * (1-tintBurn) * srcTex.a, altTex.rgb * altTex.a, altMaskInfluence )

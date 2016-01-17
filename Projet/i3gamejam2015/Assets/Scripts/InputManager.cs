@@ -57,7 +57,7 @@ public class InputManager : Singleton<InputManager> {
 				}
 			}
 		} else {
-			Debug.Log ("InControl Input Manager missing, contact Elias.");
+			//Debug.Log ("InControl Input Manager missing, contact Elias.");
 		}
 		axisValue += Input.GetAxis (axisName + controllerId);
 		
@@ -118,7 +118,7 @@ public class InputManager : Singleton<InputManager> {
 				}
 			}
 		} else {
-			Debug.Log ("InControl Input Manager missing, contact Elias.");
+			//Debug.Log ("InControl Input Manager missing, contact Elias.");
 		}
 		buttonValue = buttonValue || Input.GetButtonDown (keyName + " P" + controllerId);
 		return buttonValue;

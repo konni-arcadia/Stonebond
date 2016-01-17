@@ -28,7 +28,7 @@ public class LevelSelectionManager : MonoBehaviour {
     {
         for (int i = 1; i < 5; i++)
             CheckControlerStartMenu(i);
-    }
+	}
 
     void CheckControlerStartMenu(int noControler)
     {

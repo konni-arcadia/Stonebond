@@ -109,7 +109,9 @@ public class PauseManager : MonoBehaviour {
                 Time.timeScale = 1.0f;
             }
 
-			if (!wasPressed[noControler - 1] && inputManager.AxisValueCtrl(noControler, InputManager.Vertical) < -InputManager.AxisDeadZone)
+			float horizontalAxis = inputManager.AxisValueCtrl(noControler, InputManager.Horizontal);
+			float verticalAxis = inputManager.AxisValueCtrl(noControler, InputManager.Vertical);
+			if (!wasPressed[noControler - 1] && verticalAxis < -InputManager.AxisDeadZone)
             {
                 if (menuSelectedItem != (StartMenuItem)0)
                 {
@@ -121,7 +123,7 @@ public class PauseManager : MonoBehaviour {
                 }
 
             }
-			else if (!wasPressed[noControler - 1] && inputManager.AxisValueCtrl(noControler, InputManager.Vertical) > InputManager.AxisDeadZone)
+			else if (!wasPressed[noControler - 1] && verticalAxis > InputManager.AxisDeadZone)
             {
                 if (menuSelectedItem != StartMenuItem.Quit)
                 {
@@ -133,8 +135,8 @@ public class PauseManager : MonoBehaviour {
                 }
 
             }
-			else if (inputManager.AxisValueCtrl(noControler, InputManager.Vertical) < InputManager.AxisDeadZone &&
-			         inputManager.AxisValueCtrl(noControler, InputManager.Vertical) > -InputManager.AxisDeadZone && 
+			else if (verticalAxis < InputManager.AxisDeadZone &&
+			         verticalAxis > -InputManager.AxisDeadZone && 
 			         wasPressed[noControler - 1])
             {
                 wasPressed[noControler - 1] = false;

@@ -975,7 +975,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   spreadCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -997,7 +997,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
 --- !u!95 &9529712
 Animator:
   serializedVersion: 3
@@ -1408,6 +1408,10 @@ MonoBehaviour:
   attackForwardCollider: {fileID: 6193008}
   attackCooldownTime: 0.35
   chargeTime: 1
+  chargeGravityReductionTime: 0.08
+  chargeReady: 0
+  chargeReadyTime: 0
+  chargeReadyMaxTime: 1.2
   specialAttackTime: 0.55
   specialAttackForceMin: 0
   specialAttackForceMax: 3000
@@ -14318,6 +14322,18 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: attackDownChromaCurve.m_Curve.Array.data[3].outSlope
       value: -8.07007694
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: chargeReadyMaxTime
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: panLevelCustomCurve.m_RotationOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: reverbZoneMixCustomCurve.m_RotationOrder
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

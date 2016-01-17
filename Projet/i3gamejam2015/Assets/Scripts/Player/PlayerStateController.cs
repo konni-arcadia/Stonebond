@@ -686,7 +686,6 @@ public class PlayerStateController : MonoBehaviour
         
         statusProvider.setChargeStart();
 
-		chargeAnimation.StartCharge ();
     }
     
     private void LeaveCharge()
@@ -721,11 +720,14 @@ public class PlayerStateController : MonoBehaviour
 		}
 
 		// detect if charge is ready ?
-        if (stateTime >= chargeTime && !chargeReady)
-        {
+		if (stateTime >= chargeTime && !chargeReady) {
 			chargeReady = true;
 			chargeReadyTime = 0;
-            statusProvider.setChargeReady();
+			statusProvider.setChargeReady ();
+		}
+
+		if (stateTime >= chargeMinTime) {
+			chargeAnimation.StartCharge ();
         }
 
 		// stop charge if charge ready time exceeds max charge time

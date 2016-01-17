@@ -14,7 +14,7 @@ public class LevelManager : MonoBehaviour {
 	public float increaseStartCooldownSecs = 2;
 	public float introDuration = 2;
     public float bondPauseTime = 1.0f;
-	private bool pauseWin = true;
+	private bool pauseWin = false;
 	private float pauseWinTimer = 1.0f;
 	private BondLink bondLink;
 	private float bondLinkGauge, appearedSinceSec;
@@ -78,21 +78,23 @@ public class LevelManager : MonoBehaviour {
 							WinScreenManager.IdOfWonP2 = p2.GetPlayerId();
 							WinScreenManager.IdOfLevelToRestartTo = SceneManager.GetActiveScene().buildIndex;
 							GameState.Instance.NotifyWinners(p1.GetPlayerId(), p2.GetPlayerId());
+
 							foreach (PlayerStateController player in players) {
 								player.SetGameOver ();
 							}
-
+							TimeManager.Pause (bondPauseTime);
 							pauseWin = true;
 
+
 						}
-						if (pauseWin && pauseWinTimer > 0) {
-							Time.timeScale = 0.0f;
-							pauseWinTimer -= TimeManager.realDeltaTime;
-
-						} else {
-							WinScreenManager.showScreen ();
-							hasAlreadyShownWinScreen = true;
-
+						else
+						{
+							if (pauseWinTimer > 0) {
+								pauseWinTimer -= TimeManager.realDeltaTime;
+							} else {
+								WinScreenManager.showScreen ();
+								hasAlreadyShownWinScreen = true;
+							}
 
 						}
                     }

@@ -107,23 +107,20 @@ public class PlayerMovementController : MonoBehaviour
         //Cache the vertical input.
         float v = isMovementEnabled && disallowDirectionTime == 0 ? inputManager.AxisValue(playerId, InputManager.Vertical) : 0;
 
-		if (inputManager.WasPressed(playerId, InputManager.A)) {
+		// If the jump button is pressed and the player is grounded then the player should jump.
+		if (isJumpEnabled && inputManager.WasPressed(playerId, InputManager.A)) {
 			bool isHoldingDown = v < 0.5 ? false : true;
-			// If the jump button is pressed and the player is grounded then the player should jump.
-			if (isJumpEnabled) {
-				// Standard way of jumping (allowed to jump)
-				if (allowJumpTime > 0 && !isHoldingDown)
-					wantJump = true;
-				// Or by going down while on a wall
-				else if (isGrinding && !isHoldingDown)
-					wantWallJump = true;
-
-				//If he holds down, he doesnt jump
-			}
-			
+			// Standard way of jumping (allowed to jump)
+			if (allowJumpTime > 0 && !isHoldingDown)
+				wantJump = true;
+			// Or by going down while on a wall
+			else if (isGrinding && !isHoldingDown)
+				wantWallJump = true;
 			// Drop trhough OWP if down is held
-			if (isHoldingDown)
+			else if (isHoldingDown)
 				wantDropThru = true;
+
+			//If he holds down, he doesnt jump
 		}
 
         if (isJumpEnabled && inputManager.IsHeld(playerId, InputManager.A) && wantJumpExtension)

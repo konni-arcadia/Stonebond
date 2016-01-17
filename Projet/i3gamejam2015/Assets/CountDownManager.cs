@@ -8,7 +8,6 @@ public class CountDownManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		AudioSingleton<MenuAudioManager>.Instance.SetMainMenuSnapshot();
-	
 	}
 	
 	// Update is called once per frame
@@ -21,6 +20,7 @@ public class CountDownManager : MonoBehaviour {
         // TODO add sound
         //Debug.Log("OnGetReadyTextShown");
 		AudioSingleton<VoiceAudioManager>.Instance.PlayGameReady();
+
 	}
 	
 	public void OnFightTextShown()

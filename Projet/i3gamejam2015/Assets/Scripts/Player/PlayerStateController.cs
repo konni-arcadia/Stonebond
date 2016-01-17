@@ -13,6 +13,9 @@ public class PlayerStateController : MonoBehaviour
     private PlayerStatusProvider statusProvider;
     private List<PlayerStateController> enemies = new List<PlayerStateController>();
     
+	private Shield shield;
+	private Charge charge;
+
     // 
     // GLOBAL STATE
     //
@@ -155,14 +158,26 @@ public class PlayerStateController : MonoBehaviour
 
         attackUpCollider.enabled = false;
         attackDownCollider.enabled = false;
-            attackForwardCollider.enabled = false;
+		attackForwardCollider.enabled = false;
         specialAttackCollider.enabled = false;
 
-        inputManager = FindObjectOfType<InputManager>();
+		shield = GetComponentInChildren<Shield> ();
+		if (shield != null) {
+			shield.SetPlayer (playerId);
+			shield.gameObject.SetActive (false);
+		}
+
+		charge = GetComponentInChildren<Charge> ();
+		if (charge != null) {
+			charge.SetPlayer (this);
+			charge.StopCharge ();
+		}
+
+		inputManager = FindObjectOfType<InputManager>();
         movementController = GetComponent<PlayerMovementController>();
         statusProvider = GetComponent<PlayerStatusProvider>();
 
-        statusProvider.OnGroundedStatusChanged += HandleOnGroundedStatusChanged;
+		statusProvider.OnGroundedStatusChanged += HandleOnGroundedStatusChanged;
         statusProvider.OnOnWallStatusChanged += HandleOnOnWallStatusChanged;
         awake = true;
     }
@@ -655,6 +670,8 @@ public class PlayerStateController : MonoBehaviour
         movementController.setJumpEnabled(false);
         
         statusProvider.setChargeStart();
+
+		charge.StartCharge ();
     }
     
     private void LeaveCharge()
@@ -664,6 +681,8 @@ public class PlayerStateController : MonoBehaviour
         movementController.setGravityFactor(1.0f);
 
         attackCooldown = attackCooldownTime;
+
+		charge.StopCharge ();
     }
     
     private void UpdateCharge()
@@ -883,6 +902,19 @@ public class PlayerStateController : MonoBehaviour
                 break;
         }
     }
+
+	//
+	// SHIELD
+	//
+
+	public void ActivateShield() {
+		shield.gameObject.SetActive (true);
+		shield.Create ();
+	}
+
+	public void DisableShield() {
+		shield.Break ();
+	}
 
     //
     // INVINCIBLE

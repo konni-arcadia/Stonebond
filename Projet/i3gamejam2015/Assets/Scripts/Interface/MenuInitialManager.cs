@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 using UnityEngine.UI;
 
@@ -11,7 +12,7 @@ public class MenuInitialManager : MonoBehaviour {
         if (PlayerPrefs.HasKey("ComeFromLVL"))
         {
             PlayerPrefs.DeleteKey("ComeFromLVL");
-            Application.LoadLevelAdditiveAsync("SelectLvl");
+			SceneManager.LoadSceneAsync("SelectLvl", LoadSceneMode.Additive);
         }
         else
         {
@@ -30,7 +31,7 @@ public class MenuInitialManager : MonoBehaviour {
 	private IEnumerator FadeLater() {
 		yield return new WaitForSeconds(0.05f);
 		FadePanel.GetComponent<Image>().CrossFadeAlpha(0, 1.0f, true);
-		Application.LoadLevelAdditiveAsync("SelectOption");
+		SceneManager.LoadSceneAsync("SelectOption", LoadSceneMode.Additive);
 		Destroy(gameObject);
 	}
 }

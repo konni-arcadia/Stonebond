@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class PlayersSelectorManager : MonoBehaviour {
@@ -74,7 +75,7 @@ public class PlayersSelectorManager : MonoBehaviour {
 			}
 
 			PlayerPrefs.SetString(PlayerSeleted, playerReadyString);
-            Application.LoadLevelAdditiveAsync("SelectLvl");
+			SceneManager.LoadSceneAsync("SelectLvl", LoadSceneMode.Additive);
             
             Destroy(gameObject);
         }
@@ -85,7 +86,7 @@ public class PlayersSelectorManager : MonoBehaviour {
 		if (inputManager.WasPressedCtrl(noControler, InputManager.B))
         {
             PlayerPrefs.SetString("ComeFromMenu", "");
-            Application.LoadLevelAdditiveAsync("SelectOption");
+			SceneManager.LoadSceneAsync("SelectOption", LoadSceneMode.Additive);
 			AudioSingleton<SfxAudioManager>.Instance.PlayCancel();
             Destroy(gameObject);
         }

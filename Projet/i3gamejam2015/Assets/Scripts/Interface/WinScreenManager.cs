@@ -172,7 +172,7 @@ public class WinScreenManager : MonoBehaviour {
 		canvas.enabled = true;
 		timeSinceStart = 0;
 		isSceneDisplayed = true;
-        Time.timeScale = 1.0f; // Stop the game
+        Time.timeScale = 0.0f; // Stop the game
 
 
 

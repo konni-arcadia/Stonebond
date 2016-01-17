@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.Audio;
@@ -6,8 +7,6 @@ using UnityEngine.Audio;
 public class PauseManager : MonoBehaviour {
 
     enum StartMenuItem { Resume, LvlSelection, MenuSelection, Quit };
-    private string dpadHorizontal = "Horizontal";
-    private string dpadVertical = "Vertical";
     private Color32 highlithed = new Color32(107, 107, 107, 255);
     private Color32 normal = new Color32(0, 0, 0, 255);
     
@@ -79,11 +78,11 @@ public class PauseManager : MonoBehaviour {
 						AudioSingleton<SfxAudioManager>.Instance.SetSfxDefaultSnapshot();
 						//Set the level Snapshot
 						AudioSingleton<MenuAudioManager>.Instance.SetSelectStageSnapshot();
-						PlayerPrefs.SetInt("ComeFromLVL", 0); 
-                                                Application.LoadLevel("Menu");
-												if(InControlObject != null)
-													Destroy(InControlObject);
-                                                break;
+						PlayerPrefs.SetInt("ComeFromLVL", 0);
+						SceneManager.LoadScene("Menu");
+						if(InControlObject != null)
+							Destroy(InControlObject);
+						break;
 
                     case StartMenuItem.MenuSelection:
 						// TODO create event for that
@@ -93,10 +92,10 @@ public class PauseManager : MonoBehaviour {
 						AudioSingleton<MusicAudioManager>.Instance.SetMusicDefaultSnapshot();
 						//Set the Main menu music
 						AudioSingleton<MenuAudioManager>.Instance.SetMainMenuSnapshot();
-						Application.LoadLevel("Menu");
-												if(InControlObject != null)
-													Destroy(InControlObject);
-                                                break;
+						SceneManager.LoadScene("Menu");
+						if(InControlObject != null)
+							Destroy(InControlObject);
+						break;
                 }
                 Time.timeScale = 1.0f;
 				AudioSingleton<SfxAudioManager>.Instance.PlayValidate();

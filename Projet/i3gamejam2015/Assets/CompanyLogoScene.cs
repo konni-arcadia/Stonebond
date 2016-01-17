@@ -1,16 +1,15 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 using UnityEngine.UI;
 
 public class CompanyLogoScene : MonoBehaviour {
 
-	private Canvas canvas;
 	private float timeRemaining = 5.0f;
 	public GameObject Panel;
 
 	// Use this for initialization
 	void Start () {
-		canvas = FindObjectOfType<Canvas>();
 		Panel.GetComponent<Image>().color = Color.black;
 	}
 
@@ -20,7 +19,7 @@ public class CompanyLogoScene : MonoBehaviour {
 		for (int i = 1; i <= 4; i++)
 			CheckControlerStartMenu(i);
 		if (timeRemaining < 0)
-			Application.LoadLevel("Menu");
+			SceneManager.LoadScene("Menu");
 	}
 
 	private void CheckControlerStartMenu(int noControler) {

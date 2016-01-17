@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 using UnityEngine.UI;
 using System.Collections.Generic;
@@ -6,11 +7,6 @@ using System.Collections.Generic;
 public class LevelSelectionManager : MonoBehaviour {
 
     enum LvlSelectionItem { Spire, Pipes, Cathedrale, Forest};
-
-    private string dpadHorizontal = "Horizontal";
-    private string dpadVertical = "Vertical";
-    private Color32 highlithed = new Color32(152, 152, 152, 255);
-    private Color32 normal = new Color32(0, 0, 0, 0);
 
     public Image selectedLevelImage;
     public List<Sprite> levelList;
@@ -47,22 +43,26 @@ public class LevelSelectionManager : MonoBehaviour {
 			AudioSingleton<MenuAudioManager>.Instance.SetDefaultSnapshot();
             switch (menuSelectedItem)
             {
-                case LvlSelectionItem.Cathedrale: Application.LoadLevel("LevelCathedrale");					
+                case LvlSelectionItem.Cathedrale:
+					SceneManager.LoadScene("LevelCathedrale");
                     break;
 
-                case LvlSelectionItem.Forest: Application.LoadLevel("LevelForest"); ;
+                case LvlSelectionItem.Forest:
+					SceneManager.LoadScene("LevelForest");
                     break;
 
-                case LvlSelectionItem.Pipes: Application.LoadLevel("LevelOrgan"); ;
+                case LvlSelectionItem.Pipes:
+					SceneManager.LoadScene("LevelOrgan");
                     break;
 
-                case LvlSelectionItem.Spire: Application.LoadLevel("LevelRoof"); ;
+                case LvlSelectionItem.Spire:
+					SceneManager.LoadScene("LevelRoof");
                     break;
             }
         }
 		else if (inputManager.WasPressedCtrl(noControler, InputManager.B ))
-        {
-            Application.LoadLevelAdditiveAsync("SelectPlayers");
+		{
+			SceneManager.LoadSceneAsync("SelectPlayers", LoadSceneMode.Additive);
             //TODO not sure what it was supposed to do : SoundManager.Instance.StageSelect_Stop();
 			AudioSingleton<MenuAudioManager>.Instance.SetDefaultSnapshot();
 			AudioSingleton<SfxAudioManager>.Instance.PlayCancel();

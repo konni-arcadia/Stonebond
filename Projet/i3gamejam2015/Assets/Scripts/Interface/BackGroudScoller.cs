@@ -29,7 +29,7 @@ public class BackGroudScoller : MonoBehaviour {
     /// </summary>
     private List<Transform> backgroundPart;
 
-    private float firstPosition;
+//  private float firstPosition;
 
     // 3 - Get all the children
     void Start()
@@ -51,7 +51,7 @@ public class BackGroudScoller : MonoBehaviour {
                 }
             }
 
-            firstPosition = backgroundPart[0].transform.position.x;
+//          firstPosition = backgroundPart[0].transform.position.x;
 
             // Sort by position.
             // Note: Get the children from left to right.

@@ -14,6 +14,8 @@ public class LevelManager : MonoBehaviour {
 	public float increaseStartCooldownSecs = 2;
 	public float introDuration = 2;
     public float bondPauseTime = 1.0f;
+	private bool pauseWin = true;
+	private float pauseWinTimer = 1.0f;
 	private BondLink bondLink;
 	private float bondLinkGauge, appearedSinceSec;
 	private WinScreenManager WinScreenManager {
@@ -60,26 +62,40 @@ public class LevelManager : MonoBehaviour {
 				// A winner is designated
 				if (bondLinkGauge > 1) {
 					bondLinkGauge = 1;
+
+
 					if (!hasAlreadyShownWinScreen) {
 						// TODO create event for that
-						AudioSingleton<MusicAudioManager>.Instance.SetMusicDefaultSnapshot();
-						AudioSingleton<SfxAudioManager>.Instance.PlayStopBound();
-						AudioSingleton<SfxAudioManager>.Instance.PlayVictoryJingle();
-						AudioSingleton<MenuAudioManager>.Instance.SetMainMenuSnapshot();
+						if (!pauseWin) {
+							AudioSingleton<MusicAudioManager>.Instance.SetMusicDefaultSnapshot();
+							AudioSingleton<SfxAudioManager>.Instance.PlayStopBound();
+							AudioSingleton<SfxAudioManager>.Instance.PlayVictoryJingle();
+							AudioSingleton<MenuAudioManager>.Instance.SetMainMenuSnapshot();
 
-						var p1 = bondLink.playerAStateController;
-						var p2 = bondLink.playerBStateController;
-						WinScreenManager.IdOfWonP1 = p1.GetPlayerId();
-						WinScreenManager.IdOfWonP2 = p2.GetPlayerId();
-						WinScreenManager.IdOfLevelToRestartTo = SceneManager.GetActiveScene().buildIndex;
-						GameState.Instance.NotifyWinners(p1.GetPlayerId(), p2.GetPlayerId());
-						WinScreenManager.showScreen();
-						hasAlreadyShownWinScreen = true;
+							var p1 = bondLink.playerAStateController;
+							var p2 = bondLink.playerBStateController;
+							WinScreenManager.IdOfWonP1 = p1.GetPlayerId();
+							WinScreenManager.IdOfWonP2 = p2.GetPlayerId();
+							WinScreenManager.IdOfLevelToRestartTo = SceneManager.GetActiveScene().buildIndex;
+							GameState.Instance.NotifyWinners(p1.GetPlayerId(), p2.GetPlayerId());
+							foreach (PlayerStateController player in players) {
+								player.SetGameOver ();
+							}
 
-                        foreach (PlayerStateController player in players)
-                        {
-                            player.SetGameOver();
-                        }
+							pauseWin = true;
+
+						}
+						if (pauseWin && pauseWinTimer > 0) {
+							Time.timeScale = 0.0f;
+							pauseWinTimer -= TimeManager.realDeltaTime;
+							Debug.Log ("FUCKINGTIME: " + Time.timeScale + " " + Time.deltaTime);
+
+						} else {
+							WinScreenManager.showScreen ();
+							hasAlreadyShownWinScreen = true;
+
+
+						}
                     }
 				}
 			}
@@ -125,6 +141,8 @@ public class LevelManager : MonoBehaviour {
 		Debug.Log("Leaving bond mode");
 		bondMode = false;
 		allowsCreateBond = false;
+
+		TimeManager.Pause(bondPauseTime);
 	}
 
 	private void GatherPlayers() {

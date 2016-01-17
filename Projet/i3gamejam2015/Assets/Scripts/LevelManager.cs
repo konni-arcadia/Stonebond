@@ -88,7 +88,6 @@ public class LevelManager : MonoBehaviour {
 						if (pauseWin && pauseWinTimer > 0) {
 							Time.timeScale = 0.0f;
 							pauseWinTimer -= TimeManager.realDeltaTime;
-							Debug.Log ("FUCKINGTIME: " + Time.timeScale + " " + Time.deltaTime);
 
 						} else {
 							WinScreenManager.showScreen ();

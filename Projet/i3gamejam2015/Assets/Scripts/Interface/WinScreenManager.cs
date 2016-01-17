@@ -76,6 +76,7 @@ public class WinScreenManager : MonoBehaviour {
 			  || inputManager.WasPressedCtrl(noControler, InputManager.START)) 
 			  && timeSinceStart > minTimeBeforeShowingMenu)
 			{
+				HideAllWinChar ();
 				isMenuDisplayed = true;
 				menu.SetActive(true);
 				return;
@@ -95,19 +96,22 @@ public class WinScreenManager : MonoBehaviour {
 					break;
 
 					case StartMenuItem.Restart:
+						
 						if(InControlObject != null)
 							Destroy(InControlObject);
 						SceneManager.LoadScene(IdOfLevelToRestartTo);
 					break;
 
 					case StartMenuItem.LvlSelection:
+						
 						PlayerPrefs.SetInt("ComeFromLVL", 0);
 						if(InControlObject != null)
 							Destroy(InControlObject);
 						SceneManager.LoadScene("Menu");
 					break;
 
-					case StartMenuItem.MenuSelection:
+				case StartMenuItem.MenuSelection:
+						
 						if(InControlObject != null)
 							Destroy(InControlObject);
 						SceneManager.LoadScene("Menu");	
@@ -151,7 +155,11 @@ public class WinScreenManager : MonoBehaviour {
             }
         }
     }
-
+	private void HideAllWinChar()
+	{
+		foreach (WinChar character in winChar)
+			character.HideCharacter();
+	}
 	// Call this when a player has won
 	public void showScreen() 
 	{

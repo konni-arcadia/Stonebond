@@ -112,6 +112,8 @@ public class LevelManager : MonoBehaviour {
 		bondLink.LinkPlayers ( activePlayers[0].gameObject, activePlayers[1].gameObject);
 		activePlayers[0].SetBondLink(bondLink);
 		activePlayers[1].SetBondLink(bondLink);
+		activePlayers [0].ActivateShield ();
+		activePlayers [1].ActivateShield ();
 		bondLinkGauge = 0;
 		appearedSinceSec = 0;
 
@@ -120,8 +122,10 @@ public class LevelManager : MonoBehaviour {
 
 	private void ExitBondMode(PlayerStateController p1, PlayerStateController p2) {
 		Destroy(bondLink.gameObject);
-        p1.SetBondLink(null);
-        p2.SetBondLink(null);
+		p1.SetBondLink(null);
+		p2.SetBondLink(null);
+		p1.DisableShield ();
+		p2.DisableShield ();
 		Debug.Log("Leaving bond mode");
 		bondMode = false;
 		allowsCreateBond = false;

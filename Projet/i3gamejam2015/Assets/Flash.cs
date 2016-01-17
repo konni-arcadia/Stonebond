@@ -12,7 +12,7 @@ public class Flash : MonoBehaviour {
 
     private float pause = 0.0f;
     private float counter = 0.0f;
-    private float duration = 0.0f;
+//  private float duration = 0.0f;
     private bool reverse = false;
 
     private float r, g, b;
@@ -81,7 +81,7 @@ public class Flash : MonoBehaviour {
 
     private static void Show(float duration, float r, float g, float b, bool reverse, float pause) {
         instance.counter = duration;
-        instance.duration = duration;
+//      instance.duration = duration;
         instance.r = r;
         instance.g = g;
         instance.b = b;

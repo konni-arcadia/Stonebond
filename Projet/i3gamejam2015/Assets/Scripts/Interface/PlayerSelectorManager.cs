@@ -58,7 +58,7 @@ public class PlayerSelectorManager : MonoBehaviour {
         //Name.enabled = true;
         PlayerSelection.SetActive(true);
         Ready.enabled = true;
-		Ready.text = "PRESS START!";
+		Ready.text = "PRESS START";
 		// Do not allow validating the second time immediately (READY)
 		waitBeforeAllowingSelection = 0.2f;
     }

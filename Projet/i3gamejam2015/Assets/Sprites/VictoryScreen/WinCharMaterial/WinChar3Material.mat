@@ -6,8 +6,8 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: ShredMaterial
-  m_Shader: {fileID: 4800000, guid: c22c3a3928944404a9ebe80b9d78bf0f, type: 3}
+  m_Name: WinChar3Material
+  m_Shader: {fileID: 4800000, guid: d9d73d22f959b47bcba0a86b0152f771, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 5
   m_CustomRenderQueue: 3000
@@ -189,7 +189,7 @@ Material:
       data:
         first:
           name: _Color
-        second: {r: 0.7, g: 0.901, b: 0.913, a: 1}
+        second: {r: 0.712, g: 0.874, b: 0.7, a: 1}
       data:
         first:
           name: _Emission
@@ -197,4 +197,4 @@ Material:
       data:
         first:
           name: _ChromaTexColor
-        second: {r: 0.022058845, g: 0.94490445, b: 1, a: 1}
+        second: {r: 0.04, g: 0.58, b: 0, a: 1}

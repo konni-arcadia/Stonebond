@@ -1,12 +1,11 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 using UnityEngine.UI;
 
 public class MenuManager : MonoBehaviour {
 
     enum StartMenuItem { GameStart, HowTo, Credits, Quit };
-    private string dpadHorizontal = "Horizontal";
-    private string dpadVertical = "Vertical";
     private Color32 highlithed = new Color32(107, 107, 107, 255);
     private Color32 normal = new Color32(0, 0, 0, 255);
     
@@ -70,25 +69,29 @@ public class MenuManager : MonoBehaviour {
     {
 		if (inputManager.WasPressedCtrl(noControler,InputManager.A) || inputManager.WasPressedCtrl(noControler, InputManager.START))
         {
-			if (!StartButtonArea.active) {
+			if (!StartButtonArea.activeSelf) {
 				pressStartActive = false;
 				StartCoroutine(ShowMenuAfterDelay());
 				return;
 			}
 			else {
 				switch (menuSelectedItem) {
-					case StartMenuItem.Quit: Application.Quit();
+					case StartMenuItem.Quit:
+						Application.Quit();
 						break;
 
-					case StartMenuItem.GameStart: Application.LoadLevelAdditiveAsync("SelectPlayers");
+					case StartMenuItem.GameStart:
+						SceneManager.LoadSceneAsync("SelectPlayers", LoadSceneMode.Additive);
 						AudioSingleton<MenuAudioManager>.Instance.SetDefaultSnapshot();
 						break;
 
-					case StartMenuItem.Credits: Application.LoadLevelAdditiveAsync("Credits");
-					AudioSingleton<MenuAudioManager>.Instance.SetDefaultSnapshot();
+					case StartMenuItem.Credits:
+						SceneManager.LoadSceneAsync("Credits", LoadSceneMode.Additive);
+						AudioSingleton<MenuAudioManager>.Instance.SetDefaultSnapshot();
 						break;
 
-					case StartMenuItem.HowTo: return;
+					case StartMenuItem.HowTo:
+						return;
 				}
 				AudioSingleton<SfxAudioManager>.Instance.PlayValidate();
 				Destroy(gameObject);
@@ -96,7 +99,7 @@ public class MenuManager : MonoBehaviour {
         }
 
 
-        if (StartButtonArea.active)
+        if (StartButtonArea.activeSelf)
         {
             if (!wasPressed[noControler - 1] && inputManager.AxisValueCtrl(noControler, InputManager.Vertical) < -InputManager.AxisDeadZone)
             {

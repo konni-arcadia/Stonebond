@@ -248,6 +248,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: ffd27528108187046b48a4882b149e5b, type: 3}
   - {fileID: 8300000, guid: 2e44b94be1e90482cb2105041e4be0b7, type: 3}
   Rebirth: {fileID: 8300000, guid: 0971cce2bf5b1c54795d26542c3fe901, type: 3}
+  WallSlide: {fileID: 8300000, guid: 9fa53a91053a9ad4183671e80ff69987, type: 3}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

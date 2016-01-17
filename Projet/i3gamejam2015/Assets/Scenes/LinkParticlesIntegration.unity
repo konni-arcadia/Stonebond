@@ -845,9 +845,45 @@ Prefab:
       propertyPath: m_Name
       value: Player A
       objectReference: {fileID: 0}
+    - target: {fileID: 11415718, guid: 294137296027b2e479aede083fd94e21, type: 2}
+      propertyPath: magicalParticles.Array.data[1]
+      value: 
+      objectReference: {fileID: 855221996}
+    - target: {fileID: 11415718, guid: 294137296027b2e479aede083fd94e21, type: 2}
+      propertyPath: magicalParticles.Array.data[2]
+      value: 
+      objectReference: {fileID: 855221995}
+    - target: {fileID: 11484744, guid: 294137296027b2e479aede083fd94e21, type: 2}
+      propertyPath: circleParticles.Array.data[1]
+      value: 
+      objectReference: {fileID: 855221994}
+    - target: {fileID: 11484744, guid: 294137296027b2e479aede083fd94e21, type: 2}
+      propertyPath: circleParticles.Array.data[2]
+      value: 
+      objectReference: {fileID: 855221993}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 294137296027b2e479aede083fd94e21, type: 2}
   m_IsPrefabParent: 0
+--- !u!198 &855221993 stripped
+ParticleSystem:
+  m_PrefabParentObject: {fileID: 19853418, guid: 294137296027b2e479aede083fd94e21,
+    type: 2}
+  m_PrefabInternal: {fileID: 855221992}
+--- !u!198 &855221994 stripped
+ParticleSystem:
+  m_PrefabParentObject: {fileID: 19889602, guid: 294137296027b2e479aede083fd94e21,
+    type: 2}
+  m_PrefabInternal: {fileID: 855221992}
+--- !u!198 &855221995 stripped
+ParticleSystem:
+  m_PrefabParentObject: {fileID: 19875664, guid: 294137296027b2e479aede083fd94e21,
+    type: 2}
+  m_PrefabInternal: {fileID: 855221992}
+--- !u!198 &855221996 stripped
+ParticleSystem:
+  m_PrefabParentObject: {fileID: 19842690, guid: 294137296027b2e479aede083fd94e21,
+    type: 2}
+  m_PrefabInternal: {fileID: 855221992}
 --- !u!1001 &990231362
 Prefab:
   m_ObjectHideFlags: 0

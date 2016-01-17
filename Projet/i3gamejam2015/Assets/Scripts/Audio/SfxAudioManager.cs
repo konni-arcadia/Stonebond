@@ -25,6 +25,7 @@ public class SfxAudioManager : BaseAudioManager {
 	public AudioClip[] Lands;
 	public AudioClip[] Deaths;
 	public AudioClip Rebirth;
+	public AudioClip WallSlide;
 
 	private AudioSource _source;
 
@@ -149,4 +150,10 @@ public class SfxAudioManager : BaseAudioManager {
 	{
 		GetAudioSource().PlayOneShot(WallJump);
 	}
+
+	public void PlayWallSlide()
+	{
+		GetAudioSource().PlayOneShot(WallSlide);
+	}
+
 }

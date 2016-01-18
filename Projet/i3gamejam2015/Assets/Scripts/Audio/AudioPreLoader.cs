@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class AudioPreLoader : MonoBehaviour {
 
@@ -9,5 +8,6 @@ public class AudioPreLoader : MonoBehaviour {
 		AudioSingleton<MusicAudioManager>.Instance.GetType();
 		AudioSingleton<MenuAudioManager>.Instance.GetType();
 		AudioSingleton<SfxAudioManager>.Instance.GetType();
-	}
+        AudioSingleton<VoiceAudioManager>.Instance.GetType();
+    }
 }

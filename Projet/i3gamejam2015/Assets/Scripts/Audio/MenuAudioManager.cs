@@ -18,7 +18,7 @@ public class MenuAudioManager : BaseAudioManager {
 
 	public void SetDefaultSnapshot()
 	{
-		DefaultSnapshot.TransitionTo(transitionIn);
+		DefaultSnapshot.TransitionTo(transitionOut);
 	}
 
 	public void SetMainMenuSnapshot()

@@ -4,7 +4,6 @@ using System.Collections.Generic;
 
 public class PlayerMovementController : MonoBehaviour
 {
-
     public float maxSpeed;				// The fastest the player can travel in the x axis.
     public float maxFallSpeed;
     public float breakForce;
@@ -39,7 +38,6 @@ public class PlayerMovementController : MonoBehaviour
     private Rigidbody2D body;
     private InputManager inputManager;
     private Collider2D coll;
-
 
     private PlayerStatusProvider myStatusProvider;
 
@@ -130,7 +128,6 @@ public class PlayerMovementController : MonoBehaviour
 
     void FixedUpdate()
     {
-
         if (gameOver)
             return;
 
@@ -176,7 +173,6 @@ public class PlayerMovementController : MonoBehaviour
 				myStatusProvider.setJump ();
 			}
 
-
             // Ensure that the current vy doesn't take in account
             Vector2 vel = body.velocity;
             vel.y = 0;
@@ -208,13 +204,9 @@ public class PlayerMovementController : MonoBehaviour
 			TryDropThru();
         }
 
-
-
         //Update Y velocity in player status component
         myStatusProvider.setVelocityYValue(body.velocity.y);
     }
-
-
 
     public void resetVelocity(bool resetX = true, bool resetY = true)
 	{
@@ -308,7 +300,6 @@ public class PlayerMovementController : MonoBehaviour
         
         return false;
     }
-
 
     public bool IsHittingSolid(Transform start, Transform[] ends, Vector2 movementDirection)
     {

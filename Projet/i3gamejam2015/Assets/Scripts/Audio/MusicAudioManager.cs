@@ -13,7 +13,6 @@ public class MusicAudioManager : BaseAudioManager {
 	public AudioMixerSnapshot PauseSnapshot;
 	public AudioMixerSnapshot MainDefaultSnapshot;
 
-
 	public void Stage_Play(Constants.StageEnum _stage)
 	{
 		switch (_stage)
@@ -33,39 +32,43 @@ public class MusicAudioManager : BaseAudioManager {
 		}
 	}
 
+    void Start()
+    {
+        SetMusicDefaultSnapshot();
+    }
 
 	public void SetMusicDefaultSnapshot()
 	{
-		MusicDefaultSnapshot.TransitionTo(0f);
+		MusicDefaultSnapshot.TransitionTo(transitionIn);
 	}
 
 	public void SetMainDefaultSnapshot()
 	{
-		MainDefaultSnapshot.TransitionTo(0f);
+		MainDefaultSnapshot.TransitionTo(transitionIn);
 	}
 
 	public void SetPauseSnapshot()
 	{
-		PauseSnapshot.TransitionTo(0f);
+		PauseSnapshot.TransitionTo(transitionIn);
 	}
 
 	public void SetPipesOfAwakeningSnapshot()
 	{
-		PipesOfAwakeningSnapshot.TransitionTo(0f);
+		PipesOfAwakeningSnapshot.TransitionTo(transitionIn);
 	}
 
 	public void SetSpireHighSnapshot()
 	{
-		SpireHighSnapshot.TransitionTo(0f);
+		SpireHighSnapshot.TransitionTo(transitionIn);
 	}
 
 	public void SetCloisterOfTheSilence()
 	{
-		CloisterOfTheSilenceSnapshot.TransitionTo(0f);
+		CloisterOfTheSilenceSnapshot.TransitionTo(transitionIn);
 	}
 
 	public void SetRosetteOfTheWingeSnapshot()
 	{
-		RosetteOfTheWingeSnapshot.TransitionTo(0f);
+		RosetteOfTheWingeSnapshot.TransitionTo(transitionIn);
 	}
 }

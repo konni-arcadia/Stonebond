@@ -47,7 +47,7 @@ public abstract class AudioSingleton<T> : MonoBehaviour where T : MonoBehaviour
 			if (_instance == null) {
 				_instance = (T)FindObjectOfType (mytype);
 				if (_instance == null) {
-					Debug.Log("initializing instance of: " + mytype.Name);
+					//Debug.Log("initializing instance of: " + mytype.Name);
 					string goName = mytype.ToString ();
 					GameObject go = GameObject.Find (goName);
 					if (go == null) // try again searching for a cloned object
@@ -55,7 +55,7 @@ public abstract class AudioSingleton<T> : MonoBehaviour where T : MonoBehaviour
 						go = GameObject.Find (goName+"(Clone)");
 						if (go != null)
 						{
-							Debug.Log("found clone of object using it!"); 
+							//Debug.Log("found clone of object using it!"); 
 						}
 					}
 
@@ -67,7 +67,7 @@ public abstract class AudioSingleton<T> : MonoBehaviour where T : MonoBehaviour
 						{
 							PrefabAttribute attr = (PrefabAttribute)Attribute.GetCustomAttribute(mytype,typeof(PrefabAttribute));
 							string prefabname = attr.Name;
-							Debug.Log(goName + " not found attempting to instantiate prefab... either: " + goName + " or: " + prefabname);
+							//Debug.Log(goName + " not found attempting to instantiate prefab... either: " + goName + " or: " + prefabname);
 							try
 							{
 								if (prefabname != "")
@@ -78,14 +78,15 @@ public abstract class AudioSingleton<T> : MonoBehaviour where T : MonoBehaviour
 								{
 									go = (GameObject)Instantiate(Resources.Load(goName)as GameObject);
 								}
-							} catch (Exception e)
+							}
+                            catch (Exception e)
 							{
 								Debug.Log("could not instantiate prefab even though prefab attribute was set: " + e.Message + "\n" + e.StackTrace);
 							}
 						}
 						if (go == null)
 						{
-							Debug.Log(goName + " not found creating...");
+							//Debug.Log(goName + " not found creating...");
 							go = new GameObject ();
 							go.name = goName;
 						}
@@ -98,11 +99,11 @@ public abstract class AudioSingleton<T> : MonoBehaviour where T : MonoBehaviour
 				}
 				else
 				{ 
-					Debug.Log(mytype.Name + " had to be searched for but was found"); 
+					//Debug.Log(mytype.Name + " had to be searched for but was found"); 
 					int count = FindObjectsOfType(mytype).Length;
 					if (count > 1)
 					{
-						Debug.LogError("Singleton: there are " + count.ToString() + " of " + mytype.Name);
+						//Debug.LogError("Singleton: there are " + count.ToString() + " of " + mytype.Name);
 						throw new Exception("Too many (" + count.ToString() + ") prefab singletons of type: " + mytype.Name);
 					}
 				}

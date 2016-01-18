@@ -78,7 +78,7 @@ public class PlayerSoundManager : MonoBehaviour
         }
         else
         {
-            //TODO
+			AudioSingleton<SfxAudioManager>.Instance.StopWallSlide();
         }
     }
 
@@ -91,6 +91,4 @@ public class PlayerSoundManager : MonoBehaviour
     {
 		AudioSingleton<SfxAudioManager>.Instance.PlayDeath();
     }
-
-    //void Update() { }
 }

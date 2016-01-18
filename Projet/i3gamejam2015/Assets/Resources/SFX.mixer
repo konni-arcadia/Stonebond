@@ -20,6 +20,7 @@ AudioMixerController:
     - 5b014778e7e784fcbb9dcb5a28f818a5
     - 6f495b386322d4d3e861440abd330713
     - 988cf397182ef442fbc872268cd49e9f
+    - 7e01ef117303d4b20a1203b54c1ff9ce
     name: View
   m_CurrentViewIndex: 0
   m_TargetSnapshot: {fileID: 24500003}
@@ -34,10 +35,28 @@ AudioMixerGroupController:
   m_Children:
   - {fileID: 24341232}
   - {fileID: 24380006}
+  - {fileID: 24322660}
   m_Volume: 255c051af915247f78fd282557d28b0a
   m_Pitch: 72c0b00c1116b40108ed78b37e1f4bcc
   m_Effects:
   - {fileID: 24400002}
+  m_UserColorIndex: 0
+  m_Mute: 0
+  m_Solo: 0
+  m_BypassEffects: 0
+--- !u!243 &24322660
+AudioMixerGroupController:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: WallSlide
+  m_AudioMixer: {fileID: 24100000}
+  m_GroupID: 7e01ef117303d4b20a1203b54c1ff9ce
+  m_Children: []
+  m_Volume: 5e30da8e9d2e64c2a99e3048b222b4fd
+  m_Pitch: e14fc6860c6f9460b836c915b3ab391e
+  m_Effects:
+  - {fileID: 24451792}
   m_UserColorIndex: 0
   m_Mute: 0
   m_Solo: 0
@@ -98,6 +117,19 @@ AudioMixerEffectController:
   m_EffectID: 8f837f3c3a2704d8fb33e0c63a725bd5
   m_EffectName: Attenuation
   m_MixLevel: 9a00043510e1649d0b2df512840717b1
+  m_Parameters: []
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
+--- !u!244 &24451792
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: 
+  m_EffectID: e47617bd2d72b4627ba562cb1d1d3eff
+  m_EffectName: Attenuation
+  m_MixLevel: f2f137f6748e241c993a64b0d9958387
   m_Parameters: []
   m_SendTarget: {fileID: 0}
   m_EnableWetMix: 0

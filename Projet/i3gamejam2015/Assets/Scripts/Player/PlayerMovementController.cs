@@ -64,8 +64,6 @@ public class PlayerMovementController : MonoBehaviour
 
     void Update()
     {
-        Debug.DrawLine(transform.position, groundChecks[0].transform.position, Color.red);
-
         if (gameOver)
             return;
 

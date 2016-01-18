@@ -27,6 +27,7 @@ public class SfxAudioManager : BaseAudioManager {
 	public AudioClip Rebirth;
 	public AudioClip WallSlide;
 
+	public AudioSource WallSlideAudioSource;
 	private AudioSource _source;
 
 	public void SetSfxDefaultSnapshot()
@@ -153,7 +154,11 @@ public class SfxAudioManager : BaseAudioManager {
 
 	public void PlayWallSlide()
 	{
-		GetAudioSource().PlayOneShot(WallSlide);
+		WallSlideAudioSource.Play();
 	}
 
+	public void StopWallSlide()
+	{
+		WallSlideAudioSource.Stop();
+	}
 }

@@ -4,23 +4,18 @@ using System.Collections;
 public class PlayerSoundManager : MonoBehaviour
 {
     public PlayerStatusProvider statusProvider;
-
-    bool prevIsGroundedFlag = true;
-
+       
     void Start()
     {
         statusProvider.OnBoundChangedAction += OnBounded;
-        statusProvider.OnGroundedStatusChanged += OnGrounded;
+        statusProvider.OnCollisionAction += OnCollision;
         statusProvider.OnGrindingStatusChanged += OnWallrided;
         statusProvider.OnHorizontalKnockbackAction += onKnockbacked;
 		statusProvider.OnVerticalKnockbackAction += onKnockbacked;
         statusProvider.OnDieAction += onPlayerDied;
         statusProvider.onJumpAction += OnJumped;
         statusProvider.onWallJumpAction += OnWallJumped;
-        statusProvider.OnAttackUpAction += OnAttack;
-		statusProvider.OnAttackSpecialStartAction += OnSpecialAttack;
-        statusProvider.OnAttackForwardAction += OnAttack;
-        statusProvider.OnAttackDownAction += OnAttack;
+        statusProvider.OnAttackStartAction += OnAttackStart;		
         statusProvider.OnRespawnAction += OnRespawned;
     }
 
@@ -29,16 +24,25 @@ public class PlayerSoundManager : MonoBehaviour
 		AudioSingleton<SfxAudioManager>.Instance.PlayReBirth();
     }
 
-    private void OnAttack()
+    private void OnAttackStart(PlayerStatusProvider.AttackType attackType, Vector2 direction)
     {
-		AudioSingleton<SfxAudioManager>.Instance.PlayAttack();
+        switch (attackType)
+        {
+            case PlayerStatusProvider.AttackType.FORWARD:
+                AudioSingleton<SfxAudioManager>.Instance.PlayAttack();
+                break;
+            case PlayerStatusProvider.AttackType.UP:
+                AudioSingleton<SfxAudioManager>.Instance.PlayAttack();
+                break;
+            case PlayerStatusProvider.AttackType.DOWN:
+                AudioSingleton<SfxAudioManager>.Instance.PlayAttack();
+                break;
+            case PlayerStatusProvider.AttackType.SPECIAL:
+                AudioSingleton<SfxAudioManager>.Instance.PlayAttack();
+                break;
+        }
     }
-
-	private void OnSpecialAttack(Vector2 direction)
-	{
-		AudioSingleton<SfxAudioManager>.Instance.PlayAttack(); // TODO sound for special action
-	}
-
+	
     private void OnWallJumped()
     { 
 		AudioSingleton<SfxAudioManager>.Instance.PlayWallJump();
@@ -61,13 +65,26 @@ public class PlayerSoundManager : MonoBehaviour
 		}
     }
 
-    private void OnGrounded(bool isGrounded)
-    {
-        if (isGrounded && !prevIsGroundedFlag)
+    private void OnCollision(PlayerStatusProvider.CollisionType collisionType, Vector2 velocity)
+    {        
+        switch (collisionType)
         {
-			AudioSingleton<SfxAudioManager>.Instance.PlayLand();
+            case PlayerStatusProvider.CollisionType.GROUND:
+                AudioSingleton<SfxAudioManager>.Instance.PlayLand();
+                break;
+            case PlayerStatusProvider.CollisionType.GROUND_ATTACK:
+                AudioSingleton<SfxAudioManager>.Instance.PlayLand();
+                break;
+            case PlayerStatusProvider.CollisionType.WALL:
+                // no sound on wall hit
+                break;
+            case PlayerStatusProvider.CollisionType.WALL_ATTACK:
+                // no sound on wall hit
+                break;
+            case PlayerStatusProvider.CollisionType.SPECIAL_ATTACK:
+                AudioSingleton<SfxAudioManager>.Instance.PlayLand();
+                break;
         }
-        prevIsGroundedFlag = isGrounded;
     }
 
     private void OnWallrided(bool isOnWall)

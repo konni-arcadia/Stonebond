@@ -23,17 +23,14 @@ public class PlayerAnimationStateVarsProvider : MonoBehaviour {
         myStatusProvider.OnVelocityYChanged += VelocityYChangedAction;
         myStatusProvider.OnGroundedStatusChanged += GroundedAction;
         myStatusProvider.OnGrindingStatusChanged += OnWallAction;
-        myStatusProvider.OnAttackForwardAction += AttackForwardAction;
-        myStatusProvider.OnAttackUpAction += AttackUpAction;
-        myStatusProvider.OnAttackDownAction += AttackDownAction;
+        myStatusProvider.OnAttackStartAction += HandleOnAttackStartAction;
+        myStatusProvider.OnAttackStopAction += HandleOnAttackStopAction;
 		myStatusProvider.OnChargeStartAction += ChargeStartAction;
-		myStatusProvider.OnChargeStopAction += ChargeStopAction;
-		myStatusProvider.OnAttackSpecialStartAction += AttackSpecialStartAction;
+		myStatusProvider.OnChargeStopAction += ChargeStopAction;		
         myStatusProvider.OnVerticalKnockbackAction += VerticalKnockbackAction;
 		myStatusProvider.OnHorizontalKnockbackAction += HorizontalKnockbackAction;
         myStatusProvider.OnDieAction += DieAction;
         myStatusProvider.OnRespawnAction += RespawnAction;
-        myStatusProvider.OnCollisionAction += HandleOnCollisionAction;
 	}
 
     public void AxisHChangedAction(float axisHValue)
@@ -62,25 +59,41 @@ public class PlayerAnimationStateVarsProvider : MonoBehaviour {
             myAnimator.SetBool("Riding", isOnWall);
     }
 
-
-    public void AttackForwardAction()
+    private void HandleOnAttackStartAction(PlayerStatusProvider.AttackType attackType, Vector2 direction)
     {
-        if (myAnimator != null)
-			myAnimator.SetTrigger("ForwardAttack");
+        if (myAnimator == null)
+        {
+            return;
+        }
+
+        switch (attackType)
+        {
+            case PlayerStatusProvider.AttackType.FORWARD:
+                myAnimator.SetTrigger("ForwardAttack");
+                break;
+            case PlayerStatusProvider.AttackType.UP:
+                myAnimator.SetTrigger("UpwardAttack");
+                break;
+            case PlayerStatusProvider.AttackType.DOWN:
+                myAnimator.SetTrigger("DownwardAttack");
+                break;
+            case PlayerStatusProvider.AttackType.SPECIAL:
+                myAnimator.SetTrigger("SpecialAttack");
+                break;
+        }
     }
 
-
-    public void AttackUpAction()
+    private void HandleOnAttackStopAction (PlayerStatusProvider.AttackType attackType, bool cancelled)
     {
-        if (myAnimator != null)
-            myAnimator.SetTrigger("UpwardAttack");
-    }
+        if (myAnimator == null)
+        {
+            return;
+        }
 
-
-    public void AttackDownAction()
-    {
-        if (myAnimator != null)
-            myAnimator.SetTrigger("DownwardAttack");
+        if(cancelled)
+        {           
+            myAnimator.SetTrigger("CancelAttack");
+        }
     }
 
 	public void ChargeStartAction()
@@ -93,13 +106,7 @@ public class PlayerAnimationStateVarsProvider : MonoBehaviour {
 	{
 		if (myAnimator != null)
 			myAnimator.SetBool("Charge", false);
-	}
-
-	public void AttackSpecialStartAction(Vector2 direction)
-	{
-		if (myAnimator != null)
-			myAnimator.SetTrigger("SpecialAttack");
-	}
+	}       
 
     public void HorizontalKnockbackAction()
     {
@@ -129,16 +136,5 @@ public class PlayerAnimationStateVarsProvider : MonoBehaviour {
     {
         if (myAnimator != null)
             myAnimator.SetBool("Invincible", isInvicible);
-    }
-
-    private void HandleOnCollisionAction (PlayerStatusProvider.CollisionType collisionType, Vector2 velocity)
-    {
-        if (collisionType == PlayerStatusProvider.CollisionType.GROUND_ATTACK || collisionType == PlayerStatusProvider.CollisionType.SPECIAL_ATTACK)
-        {
-            if (myAnimator != null)
-            {
-                myAnimator.SetTrigger("CancelAttack");
-            }
-        }
-    }
+    }      
 }

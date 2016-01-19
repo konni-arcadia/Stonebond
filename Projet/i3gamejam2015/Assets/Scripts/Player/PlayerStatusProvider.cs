@@ -67,25 +67,26 @@ public class PlayerStatusProvider : MonoBehaviour {
 		if (onWallJumpAction != null) onWallJumpAction();
 	}
 
-	public delegate void AttackForwardAction();
-    public event AttackForwardAction OnAttackForwardAction;
-    public void setAttackForward()
+    public enum AttackType
     {
-        if (OnAttackForwardAction != null) OnAttackForwardAction();
+        FORWARD,
+        UP,
+        DOWN,
+        SPECIAL
     }
 
-    public delegate void AttackUpAction();
-    public event AttackUpAction OnAttackUpAction;
-    public void setAttackUp()
+    public delegate void AttackStartAction(AttackType attackType, Vector2 direction);
+    public event AttackStartAction OnAttackStartAction;
+    public void setAttackStart(AttackType attackType, Vector2 direction)
     {
-        if (OnAttackUpAction != null) OnAttackUpAction();
+        if (OnAttackStartAction != null) OnAttackStartAction(attackType, direction);
     }
 
-    public delegate void AttackDownAction();
-    public event AttackDownAction OnAttackDownAction;
-    public void setAttackDown()
+    public delegate void AttackStopAction(AttackType attackType, bool cancelled);
+    public event AttackStopAction OnAttackStopAction;
+    public void setAttackStop(AttackType attackType, bool cancelled)
     {
-        if (OnAttackDownAction != null) OnAttackDownAction();
+        if (OnAttackStopAction != null) OnAttackStopAction(attackType, cancelled);
     }
 
 	public delegate void ChargeStartAction();
@@ -108,20 +109,6 @@ public class PlayerStatusProvider : MonoBehaviour {
 	{
 		if (OnChargeReadyAction != null) OnChargeReadyAction();
 	}
-
-	public delegate void AttackSpecialStartAction(Vector2 direction);
-    public event AttackSpecialStartAction OnAttackSpecialStartAction;
-	public void setAttackSpecialStart(Vector2 direction)
-	{
-        if (OnAttackSpecialStartAction != null) OnAttackSpecialStartAction(direction);
-	}
-
-    public delegate void AttackSpecialStopAction();
-    public event AttackSpecialStopAction OnAttackSpecialStopAction;
-    public void setAttackSpecialStop()
-    {
-        if (OnAttackSpecialStopAction != null) OnAttackSpecialStopAction();
-    }
 
 	public delegate void AttackFailedAction();
 	public event AttackFailedAction OnAttackFailedAction;

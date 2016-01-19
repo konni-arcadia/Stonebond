@@ -1427,6 +1427,7 @@ MonoBehaviour:
   attackDownForceMax: 10000
   attackDownHitboxStart: 0
   attackDownHitboxEnd: 1
+  attackDownCancelTimeMin: 0.08
   attackDownCurve:
     serializedVersion: 2
     m_Curve:
@@ -1468,13 +1469,11 @@ MonoBehaviour:
     m_RotationOrder: 4
   attackForwardCollider: {fileID: 6193008}
   attackCooldownTime: 0.35
-  chargeTime: 1
-  chargeMinTime: 0.5
   chargeGravityReductionTime: 0.08
-  chargeReady: 0
-  chargeReadyTime: 0
-  chargeReadyMaxTime: 1.2
+  chargeReadyTimeMin: 0.5
+  chargeReadyTimeMax: 1.7
   specialAttackTime: 0.55
+  specialAttackCancelTimeMin: 0.25
   specialAttackForceMin: 0
   specialAttackForceMax: 3000
   specialAttackForceRatio: 1
@@ -14398,6 +14397,18 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: reverbZoneMixCustomCurve.m_RotationOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: chargeReadyTimeMax
+      value: 1.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: specialAttackCancelTimeMin
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackDownCancelTimeMin
+      value: 0.08
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

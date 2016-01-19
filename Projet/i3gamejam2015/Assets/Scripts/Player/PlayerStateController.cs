@@ -493,18 +493,18 @@ public class PlayerStateController : MonoBehaviour
         }
         
         // attack
-        if (inputManager.WasPressed(playerId, InputManager.BUTTON_ATTACK))
+		if (inputManager.IsHeld(playerId, InputManager.BUTTON_ATTACK))
         {
             if (attackCooldown == 0.0f)
             {
                 SetState(State.ATTACK);
                 return;
             }
-            else
+            else if (inputManager.WasPressed (playerId, InputManager.BUTTON_ATTACK))
             {
-                print("p" + playerId + ": attack on CD");
-                statusProvider.setAttackFailed();
-            }
+                LogDebug("attack on CD");
+                statusProvider.setAttackFailed ();
+			}
         }
 
         // charge
@@ -515,10 +515,10 @@ public class PlayerStateController : MonoBehaviour
                 SetState(State.CHARGE);
                 return;
             }
-            else
+            else if (inputManager.WasPressed (playerId, InputManager.BUTTON_CHARGE))
             {
-                print("p" + playerId + ": charge on CD");
-                statusProvider.setAttackFailed();
+                LogDebug("charge on CD");
+                statusProvider.setAttackFailed ();				
             }
         }
 

@@ -96,13 +96,10 @@ public class PlayerStateController : MonoBehaviour
     // 
     // CHARGE
     //
-
-    public float chargeTime = 1.0f;
-	public float chargeMinTime = 0.5f; // min charge time to launch the special attack
-	public float chargeGravityReductionTime = 0.08f; // secs
-	public bool chargeReady = false;
-	public float chargeReadyTime; // secs
-	public float chargeReadyMaxTime = 2.0f; // max time player can stay with charge ready in secs
+	    
+	public float chargeGravityReductionTime = 0.08f;
+	public float chargeReadyTimeMin = 0.5f;
+	public float chargeReadyTimeMax = 2.0f;
 
     //
     // SPECIAL ATTACK
@@ -259,7 +256,7 @@ public class PlayerStateController : MonoBehaviour
             return 0.0f;
         }
 
-        return stateTime / chargeTime;
+        return stateTime / chargeReadyTimeMin;
     }
 
     public float GetSpecialAttackPct()
@@ -677,10 +674,13 @@ public class PlayerStateController : MonoBehaviour
     // CHARGE
     //
     
+	private bool chargeReady;
+
     private void EnterCharge()
     {
         stateTime = 0.0f;
-        
+		chargeReady = false;
+
         movementController.setMovementEnabled(false);
         movementController.setJumpEnabled(false);
         
@@ -704,10 +704,6 @@ public class PlayerStateController : MonoBehaviour
 		// increase state time
 		stateTime += Time.deltaTime;
 
-		// increase charge ready time if ready
-		if(chargeReady)
-			chargeReadyTime += Time.deltaTime;
-
 		// gradually reduce gravity
 		if(stateTime < chargeGravityReductionTime)
 		{
@@ -720,18 +716,17 @@ public class PlayerStateController : MonoBehaviour
 		}
 
 		// detect if charge is ready ?
-		if (stateTime >= chargeTime && !chargeReady) {
+		if (stateTime >= chargeReadyTimeMin && !chargeReady) {
 			chargeReady = true;
-			chargeReadyTime = 0;
 			statusProvider.setChargeReady ();
 		}
 
-		if (stateTime >= chargeMinTime) {
+		if (stateTime >= chargeReadyTimeMin) {
 			chargeAnimation.StartCharge ();
         }
 
 		// stop charge if charge ready time exceeds max charge time
-		if (chargeReady && chargeReadyTime >= chargeReadyMaxTime)
+		if (stateTime > chargeReadyTimeMax)
 		{
 			StopCharge();
 			return;
@@ -741,7 +736,7 @@ public class PlayerStateController : MonoBehaviour
 		if(!inputManager.IsHeld(playerId, InputManager.BUTTON_CHARGE))
 		{
 			// trigger special attack if min charge time is reached
-			if(stateTime >= chargeMinTime)
+			if(stateTime >= chargeReadyTimeMin)
 			{
 				ComputeSpecialAttackForceRatio();
 				LaunchSpecialAttack();
@@ -758,7 +753,7 @@ public class PlayerStateController : MonoBehaviour
 	public void ComputeSpecialAttackForceRatio()
 	{
 		// compute charge ratio according charge time
-		float chargeRatio = Mathf.Min(1.0f, (stateTime - chargeMinTime) / (chargeTime - chargeMinTime));
+		float chargeRatio = Mathf.Min(1.0f, (stateTime - chargeReadyTimeMin) / (chargeReadyTimeMax - chargeReadyTimeMin));
 
 		// re-normalize to include min ratio
 		specialAttackForceRatio = specialAttackForceMinRatio + (1.0f - specialAttackForceMinRatio) * chargeRatio;

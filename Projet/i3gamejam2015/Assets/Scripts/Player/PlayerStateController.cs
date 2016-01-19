@@ -69,7 +69,9 @@ public class PlayerStateController : MonoBehaviour
     public float attackUpTimeMax = 0.25f;
     public float attackUpForceMin = 0.0f;
     public float attackUpForceMax = 46000.0f;
+	[Range(0.0f, 1.0f)]
     public float attackUpHitboxStart = 0.0f;
+	[Range(0.0f, 1.0f)]
     public float attackUpHitboxEnd = 0.9f;
     public AnimationCurve attackUpCurve;
     public Collider2D attackUpCollider;
@@ -78,7 +80,9 @@ public class PlayerStateController : MonoBehaviour
     public float attackDownTimeMax = 0.25f;
     public float attackDownForceMin = 0.0f;
     public float attackDownForceMax = 46000.0f;
+	[Range(0.0f, 1.0f)]
     public float attackDownHitboxStart = 0.0f;
+	[Range(0.0f, 1.0f)]
     public float attackDownHitboxEnd = 1.0f;
     public AnimationCurve attackDownCurve;
     public Collider2D attackDownCollider;
@@ -87,7 +91,9 @@ public class PlayerStateController : MonoBehaviour
     public float attackForwardTimeMax = 0.2f;
     public float attackForwardForceMin = 0.0f;
     public float attackForwardForceMax = 30000.0f;
+	[Range(0.0f, 1.0f)]
     public float attackForwardHitboxStart = 0.0f;
+	[Range(0.0f, 1.0f)]
     public float attackForwardHitboxEnd = 0.6f;
     public AnimationCurve attackForwardCurve;
     public Collider2D attackForwardCollider;
@@ -112,7 +118,9 @@ public class PlayerStateController : MonoBehaviour
 	public float specialAttackForceRatio = 1.0f;
 	[Range(0.0f, 1.0f)]
 	public float specialAttackForceMinRatio = 0.2f;
+	[Range(0.0f, 1.0f)]
     public float specialAttackHitboxStart = 0.0f;
+	[Range(0.0f, 1.0f)]
     public float specialAttackHitboxEnd = 0.95f;
     public AnimationCurve specialAttackCurve;
     public Collider2D specialAttackCollider;

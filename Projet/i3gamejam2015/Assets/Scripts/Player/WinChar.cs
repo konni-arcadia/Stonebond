@@ -10,22 +10,22 @@ public class WinChar : MonoBehaviour {
 	[SerializeField] private Image winCharImg;
 	public int playerId = 1;
 	private Color bodyColorNormal;
-	private Color bodyColorMin;
-	private Color bodyColorMax;
+	//private Color bodyColorMin;
+	//private Color bodyColorMax;
 	private Color chromaColorNormal;
-	private Color chromaColorMin;
-	private Color chromaColorMax;
+	//private Color chromaColorMin;
+	//private Color chromaColorMax;
 	// Use this for initialization
 	public void UpdateColor () {
 		GameState.PlayerInfo playerInfo = GameState.Instance.Player(playerId);
 
 		bodyColorNormal = playerInfo.BodyColor;
-		bodyColorMin = Color.Lerp(bodyColorNormal, Color.black, bodyColorDarkPct);
-		bodyColorMax = Color.Lerp(bodyColorNormal, Color.white, bodyColorBrightPct);
+		//bodyColorMin = Color.Lerp(bodyColorNormal, Color.black, bodyColorDarkPct);
+		//bodyColorMax = Color.Lerp(bodyColorNormal, Color.white, bodyColorBrightPct);
 
 		chromaColorNormal = playerInfo.Color;
-		chromaColorMin = Color.Lerp(chromaColorNormal, Color.black, chromaColorDarkPct);
-		chromaColorMax = Color.Lerp(chromaColorNormal, Color.white, chromaColorBrightPct);
+		//chromaColorMin = Color.Lerp(chromaColorNormal, Color.black, chromaColorDarkPct);
+		//chromaColorMax = Color.Lerp(chromaColorNormal, Color.white, chromaColorBrightPct);
 
 		SetBodyColor(bodyColorNormal);
 		SetChromaColor(chromaColorNormal);

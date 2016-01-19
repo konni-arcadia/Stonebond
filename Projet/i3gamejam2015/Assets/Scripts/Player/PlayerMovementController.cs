@@ -318,14 +318,8 @@ public class PlayerMovementController : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(groundChecks[1].transform.position, groundChecks[0].transform.position);
 		// Only available on one-way platforms (OWP)
 		if (hit.collider.transform.GetComponent<OneWayPlatform>() != null)
-			StartCoroutine(TemporarilyDeactivateMutualColliders(hit.collider, coll));
+            Physics2D.IgnoreCollision(hit.collider, coll, true);
     }
 
-    IEnumerator TemporarilyDeactivateMutualColliders(Collider2D coll1, Collider2D coll2)
-    {
-		Physics2D.IgnoreCollision(coll1, coll2, true);
-		yield return new WaitForSeconds(0.1f);
-		Physics2D.IgnoreCollision(coll1, coll2, false);
-	}
     
 }

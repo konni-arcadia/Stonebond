@@ -745,8 +745,7 @@ public class PlayerStateController : MonoBehaviour
 		{
 			// trigger special attack if min charge time is reached
 			if(stateTime >= chargeReadyTimeMin)
-			{
-				ComputeSpecialAttackForceRatio();
+			{			
 				LaunchSpecialAttack();
 				return;
 			}
@@ -756,25 +755,22 @@ public class PlayerStateController : MonoBehaviour
 				return;
 			}
 		}
-    }
+    }       
 
-	public void ComputeSpecialAttackForceRatio()
+	private void LaunchSpecialAttack()
 	{
-		// compute charge ratio according charge time
-		float chargeRatio = Mathf.Min(1.0f, (stateTime - chargeReadyTimeMin) / (chargeReadyTimeMax - chargeReadyTimeMin));
+        // compute charge ratio according charge time
+        float chargeRatio = Mathf.Min(1.0f, (stateTime - chargeReadyTimeMin) / (chargeReadyTimeMax - chargeReadyTimeMin));
 
-		// re-normalize to include min ratio
-		specialAttackForceRatio = specialAttackForceMinRatio + (1.0f - specialAttackForceMinRatio) * chargeRatio;
-	}
+        // re-normalize to include min ratio
+        specialAttackForceRatio = specialAttackForceMinRatio + (1.0f - specialAttackForceMinRatio) * chargeRatio;
 
-	public void LaunchSpecialAttack()
-	{
 		chargeReady = false;
 		statusProvider.setChargeStop(true);
 		SetState(State.SPECIAL_ATTACK);
 	}
 
-	public void StopCharge()
+	private void StopCharge()
 	{
 		chargeReady = false;
 		statusProvider.setChargeStop(false);

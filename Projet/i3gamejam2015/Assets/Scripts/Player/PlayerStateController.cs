@@ -84,6 +84,7 @@ public class PlayerStateController : MonoBehaviour
     public float attackDownHitboxStart = 0.0f;
 	[Range(0.0f, 1.0f)]
     public float attackDownHitboxEnd = 1.0f;
+    public float attackDownCancelTimeMin = 0.12f;
     public AnimationCurve attackDownCurve;
     public Collider2D attackDownCollider;
 
@@ -112,6 +113,7 @@ public class PlayerStateController : MonoBehaviour
     // 
 
     public float specialAttackTime = 0.35f;
+    public float specialAttackCancelTimeMin = 0.25f;
     public float specialAttackForceMin = 0.0f;
     public float specialAttackForceMax = 30000.0f;
 	[Range(0.0f, 1.0f)]
@@ -538,42 +540,50 @@ public class PlayerStateController : MonoBehaviour
     //
 
     private Collider2D attackCollider;
+    private float attackTime;
+    private float attackCancelTimeMin;
     private float attackHitboxStart;
     private float attackHitboxEnd;
+    private bool hasAttackBeenCancelled;
 
     private void EnterAttack()
     { 
         stateTime = 0.0f;
+        hasAttackBeenCancelled = false;
 
         switch (aimDirection)
         {
             case AimDirection.UP:
+                attackTime = attackUpTimeMax;
+                attackCancelTimeMin = attackTime; // not used
                 attackCollider = attackUpCollider;
                 attackHitboxStart = attackUpHitboxStart;
                 attackHitboxEnd = attackUpHitboxEnd;
 
                 movementController.resetVelocity(false, true);
                 movementController.setJumpEnabled(false);
-                statusProvider.setAttackUp();
+                statusProvider.setAttackStart(PlayerStatusProvider.AttackType.UP, Vector2.up);
                 break;
             case AimDirection.DOWN:
+                attackTime = attackDownTimeMax;
+                attackCancelTimeMin = attackDownCancelTimeMin;
                 attackCollider = attackDownCollider;
                 attackHitboxStart = attackDownHitboxStart;
                 attackHitboxEnd = attackDownHitboxEnd;
 
+                movementController.resetVelocity(false, true);
+                statusProvider.setAttackStart(PlayerStatusProvider.AttackType.DOWN, Vector2.down);
+
                 if (onGround)
                 {
-                    // can't perform down attack while on ground
-                    statusProvider.setAttackFailed();
-                    SetState(State.IDLE);
-                }
-                else
-                {
-                    movementController.resetVelocity(false, true);
-                    statusProvider.setAttackDown();
+                    // was already on wall, cancel the attack (hit event wouldn't be triggered otherwise)
+                    statusProvider.setCollision(PlayerStatusProvider.CollisionType.GROUND_ATTACK, Vector2.down);
+                    hasAttackBeenCancelled = true;
                 }
                 break;
             case AimDirection.FORWARD:
+                attackTime = attackForwardTimeMax;
+                attackCancelTimeMin = attackTime; // not used
                 attackCollider = attackForwardCollider;
                 attackHitboxStart = attackForwardHitboxStart;
                 attackHitboxEnd = attackForwardHitboxEnd;
@@ -582,12 +592,14 @@ public class PlayerStateController : MonoBehaviour
                 movementController.setMovementEnabled(false);
                 movementController.setGravityFactor(0.0f);
                 movementController.setJumpEnabled(false);
-                statusProvider.setAttackForward();
+
+                Vector2 direction = movementController.isFacingRight() ? Vector2.right : Vector2.left;
+                statusProvider.setAttackStart(PlayerStatusProvider.AttackType.FORWARD, direction);
 
                 if (onWall)
                 {
                     // was already on wall, fire an hit event (hit event wouldn't be triggered otherwise)
-                    statusProvider.setCollision(PlayerStatusProvider.CollisionType.WALL_ATTACK, new Vector2());
+                    statusProvider.setCollision(PlayerStatusProvider.CollisionType.WALL_ATTACK, direction);
                 }
                 break;
         }
@@ -615,35 +627,22 @@ public class PlayerStateController : MonoBehaviour
 
     private void FixedUpdateAttack()
     {
-        float attackMinTime = 0.0f;
-        float attackMaxTime = 0.0f;
-
-        switch (aimDirection)
-        {
-            case AimDirection.UP:
-                attackMinTime = attackUpTimeMin;
-                attackMaxTime = attackUpTimeMax;
-                break;
-            case AimDirection.DOWN:
-                attackMinTime = attackDownTimeMin;
-                attackMaxTime = attackDownTimeMax;
-                break;
-            case AimDirection.FORWARD:
-                attackMinTime = attackForwardTimeMin;
-                attackMaxTime = attackForwardTimeMax;
-                break;
-        }
-
         stateTime += Time.fixedDeltaTime;
     
         // if attack time is over
-        if (stateTime > attackMaxTime || (stateTime > attackMinTime && !inputManager.IsHeld(playerId, InputManager.BUTTON_ATTACK)))
+        if (stateTime > attackTime)
         {
             SetState(State.IDLE);
             return;
         }
 
-        float attackPct = stateTime / attackMaxTime;
+        if (hasAttackBeenCancelled && stateTime > attackCancelTimeMin)
+        {
+            SetState (State.IDLE);
+            return;
+        }
+
+        float attackPct = stateTime / attackTime;
 
         if (!attackCollider.enabled && attackPct >= attackHitboxStart && attackPct < attackHitboxEnd)
         {
@@ -782,10 +781,12 @@ public class PlayerStateController : MonoBehaviour
     //
 
     private Vector2 specialAttackVector = new Vector2();
+    private bool hasSpecialAttackBeenCancelled;
 
     private void EnterSpecialAttack()
     {
         stateTime = 0.0f;
+        hasSpecialAttackBeenCancelled = false;
 
         movementController.resetVelocity();
         movementController.setGravityFactor(0.0f);
@@ -809,7 +810,7 @@ public class PlayerStateController : MonoBehaviour
         float angle = Mathf.Sign(specialAttackVector.y) * Vector2.Angle(specialAttackVector.x < 0.0f ? Vector2.left : Vector2.right, specialAttackVector);
         specialAttackBase.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
-        statusProvider.setAttackSpecialStart(specialAttackVector);		       
+        statusProvider.setAttackStart(PlayerStatusProvider.AttackType.SPECIAL, specialAttackVector);		       
     }
 
     private void LeaveSpecialAttack()
@@ -824,7 +825,7 @@ public class PlayerStateController : MonoBehaviour
         
         attackCooldown = attackCooldownTime;
 
-        statusProvider.setAttackSpecialStop();
+        statusProvider.setAttackStop(PlayerStatusProvider.AttackType.SPECIAL, hasSpecialAttackBeenCancelled);
     }
 
     private void FixedUpdateSpecialAttack()
@@ -839,9 +840,14 @@ public class PlayerStateController : MonoBehaviour
         }
         
 		// if special attack hit solid
-        if (movementController.IsHittingSolid(specialAttackBase, specialAttackSolidChecks, specialAttackVector))
+        if (!hasSpecialAttackBeenCancelled && movementController.IsHittingSolid(specialAttackBase, specialAttackSolidChecks, specialAttackVector))
         {
+            hasSpecialAttackBeenCancelled = true;
             statusProvider.setCollision (PlayerStatusProvider.CollisionType.SPECIAL_ATTACK, specialAttackVector);
+        }
+
+        if (hasSpecialAttackBeenCancelled && stateTime > specialAttackCancelTimeMin)
+        {
             SetState (State.IDLE);
             return;
         }
@@ -1017,12 +1023,12 @@ public class PlayerStateController : MonoBehaviour
 
         if (state == State.ATTACK && aimDirection == AimDirection.DOWN)
         {
-            SetState(State.IDLE);
-            statusProvider.setCollision(PlayerStatusProvider.CollisionType.GROUND_ATTACK, new Vector2());
+            hasAttackBeenCancelled = true;
+            statusProvider.setCollision(PlayerStatusProvider.CollisionType.GROUND_ATTACK, Vector2.down);
         }
         else
         {
-            statusProvider.setCollision(PlayerStatusProvider.CollisionType.GROUND, new Vector2());
+            statusProvider.setCollision(PlayerStatusProvider.CollisionType.GROUND, Vector2.down);
         }
     }
 
@@ -1037,11 +1043,11 @@ public class PlayerStateController : MonoBehaviour
 
         if (state == State.ATTACK && aimDirection == AimDirection.FORWARD)
         {
-            statusProvider.setCollision(PlayerStatusProvider.CollisionType.WALL_ATTACK, new Vector2());
+            statusProvider.setCollision(PlayerStatusProvider.CollisionType.WALL_ATTACK, movementController.isFacingRight() ? Vector2.right : Vector2.left);
         }
         else
         {
-            statusProvider.setCollision(PlayerStatusProvider.CollisionType.WALL, new Vector2());
+            statusProvider.setCollision(PlayerStatusProvider.CollisionType.WALL, movementController.isFacingRight() ? Vector2.right : Vector2.left);
         }
     }
 

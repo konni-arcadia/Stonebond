@@ -57,8 +57,8 @@ public class PlayerFXManager : MonoBehaviour
         statusProvider.OnDieWarningAction += HandleOnDieWarning;
         statusProvider.OnDieAction += HandleOnDie;
         statusProvider.OnCollisionAction += HandleOnCollisionAction;
-        statusProvider.OnAttackSpecialStartAction += HandleOnAttackSpecialStartAction;
-        statusProvider.OnAttackSpecialStopAction += HandleOnAttackSpecialStopAction;
+        statusProvider.OnAttackStartAction += HandleOnAttackStartAction;
+        statusProvider.OnAttackStopAction += HandleOnAttackStopAction;
 
         originalSortingLayerName = bodyRenderer.sortingLayerName;
         originalSortingOrder = bodyRenderer.sortingOrder;
@@ -181,17 +181,23 @@ public class PlayerFXManager : MonoBehaviour
         }
     }
 
-    void HandleOnAttackSpecialStartAction (Vector2 direction)
+    void HandleOnAttackStartAction(PlayerStatusProvider.AttackType attackType, Vector2 direction)
     {
-        float angle = Mathf.Sign(direction.y) * Vector2.Angle(direction.x < 0.0f ? Vector2.left : Vector2.right, direction);
-        bodyRenderer.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-		bodyRenderer.transform.parent.Translate (new Vector3 (0.0f, 1.0f, 0.0f));
+        if (attackType == PlayerStatusProvider.AttackType.SPECIAL)
+        {
+            float angle = Mathf.Sign(direction.y) * Vector2.Angle(direction.x < 0.0f ? Vector2.left : Vector2.right, direction);
+            bodyRenderer.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            bodyRenderer.transform.parent.Translate(new Vector3(0.0f, 1.0f, 0.0f));
+        }
     }
     
-    void HandleOnAttackSpecialStopAction ()
+    void HandleOnAttackStopAction (PlayerStatusProvider.AttackType attackType, bool cancelled)
     {
-        bodyRenderer.transform.rotation = Quaternion.AngleAxis(0.0f, Vector3.forward);
-		bodyRenderer.transform.parent.Translate (new Vector3 (0.0f, -1.0f, 0.0f));
+        if (attackType == PlayerStatusProvider.AttackType.SPECIAL)
+        {
+            bodyRenderer.transform.rotation = Quaternion.AngleAxis(0.0f, Vector3.forward);
+            bodyRenderer.transform.parent.Translate(new Vector3(0.0f, -1.0f, 0.0f));
+        }
     }
 
     //

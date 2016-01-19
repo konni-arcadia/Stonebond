@@ -17,10 +17,7 @@ public class PlayerSoundManager : MonoBehaviour
         statusProvider.OnDieAction += onPlayerDied;
         statusProvider.onJumpAction += OnJumped;
         statusProvider.onWallJumpAction += OnWallJumped;
-        statusProvider.OnAttackUpAction += OnAttack;
-		statusProvider.OnAttackSpecialStartAction += OnSpecialAttack;
-        statusProvider.OnAttackForwardAction += OnAttack;
-        statusProvider.OnAttackDownAction += OnAttack;
+        statusProvider.OnAttackStartAction += OnAttackStart;		
         statusProvider.OnRespawnAction += OnRespawned;
     }
 
@@ -29,16 +26,25 @@ public class PlayerSoundManager : MonoBehaviour
 		AudioSingleton<SfxAudioManager>.Instance.PlayReBirth();
     }
 
-    private void OnAttack()
+    private void OnAttackStart(PlayerStatusProvider.AttackType attackType, Vector2 direction)
     {
-		AudioSingleton<SfxAudioManager>.Instance.PlayAttack();
+        switch (attackType)
+        {
+            case PlayerStatusProvider.AttackType.FORWARD:
+                AudioSingleton<SfxAudioManager>.Instance.PlayAttack();
+                break;
+            case PlayerStatusProvider.AttackType.UP:
+                AudioSingleton<SfxAudioManager>.Instance.PlayAttack();
+                break;
+            case PlayerStatusProvider.AttackType.DOWN:
+                AudioSingleton<SfxAudioManager>.Instance.PlayAttack();
+                break;
+            case PlayerStatusProvider.AttackType.SPECIAL:
+                AudioSingleton<SfxAudioManager>.Instance.PlayAttack();
+                break;
+        }
     }
-
-	private void OnSpecialAttack(Vector2 direction)
-	{
-		AudioSingleton<SfxAudioManager>.Instance.PlayAttack(); // TODO sound for special action
-	}
-
+	
     private void OnWallJumped()
     { 
 		AudioSingleton<SfxAudioManager>.Instance.PlayWallJump();

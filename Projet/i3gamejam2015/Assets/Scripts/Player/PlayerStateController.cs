@@ -107,6 +107,7 @@ public class PlayerStateController : MonoBehaviour
 	public float chargeGravityReductionTime = 0.08f;
 	public float chargeReadyTimeMin = 0.5f;
 	public float chargeReadyTimeMax = 2.0f;
+    public AnimationCurve chargeForceRatioCurve;
 
     //
     // SPECIAL ATTACK
@@ -116,10 +117,6 @@ public class PlayerStateController : MonoBehaviour
     public float specialAttackCancelTimeMin = 0.25f;
     public float specialAttackForceMin = 0.0f;
     public float specialAttackForceMax = 30000.0f;
-	[Range(0.0f, 1.0f)]
-	public float specialAttackForceRatio = 1.0f;
-	[Range(0.0f, 1.0f)]
-	public float specialAttackForceMinRatio = 0.2f;
 	[Range(0.0f, 1.0f)]
     public float specialAttackHitboxStart = 0.0f;
 	[Range(0.0f, 1.0f)]
@@ -682,6 +679,7 @@ public class PlayerStateController : MonoBehaviour
     //
     
 	private bool chargeReady;
+    private float chargeForceRatio;
 
     private void EnterCharge()
     {
@@ -692,7 +690,6 @@ public class PlayerStateController : MonoBehaviour
         movementController.setJumpEnabled(false);
         
         statusProvider.setChargeStart();
-
     }
     
     private void LeaveCharge()
@@ -707,8 +704,7 @@ public class PlayerStateController : MonoBehaviour
     }
     
     private void UpdateCharge()
-    {
-		// increase state time
+    {		
 		stateTime += Time.deltaTime;
 
 		// gradually reduce gravity
@@ -722,7 +718,7 @@ public class PlayerStateController : MonoBehaviour
 			movementController.setGravityFactor(0.0f);
 		}
 
-		// detect if charge is ready ?
+		// detect if charge is ready
 		if (stateTime >= chargeReadyTimeMin && !chargeReady) {
 			chargeReady = true;
 			statusProvider.setChargeReady ();
@@ -758,12 +754,11 @@ public class PlayerStateController : MonoBehaviour
 
 	private void LaunchSpecialAttack()
 	{
-        // compute charge ratio according charge time
-        float chargeRatio = Mathf.Min(1.0f, (stateTime - chargeReadyTimeMin) / (chargeReadyTimeMax - chargeReadyTimeMin));
+        // compute charge ratio according to charge time
+        float chargePct = Mathf.Min(1.0f, (stateTime - chargeReadyTimeMin) / (chargeReadyTimeMax - chargeReadyTimeMin));       
+        chargeForceRatio = chargeForceRatioCurve.Evaluate(chargePct);
 
-        // re-normalize to include min ratio
-        specialAttackForceRatio = specialAttackForceMinRatio + (1.0f - specialAttackForceMinRatio) * chargeRatio;
-
+        // launch special attack
 		chargeReady = false;
 		statusProvider.setChargeStop(true);
 		SetState(State.SPECIAL_ATTACK);
@@ -863,9 +858,9 @@ public class PlayerStateController : MonoBehaviour
             specialAttackCollider.enabled = false;
         }
 
-        float forcePct = specialAttackCurve.Evaluate(attackPct);
-		float hForce = (Mathf.Sign(specialAttackVector.x) * specialAttackForceMin + specialAttackVector.x * forcePct * (specialAttackForceMax - specialAttackForceMin)) * Time.fixedDeltaTime * specialAttackForceRatio;
-		float vForce = (Mathf.Sign(specialAttackVector.y) * specialAttackForceMin + specialAttackVector.y * forcePct * (specialAttackForceMax - specialAttackForceMin)) * Time.fixedDeltaTime * specialAttackForceRatio;
+        float forcePct = specialAttackCurve.Evaluate(attackPct) * chargeForceRatio;
+        float hForce = (Mathf.Sign(specialAttackVector.x) * specialAttackForceMin + specialAttackVector.x * forcePct * (specialAttackForceMax - specialAttackForceMin)) * Time.fixedDeltaTime;
+        float vForce = (Mathf.Sign(specialAttackVector.y) * specialAttackForceMin + specialAttackVector.y * forcePct * (specialAttackForceMax - specialAttackForceMin)) * Time.fixedDeltaTime;
 		movementController.setVelocity(new Vector2(hForce, vForce));
     }
 

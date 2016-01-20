@@ -1472,12 +1472,31 @@ MonoBehaviour:
   chargeGravityReductionTime: 0.08
   chargeReadyTimeMin: 0.5
   chargeReadyTimeMax: 1.7
+  chargeForceRatioCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0.2
+      inSlope: -0.11595045
+      outSlope: -0.11595045
+      tangentMode: 0
+    - time: 0.8
+      value: 1
+      inSlope: 0.64164
+      outSlope: 0.64164
+      tangentMode: 0
+    - time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
   specialAttackTime: 0.55
   specialAttackCancelTimeMin: 0.25
   specialAttackForceMin: 0
   specialAttackForceMax: 3000
-  specialAttackForceRatio: 1
-  specialAttackForceMinRatio: 0.2
   specialAttackHitboxStart: 0
   specialAttackHitboxEnd: 0.95
   specialAttackCurve:

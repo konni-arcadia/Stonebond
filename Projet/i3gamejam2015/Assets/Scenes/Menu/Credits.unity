@@ -8,25 +8,25 @@ SceneSettings:
   m_PVSPortalsArray: []
   m_OcclusionBakeSettings:
     smallestOccluder: 5
-    smallestHole: .25
+    smallestHole: 0.25
     backfaceThreshold: 100
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 6
   m_Fog: 0
-  m_FogColor: {r: .5, g: .5, b: .5, a: 1}
+  m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_FogMode: 3
-  m_FogDensity: .00999999978
+  m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: .211999997, g: .226999998, b: .259000003, a: 1}
-  m_AmbientEquatorColor: {r: .114, g: .125, b: .133000001, a: 1}
-  m_AmbientGroundColor: {r: .0469999984, g: .0430000015, b: .0350000001, a: 1}
+  m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
+  m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
+  m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
   m_AmbientMode: 3
   m_SkyboxMaterial: {fileID: 0}
-  m_HaloStrength: .5
+  m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
   m_HaloTexture: {fileID: 0}
@@ -40,7 +40,7 @@ RenderSettings:
 --- !u!157 &4
 LightmapSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 5
+  serializedVersion: 6
   m_GIWorkflowMode: 1
   m_LightmapsMode: 1
   m_GISettings:
@@ -66,7 +66,7 @@ LightmapSettings:
     m_FinalGather: 0
     m_FinalGatherRayCount: 1024
     m_ReflectionCompression: 2
-  m_LightmapSnapshot: {fileID: 0}
+  m_LightingDataAsset: {fileID: 0}
   m_RuntimeCPUUsage: 25
 --- !u!196 &5
 NavMeshSettings:
@@ -74,15 +74,15 @@ NavMeshSettings:
   m_ObjectHideFlags: 0
   m_BuildSettings:
     serializedVersion: 2
-    agentRadius: .5
+    agentRadius: 0.5
     agentHeight: 2
     agentSlope: 45
-    agentClimb: .400000006
+    agentClimb: 0.4
     ledgeDropHeight: 0
     maxJumpAcrossDistance: 0
     accuratePlacement: 0
     minRegionArea: 2
-    cellSize: .166666672
+    cellSize: 0.16666667
     manualCellSize: 0
   m_NavMeshData: {fileID: 0}
 --- !u!1 &367046566
@@ -195,11 +195,11 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 770526648}
   m_RootOrder: 1
-  m_AnchorMin: {x: .0556881465, y: .110222608}
-  m_AnchorMax: {x: .963000059, y: .835222661}
-  m_AnchoredPosition: {x: 1.43899536, y: -1.24996948}
-  m_SizeDelta: {x: -1, y: -2.5000999}
-  m_Pivot: {x: .5, y: .5}
+  m_AnchorMin: {x: 0.055688147, y: 0.1646977}
+  m_AnchorMax: {x: 0.96300006, y: 0.88681865}
+  m_AnchoredPosition: {x: 1.4998999, y: -16}
+  m_SizeDelta: {x: -1, y: 3.4999008}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &406538422
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -221,37 +221,32 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: f471a3d61e4a4f94691b4f2de1674f94, type: 3}
-    m_FontSize: 14
+    m_FontSize: 30
     m_FontStyle: 0
-    m_BestFit: 1
+    m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 100
     m_Alignment: 1
+    m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'New Text
-
-    test
-
-    tes
-
-    tes
-
-    tes
-
-    test
-
-    ete
-
-    ste
-
-    st
-
-    ew
-
-    tst'
+  m_Text: "Anthony Rodrigues (Character & Animation Artist)\n\nAur\xE9lien Da Campo
+    (Lead Programmer, @AurelienDaCampo)\n\nCl\xE9ment Buisson (Background artist)\n\nDaniel
+    N\xE9phi Muller (Animation Programmer)\n\nDario Galizia (Music & Sound Designer)\n\nDavid
+    Javet (Producer, Tchagata Games, @TafiaTchagata)\n\nDavid Perret (Programmer,
+    Alpagames, @alpagamesstudio)\n\nDavid Roulin (Visual FX Programmer, @roulinade)\n\nElias
+    Farhan (Game Designer)\n\nFlorian Br\xF6nimann (Programmer, @f_bron)\n\nGabriel
+    Sonderegger (Lead Background Artist)\n\nIgor Neimann (Character & Animation Artist)\n\nJ\xE9r\xE9my
+    Wuthrer Cuany (Communication Manager)\n\nJo\xEBl Lauener (Gameplay Programmer,
+    ZappedCow, @ZappedCow)\n\nJohan Fruh (Character & Animation Artist)\n\nJohn D
+    Willimann (Animation Artist, Willimann3D, @angrygobbler)\n\nKarim Cheurfi (Programmer,
+    Alpagames, @alpagamesstudio)\n\nMathieu Bonvin (Lead Artist)\n\nNicolas Schluchter
+    (Programmer)\n\nPhilippe G\xFCdemann (Sound Design & Audio API Developer, Tchagata
+    Games, @philgude)\n\nQui Cung (Programmer, Oniroforge, @qui_cung)\n\nSandrine
+    Pilloud (Background Artist)\n\nSandro Dall\u2019Aglio (Lead Game Designer, @rouxtilant)\n\nThao
+    Cung (UI Artist)"
 --- !u!222 &406538423
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -286,13 +281,14 @@ RectTransform:
   m_Children:
   - {fileID: 1883031604}
   - {fileID: 406538421}
+  - {fileID: 1543538606}
   m_Father: {fileID: 1698499080}
   m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 8.50558472, y: -.199951172}
-  m_SizeDelta: {x: 19, y: 2.30004883}
-  m_Pivot: {x: .5, y: .5}
+  m_AnchoredPosition: {x: 8.505585, y: -5}
+  m_SizeDelta: {x: 19, y: 2.3000488}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &770526649
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -345,7 +341,7 @@ MonoBehaviour:
   m_SubmitButton: Submit
   m_CancelButton: Cancel
   m_InputActionsPerSecond: 10
-  m_RepeatDelay: .5
+  m_RepeatDelay: 0.5
   m_ForceModuleActive: 0
 --- !u!114 &954857254
 MonoBehaviour:
@@ -373,6 +369,82 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
+--- !u!1 &1543538605
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 224: {fileID: 1543538606}
+  - 222: {fileID: 1543538608}
+  - 114: {fileID: 1543538607}
+  m_Layer: 5
+  m_Name: Footer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1543538606
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1543538605}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 770526648}
+  m_RootOrder: 2
+  m_AnchorMin: {x: 0.055688147, y: 0}
+  m_AnchorMax: {x: 0.96300006, y: 0.15300001}
+  m_AnchoredPosition: {x: 1.4998779, y: 4.25}
+  m_SizeDelta: {x: -1, y: 7.699951}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1543538607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1543538605}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: f471a3d61e4a4f94691b4f2de1674f94, type: 3}
+    m_FontSize: 30
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 100
+    m_Alignment: 1
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: "Thanks\r\n\r\nMatthieu Pellet, Seiko Rubattel, Caroline Hirt, Alexis Simonetta,
+    Kevin Peclet, Bader Beggah, Loic Duboux, Anne Willimann, Fabrice Joly, Hulaj Hasan\r\n\r\n&
+    to all our playtesters !!!\r\n\n\r\nFirst made in 46 hours, for the I3 Game Jam
+    : 26 indies, one game, AAA style\r\n"
+--- !u!222 &1543538608
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1543538605}
 --- !u!1 &1650603033
 GameObject:
   m_ObjectHideFlags: 0
@@ -407,14 +479,18 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 50
   m_Sprite: {fileID: 21300000, guid: a2d4936adf1e219418bbd545896930c8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
 --- !u!4 &1650603035
 Transform:
   m_ObjectHideFlags: 0
@@ -422,7 +498,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1650603033}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.65778351, y: -14.0001917, z: 0}
+  m_LocalPosition: {x: 3.6577835, y: -14.000192, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1977112350}
@@ -458,7 +534,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: -1081}
-  m_SizeDelta: {x: 0, y: 2126.3999}
+  m_SizeDelta: {x: 0, y: 2126.4}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &1770387252
 GameObject:
@@ -528,7 +604,7 @@ MonoBehaviour:
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: .5
+  m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -550,6 +626,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
+  m_TargetDisplay: 0
 --- !u!1 &1883031601
 GameObject:
   m_ObjectHideFlags: 0
@@ -588,17 +665,18 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: f471a3d61e4a4f94691b4f2de1674f94, type: 3}
-    m_FontSize: 14
+    m_FontSize: 68
     m_FontStyle: 0
-    m_BestFit: 1
+    m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 300
     m_Alignment: 1
+    m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: tes
+  m_Text: Residents of the Domain
 --- !u!222 &1883031603
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -617,11 +695,11 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 770526648}
   m_RootOrder: 0
-  m_AnchorMin: {x: .0556881465, y: .864851654}
-  m_AnchorMax: {x: .963000059, y: .97962904}
-  m_AnchoredPosition: {x: 1, y: 1}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_AnchorMin: {x: 0.06336967, y: 0.90800005}
+  m_AnchorMax: {x: 0.96300006, y: 0.97962904}
+  m_AnchoredPosition: {x: -6.5, y: 2}
+  m_SizeDelta: {x: 15, y: -3}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1977112349
 GameObject:
   m_ObjectHideFlags: 0
@@ -666,7 +744,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvas: {fileID: 1698499080}
   viewport: {fileID: 1770387253}
-  ScrollSpeed: 3
+  ScrollSpeed: 2
 --- !u!114 &1977112352
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -710,9 +788,9 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 7.5, y: -2.406165e-05}
+  m_AnchoredPosition: {x: 7.5, y: -0.00002406165}
   m_SizeDelta: {x: 14, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2033906761
 MonoBehaviour:
   m_ObjectHideFlags: 0

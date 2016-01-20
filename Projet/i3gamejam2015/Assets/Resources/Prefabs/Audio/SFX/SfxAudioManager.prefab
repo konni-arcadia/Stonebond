@@ -187,7 +187,7 @@ AudioSource:
   rolloffMode: 0
   BypassEffects: 0
   BypassListenerEffects: 0
-  BypassReverbZones: 1
+  BypassReverbZones: 0
   rolloffCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -329,6 +329,7 @@ MonoBehaviour:
   MainBoundSnapshot: {fileID: 24538774, guid: 8fd68e0f408954541820745bd1e935e1, type: 2}
   MainDefaultSnapshot: {fileID: 24512364, guid: 8fd68e0f408954541820745bd1e935e1,
     type: 2}
+  MainNoSfxSnapshot: {fileID: 24542740, guid: 8fd68e0f408954541820745bd1e935e1, type: 2}
   VictoryJingle: {fileID: 8300000, guid: 3b674da562936c040906a3045c8d8fe5, type: 3}
   Cursor: {fileID: 8300000, guid: 77d371aa62af3ec42a02203e57c90929, type: 3}
   Validate: {fileID: 8300000, guid: 4b2e4d7018ba8de439a6badfe5729081, type: 3}

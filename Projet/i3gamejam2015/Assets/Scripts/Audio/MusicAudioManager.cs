@@ -12,6 +12,7 @@ public class MusicAudioManager : BaseAudioManager {
 	public AudioMixerSnapshot MusicDefaultSnapshot;
 	public AudioMixerSnapshot PauseSnapshot;
 	public AudioMixerSnapshot MainDefaultSnapshot;
+	public AudioSource VictoryJingleAudioSource;
 
 	public void Stage_Play(Constants.StageEnum _stage)
 	{
@@ -70,5 +71,10 @@ public class MusicAudioManager : BaseAudioManager {
 	public void SetRosetteOfTheWingeSnapshot()
 	{
 		RosetteOfTheWingeSnapshot.TransitionTo(transitionIn);
+	}
+
+	public void PlayVictoryJingle()
+	{
+		VictoryJingleAudioSource.Play();
 	}
 }

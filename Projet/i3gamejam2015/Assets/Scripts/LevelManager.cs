@@ -69,9 +69,9 @@ public class LevelManager : MonoBehaviour {
 						if (!pauseWin) {
 							AudioSingleton<MusicAudioManager>.Instance.SetMusicDefaultSnapshot();
 							AudioSingleton<SfxAudioManager>.Instance.PlayStopBound();
-							AudioSingleton<SfxAudioManager>.Instance.PlayVictoryJingle();
+							AudioSingleton<MusicAudioManager>.Instance.PlayVictoryJingle();
 							AudioSingleton<VoiceAudioManager>.Instance.DelayPlayGameOver(1);
-							AudioSingleton<MenuAudioManager>.Instance.SetMainMenuSnapshot();
+
 
 							var p1 = bondLink.playerAStateController;
 							var p2 = bondLink.playerBStateController;
@@ -86,7 +86,8 @@ public class LevelManager : MonoBehaviour {
 							TimeManager.Pause (bondPauseTime);
 							pauseWin = true;
 
-
+							AudioSingleton<SfxAudioManager>.Instance.SetNoSfxOnMainMixer();
+							AudioSingleton<MenuAudioManager>.Instance.SetMainMenuSnapshot();
 						}
 						else
 						{

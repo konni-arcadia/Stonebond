@@ -5,13 +5,14 @@ using UnityEngine.Audio;
 [PrefabAttribute("Prefabs/Audio/SFX/SfxAudioManager")]
 public class SfxAudioManager : BaseAudioManager {
 
+	//All properties below are set in the prefab..
 	public AudioMixerSnapshot SfxBoundSnapshot;
 	public AudioMixerSnapshot SfxDefaultSnapshot;
 
 	public AudioMixerSnapshot MainBoundSnapshot;
 	public AudioMixerSnapshot MainDefaultSnapshot;
+	public AudioMixerSnapshot MainNoSfxSnapshot;
 
-	public AudioClip VictoryJingle;
 	public AudioClip Cursor;
 	public AudioClip Validate;
 	public AudioClip Cancel;
@@ -29,7 +30,6 @@ public class SfxAudioManager : BaseAudioManager {
 	public AudioClip ChargeSpecialAttack;
 
 	public AudioSource WallSlideAudioSource;
-	private AudioSource _source;
 
 	public void SetSfxDefaultSnapshot()
 	{
@@ -49,11 +49,6 @@ public class SfxAudioManager : BaseAudioManager {
 	public void SetMainBoundSnapshot()
 	{
 		MainBoundSnapshot.TransitionTo(0f);
-	}
-		
-	public void PlayVictoryJingle()
-	{
-		GetAudioSource().PlayOneShot(VictoryJingle);
 	}
 
 	public void PlayStartBound()
@@ -167,4 +162,10 @@ public class SfxAudioManager : BaseAudioManager {
 	{
 		WallSlideAudioSource.Stop();
 	}
+
+	//This is used to avoid having sfx played during Vitory screeen
+	public void SetNoSfxOnMainMixer()
+	{
+		MainNoSfxSnapshot.TransitionTo(0f);
+	}	
 }

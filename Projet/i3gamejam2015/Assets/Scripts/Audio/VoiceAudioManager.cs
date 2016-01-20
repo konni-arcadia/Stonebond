@@ -35,4 +35,9 @@ public class VoiceAudioManager : BaseAudioManager {
 	{
 		GetAudioSource().PlayOneShot(VOICEFight);
 	}
+
+	public void DelayPlayGameOver(float second)
+	{
+		Invoke("PlayGameOver",second);
+	}
 }

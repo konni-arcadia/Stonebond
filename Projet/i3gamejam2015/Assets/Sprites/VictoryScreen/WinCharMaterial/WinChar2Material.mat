@@ -38,41 +38,6 @@ Material:
           m_Offset: {x: 0, y: 0}
       data:
         first:
-          name: _AlternateTex
-        second:
-          m_Texture: {fileID: 2800000, guid: e6018298f4451f84e8194752d6ede733, type: 3}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _AlternateTexMask
-        second:
-          m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _ChromaTex
-        second:
-          m_Texture: {fileID: 2800000, guid: ea02043accc2a01438ceb0855a9f450a, type: 3}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _NormalMapTex
-        second:
-          m_Texture: {fileID: 2800000, guid: 2b3a108f1a1ad40d1a901c999a5be49b, type: 3}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _LightMap
-        second:
-          m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
           name: _ParallaxMap
         second:
           m_Texture: {fileID: 0}
@@ -115,6 +80,41 @@ Material:
           m_Offset: {x: 0, y: 0}
       data:
         first:
+          name: _AlternateTex
+        second:
+          m_Texture: {fileID: 2800000, guid: e6018298f4451f84e8194752d6ede733, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _AlternateTexMask
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _ChromaTex
+        second:
+          m_Texture: {fileID: 2800000, guid: ea02043accc2a01438ceb0855a9f450a, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _NormalMapTex
+        second:
+          m_Texture: {fileID: 2800000, guid: 2b3a108f1a1ad40d1a901c999a5be49b, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _LightMap
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
           name: _MaskTex
         second:
           m_Texture: {fileID: 2800000, guid: cfce1e91129a06a478e6f5c869cef884, type: 3}
@@ -146,11 +146,31 @@ Material:
         second: 0
       data:
         first:
-          name: _AlternateBlend
+          name: _Stencil
         second: 0
       data:
         first:
-          name: _LightMapBlend
+          name: _StencilComp
+        second: 8
+      data:
+        first:
+          name: _StencilOp
+        second: 0
+      data:
+        first:
+          name: _StencilReadMask
+        second: 255
+      data:
+        first:
+          name: _StencilWriteMask
+        second: 255
+      data:
+        first:
+          name: _ColorMask
+        second: 15
+      data:
+        first:
+          name: _UseUIAlphaClip
         second: 0
       data:
         first:
@@ -190,31 +210,11 @@ Material:
         second: 0
       data:
         first:
-          name: _Stencil
+          name: _AlternateBlend
         second: 0
       data:
         first:
-          name: _StencilComp
-        second: 8
-      data:
-        first:
-          name: _StencilOp
-        second: 0
-      data:
-        first:
-          name: _StencilReadMask
-        second: 255
-      data:
-        first:
-          name: _StencilWriteMask
-        second: 255
-      data:
-        first:
-          name: _ColorMask
-        second: 15
-      data:
-        first:
-          name: _UseUIAlphaClip
+          name: _LightMapBlend
         second: 0
       data:
         first:
@@ -228,12 +228,12 @@ Material:
       data:
         first:
           name: _Color
-        second: {r: 0.919, g: 0.904, b: 0.7, a: 1}
-      data:
-        first:
-          name: _ChromaTexColor
-        second: {r: 0.73, g: 0.68, b: 0, a: 1}
+        second: {r: 0.712, g: 0.874, b: 0.7, a: 1}
       data:
         first:
           name: _Emission
         second: {r: 1, g: 1, b: 1, a: 1}
+      data:
+        first:
+          name: _ChromaTexColor
+        second: {r: 0.04, g: 0.58, b: 0, a: 1}

@@ -107,6 +107,7 @@ public class PlayerStateController : MonoBehaviour
 	public float chargeGravityReductionTime = 0.08f;
 	public float chargeReadyTimeMin = 0.5f;
 	public float chargeReadyTimeMax = 2.0f;
+    public float chargeCancelTimeMin = 0.2f;
     public AnimationCurve chargeForceRatioCurve;
 
     //
@@ -728,17 +729,16 @@ public class PlayerStateController : MonoBehaviour
 			chargeAnimation.StartCharge ();
         }
 
-		// stop charge if charge ready time exceeds max charge time
+		// cancel charge if max time exceeded
 		if (stateTime > chargeReadyTimeMax)
 		{
-			StopCharge();
+            CancelCharge();
 			return;
 		}
 
-		// charge button is released
-		if(!inputManager.IsHeld(playerId, InputManager.BUTTON_CHARGE))
+        // start or cancel charge when button is released and cancel time expired
+        if(stateTime > chargeCancelTimeMin && !inputManager.IsHeld(playerId, InputManager.BUTTON_CHARGE))
 		{
-			// trigger special attack if min charge time is reached
 			if(stateTime >= chargeReadyTimeMin)
 			{			
 				LaunchSpecialAttack();
@@ -746,7 +746,7 @@ public class PlayerStateController : MonoBehaviour
 			}
 			else
 			{
-				StopCharge();
+                CancelCharge();
 				return;
 			}
 		}
@@ -764,7 +764,7 @@ public class PlayerStateController : MonoBehaviour
 		SetState(State.SPECIAL_ATTACK);
 	}
 
-	private void StopCharge()
+	private void CancelCharge()
 	{
 		chargeReady = false;
 		statusProvider.setChargeStop(false);

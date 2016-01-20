@@ -28,6 +28,7 @@ public class SfxAudioManager : BaseAudioManager {
 	public AudioClip Rebirth;
 	public AudioClip WallSlide;
 	public AudioClip ChargeSpecialAttack;
+	public AudioSource ChargeSpecialAttackAudioSource;
 
 	public AudioSource WallSlideAudioSource;
 
@@ -96,7 +97,12 @@ public class SfxAudioManager : BaseAudioManager {
 
 	public void PlayChargeSpecialAttack()
 	{
-		GetAudioSource().PlayOneShot(ChargeSpecialAttack);
+		ChargeSpecialAttackAudioSource.Play();
+	}
+
+	public void StopChargeSpecialAttack()
+	{
+		ChargeSpecialAttackAudioSource.Stop();
 	}
 
 	public void PlayDeath()

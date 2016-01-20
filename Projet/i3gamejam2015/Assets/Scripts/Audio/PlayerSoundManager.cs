@@ -17,7 +17,18 @@ public class PlayerSoundManager : MonoBehaviour
         statusProvider.onWallJumpAction += OnWallJumped;
         statusProvider.OnAttackStartAction += OnAttackStart;		
         statusProvider.OnRespawnAction += OnRespawned;
+		statusProvider.OnChargeStartAction += OnChargeAction;
+		statusProvider.OnChargeStopAction += OnStopChargeAction;
     }
+
+	private void OnChargeAction()
+	{
+		AudioSingleton<SfxAudioManager>.Instance.PlayChargeSpecialAttack();
+	}
+	private void OnStopChargeAction(bool complete)
+	{
+		AudioSingleton<SfxAudioManager>.Instance.StopChargeSpecialAttack();
+	}
 
     private void OnRespawned(bool initial)
     {

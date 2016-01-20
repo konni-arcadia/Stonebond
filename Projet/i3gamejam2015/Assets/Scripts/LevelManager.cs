@@ -70,7 +70,7 @@ public class LevelManager : MonoBehaviour {
 							AudioSingleton<MusicAudioManager>.Instance.SetMusicDefaultSnapshot();
 							AudioSingleton<SfxAudioManager>.Instance.PlayStopBound();
 							AudioSingleton<SfxAudioManager>.Instance.PlayVictoryJingle();
-							AudioSingleton<VoiceAudioManager>.Instance.PlayGameOver();
+							AudioSingleton<VoiceAudioManager>.Instance.DelayPlayGameOver(1);
 							AudioSingleton<MenuAudioManager>.Instance.SetMainMenuSnapshot();
 
 							var p1 = bondLink.playerAStateController;

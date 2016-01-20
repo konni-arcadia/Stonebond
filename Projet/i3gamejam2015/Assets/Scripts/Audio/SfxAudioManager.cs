@@ -33,22 +33,22 @@ public class SfxAudioManager : BaseAudioManager {
 
 	public void SetSfxDefaultSnapshot()
 	{
-		SfxDefaultSnapshot.TransitionTo(0f);
+		SfxDefaultSnapshot.TransitionTo(transitionIn);
 	}
 
 	public void SetSfxBoundSnapshot()
 	{
-		SfxBoundSnapshot.TransitionTo(0f);
+		SfxBoundSnapshot.TransitionTo(transitionIn);
 	}
 
 	public void SetMainDefaultSnapshot()
 	{
-		MainDefaultSnapshot.TransitionTo(0f);
+		MainDefaultSnapshot.TransitionTo(transitionIn);
 	}
 
 	public void SetMainBoundSnapshot()
 	{
-		MainBoundSnapshot.TransitionTo(0f);
+		MainBoundSnapshot.TransitionTo(transitionIn);
 	}
 
 	public void PlayStartBound()
@@ -166,6 +166,11 @@ public class SfxAudioManager : BaseAudioManager {
 	//This is used to avoid having sfx played during Vitory screeen
 	public void SetNoSfxOnMainMixer()
 	{
-		MainNoSfxSnapshot.TransitionTo(0f);
-	}	
+		MainNoSfxSnapshot.TransitionTo(transitionIn);
+	}
+
+	public void SetNoSfxOnMainMixerAfterVictory(float time)
+	{
+		Invoke("SetNoSfxOnMainMixer", time);
+	}
 }

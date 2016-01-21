@@ -32,6 +32,6 @@ public class CountDownManager : MonoBehaviour {
 	{
         //Debug.Log("OnCountDownOver");
 		AudioSingleton<MenuAudioManager>.Instance.SetDefaultSnapshot();
-		AudioSingleton<MusicAudioManager>.Instance.Stage_Play(levelMgr.GetCurrentStageEnum());
+		AudioSingleton<MusicAudioManager>.Instance.StagePlay(levelMgr.GetCurrentStageEnum());
     }
 }

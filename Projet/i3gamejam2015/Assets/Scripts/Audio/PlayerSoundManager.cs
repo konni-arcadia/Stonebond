@@ -32,7 +32,7 @@ public class PlayerSoundManager : MonoBehaviour
 
     private void OnRespawned(bool initial)
     {
-		AudioSingleton<SfxAudioManager>.Instance.PlayReBirth();
+		AudioSingleton<SfxAudioManager>.Instance.PlayReBirth(initial);
     }
 
     private void OnAttackStart(PlayerStatusProvider.AttackType attackType, Vector2 direction)

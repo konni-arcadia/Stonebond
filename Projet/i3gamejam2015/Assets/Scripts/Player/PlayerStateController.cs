@@ -706,11 +706,12 @@ public class PlayerStateController : MonoBehaviour
     
 	private bool chargeReady;
     private float chargeForceRatio;
+    private bool hasChargeBeenCompleted;
 
     private void EnterCharge()
     {
 		chargeReady = false;
-
+        hasChargeBeenCompleted = false;
         movementController.setMovementEnabled(false);
         movementController.setJumpEnabled(false);
         
@@ -726,6 +727,7 @@ public class PlayerStateController : MonoBehaviour
         attackCooldown = attackCooldownTime;
 
 		chargeAnimation.StopCharge ();
+        statusProvider.setChargeStop(hasChargeBeenCompleted);
     }
     
     private void UpdateCharge()
@@ -754,7 +756,7 @@ public class PlayerStateController : MonoBehaviour
 		// cancel charge if max time exceeded
         if (stateElapsedTime > chargeReadyTimeMax)
 		{
-            CancelCharge();
+            SetIdleState();
 			return;
 		}
 
@@ -768,7 +770,7 @@ public class PlayerStateController : MonoBehaviour
 			}
 			else
 			{
-                CancelCharge();
+                SetIdleState();
 				return;
 			}
 		}
@@ -781,17 +783,9 @@ public class PlayerStateController : MonoBehaviour
         chargeForceRatio = chargeForceRatioCurve.Evaluate(chargePct);
 
         // launch special attack
-		chargeReady = false;
-		statusProvider.setChargeStop(true);
+        hasChargeBeenCompleted = true;
         SetSpecialAttackState();
-	}
-
-	private void CancelCharge()
-	{
-		chargeReady = false;
-		statusProvider.setChargeStop(false);
-        SetIdleState();
-	}
+	}       	
 
     //
     // SPECIAL ATTACK

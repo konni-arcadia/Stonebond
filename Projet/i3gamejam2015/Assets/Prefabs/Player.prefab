@@ -1396,8 +1396,6 @@ MonoBehaviour:
   playerId: 1
   bodyCollider: {fileID: 6151464}
   verticalAimThresholdDegree: 100
-  initialSpawnTime: 1.8
-  respawnTime: 1.2
   attackUpTimeMin: 0.26
   attackUpTimeMax: 0.26
   attackUpForceMin: 0
@@ -1542,7 +1540,9 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   diePauseTime: 0.1
-  crystaledTime: 2
+  respawnCrystaledTime: 3.2
+  initialCrystaledTime: 2.4
+  respawnWarningTime: 1.2
   invincibleAfterSpawnTime: 1
   invinsibleBlinkInterval: 0.12
 --- !u!198 &19842690
@@ -14477,6 +14477,14 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: chargeForceRatioCurve.m_Curve.Array.data[2].value
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: respawnWarningTime
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: initialCrystaledTime
+      value: 2.4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

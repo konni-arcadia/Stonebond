@@ -16,7 +16,7 @@ public class PlayerSoundManager : MonoBehaviour
         statusProvider.onJumpAction += OnJumped;
         statusProvider.onWallJumpAction += OnWallJumped;
         statusProvider.OnAttackStartAction += OnAttackStart;		
-        statusProvider.OnRespawnAction += OnRespawned;
+        statusProvider.OnRespawnWarningAction += OnRespawned;
 		statusProvider.OnChargeStartAction += OnChargeAction;
 		statusProvider.OnChargeStopAction += OnStopChargeAction;
     }

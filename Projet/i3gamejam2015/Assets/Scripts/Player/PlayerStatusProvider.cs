@@ -146,11 +146,11 @@ public class PlayerStatusProvider : MonoBehaviour {
 		if (OnDieAction != null) OnDieAction(source, attackDirection);
     }
 
-    public delegate void RespawnAction(bool initial);
-    public event RespawnAction OnRespawnAction;
-    public void setRespawn(bool initial)
+    public delegate void RespawnWarningAction(bool initial);
+    public event RespawnWarningAction OnRespawnWarningAction;
+    public void setRespawnWarning(bool initial)
     {
-		if (OnRespawnAction != null) OnRespawnAction(initial);
+        if (OnRespawnWarningAction != null) OnRespawnWarningAction(initial);
     }
 
     public delegate void InvinsibleStateAction(bool isInvinsible);

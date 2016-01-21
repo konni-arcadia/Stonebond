@@ -25,7 +25,6 @@ public class PlayerStateController : MonoBehaviour
     private enum State
     {
         NONE,
-        SPAWN,
         IDLE,
         ATTACK,
         CHARGE,
@@ -55,13 +54,6 @@ public class PlayerStateController : MonoBehaviour
     private AimDirection aimDirection = AimDirection.FORWARD;
     public float verticalAimThresholdDegree = 90.0f;
     private float attackCooldown = 0.0f;
-
-    //
-    // SPAWN
-    //
-
-    public float initialSpawnTime = 1.6f;
-    public float respawnTime = 1.3f;
 
     //
     // ATTACK
@@ -144,7 +136,9 @@ public class PlayerStateController : MonoBehaviour
     //
 
     public float diePauseTime = 0.2f;
-    public float crystaledTime = 2.0f;
+    public float respawnCrystaledTime = 3.2f;
+    public float initialCrystaledTime = 3.8f;
+    public float respawnWarningTime = 1.2f;
 
     //
     // INVINSIBLE
@@ -199,7 +193,7 @@ public class PlayerStateController : MonoBehaviour
 		OnPlayerIdHasBeenSet ();
 
         // start in spawn state
-        SetSpawnState(initialSpawnTime);
+        SetCrystaledState(initialCrystaledTime);
     }
 
 	// This method must be called after the playerId has been set.
@@ -226,7 +220,7 @@ public class PlayerStateController : MonoBehaviour
 
     public bool IsCrystaled()
     {
-        return state == State.CRYSTALED || state == State.SPAWN;
+        return state == State.CRYSTALED;
     }
 
     public int GetPlayerId()
@@ -300,9 +294,6 @@ public class PlayerStateController : MonoBehaviour
 
         switch (state)
         {
-            case State.SPAWN:       
-                UpdateSpawn();
-                break;
             case State.IDLE:
                 UpdateIdle();
                 break;
@@ -341,10 +332,7 @@ public class PlayerStateController : MonoBehaviour
         //LogDebug ("leave " + state + ", enter " + newState);
 
         switch (state)
-        {
-            case State.SPAWN:       
-                LeaveSpawn();
-                break;
+        {          
             case State.IDLE:
                 LeaveIdle();
                 break;
@@ -371,12 +359,6 @@ public class PlayerStateController : MonoBehaviour
         state = newState;
         stateElapsedTime = 0.0f;
         stateElapsedFixedTime = 0.0f;
-    }
-
-    private void SetSpawnState(float duration)
-    {
-        PrepareNewState(State.SPAWN);
-        EnterSpawn(duration);
     }
 
     private void SetIdleState()
@@ -409,10 +391,10 @@ public class PlayerStateController : MonoBehaviour
         EnterKnockback(direction);
     }
 
-    private void SetCrystaledState()
+    private void SetCrystaledState(float duration)
     {
         PrepareNewState(State.CRYSTALED);
-        EnterCrystaled();
+        EnterCrystaled(duration);
     }
 
     private void SetInvincibleState(float duration)
@@ -420,53 +402,20 @@ public class PlayerStateController : MonoBehaviour
         PrepareNewState(State.INVINCIBLE);
         EnterInvincible(duration);
     }
-        
-
-    //
-    // SPAWN
-    //
-
-    private bool initialSpawn = true;
-    private float spawnTime;
-
-    private void EnterSpawn(float duration)
-    {
-        spawnTime = duration;
-
-        movementController.setMovementEnabled(false);
-        movementController.setJumpEnabled(false);
-
-        statusProvider.setRespawn(initialSpawn);
-    }
-
-    private void LeaveSpawn()
-    {
-        movementController.setMovementEnabled(true);
-        movementController.setJumpEnabled(true);
-    }
-
-    private void UpdateSpawn()
-    {        
-        if (stateElapsedTime > spawnTime)
-        {
-            if (initialSpawn)
-            {
-                initialSpawn = false;
-                SetIdleState();
-            }
-            else
-            {                
-                SetInvincibleState(invincibleTime);
-            }
-        }
-    }
 
     //
     // CRYSTALED
     //
 
-    private void EnterCrystaled()
+    private bool initialSpawn = true;
+    private float crystaledTime;
+    private bool respawnWarningTriggered;
+
+    private void EnterCrystaled(float duration)
     {     
+        crystaledTime = duration;
+        respawnWarningTriggered = false;
+
         movementController.setMovementEnabled(false);
         movementController.setJumpEnabled(false);
     }
@@ -478,10 +427,24 @@ public class PlayerStateController : MonoBehaviour
     }
 
     private void UpdateCrystaled()
-    {        
-        if (stateElapsedTime > crystaledTime)
+    {
+        if (!respawnWarningTriggered && stateElapsedTime > crystaledTime - respawnWarningTime)
         {            
-            SetSpawnState(respawnTime);
+            statusProvider.setRespawnWarning(initialSpawn);
+            respawnWarningTriggered = true;
+        }
+            
+        if (stateElapsedTime > crystaledTime)
+        {
+            if (initialSpawn)
+            {
+                initialSpawn = false;
+                SetIdleState();
+            }
+            else
+            {                
+                SetInvincibleState(invincibleAfterSpawnTime);
+            }
         }
     }
 
@@ -795,8 +758,7 @@ public class PlayerStateController : MonoBehaviour
     private bool hasSpecialAttackBeenCancelled;
 
     private void EnterSpecialAttack()
-    {
-        LogDebug("enter special attack");
+    {     
         hasSpecialAttackBeenCancelled = false;
 
         movementController.resetVelocity();
@@ -826,7 +788,6 @@ public class PlayerStateController : MonoBehaviour
 
     private void LeaveSpecialAttack()
     {
-        LogDebug("leave special attack");
         movementController.resetVelocity();
         movementController.setGravityFactor(1.0f);
         movementController.setFrictionEnabled(true);
@@ -959,6 +920,7 @@ public class PlayerStateController : MonoBehaviour
 
     private void EnterInvincible(float duration)
     {
+        LogDebug("EnterInvincible(" + duration + ")");
         invincibleTime = duration;
         invisibleBlinkCounter = invinsibleBlinkInterval;
 
@@ -996,11 +958,11 @@ public class PlayerStateController : MonoBehaviour
 
     public void HandleOnCollide(Collider2D source, Collider2D other)
     {
-        LogDebug ("HandleOnCollide");
+        //LogDebug ("HandleOnCollide");
         PlayerStateController enemy = other.GetComponentInParent<PlayerStateController>();
         if (enemy != null)
         {
-            LogDebug ("collide with enemy " + enemy.playerId);
+            //LogDebug ("collide with enemy " + enemy.playerId);
             if (enemy.IsPerformingAttack() && IsAimingOppositeDirection(enemy))
             {
                 enemy.SetKnockbackState(aimDirection);
@@ -1016,7 +978,7 @@ public class PlayerStateController : MonoBehaviour
         BondLink bondLink = other.GetComponentInParent<BondLink>();
         if (bondLink != null)
         {
-            LogDebug ("collide with link");
+            //LogDebug ("collide with link");
             LevelManager levelManager = FindObjectOfType<LevelManager>();
             levelManager.bondHasBeenBrokenBy(this);
             return;
@@ -1090,7 +1052,7 @@ public class PlayerStateController : MonoBehaviour
                 break;
         }
 
-        SetCrystaledState();
+        SetCrystaledState(respawnCrystaledTime);
 
         // this is kind of mixing logic and display but cannot rely on other component to trigger die event
         TimeManager.Pause(diePauseTime, delegate()

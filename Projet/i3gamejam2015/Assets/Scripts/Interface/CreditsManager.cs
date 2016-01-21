@@ -14,6 +14,7 @@ public class CreditsManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		inputManager = GetComponent<InputManager> ();
+		AudioSingleton<MenuAudioManager>.Instance.SetMainMenuSnapshot();
 	}
 	
 	// Update is called once per frame

@@ -14,7 +14,7 @@ public class MusicAudioManager : BaseAudioManager {
 	public AudioMixerSnapshot MainDefaultSnapshot;
 	public AudioSource VictoryJingleAudioSource;
 
-	public void Stage_Play(Constants.StageEnum _stage)
+	public void StagePlay(Constants.StageEnum _stage)
 	{
 		switch (_stage)
 		{

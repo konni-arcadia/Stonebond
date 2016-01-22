@@ -2,41 +2,38 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Charge : MonoBehaviour {
+public class Charge : MonoBehaviour
+{
+    public List<ParticleSystem> circleParticles;
 
-	// we need a reference to check geometry (facing left or right)
-	private GameObject playerGameObject;
+    private PlayerMovementController movementController;
+    private ParticleSystem particles;
 
-	public List<ParticleSystem>circleParticles;
+    void Awake()
+    {
+        movementController = transform.GetComponentInParent<PlayerMovementController>();
+        int playerId = transform.GetComponentInParent<PlayerStateController>().GetPlayerId();
+        particles = circleParticles[playerId - 1];
 
-	protected int playerId;
-
-	public void SetPlayer(PlayerStateController playerController)
-	{
-		this.playerId = playerController.playerId;
-		this.playerGameObject = playerController.gameObject;
-	}
-
-	ParticleSystem GetCircleParticles()
-	{
-		return circleParticles[playerId-1];
-	}
-
-	public void StartCharge()
-	{
-		GetCircleParticles().gameObject.SetActive(true);
-	}
-
-	public void StopCharge()
-	{
-		GetCircleParticles().gameObject.SetActive(false);
-	}
-
-	public void Update() {
-		
+        PlayerStatusProvider statusProvider = transform.GetComponentInParent<PlayerStatusProvider>();
+        statusProvider.OnChargeReadyAction += HandleOnChargeReadyAction;
+        statusProvider.OnChargeStopAction += HandleOnChargeStopAction;
+    }
+ 
+	public void Update()
+    {	
 		// if the player is facing left, we need to invert the localScale of the charge particles otherwise they will spawn outside of the circle
-		gameObject.transform.localScale = new Vector3 ( playerGameObject.transform.localScale.x, 1, 1 );
-
+        transform.localScale = new Vector3 (movementController.isFacingRight() ? 1.0f : -1.0f, 1.0f, 1.0f);
 	}
+        
+    private void HandleOnChargeReadyAction()
+    {
+        particles.gameObject.SetActive(true);
+    }
+
+    public void HandleOnChargeStopAction(bool complete)
+    {
+        particles.gameObject.SetActive(false);
+    }
 
 }

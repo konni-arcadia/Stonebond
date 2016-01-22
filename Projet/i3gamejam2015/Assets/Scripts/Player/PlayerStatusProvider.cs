@@ -96,6 +96,20 @@ public class PlayerStatusProvider : MonoBehaviour {
 		if (OnChargeStartAction != null) OnChargeStartAction();
 	}
 
+	public delegate void ChargeReadyAction();
+	public event ChargeReadyAction OnChargeReadyAction;
+	public void setChargeReady()
+	{
+		if (OnChargeReadyAction != null) OnChargeReadyAction();
+	}
+
+	public delegate void ChargeFullAction();
+	public event ChargeFullAction OnChargeFullAction;
+	public void setChargeFull()
+	{
+		if (OnChargeFullAction != null) OnChargeFullAction();
+	}
+
 	public delegate void ChargeStopAction(bool complete);
 	public event ChargeStopAction OnChargeStopAction;
 	public void setChargeStop(bool complete)
@@ -103,11 +117,17 @@ public class PlayerStatusProvider : MonoBehaviour {
 		if (OnChargeStopAction != null) OnChargeStopAction(complete);
 	}
 
-	public delegate void ChargeReadyAction();
-	public event ChargeReadyAction OnChargeReadyAction;
-	public void setChargeReady()
+	public enum ChargeState
 	{
-		if (OnChargeReadyAction != null) OnChargeReadyAction();
+		LOAD,
+		READY,
+		FULL
+	}
+	public delegate void ChargeUpdateAction(ChargeState state, float statePct, float forceRatio);
+	public event ChargeUpdateAction OnChargeUpdateAction;
+	public void setChargeUpdate(ChargeState state, float statePct, float forceRatio)
+	{
+		if (OnChargeUpdateAction != null) OnChargeUpdateAction (state, statePct, forceRatio);
 	}
 
 	public delegate void AttackFailedAction();

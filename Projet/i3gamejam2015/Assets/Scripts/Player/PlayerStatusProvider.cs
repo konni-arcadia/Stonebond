@@ -119,7 +119,7 @@ public class PlayerStatusProvider : MonoBehaviour {
 
 	public enum ChargeState
 	{
-		CHARGE,
+		LOAD,
 		READY,
 		FULL
 	}

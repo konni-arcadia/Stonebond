@@ -742,7 +742,7 @@ public class PlayerStateController : MonoBehaviour
         if (stateElapsedTime < chargeReadyTime)
         {
             float statePct = stateElapsedTime / chargeReadyTime;
-            statusProvider.setChargeUpdate(PlayerStatusProvider.ChargeState.CHARGE, statePct, 0.0f);
+            statusProvider.setChargeUpdate(PlayerStatusProvider.ChargeState.LOAD, statePct, 0.0f);
         }
         else if (stateElapsedTime < chargeFullTime)
         {

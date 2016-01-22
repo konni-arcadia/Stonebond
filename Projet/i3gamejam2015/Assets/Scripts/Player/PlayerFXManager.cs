@@ -2,20 +2,29 @@ using UnityEngine;
 
 public class PlayerFXManager : MonoBehaviour
 {
-    // 
-    // PARAMETERS
+    //
+    // CHROMA
     //
     
     public float bodyColorDarkPct = 0.1f;
     public float bodyColorBrightPct = 0.1f;
     public float chromaColorDarkPct = 1.0f;
     public float chromaColorBrightPct = 0.9f;
+
+    //
+    // ATTACK
+    //
+
     public AnimationCurve attackForwardChromaCurve;
     public AnimationCurve attackUpChromaCurve;
     public AnimationCurve attackDownChromaCurve;
     public AnimationCurve attackSpecialChromaCurve;
-    public AnimationCurve chargeChromaCurve;
     public AnimationCurve attackCooldownChromaCurve;
+
+    //
+    // OVERLAY
+    //
+ 
     public string overlaySortingLayerName = "HUD";
     public int overlaySortingOrder = 100;
 
@@ -29,7 +38,7 @@ public class PlayerFXManager : MonoBehaviour
     private string originalSortingLayerName;
     private int originalSortingOrder;
 
-    // 
+    //
     // GLOBAL STATE
     //
 
@@ -39,7 +48,10 @@ public class PlayerFXManager : MonoBehaviour
     private Color chromaColorNormal;
     private Color chromaColorMin;
     private Color chromaColorMax;
+
+    // TODO use a state machine
     private bool overlay = false;
+    private bool charge = false;
 
     
     //
@@ -59,6 +71,9 @@ public class PlayerFXManager : MonoBehaviour
         statusProvider.OnCollisionAction += HandleOnCollisionAction;
         statusProvider.OnAttackStartAction += HandleOnAttackStartAction;
         statusProvider.OnAttackStopAction += HandleOnAttackStopAction;
+        statusProvider.OnChargeStartAction += HandleOnChargeStartAction;
+        statusProvider.OnChargeStopAction += HandleOnChargeStopAction;
+        statusProvider.OnChargeUpdateAction += HandleOnChargeUpdateAction;
 
         originalSortingLayerName = bodyRenderer.sortingLayerName;
         originalSortingOrder = bodyRenderer.sortingOrder;
@@ -82,51 +97,95 @@ public class PlayerFXManager : MonoBehaviour
 
     void Update()
     {
-        if (overlay)
+        if (overlay || charge)
         {
-            // don't change the sprite color while in overlay mode
+            // don't change the sprite color while in overlay/charge mode
         }
         else if (stateController.GetAttackPct() > 0.0f)
         {
-            //SetBodyColor (Color.Lerp (bodyColorMax, bodyColorMin, stateController.GetAttackPct ()));
-
             switch (stateController.GetAimDirection())
             {
                 case PlayerStateController.AimDirection.UP:
-                    SetBodyColor(stateController.GetAttackPct(), attackUpChromaCurve);
-                    SetChromaColor(stateController.GetAttackPct(), attackUpChromaCurve);
+                    SetBodyAndChromaColor(attackUpChromaCurve.Evaluate(stateController.GetAttackPct()));
+           
                     break;
                 case PlayerStateController.AimDirection.DOWN:
-                    SetBodyColor(stateController.GetAttackPct(), attackDownChromaCurve);
-                    SetChromaColor(stateController.GetAttackPct(), attackDownChromaCurve);
+                    SetBodyAndChromaColor(attackDownChromaCurve.Evaluate(stateController.GetAttackPct()));
                     break;
                 case PlayerStateController.AimDirection.FORWARD:
-                    SetBodyColor(stateController.GetAttackPct(), attackForwardChromaCurve);
-                    SetChromaColor(stateController.GetAttackPct(), attackForwardChromaCurve);
+                    SetBodyAndChromaColor(attackForwardChromaCurve.Evaluate(stateController.GetAttackPct()));
                     break;
             }
 
         }
-        else if (stateController.GetChargePct() > 0.0f)
-        {
-            SetBodyColor(stateController.GetChargePct(), chargeChromaCurve);
-            SetChromaColor(stateController.GetChargePct(), chargeChromaCurve);
-        }
         else if (stateController.GetSpecialAttackPct() > 0.0f)
         {
-            SetBodyColor(stateController.GetSpecialAttackPct(), attackSpecialChromaCurve);
-            SetChromaColor(stateController.GetSpecialAttackPct(), attackSpecialChromaCurve);
+            SetBodyAndChromaColor(attackSpecialChromaCurve.Evaluate(stateController.GetSpecialAttackPct()));
         }
         else if (stateController.GetAttackCooldownPct() > 0.0f)
         {
-            SetBodyColor(stateController.GetAttackCooldownPct(), attackCooldownChromaCurve);
-            SetChromaColor(stateController.GetAttackCooldownPct(), attackCooldownChromaCurve);
+            SetBodyAndChromaColor(attackCooldownChromaCurve.Evaluate(stateController.GetAttackCooldownPct()));
         }
         else
         {
             SetBodyColor(bodyColorNormal);
             SetChromaColor(chromaColorNormal);
         }
+    }
+
+    //
+    // CHARGE
+    //
+
+    public float chargeLoadChromaMin = 0.05f;
+    public float chargeLoadChromaMax = 0.5f;
+    public float chargeReadyChromaMin = 0.55f;
+    public float chargeReadyChromaMax = 1.0f;
+    public float chargeOverflowBlinkInterval = 0.01f;
+    public AnimationCurve chargeLoadChromaCurve;
+
+    private float chargeOverflowBlinkCounter;
+    private bool chargeOverflowBlinkVisible;
+
+    private void HandleOnChargeStartAction()
+    {
+        charge = true;
+        chargeOverflowBlinkCounter = 0.0f;
+        chargeOverflowBlinkVisible = true;
+    }
+
+    private void HandleOnChargeStopAction(bool complete)
+    {
+        charge = false;
+    }
+
+    private void HandleOnChargeUpdateAction(PlayerStatusProvider.ChargeState state, float statePct, float forceRatio)
+    {
+        if (overlay)
+        {
+            return;
+        }
+
+        switch (state)
+        {
+            case PlayerStatusProvider.ChargeState.LOAD:
+                SetBodyAndChromaColor(chargeLoadChromaMin + chargeLoadChromaCurve.Evaluate(statePct) * (chargeLoadChromaMax - chargeLoadChromaMin));
+                break;
+            case PlayerStatusProvider.ChargeState.READY:
+                SetBodyAndChromaColor(chargeReadyChromaMin + forceRatio * (chargeReadyChromaMax - chargeReadyChromaMin));
+                break;
+            case PlayerStatusProvider.ChargeState.FULL:
+                chargeOverflowBlinkCounter -= Time.deltaTime;
+                if (chargeOverflowBlinkCounter <= 0.0)
+                {
+                    chargeOverflowBlinkVisible = !chargeOverflowBlinkVisible;
+                    chargeOverflowBlinkCounter += chargeOverflowBlinkInterval;
+                       print("blink = " + chargeOverflowBlinkVisible);
+                }
+                SetBodyAndChromaColor(chargeOverflowBlinkVisible ? chargeLoadChromaMax : -1.0f);
+                break;
+        }
+
     }
 
     //
@@ -170,7 +229,7 @@ public class PlayerFXManager : MonoBehaviour
         switch (collisionType)
         {
             case PlayerStatusProvider.CollisionType.SPECIAL_ATTACK:
-				ScreenShake.ShakeXY(Mathf.Abs(normal.x) * 0.32f, Mathf.Abs(normal.x) * 1.7f, Mathf.Abs(normal.y) * 0.32f, Mathf.Abs(normal.y) * 1.7f);
+                ScreenShake.ShakeXY(Mathf.Abs(normal.x) * 0.32f, Mathf.Abs(normal.x) * 1.7f, Mathf.Abs(normal.y) * 0.32f, Mathf.Abs(normal.y) * 1.7f);
                 break;
             case PlayerStatusProvider.CollisionType.WALL_ATTACK:
                 ScreenShake.ShakeX(0.24f, 1.7f);
@@ -181,7 +240,7 @@ public class PlayerFXManager : MonoBehaviour
         }
     }
 
-    void HandleOnAttackStartAction(PlayerStatusProvider.AttackType attackType, Vector2 direction)
+    private void HandleOnAttackStartAction(PlayerStatusProvider.AttackType attackType, Vector2 direction)
     {
         if (attackType == PlayerStatusProvider.AttackType.SPECIAL)
         {
@@ -190,8 +249,8 @@ public class PlayerFXManager : MonoBehaviour
             bodyRenderer.transform.parent.Translate(new Vector3(0.0f, 1.0f, 0.0f));
         }
     }
-    
-    void HandleOnAttackStopAction (PlayerStatusProvider.AttackType attackType, bool cancelled)
+
+    private void HandleOnAttackStopAction(PlayerStatusProvider.AttackType attackType, bool cancelled)
     {
         if (attackType == PlayerStatusProvider.AttackType.SPECIAL)
         {
@@ -204,9 +263,14 @@ public class PlayerFXManager : MonoBehaviour
     // HELPERS
     //
 
-    private void SetChromaColor(float pct, AnimationCurve curve)
+    private void SetBodyAndChromaColor(float value)
     {
-        float value = curve.Evaluate(pct);
+        SetBodyColor(value);
+        SetChromaColor(value);
+    }
+
+    private void SetChromaColor(float value)
+    {
         if (value < 0.0f)
         {
             SetChromaColor(Color.Lerp(chromaColorNormal, chromaColorMin, Mathf.Min(1.0f, Mathf.Abs(value))));
@@ -221,9 +285,8 @@ public class PlayerFXManager : MonoBehaviour
         }
     }
 
-    private void SetBodyColor(float pct, AnimationCurve curve)
+    private void SetBodyColor(float value)
     {
-        float value = curve.Evaluate(pct);
         if (value < 0.0f)
         {
             SetBodyColor(Color.Lerp(bodyColorNormal, bodyColorMin, Mathf.Min(1.0f, Mathf.Abs(value))));

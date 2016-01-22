@@ -253,17 +253,7 @@ public class PlayerStateController : MonoBehaviour
                 return 0.0f;
         }
     }
-
-    public float GetChargePct()
-    {
-        if (state != State.CHARGE)
-        {
-            return 0.0f;
-        }
-
-        return stateElapsedTime / chargeReadyTime;
-    }
-
+        
     public float GetSpecialAttackPct()
     {
         if (state != State.SPECIAL_ATTACK)

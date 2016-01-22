@@ -781,6 +781,7 @@ public class PlayerStateController : MonoBehaviour
         float angle = Mathf.Sign(specialAttackVector.y) * Vector2.Angle(specialAttackVector.x < 0.0f ? Vector2.left : Vector2.right, specialAttackVector);
         specialAttackBase.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
+        movementController.setFacingRight(specialAttackVector.x >= 0.0f);
         statusProvider.setAttackStart(PlayerStatusProvider.AttackType.SPECIAL, specialAttackVector);		       
     }
 

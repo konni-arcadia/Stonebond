@@ -26,7 +26,7 @@ GameObject:
   - 4: {fileID: 454580}
   - 82: {fileID: 8222226}
   m_Layer: 0
-  m_Name: ChargeSpecialAttack
+  m_Name: Charge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43,6 +43,22 @@ GameObject:
   - 82: {fileID: 8210044}
   m_Layer: 0
   m_Name: WallSlide
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &188926
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 488212}
+  - 82: {fileID: 8212398}
+  m_Layer: 0
+  m_Name: ChargeReady
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -78,6 +94,7 @@ Transform:
   - {fileID: 415156}
   - {fileID: 487994}
   - {fileID: 454580}
+  - {fileID: 488212}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!4 &415156
@@ -116,6 +133,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 408936}
   m_RootOrder: 1
+--- !u!4 &488212
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 188926}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 408936}
+  m_RootOrder: 3
 --- !u!82 &8210044
 AudioSource:
   m_ObjectHideFlags: 1
@@ -191,6 +220,81 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+--- !u!82 &8212398
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 188926}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 24369464, guid: e92112b978bf443c2ad76572e51b6e16,
+    type: 2}
+  m_audioClip: {fileID: 8300000, guid: ae80994e679c24e1dbc018d5e68bb9f1, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!82 &8222226
 AudioSource:
   m_ObjectHideFlags: 1
@@ -199,9 +303,9 @@ AudioSource:
   m_GameObject: {fileID: 170978}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 24300001, guid: e92112b978bf443c2ad76572e51b6e16,
+  OutputAudioMixerGroup: {fileID: 24321086, guid: e92112b978bf443c2ad76572e51b6e16,
     type: 2}
-  m_audioClip: {fileID: 8300000, guid: 0c00fed49e7d541489bb58979ac7eb59, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 05c31de42225d45429fa8d709eb7ac7d, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -457,8 +561,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 2e44b94be1e90482cb2105041e4be0b7, type: 3}
   Rebirth: {fileID: 8300000, guid: 0971cce2bf5b1c54795d26542c3fe901, type: 3}
   WallSlide: {fileID: 8300000, guid: 9fa53a91053a9ad4183671e80ff69987, type: 3}
-  ChargeSpecialAttack: {fileID: 8300000, guid: 0c00fed49e7d541489bb58979ac7eb59, type: 3}
-  ChargeSpecialAttackAudioSource: {fileID: 8222226}
+  ChargeAudioSource: {fileID: 8222226}
+  ChargeReadyAudioSource: {fileID: 8212398}
   WallSlideAudioSource: {fileID: 8210044}
 --- !u!1001 &100100000
 Prefab:

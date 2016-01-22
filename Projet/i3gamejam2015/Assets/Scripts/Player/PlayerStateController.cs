@@ -13,8 +13,7 @@ public class PlayerStateController : MonoBehaviour
     private PlayerStatusProvider statusProvider;
     private List<PlayerStateController> enemies = new List<PlayerStateController>();
     
-	private Shield shieldAnimation;
-	private Charge chargeAnimation;
+	private Shield shieldAnimation; // TODO use events and remove
 
     // 
     // GLOBAL STATE
@@ -168,8 +167,6 @@ public class PlayerStateController : MonoBehaviour
 			shieldAnimation.gameObject.SetActive (false);
 		}
 
-		chargeAnimation = GetComponentInChildren<Charge> ();
-
 		inputManager = FindObjectOfType<InputManager>();
         movementController = GetComponent<PlayerMovementController>();
         statusProvider = GetComponent<PlayerStatusProvider>();
@@ -207,12 +204,6 @@ public class PlayerStateController : MonoBehaviour
 		if (shieldAnimation != null) {
 			shieldAnimation.SetPlayer (playerId);
 		}
-
-		if (chargeAnimation != null) {
-			chargeAnimation.SetPlayer (this);
-			chargeAnimation.StopCharge ();
-		}
-
 	}
 
     //
@@ -680,7 +671,6 @@ public class PlayerStateController : MonoBehaviour
 
         attackCooldown = attackCooldownTime;
 
-		chargeAnimation.StopCharge ();
         statusProvider.setChargeStop(hasChargeBeenCompleted);
     }
     
@@ -702,10 +692,6 @@ public class PlayerStateController : MonoBehaviour
 			chargeReady = true;
 			statusProvider.setChargeReady ();
 		}
-
-        if (stateElapsedTime >= chargeReadyTime) {
-			chargeAnimation.StartCharge ();
-        }
 
 		// cancel charge if max time exceeded
         if (stateElapsedTime > chargeOverflowTime)

@@ -99,10 +99,11 @@ public class PlayerStateController : MonoBehaviour
     //
 	    
 	public float chargeGravityReductionTime = 0.08f;
-	public float chargeReadyTimeMin = 0.5f;
-	public float chargeReadyTimeMax = 2.0f;
-    public float chargeCancelTimeMin = 0.2f;
-    public AnimationCurve chargeForceRatioCurve;
+	public float chargeReadyTime = 0.5f;
+    public float chargeFullTime = 1.6f;
+	public float chargeOverflowTime = 2.0f;
+    public float chargeInputCancelTimeMin = 0.2f;
+    public AnimationCurve chargeReadyForceRatioCurve;
 
     //
     // SPECIAL ATTACK
@@ -260,7 +261,7 @@ public class PlayerStateController : MonoBehaviour
             return 0.0f;
         }
 
-        return stateElapsedTime / chargeReadyTimeMin;
+        return stateElapsedTime / chargeReadyTime;
     }
 
     public float GetSpecialAttackPct()
@@ -707,26 +708,26 @@ public class PlayerStateController : MonoBehaviour
 		}
 
 		// detect if charge is ready
-        if (stateElapsedTime >= chargeReadyTimeMin && !chargeReady) {
+        if (stateElapsedTime >= chargeReadyTime && !chargeReady) {
 			chargeReady = true;
 			statusProvider.setChargeReady ();
 		}
 
-        if (stateElapsedTime >= chargeReadyTimeMin) {
+        if (stateElapsedTime >= chargeReadyTime) {
 			chargeAnimation.StartCharge ();
         }
 
 		// cancel charge if max time exceeded
-        if (stateElapsedTime > chargeReadyTimeMax)
+        if (stateElapsedTime > chargeOverflowTime)
 		{
             SetIdleState();
 			return;
 		}
 
         // start or cancel charge when button is released and cancel time expired
-        if(stateElapsedTime > chargeCancelTimeMin && !inputManager.IsHeld(playerId, InputManager.BUTTON_CHARGE))
+        if(stateElapsedTime > chargeInputCancelTimeMin && !inputManager.IsHeld(playerId, InputManager.BUTTON_CHARGE))
 		{
-            if(stateElapsedTime >= chargeReadyTimeMin)
+            if(stateElapsedTime >= chargeReadyTime)
 			{			
 				LaunchSpecialAttack();
 				return;
@@ -737,18 +738,39 @@ public class PlayerStateController : MonoBehaviour
 				return;
 			}
 		}
+
+        if (stateElapsedTime < chargeReadyTime)
+        {
+            float statePct = stateElapsedTime / chargeReadyTime;
+            statusProvider.setChargeUpdate(PlayerStatusProvider.ChargeState.CHARGE, statePct, 0.0f);
+        }
+        else if (stateElapsedTime < chargeFullTime)
+        {
+            float statePct = (stateElapsedTime - chargeReadyTime) / (chargeFullTime - chargeReadyTime);
+            float forceRatio = CalculateChargeForceRatio();
+            statusProvider.setChargeUpdate(PlayerStatusProvider.ChargeState.READY, statePct, forceRatio);
+        }
+        else
+        {
+            float statePct = (stateElapsedTime - chargeFullTime) / (chargeOverflowTime - chargeFullTime);
+            statusProvider.setChargeUpdate(PlayerStatusProvider.ChargeState.FULL, statePct, 1.0f);
+        }
+
+				
     }       
 
 	private void LaunchSpecialAttack()
-	{
-        // compute charge ratio according to charge time
-        float chargePct = Mathf.Min(1.0f, (stateElapsedTime - chargeReadyTimeMin) / (chargeReadyTimeMax - chargeReadyTimeMin));       
-        chargeForceRatio = chargeForceRatioCurve.Evaluate(chargePct);
-
-        // launch special attack
+	{      
+        chargeForceRatio = CalculateChargeForceRatio();
         hasChargeBeenCompleted = true;
         SetSpecialAttackState();
-	}       	
+	}
+
+    private float CalculateChargeForceRatio()
+    {
+        float chargePct = Mathf.Clamp((stateElapsedTime - chargeReadyTime) / (chargeFullTime - chargeReadyTime), 0.0f, 1.0f);
+        return chargeReadyForceRatioCurve.Evaluate(chargePct);
+    }
 
     //
     // SPECIAL ATTACK

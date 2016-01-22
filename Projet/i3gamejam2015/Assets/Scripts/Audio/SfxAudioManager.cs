@@ -7,14 +7,17 @@ using System;
 [PrefabAttribute("Prefabs/Audio/SFX/SfxAudioManager")]
 public class SfxAudioManager : BaseAudioManager {
 
-	//All properties below are set in the prefab..
+	//All properties below are set in the prefab. Be carefull as the prefab as multiple levels..
+
+	#region AudioClip
 	public AudioMixerSnapshot SfxBoundSnapshot;
 	public AudioMixerSnapshot SfxDefaultSnapshot;
-
 	public AudioMixerSnapshot MainBoundSnapshot;
 	public AudioMixerSnapshot MainDefaultSnapshot;
 	public AudioMixerSnapshot MainNoSfxSnapshot;
+	#endregion
 
+	#region AudioClip
 	public AudioClip Cursor;
 	public AudioClip Validate;
 	public AudioClip Cancel;
@@ -29,9 +32,13 @@ public class SfxAudioManager : BaseAudioManager {
 	public AudioClip[] Deaths;
 	public AudioClip Rebirth;
 	public AudioClip WallSlide;
-	public AudioClip ChargeSpecialAttack;
-	public AudioSource ChargeSpecialAttackAudioSource;
+	#endregion
+
+	#region AudioSource
+	public AudioSource ChargeAudioSource;
+	public AudioSource ChargeReadyAudioSource;
 	public AudioSource WallSlideAudioSource;
+	#endregion
 
 	private int InitialRebirthCount;
 
@@ -98,15 +105,27 @@ public class SfxAudioManager : BaseAudioManager {
 		}
 	}
 
-	public void PlayChargeSpecialAttack()
+	public void PlayCharge()
 	{
-		ChargeSpecialAttackAudioSource.Play();
+		ChargeAudioSource.Play();
 	}
 
-	public void StopChargeSpecialAttack()
+	public void StopCharge()
 	{
-		ChargeSpecialAttackAudioSource.Stop();
+		ChargeAudioSource.Stop();
+		StopChargeThatIsReady();
 	}
+
+	public void PlayChargeIsReady()
+	{
+		ChargeReadyAudioSource.Play();
+	}
+
+	public void StopChargeThatIsReady()
+	{
+		ChargeReadyAudioSource.Stop();
+	}
+
 
 	public void PlayDeath()
 	{

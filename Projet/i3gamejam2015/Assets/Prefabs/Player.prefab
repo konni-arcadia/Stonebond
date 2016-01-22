@@ -1203,22 +1203,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  chargeChromaCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 0
-      inSlope: 2.6087785
-      outSlope: 2.6087785
-      tangentMode: 0
-    - time: 1
-      value: 1
-      inSlope: 1.4252852
-      outSlope: 1.4252852
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
   attackCooldownChromaCurve:
     serializedVersion: 2
     m_Curve:
@@ -1242,6 +1226,27 @@ MonoBehaviour:
     m_RotationOrder: 4
   overlaySortingLayerName: HUD
   overlaySortingOrder: 100
+  chargeLoadChromaMin: 0
+  chargeLoadChromaMax: 0.45
+  chargeReadyChromaMin: 0.55
+  chargeReadyChromaMax: 1
+  chargeOverflowBlinkInterval: 0.08
+  chargeLoadChromaCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 2.0384872
+      outSlope: 2.0384872
+      tangentMode: 0
+    - time: 1
+      value: 1
+      inSlope: 2.332556
+      outSlope: 2.332556
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!114 &11415718
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1468,21 +1473,17 @@ MonoBehaviour:
   attackForwardCollider: {fileID: 6193008}
   attackCooldownTime: 0.35
   chargeGravityReductionTime: 0.08
-  chargeReadyTimeMin: 0.5
-  chargeReadyTimeMax: 1.7
-  chargeCancelTimeMin: 0.3
-  chargeForceRatioCurve:
+  chargeReadyTime: 0.5
+  chargeFullTime: 1.4
+  chargeOverflowTime: 1.7
+  chargeInputCancelTimeMin: 0.3
+  chargeReadyForceRatioCurve:
     serializedVersion: 2
     m_Curve:
     - time: 0
       value: 0.2
-      inSlope: -0.11595045
-      outSlope: -0.11595045
-      tangentMode: 0
-    - time: 0.8
-      value: 1
-      inSlope: 0.64164
-      outSlope: 0.64164
+      inSlope: 0.11813266
+      outSlope: 0.11813266
       tangentMode: 0
     - time: 1
       value: 1
@@ -13619,6 +13620,10 @@ Prefab:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 0}
+      propertyPath: chargeLoadChromaCurve.m_Curve.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
       propertyPath: attackForwardChromaCurve.m_Curve.Array.size
       value: 4
       objectReference: {fileID: 0}
@@ -13629,6 +13634,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: attackCooldownChromaCurve.m_Curve.Array.size
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: chargeReadyForceRatioCurve.m_Curve.Array.size
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: maxSpeed
@@ -14485,6 +14494,106 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: initialCrystaledTime
       value: 2.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: chargeOverflowTime
+      value: 1.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: chargeFullTime
+      value: 1.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: chargeInputCancelTimeMin
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: chargeReadyForceRatioCurve.m_RotationOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: chargeReadyForceRatioCurve.m_Curve.Array.data[0].inSlope
+      value: 0.11813266
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: chargeReadyForceRatioCurve.m_Curve.Array.data[0].outSlope
+      value: 0.11813266
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: chargeReadyForceRatioCurve.m_Curve.Array.data[1].inSlope
+      value: 0.22685318
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: chargeReadyForceRatioCurve.m_Curve.Array.data[1].outSlope
+      value: 0.22685318
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: chargeReadyForceRatioCurve.m_Curve.Array.data[0].value
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: chargeReadyForceRatioCurve.m_Curve.Array.data[0].time
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: chargeLoadChromaCurve.m_RotationOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: chargeLoadChromaCurve.m_Curve.Array.data[1].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: chargeLoadChromaCurve.m_Curve.Array.data[1].time
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: chargeLoadChromaCurve.m_Curve.Array.data[1].inSlope
+      value: 2.332556
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: chargeLoadChromaCurve.m_Curve.Array.data[1].outSlope
+      value: 2.332556
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: chargeLoadChromaCurve.m_Curve.Array.data[0].inSlope
+      value: 2.0384872
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: chargeLoadChromaCurve.m_Curve.Array.data[0].outSlope
+      value: 2.0384872
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: chargeLoadChromaCurve.m_Curve.Array.data[0].value
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: chromaLoadMax
+      value: 0.45
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: chromaReadyMin
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: chromaLoadMin
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: chargeLoadChromaMin
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: chargeLoadChromaMax
+      value: 0.45
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: chargeReadyChromaMin
+      value: 0.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: chargeOverflowBlinkInterval
+      value: 0.08
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

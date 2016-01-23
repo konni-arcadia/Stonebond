@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
 using System;
@@ -11,11 +11,13 @@ public class LevelManager : MonoBehaviour {
 	public GameObject bondLinkPrefab;
 	public GameObject gaugeInner, gaugeFrame;
 	public float gaugeDecreaseFactor;
-	public float increaseStartCooldownSecs = 2;
+//	public float increaseStartCooldownSecs = 2;
 	public float introDuration = 2;
-    public float bondPauseTime = 1.0f;
+//	public float  = 3f;
+//	public float  = 0.25f;
+	public float pauseWinDuration = 1.0f;
 	private bool pauseWin = false;
-	private float pauseWinTimer = 1.0f;
+	private float pauseWinTimer;
 	private BondLink bondLink;
 	private float bondLinkGauge, appearedSinceSec;
 	private WinScreenManager WinScreenManager {
@@ -51,9 +53,9 @@ public class LevelManager : MonoBehaviour {
 			gaugeFrame.SetActive(true);
 			gaugeInner.SetActive(true);
 			gaugeInner.transform.localScale = new Vector3(bondLinkGauge, 1, 1);
-			appearedSinceSec += Time.deltaTime;
+			appearedSinceSec += Time.deltaTime; // NB: the bond is updated only after the pause
 
-			if (appearedSinceSec >= increaseStartCooldownSecs) {
+			if (appearedSinceSec >= BondLink.bondCreateDelayAfterMiddleBlastDuration) {
 				var distance = Vector3.Distance(bondLink.playerA.transform.position, bondLink.playerB.transform.position);
 				bondLinkGauge += distance * gaugeDecreaseFactor;
 
@@ -84,8 +86,9 @@ public class LevelManager : MonoBehaviour {
 							foreach (PlayerStateController player in players) {
 								player.SetGameOver ();
 							}
-							TimeManager.Pause (bondPauseTime);
+							TimeManager.Pause (pauseWinDuration);
 							pauseWin = true;
+							pauseWinTimer = pauseWinDuration;
 						}
 						else
 						{
@@ -129,12 +132,10 @@ public class LevelManager : MonoBehaviour {
 		bondLink.LinkPlayers ( activePlayers[0].gameObject, activePlayers[1].gameObject);
 		activePlayers[0].SetBondLink(bondLink);
 		activePlayers[1].SetBondLink(bondLink);
-		activePlayers [0].ActivateShield ();
-		activePlayers [1].ActivateShield ();
 		bondLinkGauge = 0;
 		appearedSinceSec = 0;
 
-        TimeManager.Pause(bondPauseTime);
+		TimeManager.Pause(BondLink.bondCreateGameplayPauseDuration);
 	}
 
 	private void ExitBondMode(PlayerStateController p1, PlayerStateController p2) {
@@ -147,7 +148,7 @@ public class LevelManager : MonoBehaviour {
 		bondMode = false;
 		allowsCreateBond = false;
 
-		TimeManager.Pause(bondPauseTime);
+		TimeManager.Pause(BondLink.bondBreakGameplayPauseDuration);
 	}
 
 	private void GatherPlayers() {

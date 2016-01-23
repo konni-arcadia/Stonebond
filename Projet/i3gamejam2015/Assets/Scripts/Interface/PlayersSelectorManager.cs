@@ -20,7 +20,7 @@ public class PlayersSelectorManager : MonoBehaviour {
         InitializePlayerSelection();
 		AudioSingleton<VoiceAudioManager>.Instance.SelectCharacterPlay();
 		AudioSingleton<MenuAudioManager>.Instance.SetSelectCharacterSnapshot();
-
+		AudioSingleton<SfxAudioManager>.Instance.SetMainDefaultSnapshot();
 		selectedControllers = new bool[listPlayerSelector.Length];
 	}
 	

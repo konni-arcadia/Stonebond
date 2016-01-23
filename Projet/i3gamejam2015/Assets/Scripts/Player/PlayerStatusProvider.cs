@@ -67,25 +67,26 @@ public class PlayerStatusProvider : MonoBehaviour {
 		if (onWallJumpAction != null) onWallJumpAction();
 	}
 
-	public delegate void AttackForwardAction();
-    public event AttackForwardAction OnAttackForwardAction;
-    public void setAttackForward()
+    public enum AttackType
     {
-        if (OnAttackForwardAction != null) OnAttackForwardAction();
+        FORWARD,
+        UP,
+        DOWN,
+        SPECIAL
     }
 
-    public delegate void AttackUpAction();
-    public event AttackUpAction OnAttackUpAction;
-    public void setAttackUp()
+    public delegate void AttackStartAction(AttackType attackType, Vector2 direction);
+    public event AttackStartAction OnAttackStartAction;
+    public void setAttackStart(AttackType attackType, Vector2 direction)
     {
-        if (OnAttackUpAction != null) OnAttackUpAction();
+        if (OnAttackStartAction != null) OnAttackStartAction(attackType, direction);
     }
 
-    public delegate void AttackDownAction();
-    public event AttackDownAction OnAttackDownAction;
-    public void setAttackDown()
+    public delegate void AttackStopAction(AttackType attackType, bool cancelled);
+    public event AttackStopAction OnAttackStopAction;
+    public void setAttackStop(AttackType attackType, bool cancelled)
     {
-        if (OnAttackDownAction != null) OnAttackDownAction();
+        if (OnAttackStopAction != null) OnAttackStopAction(attackType, cancelled);
     }
 
 	public delegate void ChargeStartAction();
@@ -95,13 +96,6 @@ public class PlayerStatusProvider : MonoBehaviour {
 		if (OnChargeStartAction != null) OnChargeStartAction();
 	}
 
-	public delegate void ChargeStopAction(bool complete);
-	public event ChargeStopAction OnChargeStopAction;
-	public void setChargeStop(bool complete)
-	{
-		if (OnChargeStopAction != null) OnChargeStopAction(complete);
-	}
-
 	public delegate void ChargeReadyAction();
 	public event ChargeReadyAction OnChargeReadyAction;
 	public void setChargeReady()
@@ -109,19 +103,32 @@ public class PlayerStatusProvider : MonoBehaviour {
 		if (OnChargeReadyAction != null) OnChargeReadyAction();
 	}
 
-	public delegate void AttackSpecialStartAction(Vector2 direction);
-    public event AttackSpecialStartAction OnAttackSpecialStartAction;
-	public void setAttackSpecialStart(Vector2 direction)
+	public delegate void ChargeFullAction();
+	public event ChargeFullAction OnChargeFullAction;
+	public void setChargeFull()
 	{
-        if (OnAttackSpecialStartAction != null) OnAttackSpecialStartAction(direction);
+		if (OnChargeFullAction != null) OnChargeFullAction();
 	}
 
-    public delegate void AttackSpecialStopAction();
-    public event AttackSpecialStopAction OnAttackSpecialStopAction;
-    public void setAttackSpecialStop()
-    {
-        if (OnAttackSpecialStopAction != null) OnAttackSpecialStopAction();
-    }
+	public delegate void ChargeStopAction(bool complete);
+	public event ChargeStopAction OnChargeStopAction;
+	public void setChargeStop(bool complete)
+	{
+		if (OnChargeStopAction != null) OnChargeStopAction(complete);
+	}
+
+	public enum ChargeState
+	{
+		LOAD,
+		READY,
+		FULL
+	}
+	public delegate void ChargeUpdateAction(ChargeState state, float statePct, float forceRatio);
+	public event ChargeUpdateAction OnChargeUpdateAction;
+	public void setChargeUpdate(ChargeState state, float statePct, float forceRatio)
+	{
+		if (OnChargeUpdateAction != null) OnChargeUpdateAction (state, statePct, forceRatio);
+	}
 
 	public delegate void AttackFailedAction();
 	public event AttackFailedAction OnAttackFailedAction;
@@ -159,11 +166,11 @@ public class PlayerStatusProvider : MonoBehaviour {
 		if (OnDieAction != null) OnDieAction(source, attackDirection);
     }
 
-    public delegate void RespawnAction(bool initial);
-    public event RespawnAction OnRespawnAction;
-    public void setRespawn(bool initial)
+    public delegate void RespawnWarningAction(bool initial);
+    public event RespawnWarningAction OnRespawnWarningAction;
+    public void setRespawnWarning(bool initial)
     {
-		if (OnRespawnAction != null) OnRespawnAction(initial);
+        if (OnRespawnWarningAction != null) OnRespawnWarningAction(initial);
     }
 
     public delegate void InvinsibleStateAction(bool isInvinsible);

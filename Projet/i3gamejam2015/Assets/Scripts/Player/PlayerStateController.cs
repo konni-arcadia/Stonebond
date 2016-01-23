@@ -13,8 +13,7 @@ public class PlayerStateController : MonoBehaviour
     private PlayerStatusProvider statusProvider;
     private List<PlayerStateController> enemies = new List<PlayerStateController>();
     
-	private Shield shieldAnimation;
-	private Charge chargeAnimation;
+	private Shield shieldAnimation; // TODO use events and remove
 
     // 
     // GLOBAL STATE
@@ -24,7 +23,7 @@ public class PlayerStateController : MonoBehaviour
 
     private enum State
     {
-        SPAWN,
+        NONE,
         IDLE,
         ATTACK,
         CHARGE,
@@ -34,8 +33,9 @@ public class PlayerStateController : MonoBehaviour
         INVINCIBLE
     }
 
-    private State state = State.SPAWN;
-    private float stateTime = 0.0f;
+    private State state = State.NONE;
+    private float stateElapsedTime;
+    private float stateElapsedFixedTime;
     private bool isBond = false;
     private bool visible = true;
     private bool onGround = false;
@@ -55,13 +55,6 @@ public class PlayerStateController : MonoBehaviour
     private float attackCooldown = 0.0f;
 
     //
-    // SPAWN
-    //
-
-    public float initialSpawnTime = 1.6f;
-    public float respawnTime = 1.3f;
-
-    //
     // ATTACK
     // 
 
@@ -69,7 +62,9 @@ public class PlayerStateController : MonoBehaviour
     public float attackUpTimeMax = 0.25f;
     public float attackUpForceMin = 0.0f;
     public float attackUpForceMax = 46000.0f;
+	[Range(0.0f, 1.0f)]
     public float attackUpHitboxStart = 0.0f;
+	[Range(0.0f, 1.0f)]
     public float attackUpHitboxEnd = 0.9f;
     public AnimationCurve attackUpCurve;
     public Collider2D attackUpCollider;
@@ -78,8 +73,11 @@ public class PlayerStateController : MonoBehaviour
     public float attackDownTimeMax = 0.25f;
     public float attackDownForceMin = 0.0f;
     public float attackDownForceMax = 46000.0f;
+	[Range(0.0f, 1.0f)]
     public float attackDownHitboxStart = 0.0f;
+	[Range(0.0f, 1.0f)]
     public float attackDownHitboxEnd = 1.0f;
+    public float attackDownCancelTimeMin = 0.12f;
     public AnimationCurve attackDownCurve;
     public Collider2D attackDownCollider;
 
@@ -87,7 +85,9 @@ public class PlayerStateController : MonoBehaviour
     public float attackForwardTimeMax = 0.2f;
     public float attackForwardForceMin = 0.0f;
     public float attackForwardForceMax = 30000.0f;
+	[Range(0.0f, 1.0f)]
     public float attackForwardHitboxStart = 0.0f;
+	[Range(0.0f, 1.0f)]
     public float attackForwardHitboxEnd = 0.6f;
     public AnimationCurve attackForwardCurve;
     public Collider2D attackForwardCollider;
@@ -96,26 +96,25 @@ public class PlayerStateController : MonoBehaviour
     // 
     // CHARGE
     //
-
-    public float chargeTime = 1.0f;
-	public float chargeMinTime = 0.5f; // min charge time to launch the special attack
-	public float chargeGravityReductionTime = 0.08f; // secs
-	public bool chargeReady = false;
-	public float chargeReadyTime; // secs
-	public float chargeReadyMaxTime = 2.0f; // max time player can stay with charge ready in secs
+	    
+	public float chargeGravityReductionTime = 0.08f;
+	public float chargeReadyTime = 0.5f;
+    public float chargeFullTime = 1.6f;
+	public float chargeOverflowTime = 2.0f;
+    public float chargeInputCancelTimeMin = 0.2f;
+    public AnimationCurve chargeReadyForceRatioCurve;
 
     //
     // SPECIAL ATTACK
     // 
 
     public float specialAttackTime = 0.35f;
+    public float specialAttackCancelTimeMin = 0.25f;
     public float specialAttackForceMin = 0.0f;
     public float specialAttackForceMax = 30000.0f;
 	[Range(0.0f, 1.0f)]
-	public float specialAttackForceRatio = 1.0f;
-	[Range(0.0f, 1.0f)]
-	public float specialAttackForceMinRatio = 0.2f;
     public float specialAttackHitboxStart = 0.0f;
+	[Range(0.0f, 1.0f)]
     public float specialAttackHitboxEnd = 0.95f;
     public AnimationCurve specialAttackCurve;
     public Collider2D specialAttackCollider;
@@ -137,7 +136,9 @@ public class PlayerStateController : MonoBehaviour
     //
 
     public float diePauseTime = 0.2f;
-    public float crystaledTime = 2.0f;
+    public float respawnCrystaledTime = 3.2f;
+    public float initialCrystaledTime = 3.8f;
+    public float respawnWarningTime = 1.2f;
 
     //
     // INVINSIBLE
@@ -166,8 +167,6 @@ public class PlayerStateController : MonoBehaviour
 			shieldAnimation.gameObject.SetActive (false);
 		}
 
-		chargeAnimation = GetComponentInChildren<Charge> ();
-
 		inputManager = FindObjectOfType<InputManager>();
         movementController = GetComponent<PlayerMovementController>();
         statusProvider = GetComponent<PlayerStatusProvider>();
@@ -192,7 +191,7 @@ public class PlayerStateController : MonoBehaviour
 		OnPlayerIdHasBeenSet ();
 
         // start in spawn state
-        SetState(State.SPAWN);
+        SetCrystaledState(initialCrystaledTime);
     }
 
 	// This method must be called after the playerId has been set.
@@ -205,12 +204,6 @@ public class PlayerStateController : MonoBehaviour
 		if (shieldAnimation != null) {
 			shieldAnimation.SetPlayer (playerId);
 		}
-
-		if (chargeAnimation != null) {
-			chargeAnimation.SetPlayer (this);
-			chargeAnimation.StopCharge ();
-		}
-
 	}
 
     //
@@ -219,7 +212,7 @@ public class PlayerStateController : MonoBehaviour
 
     public bool IsCrystaled()
     {
-        return state == State.CRYSTALED || state == State.SPAWN;
+        return state == State.CRYSTALED;
     }
 
     public int GetPlayerId()
@@ -242,26 +235,16 @@ public class PlayerStateController : MonoBehaviour
         switch (aimDirection)
         {
             case AimDirection.UP:
-                return stateTime / attackUpTimeMax;
+                return stateElapsedTime / attackUpTimeMax;
             case AimDirection.DOWN:
-                return stateTime / attackDownTimeMax;
+                return stateElapsedTime / attackDownTimeMax;
             case AimDirection.FORWARD:
-                return stateTime / attackForwardTimeMax;
+                return stateElapsedTime / attackForwardTimeMax;
             default:
                 return 0.0f;
         }
     }
-
-    public float GetChargePct()
-    {
-        if (state != State.CHARGE)
-        {
-            return 0.0f;
-        }
-
-        return stateTime / chargeTime;
-    }
-
+        
     public float GetSpecialAttackPct()
     {
         if (state != State.SPECIAL_ATTACK)
@@ -269,7 +252,7 @@ public class PlayerStateController : MonoBehaviour
             return 0.0f;
         }
         
-        return stateTime / specialAttackTime;
+        return stateElapsedTime / specialAttackTime;
     }
 
     public AimDirection GetAimDirection()
@@ -289,11 +272,10 @@ public class PlayerStateController : MonoBehaviour
 
     void Update()
     {
+        stateElapsedTime += Time.deltaTime;
+
         switch (state)
         {
-            case State.SPAWN:       
-                UpdateSpawn();
-                break;
             case State.IDLE:
                 UpdateIdle();
                 break;
@@ -311,6 +293,8 @@ public class PlayerStateController : MonoBehaviour
 
     void FixedUpdate()
     {
+        stateElapsedFixedTime += Time.fixedDeltaTime;
+
         switch (state)
         {
             case State.ATTACK:
@@ -325,15 +309,12 @@ public class PlayerStateController : MonoBehaviour
         }
     }
 
-    private void SetState(State newState)
+    private void PrepareNewState(State newState)
     {
         //LogDebug ("leave " + state + ", enter " + newState);
 
         switch (state)
-        {
-            case State.SPAWN:       
-                LeaveSpawn();
-                break;
+        {          
             case State.IDLE:
                 LeaveIdle();
                 break;
@@ -358,81 +339,65 @@ public class PlayerStateController : MonoBehaviour
         }
 
         state = newState;
-        switch (state)
-        {
-            case State.SPAWN:       
-                EnterSpawn();
-                break;
-            case State.IDLE:
-                EnterIdle();
-                break;
-            case State.ATTACK:
-                EnterAttack();
-                break;
-            case State.CHARGE:
-                EnterCharge();
-                break;
-            case State.SPECIAL_ATTACK:
-                EnterSpecialAttack();
-                break;
-            case State.KNOCKBACK:
-                EnterKnockback();
-                break;
-            case State.CRYSTALED:
-                EnterCrystaled();
-                break;
-            case State.INVINCIBLE:
-                EnterInvincible();
-                break;
-        }
+        stateElapsedTime = 0.0f;
+        stateElapsedFixedTime = 0.0f;
     }
 
-    //
-    // SPAWN
-    //
-
-    private bool initialSpawn = true;
-
-    private void EnterSpawn()
+    private void SetIdleState()
     {
-        stateTime = initialSpawn ? initialSpawnTime : respawnTime;
-        movementController.setMovementEnabled(false);
-        movementController.setJumpEnabled(false);
-
-        statusProvider.setRespawn(initialSpawn);
+        PrepareNewState(State.IDLE);
+        EnterIdle();
     }
 
-    private void LeaveSpawn()
+    private void SetAttackState()
     {
-        movementController.setMovementEnabled(true);
-        movementController.setJumpEnabled(true);
+        PrepareNewState(State.ATTACK);
+        EnterAttack();
     }
 
-    private void UpdateSpawn()
+    private void SetChargeState()
     {
-        stateTime -= Time.deltaTime;
-        if (stateTime <= 0.0f)
-        {
-            if (initialSpawn)
-            {
-                SetState(State.IDLE);
-                initialSpawn = false;
-            }
-            else
-            {
-                stateTime = invincibleAfterSpawnTime; // FIXME state arg
-                SetState(State.INVINCIBLE);
-            }
-        }
+        PrepareNewState(State.CHARGE);
+        EnterCharge();
+    }
+
+    private void SetSpecialAttackState()
+    {
+        PrepareNewState(State.SPECIAL_ATTACK);
+        EnterSpecialAttack();
+    }
+
+    private void SetKnockbackState(AimDirection direction)
+    {
+        PrepareNewState(State.KNOCKBACK);
+        EnterKnockback(direction);
+    }
+
+    private void SetCrystaledState(float duration)
+    {
+        PrepareNewState(State.CRYSTALED);
+        EnterCrystaled(duration);
+    }
+
+    private void SetInvincibleState(float duration)
+    {
+        PrepareNewState(State.INVINCIBLE);
+        EnterInvincible(duration);
     }
 
     //
     // CRYSTALED
     //
 
-    private void EnterCrystaled()
-    {
-        stateTime = crystaledTime;
+    private bool initialSpawn = true;
+    private float crystaledTime;
+    private bool respawnWarningTriggered;
+
+    private void EnterCrystaled(float duration)
+    {     
+        crystaledTime = duration;
+        respawnWarningTriggered = false;
+
         movementController.setMovementEnabled(false);
         movementController.setJumpEnabled(false);
     }
@@ -445,10 +410,23 @@ public class PlayerStateController : MonoBehaviour
 
     private void UpdateCrystaled()
     {
-        stateTime -= Time.deltaTime;
-        if (stateTime <= 0.0f)
+        if (!respawnWarningTriggered && stateElapsedTime > crystaledTime - respawnWarningTime)
+        {            
+            statusProvider.setRespawnWarning(initialSpawn);
+            respawnWarningTriggered = true;
+        }
+            
+        if (stateElapsedTime > crystaledTime)
         {
-            SetState(State.SPAWN);
+            if (initialSpawn)
+            {
+                initialSpawn = false;
+                SetIdleState();
+            }
+            else
+            {                
+                SetInvincibleState(invincibleAfterSpawnTime);
+            }
         }
     }
 
@@ -488,18 +466,18 @@ public class PlayerStateController : MonoBehaviour
         }
         
         // attack
-        if (inputManager.WasPressed(playerId, InputManager.BUTTON_ATTACK))
+		if (inputManager.IsHeld(playerId, InputManager.BUTTON_ATTACK))
         {
             if (attackCooldown == 0.0f)
             {
-                SetState(State.ATTACK);
+                SetAttackState();
                 return;
             }
-            else
+            else if (inputManager.WasPressed (playerId, InputManager.BUTTON_ATTACK))
             {
-                print("p" + playerId + ": attack on CD");
-                statusProvider.setAttackFailed();
-            }
+                LogDebug("attack on CD");
+                statusProvider.setAttackFailed ();
+			}
         }
 
         // charge
@@ -507,13 +485,13 @@ public class PlayerStateController : MonoBehaviour
         {
             if (attackCooldown == 0.0f)
             {
-                SetState(State.CHARGE);
+                SetChargeState();
                 return;
             }
-            else
+            else if (inputManager.WasPressed (playerId, InputManager.BUTTON_CHARGE))
             {
-                print("p" + playerId + ": charge on CD");
-                statusProvider.setAttackFailed();
+                LogDebug("charge on CD");
+                statusProvider.setAttackFailed ();				
             }
         }
 
@@ -533,42 +511,49 @@ public class PlayerStateController : MonoBehaviour
     //
 
     private Collider2D attackCollider;
+    private float attackTime;
+    private float attackCancelTimeMin;
     private float attackHitboxStart;
     private float attackHitboxEnd;
+    private bool hasAttackBeenCancelled;
 
     private void EnterAttack()
     { 
-        stateTime = 0.0f;
+        hasAttackBeenCancelled = false;
 
         switch (aimDirection)
         {
             case AimDirection.UP:
+                attackTime = attackUpTimeMax;
+                attackCancelTimeMin = attackTime; // not used
                 attackCollider = attackUpCollider;
                 attackHitboxStart = attackUpHitboxStart;
                 attackHitboxEnd = attackUpHitboxEnd;
 
                 movementController.resetVelocity(false, true);
                 movementController.setJumpEnabled(false);
-                statusProvider.setAttackUp();
+                statusProvider.setAttackStart(PlayerStatusProvider.AttackType.UP, Vector2.up);
                 break;
             case AimDirection.DOWN:
+                attackTime = attackDownTimeMax;
+                attackCancelTimeMin = attackDownCancelTimeMin;
                 attackCollider = attackDownCollider;
                 attackHitboxStart = attackDownHitboxStart;
                 attackHitboxEnd = attackDownHitboxEnd;
 
+                movementController.resetVelocity(false, true);
+                statusProvider.setAttackStart(PlayerStatusProvider.AttackType.DOWN, Vector2.down);
+
                 if (onGround)
                 {
-                    // can't perform down attack while on ground
-                    statusProvider.setAttackFailed();
-                    SetState(State.IDLE);
-                }
-                else
-                {
-                    movementController.resetVelocity(false, true);
-                    statusProvider.setAttackDown();
+                    // was already on wall, cancel the attack (hit event wouldn't be triggered otherwise)
+                    statusProvider.setCollision(PlayerStatusProvider.CollisionType.GROUND_ATTACK, Vector2.down);
+                    hasAttackBeenCancelled = true;
                 }
                 break;
             case AimDirection.FORWARD:
+                attackTime = attackForwardTimeMax;
+                attackCancelTimeMin = attackTime; // not used
                 attackCollider = attackForwardCollider;
                 attackHitboxStart = attackForwardHitboxStart;
                 attackHitboxEnd = attackForwardHitboxEnd;
@@ -577,12 +562,14 @@ public class PlayerStateController : MonoBehaviour
                 movementController.setMovementEnabled(false);
                 movementController.setGravityFactor(0.0f);
                 movementController.setJumpEnabled(false);
-                statusProvider.setAttackForward();
+
+                Vector2 direction = movementController.isFacingRight() ? Vector2.right : Vector2.left;
+                statusProvider.setAttackStart(PlayerStatusProvider.AttackType.FORWARD, direction);
 
                 if (onWall)
                 {
                     // was already on wall, fire an hit event (hit event wouldn't be triggered otherwise)
-                    statusProvider.setCollision(PlayerStatusProvider.CollisionType.WALL_ATTACK, new Vector2());
+                    statusProvider.setCollision(PlayerStatusProvider.CollisionType.WALL_ATTACK, direction);
                 }
                 break;
         }
@@ -609,36 +596,21 @@ public class PlayerStateController : MonoBehaviour
     }
 
     private void FixedUpdateAttack()
-    {
-        float attackMinTime = 0.0f;
-        float attackMaxTime = 0.0f;
-
-        switch (aimDirection)
-        {
-            case AimDirection.UP:
-                attackMinTime = attackUpTimeMin;
-                attackMaxTime = attackUpTimeMax;
-                break;
-            case AimDirection.DOWN:
-                attackMinTime = attackDownTimeMin;
-                attackMaxTime = attackDownTimeMax;
-                break;
-            case AimDirection.FORWARD:
-                attackMinTime = attackForwardTimeMin;
-                attackMaxTime = attackForwardTimeMax;
-                break;
-        }
-
-        stateTime += Time.fixedDeltaTime;
-    
+    {      
         // if attack time is over
-        if (stateTime > attackMaxTime || (stateTime > attackMinTime && !inputManager.IsHeld(playerId, InputManager.BUTTON_ATTACK)))
+        if (stateElapsedFixedTime > attackTime)
         {
-            SetState(State.IDLE);
+            SetIdleState();
             return;
         }
 
-        float attackPct = stateTime / attackMaxTime;
+        if (hasAttackBeenCancelled && stateElapsedFixedTime > attackCancelTimeMin)
+        {
+            SetIdleState();
+            return;
+        }
+
+        float attackPct = stateElapsedFixedTime / attackTime;
 
         if (!attackCollider.enabled && attackPct >= attackHitboxStart && attackPct < attackHitboxEnd)
         {
@@ -677,15 +649,18 @@ public class PlayerStateController : MonoBehaviour
     // CHARGE
     //
     
+	private bool chargeReady;
+    private float chargeForceRatio;
+    private bool hasChargeBeenCompleted;
+
     private void EnterCharge()
     {
-        stateTime = 0.0f;
-        
+		chargeReady = false;
+        hasChargeBeenCompleted = false;
         movementController.setMovementEnabled(false);
         movementController.setJumpEnabled(false);
         
         statusProvider.setChargeStart();
-
     }
     
     private void LeaveCharge()
@@ -696,22 +671,15 @@ public class PlayerStateController : MonoBehaviour
 
         attackCooldown = attackCooldownTime;
 
-		chargeAnimation.StopCharge ();
+        statusProvider.setChargeStop(hasChargeBeenCompleted);
     }
     
     private void UpdateCharge()
     {
-		// increase state time
-		stateTime += Time.deltaTime;
-
-		// increase charge ready time if ready
-		if(chargeReady)
-			chargeReadyTime += Time.deltaTime;
-
 		// gradually reduce gravity
-		if(stateTime < chargeGravityReductionTime)
+		if(stateElapsedTime < chargeGravityReductionTime)
 		{
-			movementController.setGravityFactor(stateTime / chargeGravityReductionTime);
+            movementController.setGravityFactor(stateElapsedTime / chargeGravityReductionTime);
 		} 
 		else 
 		{
@@ -719,74 +687,77 @@ public class PlayerStateController : MonoBehaviour
 			movementController.setGravityFactor(0.0f);
 		}
 
-		// detect if charge is ready ?
-		if (stateTime >= chargeTime && !chargeReady) {
+		// detect if charge is ready
+        if (stateElapsedTime >= chargeReadyTime && !chargeReady) {
 			chargeReady = true;
-			chargeReadyTime = 0;
 			statusProvider.setChargeReady ();
 		}
 
-		if (stateTime >= chargeMinTime) {
-			chargeAnimation.StartCharge ();
-        }
-
-		// stop charge if charge ready time exceeds max charge time
-		if (chargeReady && chargeReadyTime >= chargeReadyMaxTime)
+		// cancel charge if max time exceeded
+        if (stateElapsedTime > chargeOverflowTime)
 		{
-			StopCharge();
+            SetIdleState();
 			return;
 		}
 
-		// charge button is released
-		if(!inputManager.IsHeld(playerId, InputManager.BUTTON_CHARGE))
+        // start or cancel charge when button is released and cancel time expired
+        if(stateElapsedTime > chargeInputCancelTimeMin && !inputManager.IsHeld(playerId, InputManager.BUTTON_CHARGE))
 		{
-			// trigger special attack if min charge time is reached
-			if(stateTime >= chargeMinTime)
-			{
-				ComputeSpecialAttackForceRatio();
+            if(stateElapsedTime >= chargeReadyTime)
+			{			
 				LaunchSpecialAttack();
 				return;
 			}
 			else
 			{
-				StopCharge();
+                SetIdleState();
 				return;
 			}
 		}
+
+        if (stateElapsedTime < chargeReadyTime)
+        {
+            float statePct = stateElapsedTime / chargeReadyTime;
+            statusProvider.setChargeUpdate(PlayerStatusProvider.ChargeState.LOAD, statePct, 0.0f);
+        }
+        else if (stateElapsedTime < chargeFullTime)
+        {
+            float statePct = (stateElapsedTime - chargeReadyTime) / (chargeFullTime - chargeReadyTime);
+            float forceRatio = CalculateChargeForceRatio();
+            statusProvider.setChargeUpdate(PlayerStatusProvider.ChargeState.READY, statePct, forceRatio);
+        }
+        else
+        {
+            float statePct = (stateElapsedTime - chargeFullTime) / (chargeOverflowTime - chargeFullTime);
+            statusProvider.setChargeUpdate(PlayerStatusProvider.ChargeState.FULL, statePct, 1.0f);
+        }
+
+				
+    }       
+
+	private void LaunchSpecialAttack()
+	{      
+        chargeForceRatio = CalculateChargeForceRatio();
+        hasChargeBeenCompleted = true;
+        SetSpecialAttackState();
+	}
+
+    private float CalculateChargeForceRatio()
+    {
+        float chargePct = Mathf.Clamp((stateElapsedTime - chargeReadyTime) / (chargeFullTime - chargeReadyTime), 0.0f, 1.0f);
+        return chargeReadyForceRatioCurve.Evaluate(chargePct);
     }
-
-	public void ComputeSpecialAttackForceRatio()
-	{
-		// compute charge ratio according charge time
-		float chargeRatio = Mathf.Min(1.0f, (stateTime - chargeMinTime) / (chargeTime - chargeMinTime));
-
-		// re-normalize to include min ratio
-		specialAttackForceRatio = specialAttackForceMinRatio + (1.0f - specialAttackForceMinRatio) * chargeRatio;
-	}
-
-	public void LaunchSpecialAttack()
-	{
-		chargeReady = false;
-		statusProvider.setChargeStop(true);
-		SetState(State.SPECIAL_ATTACK);
-	}
-
-	public void StopCharge()
-	{
-		chargeReady = false;
-		statusProvider.setChargeStop(false);
-		SetState(State.IDLE);
-	}
 
     //
     // SPECIAL ATTACK
     //
 
     private Vector2 specialAttackVector = new Vector2();
+    private bool hasSpecialAttackBeenCancelled;
 
     private void EnterSpecialAttack()
-    {
-        stateTime = 0.0f;
+    {     
+        hasSpecialAttackBeenCancelled = false;
 
         movementController.resetVelocity();
         movementController.setGravityFactor(0.0f);
@@ -810,7 +781,8 @@ public class PlayerStateController : MonoBehaviour
         float angle = Mathf.Sign(specialAttackVector.y) * Vector2.Angle(specialAttackVector.x < 0.0f ? Vector2.left : Vector2.right, specialAttackVector);
         specialAttackBase.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
-        statusProvider.setAttackSpecialStart(specialAttackVector);		       
+        movementController.setFacingRight(specialAttackVector.x >= 0.0f);
+        statusProvider.setAttackStart(PlayerStatusProvider.AttackType.SPECIAL, specialAttackVector);		       
     }
 
     private void LeaveSpecialAttack()
@@ -825,30 +797,35 @@ public class PlayerStateController : MonoBehaviour
         
         attackCooldown = attackCooldownTime;
 
-        statusProvider.setAttackSpecialStop();
+        statusProvider.setAttackStop(PlayerStatusProvider.AttackType.SPECIAL, hasSpecialAttackBeenCancelled);
     }
 
     private void FixedUpdateSpecialAttack()
-    {
-        stateTime += Time.fixedDeltaTime;
-        
+    {           
         // if attack time is over
-        if (stateTime > specialAttackTime)
+        if (stateElapsedFixedTime > specialAttackTime)
         {
-            SetState(State.IDLE);
+            SetIdleState();
             return;
         }
         
 		// if special attack hit solid
-        if (movementController.IsHittingSolid(specialAttackBase, specialAttackSolidChecks, specialAttackVector))
+        if (!hasSpecialAttackBeenCancelled && movementController.IsHittingSolid(specialAttackBase, specialAttackSolidChecks, specialAttackVector))
         {
+            hasSpecialAttackBeenCancelled = true;
             statusProvider.setCollision (PlayerStatusProvider.CollisionType.SPECIAL_ATTACK, specialAttackVector);
-            SetState (State.IDLE);
-            return;
         }
 
-        float attackPct = stateTime / specialAttackTime;
+        if (hasSpecialAttackBeenCancelled && stateElapsedFixedTime > specialAttackCancelTimeMin)
+        {
+            SetIdleState();
+            return;
+        }
+            
+        // calculate attack percentage
+        float attackPct = stateElapsedFixedTime / specialAttackTime;
 
+        // enable/disable hitbox
         if (!specialAttackCollider.enabled && attackPct >= specialAttackHitboxStart && attackPct < specialAttackHitboxEnd)
         {
             specialAttackCollider.enabled = true;
@@ -858,9 +835,10 @@ public class PlayerStateController : MonoBehaviour
             specialAttackCollider.enabled = false;
         }
 
-        float forcePct = specialAttackCurve.Evaluate(attackPct);
-		float hForce = (Mathf.Sign(specialAttackVector.x) * specialAttackForceMin + specialAttackVector.x * forcePct * (specialAttackForceMax - specialAttackForceMin)) * Time.fixedDeltaTime * specialAttackForceRatio;
-		float vForce = (Mathf.Sign(specialAttackVector.y) * specialAttackForceMin + specialAttackVector.y * forcePct * (specialAttackForceMax - specialAttackForceMin)) * Time.fixedDeltaTime * specialAttackForceRatio;
+        // change velocity
+        float forcePct = specialAttackCurve.Evaluate(attackPct) * chargeForceRatio;
+        float hForce = (Mathf.Sign(specialAttackVector.x) * specialAttackForceMin + specialAttackVector.x * forcePct * (specialAttackForceMax - specialAttackForceMin)) * Time.fixedDeltaTime;
+        float vForce = (Mathf.Sign(specialAttackVector.y) * specialAttackForceMin + specialAttackVector.y * forcePct * (specialAttackForceMax - specialAttackForceMin)) * Time.fixedDeltaTime;
 		movementController.setVelocity(new Vector2(hForce, vForce));
     }
 
@@ -870,9 +848,9 @@ public class PlayerStateController : MonoBehaviour
 
     private AimDirection knockbackDirection;
 
-    private void EnterKnockback()
+    private void EnterKnockback(AimDirection dir)
     {
-        stateTime = knockbackTime;
+        knockbackDirection = dir;
 
         movementController.setMovementEnabled(false);
         movementController.setJumpEnabled(false);
@@ -895,14 +873,13 @@ public class PlayerStateController : MonoBehaviour
 
     private void FixedUpdateKnockback()
     {
-        stateTime -= Time.fixedDeltaTime;
-        if (stateTime <= 0.0f)
+        if (stateElapsedFixedTime > knockbackTime)
         {
-            SetState(State.IDLE);
+            SetIdleState();
             return;
         }
 
-        float knockbackPct = 1.0f - stateTime / knockbackTime;
+        float knockbackPct = stateElapsedFixedTime / knockbackTime;
         float knockbackVelocityPct = knockbackCurve.Evaluate(knockbackPct);
 
         switch (knockbackDirection)
@@ -937,10 +914,13 @@ public class PlayerStateController : MonoBehaviour
     // INVINCIBLE
     //
 
+    private float invincibleTime;
     private float invisibleBlinkCounter = 0.0f;
 
-    private void EnterInvincible()
+    private void EnterInvincible(float duration)
     {
+        LogDebug("EnterInvincible(" + duration + ")");
+        invincibleTime = duration;
         invisibleBlinkCounter = invinsibleBlinkInterval;
 
         statusProvider.setInvincibleStatus(true);
@@ -957,10 +937,9 @@ public class PlayerStateController : MonoBehaviour
     {
         UpdateIdle();
 
-        stateTime -= Time.deltaTime;
-        if (stateTime <= 0.0f)
+        if (stateElapsedTime > invincibleTime)
         {
-            SetState(State.IDLE);
+            SetIdleState();
             return;
         }
 
@@ -978,15 +957,15 @@ public class PlayerStateController : MonoBehaviour
 
     public void HandleOnCollide(Collider2D source, Collider2D other)
     {
-        LogDebug ("HandleOnCollide");
+        //LogDebug ("HandleOnCollide");
         PlayerStateController enemy = other.GetComponentInParent<PlayerStateController>();
         if (enemy != null)
         {
-            LogDebug ("collide with enemy " + enemy.playerId);
+            //LogDebug ("collide with enemy " + enemy.playerId);
             if (enemy.IsPerformingAttack() && IsAimingOppositeDirection(enemy))
             {
-                enemy.Knockback(aimDirection);
-                Knockback(enemy.aimDirection);
+                enemy.SetKnockbackState(aimDirection);
+                SetKnockbackState(enemy.aimDirection);
             }
             else if (enemy.IsAttackable())
             {
@@ -998,7 +977,7 @@ public class PlayerStateController : MonoBehaviour
         BondLink bondLink = other.GetComponentInParent<BondLink>();
         if (bondLink != null)
         {
-            LogDebug ("collide with link");
+            //LogDebug ("collide with link");
             LevelManager levelManager = FindObjectOfType<LevelManager>();
             levelManager.bondHasBeenBrokenBy(this);
             return;
@@ -1018,12 +997,12 @@ public class PlayerStateController : MonoBehaviour
 
         if (state == State.ATTACK && aimDirection == AimDirection.DOWN)
         {
-            SetState(State.IDLE);
-            statusProvider.setCollision(PlayerStatusProvider.CollisionType.GROUND_ATTACK, new Vector2());
+            hasAttackBeenCancelled = true;
+            statusProvider.setCollision(PlayerStatusProvider.CollisionType.GROUND_ATTACK, Vector2.down);
         }
         else
         {
-            statusProvider.setCollision(PlayerStatusProvider.CollisionType.GROUND, new Vector2());
+            statusProvider.setCollision(PlayerStatusProvider.CollisionType.GROUND, Vector2.down);
         }
     }
 
@@ -1038,11 +1017,11 @@ public class PlayerStateController : MonoBehaviour
 
         if (state == State.ATTACK && aimDirection == AimDirection.FORWARD)
         {
-            statusProvider.setCollision(PlayerStatusProvider.CollisionType.WALL_ATTACK, new Vector2());
+            statusProvider.setCollision(PlayerStatusProvider.CollisionType.WALL_ATTACK, movementController.isFacingRight() ? Vector2.right : Vector2.left);
         }
         else
         {
-            statusProvider.setCollision(PlayerStatusProvider.CollisionType.WALL, new Vector2());
+            statusProvider.setCollision(PlayerStatusProvider.CollisionType.WALL, movementController.isFacingRight() ? Vector2.right : Vector2.left);
         }
     }
 
@@ -1072,7 +1051,7 @@ public class PlayerStateController : MonoBehaviour
                 break;
         }
 
-        SetState(State.CRYSTALED);
+        SetCrystaledState(respawnCrystaledTime);
 
         // this is kind of mixing logic and display but cannot rely on other component to trigger die event
         TimeManager.Pause(diePauseTime, delegate()
@@ -1083,13 +1062,7 @@ public class PlayerStateController : MonoBehaviour
             statusProvider.setDie(source, attackVector);
         });
     }
-
-    private void Knockback(AimDirection dir)
-    {
-        knockbackDirection = dir; // FIXME state arg
-        SetState(State.KNOCKBACK);
-    }
-
+ 
     private bool IsPerformingAttack()
     {
         switch (state)

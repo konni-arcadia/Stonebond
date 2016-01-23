@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
 using System;
@@ -71,8 +71,9 @@ public class LevelManager : MonoBehaviour {
 						if (!pauseWin) {
 							AudioSingleton<MusicAudioManager>.Instance.SetMusicDefaultSnapshot();
 							AudioSingleton<SfxAudioManager>.Instance.PlayStopBound();
-							AudioSingleton<SfxAudioManager>.Instance.PlayVictoryJingle();
-							AudioSingleton<VoiceAudioManager>.Instance.PlayGameOver();
+							AudioSingleton<MusicAudioManager>.Instance.PlayVictoryJingle();
+							AudioSingleton<VoiceAudioManager>.Instance.DelayPlayGameOver (1);
+							AudioSingleton<SfxAudioManager>.Instance.SetNoSfxOnMainMixerAfterVictory(1);
 							AudioSingleton<MenuAudioManager>.Instance.SetMainMenuSnapshot();
 
 							var p1 = bondLink.playerAStateController;

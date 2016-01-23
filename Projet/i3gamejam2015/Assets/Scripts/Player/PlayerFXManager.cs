@@ -122,7 +122,7 @@ public class PlayerFXManager : MonoBehaviour
         {
             SetBodyAndChromaColor(attackSpecialChromaCurve.Evaluate(stateController.GetSpecialAttackPct()));
         }
-        else if (stateController.GetAttackCooldownPct() > 0.0f)
+        else if (!stateController.IsCrystaled() && stateController.GetAttackCooldownPct() > 0.0f)
         {
             SetBodyAndChromaColor(attackCooldownChromaCurve.Evaluate(stateController.GetAttackCooldownPct()));
         }

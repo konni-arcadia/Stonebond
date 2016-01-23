@@ -4,7 +4,6 @@ using System.Collections.Generic;
 
 public class PlayerMovementController : MonoBehaviour
 {
-
     public float maxSpeed;				// The fastest the player can travel in the x axis.
     public float maxFallSpeed;
     public float breakForce;
@@ -28,7 +27,7 @@ public class PlayerMovementController : MonoBehaviour
 	private float originalGravityScale;
 
     // Executed at next iteration
-    private bool wantJump = false, wantWallJump = false, wantJumpExtension = false;
+    private bool wantJump = false, wantWallJump = false, wantJumpExtension = false, wantDropThru = false;
     private int playerId;
     private float allowJumpTime = 0, disallowDirectionTime = 0;
     private bool inWallJump = false;
@@ -38,6 +37,7 @@ public class PlayerMovementController : MonoBehaviour
 
     private Rigidbody2D body;
     private InputManager inputManager;
+    private Collider2D coll;
 
     private PlayerStatusProvider myStatusProvider;
 
@@ -45,6 +45,7 @@ public class PlayerMovementController : MonoBehaviour
     {
         // Setting up references.
         body = GetComponent<Rigidbody2D>();
+        coll = GetComponent<Collider2D>();
         inputManager = FindObjectOfType<InputManager>();              
         myStatusProvider = GetComponent<PlayerStatusProvider>();
     }
@@ -61,7 +62,6 @@ public class PlayerMovementController : MonoBehaviour
 
     void Update()
     {
-
         if (gameOver)
             return;
 
@@ -100,30 +100,40 @@ public class PlayerMovementController : MonoBehaviour
             myStatusProvider.setGrindingStatus(isGrinding);
         }
 
-        // If the jump button is pressed and the player is grounded then the player should jump.
-        if (isJumpEnabled && inputManager.WasPressed(playerId, InputManager.A))
-        {
-            // Standard way of jumping (allowed to jump)
-            if (allowJumpTime > 0)
-                wantJump = true;
-            // Or by going down while on a wall
-            else if (isGrinding)
-                wantWallJump = true;
-        }
+        //Cache the vertical input.
+        float v = isMovementEnabled && disallowDirectionTime == 0 ? inputManager.AxisValue(playerId, InputManager.Vertical) : 0;
+
+		// If the jump button is pressed and the player is grounded then the player should jump.
+		if (isJumpEnabled && inputManager.WasPressed(playerId, InputManager.A)) {
+			bool isHoldingDown = v < 0.5 ? false : true;
+			// Standard way of jumping (allowed to jump)
+			if (allowJumpTime > 0 && !isHoldingDown)
+				wantJump = true;
+			// Or by going down while on a wall
+			else if (isGrinding && !isHoldingDown)
+				wantWallJump = true;
+			// Drop trhough OWP if down is held
+			else if (isHoldingDown)
+				wantDropThru = true;
+
+			//If he holds down, he doesnt jump
+		}
+
         if (isJumpEnabled && inputManager.IsHeld(playerId, InputManager.A) && wantJumpExtension)
             wantJumpExtension &= body.velocity.y > 0;		// not able to extend jump anymore when grounded
         else
             wantJumpExtension = false;
+
     }
 
     void FixedUpdate()
     {
-
         if (gameOver)
             return;
 
         // Cache the horizontal input.
         float h = isMovementEnabled && disallowDirectionTime == 0 ? inputManager.AxisValue(playerId, InputManager.Horizontal) : 0;
+
 
         // Facing right?
         if (Mathf.Abs(h) >= Mathf.Epsilon)
@@ -188,11 +198,17 @@ public class PlayerMovementController : MonoBehaviour
             body.AddForce(new Vector2(0, extensionJumpForce * Time.fixedDeltaTime));
         }
 
+        if (wantDropThru)
+        {
+			wantDropThru = false;
+			TryDropThru();
+        }
+
         //Update Y velocity in player status component
         myStatusProvider.setVelocityYValue(body.velocity.y);
     }
 
-	public void resetVelocity(bool resetX = true, bool resetY = true)
+    public void resetVelocity(bool resetX = true, bool resetY = true)
 	{
 		body.velocity = new Vector2(resetX ? 0.0f : body.velocity.x, resetY ? 0.0f : body.velocity.y);
         if (resetY)
@@ -219,6 +235,7 @@ public class PlayerMovementController : MonoBehaviour
             wantJump = false;
             wantWallJump = false;
             wantJumpExtension = false;
+            wantDropThru = false;
         }
 	}
 
@@ -295,4 +312,14 @@ public class PlayerMovementController : MonoBehaviour
         }
         return false;
     }
+
+    public void TryDropThru()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(groundChecks[1].transform.position, groundChecks[0].transform.position);
+		// Only available on one-way platforms (OWP)
+		if (hit.collider.transform.GetComponent<OneWayPlatform>() != null)
+            Physics2D.IgnoreCollision(hit.collider, coll, true);
+    }
+
+    
 }

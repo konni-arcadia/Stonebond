@@ -109,7 +109,7 @@ public class PauseManager : MonoBehaviour {
                 Time.timeScale = 1.0f;
             }
 
-			float horizontalAxis = inputManager.AxisValueCtrl(noControler, InputManager.Horizontal);
+			//float horizontalAxis = inputManager.AxisValueCtrl(noControler, InputManager.Horizontal);
 			float verticalAxis = inputManager.AxisValueCtrl(noControler, InputManager.Vertical);
 			if (!wasPressed[noControler - 1] && verticalAxis < -InputManager.AxisDeadZone)
             {

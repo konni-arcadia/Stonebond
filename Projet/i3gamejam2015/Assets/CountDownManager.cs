@@ -17,16 +17,13 @@ public class CountDownManager : MonoBehaviour {
 
 	public void OnGetReadyTextShown()
 	{
-        // TODO add sound
-        //Debug.Log("OnGetReadyTextShown");
 		AudioSingleton<VoiceAudioManager>.Instance.PlayGameReady();
-
+		AudioSingleton<SfxAudioManager>.Instance.SetMainDefaultSnapshot();
 	}
 	
 	public void OnFightTextShown()
 	{
 		Flash.Show ();
-		// TODO add sound
 		//Debug.Log("OnFightTextShown");
 		AudioSingleton<VoiceAudioManager>.Instance.PlayFight();
     }
@@ -35,6 +32,6 @@ public class CountDownManager : MonoBehaviour {
 	{
         //Debug.Log("OnCountDownOver");
 		AudioSingleton<MenuAudioManager>.Instance.SetDefaultSnapshot();
-		AudioSingleton<MusicAudioManager>.Instance.Stage_Play(levelMgr.GetCurrentStageEnum());
+		AudioSingleton<MusicAudioManager>.Instance.StagePlay(levelMgr.GetCurrentStageEnum());
     }
 }

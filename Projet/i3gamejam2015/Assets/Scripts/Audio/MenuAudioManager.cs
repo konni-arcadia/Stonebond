@@ -2,7 +2,6 @@
 using System.Collections;
 using UnityEngine.Audio;
 
-
 [PrefabAttribute("Prefabs/Audio/Menu/MenuAudioManager")]
 public class MenuAudioManager : BaseAudioManager {
 
@@ -11,29 +10,29 @@ public class MenuAudioManager : BaseAudioManager {
 	public AudioMixerSnapshot SelectCharacterSnapshot;
 	public AudioMixerSnapshot DefaultSnapshot;
 
-	// Use this for initialization
 	void Start () 
 	{
-		MainMenuSnapshot.TransitionTo(transitionIn);
+        //Make sure when object is instanciated that the music is default meaning without music
+        SetDefaultSnapshot();
 	}
 
 	public void SetDefaultSnapshot()
 	{
-		DefaultSnapshot.TransitionTo(0f);
+		DefaultSnapshot.TransitionTo(transitionOut);
 	}
 
 	public void SetMainMenuSnapshot()
 	{
-		MainMenuSnapshot.TransitionTo(0f);
+		MainMenuSnapshot.TransitionTo(transitionIn);
 	}
 
 	public void SetSelectCharacterSnapshot()
 	{
-		SelectCharacterSnapshot.TransitionTo(0f);
+		SelectCharacterSnapshot.TransitionTo(transitionIn);
 	}
 
 	public void SetSelectStageSnapshot()
 	{
-		SelectSceneSnapshot.TransitionTo(0f);
+		SelectSceneSnapshot.TransitionTo(transitionIn);
 	}
 }

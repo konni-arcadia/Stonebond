@@ -1,17 +1,23 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.Audio;
+using UnityEngine.SceneManagement;
+using System;
 
 [PrefabAttribute("Prefabs/Audio/SFX/SfxAudioManager")]
 public class SfxAudioManager : BaseAudioManager {
 
+	//All properties below are set in the prefab. Be carefull as the prefab as multiple levels..
+
+	#region AudioClip
 	public AudioMixerSnapshot SfxBoundSnapshot;
 	public AudioMixerSnapshot SfxDefaultSnapshot;
-
 	public AudioMixerSnapshot MainBoundSnapshot;
 	public AudioMixerSnapshot MainDefaultSnapshot;
+	public AudioMixerSnapshot MainNoSfxSnapshot;
+	#endregion
 
-	public AudioClip VictoryJingle;
+	#region AudioClip
 	public AudioClip Cursor;
 	public AudioClip Validate;
 	public AudioClip Cancel;
@@ -26,32 +32,34 @@ public class SfxAudioManager : BaseAudioManager {
 	public AudioClip[] Deaths;
 	public AudioClip Rebirth;
 	public AudioClip WallSlide;
+	#endregion
 
-	private AudioSource _source;
+	#region AudioSource
+	public AudioSource ChargeAudioSource;
+	public AudioSource ChargeReadyAudioSource;
+	public AudioSource WallSlideAudioSource;
+	#endregion
+
+	private int InitialRebirthCount;
 
 	public void SetSfxDefaultSnapshot()
 	{
-		SfxDefaultSnapshot.TransitionTo(0f);
+		SfxDefaultSnapshot.TransitionTo(transitionIn);
 	}
 
 	public void SetSfxBoundSnapshot()
 	{
-		SfxBoundSnapshot.TransitionTo(0f);
+		SfxBoundSnapshot.TransitionTo(transitionIn);
 	}
 
 	public void SetMainDefaultSnapshot()
 	{
-		MainDefaultSnapshot.TransitionTo(0f);
+		MainDefaultSnapshot.TransitionTo(transitionIn);
 	}
 
 	public void SetMainBoundSnapshot()
 	{
-		MainBoundSnapshot.TransitionTo(0f);
-	}
-		
-	public void PlayVictoryJingle()
-	{
-		GetAudioSource().PlayOneShot(VictoryJingle);
+		MainBoundSnapshot.TransitionTo(transitionIn);
 	}
 
 	public void PlayStartBound()
@@ -86,7 +94,7 @@ public class SfxAudioManager : BaseAudioManager {
 	public void PlayAttack()
 	{
 
-		float r = Random.Range(0, 2);
+		float r = UnityEngine.Random.Range(0, 2);
 		if (r > 0.5f)
 		{
 			GetAudioSource().PlayOneShot(AttackA);
@@ -97,12 +105,34 @@ public class SfxAudioManager : BaseAudioManager {
 		}
 	}
 
+	public void PlayCharge()
+	{
+		ChargeAudioSource.Play();
+	}
+
+	public void StopCharge()
+	{
+		ChargeAudioSource.Stop();
+		StopChargeThatIsReady();
+	}
+
+	public void PlayChargeIsReady()
+	{
+		ChargeReadyAudioSource.Play();
+	}
+
+	public void StopChargeThatIsReady()
+	{
+		ChargeReadyAudioSource.Stop();
+	}
+
+
 	public void PlayDeath()
 	{
 		try
 		{
 			//We can not do Deaths.Count to give a max value so I added a try catch if prefab is null or property size less than 2
-			GetAudioSource().PlayOneShot(Deaths[Random.Range(0,2)]);
+			GetAudioSource().PlayOneShot(Deaths[UnityEngine.Random.Range(0,2)]);
 		}
 		catch(System.Exception)
 		{
@@ -110,14 +140,43 @@ public class SfxAudioManager : BaseAudioManager {
 		}
 	}
 
-	public void PlayReBirth()
+	public void PlayReBirth(bool initial)
 	{
-		GetAudioSource().PlayOneShot(Rebirth);
+		if (!initial)
+		{	
+			InitialRebirthCount = 0;
+			GetAudioSource().PlayOneShot(Rebirth);
+		}
+		else
+		{
+			//There is maybe a better way to be sure this is called in a level :-)
+			if (Enum.IsDefined(typeof(Constants.StageEnum), (string)SceneManager.GetActiveScene().name))
+			{	
+				if (InitialRebirthCount == 0)
+				{   
+					GetAudioSource().PlayOneShot(Rebirth);
+					InitialRebirthCount++;
+				}
+				else
+				{
+					InitialRebirthCount++;
+					if (InitialRebirthCount == 4)
+					{
+						InitialRebirthCount = 0;
+					}
+				}
+			}
+			else
+			{
+				InitialRebirthCount = 0;
+				GetAudioSource().PlayOneShot(Rebirth);
+			}
+		}
 	}
 
 	public void PlayKnockBack()
 	{
-		GetAudioSource().PlayOneShot(Rebirth);
+		GetAudioSource().PlayOneShot(Knockback);
 	}
 
 	public void PlayJump()
@@ -125,7 +184,7 @@ public class SfxAudioManager : BaseAudioManager {
 		try
 		{
 			//We can not do Jumps.Count to give a max value so I added a try catch if prefab is null or property size less than 4
-			GetAudioSource().PlayOneShot(Jumps[Random.Range(0,4)]);
+			GetAudioSource().PlayOneShot(Jumps[UnityEngine.Random.Range(0,4)]);
 		}
 		catch(System.Exception)
 		{
@@ -138,7 +197,7 @@ public class SfxAudioManager : BaseAudioManager {
 		try
 		{
 			//We can not do Jumps.Count to give a max value so I added a try catch if prefab is null or property size less than 3
-			GetAudioSource().PlayOneShot(Lands[Random.Range(0,3)]);
+			GetAudioSource().PlayOneShot(Lands[UnityEngine.Random.Range(0,3)]);
 		}
 		catch(System.Exception)
 		{
@@ -153,7 +212,22 @@ public class SfxAudioManager : BaseAudioManager {
 
 	public void PlayWallSlide()
 	{
-		GetAudioSource().PlayOneShot(WallSlide);
+		WallSlideAudioSource.Play();
 	}
 
+	public void StopWallSlide()
+	{
+		WallSlideAudioSource.Stop();
+	}
+
+	//This is used to avoid having sfx played during Vitory screeen
+	public void SetNoSfxOnMainMixer()
+	{
+		MainNoSfxSnapshot.TransitionTo(transitionIn);
+	}
+
+	public void SetNoSfxOnMainMixerAfterVictory(float time)
+	{
+		Invoke("SetNoSfxOnMainMixer", time);
+	}
 }

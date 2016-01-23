@@ -63,7 +63,6 @@ public class LevelSelectionManager : MonoBehaviour {
 		else if (inputManager.WasPressedCtrl(noControler, InputManager.B ))
 		{
 			SceneManager.LoadSceneAsync("SelectPlayers", LoadSceneMode.Additive);
-            //TODO not sure what it was supposed to do : SoundManager.Instance.StageSelect_Stop();
 			AudioSingleton<MenuAudioManager>.Instance.SetDefaultSnapshot();
 			AudioSingleton<SfxAudioManager>.Instance.PlayCancel();
 

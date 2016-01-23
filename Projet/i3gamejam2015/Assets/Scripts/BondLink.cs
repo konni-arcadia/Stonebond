@@ -1,12 +1,14 @@
 using UnityEngine;
 using System.Collections;
 
+
 public class BondLink : MonoBehaviour {
 
 	public float completion; // should be between 0.0f and 1.0f
 
 	public GameObject middlePoint;
 	public GameObject middleAnimation;
+	public Animator middleAnimator;
 	public GameObject middleCollider;
 	protected BoxCollider2D destroyCollider;
 
@@ -37,11 +39,44 @@ public class BondLink : MonoBehaviour {
 	public GameObject forwardLineColliderA;
 	public GameObject forwardLineColliderB;
 
-//	public GameObject backwardParticlesAcontainer;
-//	public GameObject backwardParticlesBcontainer;
+	public GameObject backwardParticlesA;
+	public GameObject backwardParticlesB;
 	
 	public GameObject backwardParticlesAcollider;
 	public GameObject backwardParticlesBcollider;
+
+	// ------------------------------------------------------------
+	// ------------------------------------------------------------
+	// Settings for the bond creation animation (during the pause)
+
+	// This variable controls how long the game is frozen when a bond is created.
+	// NB: bond link animations are updated but not gargoyles sprites. And players can't move.
+	public static float bondCreateGameplayPauseDuration = .9f; // formerly bondCreatePauseTime in LevelManager
+
+	// This variable controls how long the game is frozen when a bond is frozen.
+	// NB: bond link animations are updated but not gargoyles sprites. And players can't move.
+	public static float bondBreakGameplayPauseDuration = 0.25f; // formerly bondBreakPauseTime in LevelManager
+
+	// This variable controls how long it takes to the first particles to join in the middle of the bond.
+	public static float bondCreateForwardParticlesRayDuration = .25f; // should be fast (in any case, should be inferior to the bondCreatePauseTime
+
+	// This variables controls how long to wait after the bond middle blast and before starting to increment the bond's completion.
+	public static float bondCreateDelayAfterMiddleBlastDuration = 1f; // formerly increaseStartCooldownSecs, in LevelManager
+
+	protected float bondAnimCreationElapsedTime;
+
+	protected enum BondAnimState {
+		ForwardParticlesApproaching,
+		SnowBallsAppearing, // = middle blast (energy ball) + gargoyle shields (but "snowballs" is a nickname in hommage to the first glitchy implementation)
+		BackwardParticlesTranslating
+	}
+
+	protected BondAnimState currentBondAnimState;
+
+	protected bool forwardBlastIsOver = false;
+
+	// ------------------------------------------------------------
+	// ------------------------------------------------------------
 
 	protected Renderer rend;
 	protected float originalZ;
@@ -49,7 +84,7 @@ public class BondLink : MonoBehaviour {
     float originalWidth;
 	
 	void Start () {
-
+		middleAnimator = middleAnimation.GetComponent<Animator> ();
 	}
 
 	public void LinkPlayers(GameObject player_A, GameObject player_B) {
@@ -68,6 +103,11 @@ public class BondLink : MonoBehaviour {
 	}
 
 	protected void OnBond() {
+
+		// NB forward and backward particles are off
+		currentBondAnimState = BondAnimState.ForwardParticlesApproaching;
+		forwardBlastIsOver = false;
+		bondAnimCreationElapsedTime = 0;
 
         redrawLink();
 
@@ -106,7 +146,6 @@ public class BondLink : MonoBehaviour {
 		// first we cast the line between the two gargoyles (the simple math is deferred to a sub-function, for readability)
 		Vector3 linkLine = castLine ();
 		Vector3 linkLineMiddlePoint = playerA.transform.position + linkLine * 0.5f;
-//		Vector3 linkLineQuarterLengthPoint = playerA.transform.position + linkLine * 0.25f;
 
 //		float angle = Mathf.Atan2(linkLine.y, linkLine.x) * Mathf.Rad2Deg;
 //		linkMiddle.transform.rotation = Quaternion.AngleAxis (angle, Vector3.forward);
@@ -177,16 +216,24 @@ public class BondLink : MonoBehaviour {
 		middleAnimation.transform.localPosition = Vector3.zero;
 		// TODO? rotate this animation ? Ask Matthieu Bonvin.
 
+		//middleAnimation.
 
 
 		//
 		// forward particles
 
+		// -- anim of forward particles completion
+		float forwardBlastAnimCompletion = forwardBlastIsOver ? 1.0f : bondAnimCreationElapsedTime / bondCreateForwardParticlesRayDuration;
+
+		//Debug.Log ( "bondAnimCreationElapsedTime = " + bondAnimCreationElapsedTime + ", forwardBlastAnimCompletion = " + forwardBlastAnimCompletion );
+
 		// -- A
-		forwardLineColliderA.transform.position = linkLineMiddlePoint;
-		
+		Vector3 forwardParticlesMovingColliderPositionA = playerA.transform.position + linkLine * 0.5f * forwardBlastAnimCompletion;
+		forwardLineColliderA.transform.position = forwardParticlesMovingColliderPositionA;
+
 		// -- B
-		forwardLineColliderB.transform.position = linkLineMiddlePoint;
+		Vector3 forwardParticlesMovingColliderPositionB = playerB.transform.position - linkLine * 0.5f * forwardBlastAnimCompletion;
+		forwardLineColliderB.transform.position = forwardParticlesMovingColliderPositionB;
 
 
 		//
@@ -224,8 +271,66 @@ public class BondLink : MonoBehaviour {
 
 	}
 	
-	// Update is called once per frame
+	// Note on implementation: the bond link creation animation will work well only if the Bond prefab
+	//    is instantiated AFTER the Pause has been added to the TimeManager. It assumes the .isPaused
+	//    will be true on the first frame.
 	void Update () {
+
+		bondAnimCreationElapsedTime += TimeManager.realDeltaTime;
+
+		//Debug.Log ("bondAnimCreationElapsedTime : " + bondAnimCreationElapsedTime);
+
+		if ( bondAnimCreationElapsedTime > bondCreateForwardParticlesRayDuration ) {
+			forwardBlastIsOver = true; // which means forward particles should have already touched in the middle
+		}
+
+		switch (currentBondAnimState) {
+
+		case BondAnimState.ForwardParticlesApproaching:
+
+			if (forwardBlastIsOver) {
+				currentBondAnimState = BondAnimState.SnowBallsAppearing; // jump to next state
+				//Debug.Log("Forward blast over after " + bondAnimCreationElapsedTime);
+				middleAnimation.SetActive (true);
+				middleAnimator.updateMode = AnimatorUpdateMode.UnscaledTime;
+				middleAnimator.Play ("Create");
+				playerAStateController.ActivateShield ();
+				playerBStateController.ActivateShield ();
+			} else {
+				
+			}
+
+			break;
+
+		case BondAnimState.SnowBallsAppearing:
+
+			if (TimeManager.isPaused) {
+//				middleAnimator.playbackTime = bondAnimCreationElapsedTime;
+			} else {
+				//Debug.Log("Exited pause and starting backward particles after " + bondAnimCreationElapsedTime);
+//				middleAnimator.StopPlayback ();
+//				middleAnimator.Play ("Cycle");
+				currentBondAnimState = BondAnimState.BackwardParticlesTranslating; // jump to next state
+				backwardParticlesA.SetActive(true);
+				backwardParticlesB.SetActive(true);
+				backwardParticlesAcollider.SetActive(true);
+				backwardParticlesBcollider.SetActive(true);
+			}
+
+			break;
+
+		case BondAnimState.BackwardParticlesTranslating:
+			break;
+
+		default:
+			break;
+
+		}
+
+//		middleAnimator.playbackTime = bondAnimCreationElapsedTime;
+
+		// We ignore the pause in this class
 		redrawLink ();
+
 	}
 }

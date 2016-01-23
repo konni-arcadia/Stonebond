@@ -10,7 +10,7 @@ public class LevelManager : MonoBehaviour {
 	private bool bondMode = false;
 	public GameObject bondLinkPrefab;
 	public GameObject gaugeInner, gaugeFrame;
-	public float gaugeDecreaseFactor;
+	protected float gaugeDecreaseFactor;
 //	public float increaseStartCooldownSecs = 2;
 	public float introDuration = 2;
 //	public float  = 3f;
@@ -49,7 +49,7 @@ public class LevelManager : MonoBehaviour {
 		if (activePlayers.Count == 2 && !bondMode && allowsCreateBond)
 			EnterBondMode(activePlayers);
 
-		if (bondMode) {
+		if (bondMode && !TimeManager.isPaused) {
 			gaugeFrame.SetActive(true);
 			gaugeInner.SetActive(true);
 			gaugeInner.transform.localScale = new Vector3(bondLinkGauge, 1, 1);
@@ -132,6 +132,7 @@ public class LevelManager : MonoBehaviour {
 		bondLink.LinkPlayers ( activePlayers[0].gameObject, activePlayers[1].gameObject);
 		activePlayers[0].SetBondLink(bondLink);
 		activePlayers[1].SetBondLink(bondLink);
+		gaugeDecreaseFactor = 0.00010f; // previously 0.00025
 		bondLinkGauge = 0;
 		appearedSinceSec = 0;
 

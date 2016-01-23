@@ -15,6 +15,11 @@ public class BondLinkFX : MonoBehaviour
 		this.playerId = playerId;
 	}
 
+	void Start() {
+		foreach (ParticleSystem particles in lineParticles) {
+			particles.gameObject.GetComponent<UnpausableParticleSystem > ().acceleration = 10.0f;
+		}
+	}
 	
 	public ParticleSystem GetLineParticles()
 	{

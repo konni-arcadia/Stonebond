@@ -70,7 +70,6 @@ public class LevelManager : MonoBehaviour {
 						// TODO create event for that
 						if (!pauseWin) {
 							AudioSingleton<MusicAudioManager>.Instance.SetMusicDefaultSnapshot();
-							AudioSingleton<SfxAudioManager>.Instance.PlayStopBound();
 							AudioSingleton<MusicAudioManager>.Instance.PlayVictoryJingle();
 							AudioSingleton<VoiceAudioManager>.Instance.DelayPlayGameOver (1);
 							AudioSingleton<SfxAudioManager>.Instance.SetNoSfxOnMainMixerAfterVictory(1);

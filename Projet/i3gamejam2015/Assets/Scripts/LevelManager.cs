@@ -69,10 +69,15 @@ public class LevelManager : MonoBehaviour {
 					if (!hasAlreadyShownWinScreen) {
 						// TODO create event for that
 						if (!pauseWin) {
+							//Remove any music by setting default snapshot
 							AudioSingleton<MusicAudioManager>.Instance.SetMusicDefaultSnapshot();
+							//Remove bound by setting default snapshot
+							AudioSingleton<SfxAudioManager>.Instance.SetSfxDefaultSnapshot();
 							AudioSingleton<MusicAudioManager>.Instance.PlayVictoryJingle();
-							AudioSingleton<VoiceAudioManager>.Instance.DelayPlayGameOver (1);
+							//This two calls should be replaced by observing events rather than using invoke with time
+							AudioSingleton<VoiceAudioManager>.Instance.DelayPlayGameOver(1);
 							AudioSingleton<SfxAudioManager>.Instance.SetNoSfxOnMainMixerAfterVictory(1);
+							//Set the main default snapshot to restore initial set up
 							AudioSingleton<MenuAudioManager>.Instance.SetMainMenuSnapshot();
 
 							var p1 = bondLink.playerAStateController;

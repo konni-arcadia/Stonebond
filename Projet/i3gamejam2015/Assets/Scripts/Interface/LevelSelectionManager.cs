@@ -7,8 +7,8 @@ using System.Collections.Generic;
 public class LevelSelectionManager : MonoBehaviour {
 
 	// The two MUST MATCH (in order, except for the random entry)
-    public enum LvlSelectionItem { Spire, Pipes, Cathedrale, Forest, Random};
-	private static readonly string[] RandomLevelList = { "LevelRoof", "LevelOrgan", "LevelCathedrale", "LevelForest" };
+    public enum LvlSelectionItem { Spire, Pipes, Cathedrale, Forest, Catacombs, Random};
+	private static readonly string[] RandomLevelList = { "LevelRoof", "LevelOrgan", "LevelCathedrale", "LevelForest", "LevelCatacombs" };
 
     public Image selectedLevelImage;
     public List<Sprite> levelList;
@@ -20,8 +20,7 @@ public class LevelSelectionManager : MonoBehaviour {
 	public static LvlSelectionItem idOfLastChosenLevel = LvlSelectionItem.Cathedrale;
 
     // Use this for initialization
-    void Start()
-    {
+    void Start() {
 		inputManager = GetComponent<InputManager> ();
 		AudioSingleton<MenuAudioManager>.Instance.SetSelectStageSnapshot();
 		menuSelectedItem = idOfLastChosenLevel;

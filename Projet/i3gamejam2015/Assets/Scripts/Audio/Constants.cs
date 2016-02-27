@@ -9,5 +9,6 @@ public class Constants {
 		LevelRoof,
 		LevelForest,
 		LevelCathedrale,
+		LevelCatacombs,
 	}
 }

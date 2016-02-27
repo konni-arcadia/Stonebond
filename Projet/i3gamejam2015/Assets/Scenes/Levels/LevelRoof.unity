@@ -256,9 +256,9 @@ Transform:
   m_Children:
   - {fileID: 70639271}
   - {fileID: 847755609}
+  - {fileID: 638584391}
   - {fileID: 2044629704}
   - {fileID: 463720048}
-  - {fileID: 638584391}
   m_Father: {fileID: 0}
   m_RootOrder: 7
 --- !u!212 &298988231
@@ -447,11 +447,11 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 638584390}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 29.3, y: 0, z: 0}
+  m_LocalPosition: {x: 32, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 298988230}
-  m_RootOrder: 4
+  m_RootOrder: 2
 --- !u!114 &638584392
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -464,9 +464,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fogMoveSpeed: 0.03
-  rightOffset: 40.933334
+  rightOffset: 31.97
   yPos: 0
-  xPos: -40.933334
+  xPos: 0
 --- !u!212 &638584393
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -806,9 +806,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fogMoveSpeed: 0.03
-  rightOffset: 40.933334
+  rightOffset: 31.97
   yPos: 0
-  xPos: -40.933334
+  xPos: 0
 --- !u!1 &894275908
 GameObject:
   m_ObjectHideFlags: 0
@@ -850,7 +850,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 494978, guid: 4bb8f5089f5940b4e963dcea175b055d, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 31.9200001
+      value: 32.001
       objectReference: {fileID: 0}
     - target: {fileID: 494978, guid: 4bb8f5089f5940b4e963dcea175b055d, type: 2}
       propertyPath: m_LocalPosition.y
@@ -878,7 +878,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 494978, guid: 4bb8f5089f5940b4e963dcea175b055d, type: 2}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 140746, guid: 4bb8f5089f5940b4e963dcea175b055d, type: 2}
       propertyPath: m_Name
@@ -886,15 +886,15 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11401936, guid: 4bb8f5089f5940b4e963dcea175b055d, type: 2}
       propertyPath: rightOffset
-      value: 31.9500008
+      value: 31.99
       objectReference: {fileID: 0}
     - target: {fileID: 11401936, guid: 4bb8f5089f5940b4e963dcea175b055d, type: 2}
       propertyPath: xPos
-      value: -324523
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 11401936, guid: 4bb8f5089f5940b4e963dcea175b055d, type: 2}
       propertyPath: fogMoveSpeed
-      value: .00999999978
+      value: 0.01
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4bb8f5089f5940b4e963dcea175b055d, type: 2}
@@ -1028,19 +1028,19 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 494978, guid: 4bb8f5089f5940b4e963dcea175b055d, type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 11401936, guid: 4bb8f5089f5940b4e963dcea175b055d, type: 2}
       propertyPath: rightOffset
-      value: 31.9500008
+      value: 31.99
       objectReference: {fileID: 0}
     - target: {fileID: 11401936, guid: 4bb8f5089f5940b4e963dcea175b055d, type: 2}
       propertyPath: xPos
-      value: -2345234
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 11401936, guid: 4bb8f5089f5940b4e963dcea175b055d, type: 2}
       propertyPath: fogMoveSpeed
-      value: .00999999978
+      value: 0.01
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4bb8f5089f5940b4e963dcea175b055d, type: 2}

@@ -10,14 +10,9 @@ public class LevelManager : MonoBehaviour {
 	private bool bondMode = false;
 	public GameObject bondLinkPrefab;
 	public GameObject gaugeInner, gaugeFrame;
-	protected float gaugeDecreaseFactor;
-//	public float increaseStartCooldownSecs = 2;
+	private const float gaugeDecreaseFactor = 0.006f; // previously 0.00025
 	public float introDuration = 2;
-//	public float  = 3f;
-//	public float  = 0.25f;
 	public float pauseWinDuration = 1.0f;
-	private bool pauseWin = false;
-	private float pauseWinTimer;
 	private BondLink bondLink;
 	private float bondLinkGauge, appearedSinceSec;
 	private WinScreenManager WinScreenManager {
@@ -57,8 +52,7 @@ public class LevelManager : MonoBehaviour {
 
 			if (appearedSinceSec >= BondLink.bondCreateDelayAfterMiddleBlastDuration) {
 				var distance = Vector3.Distance(bondLink.playerA.transform.position, bondLink.playerB.transform.position);
-				bondLinkGauge += distance * gaugeDecreaseFactor;
-
+				bondLinkGauge += distance * gaugeDecreaseFactor * Time.deltaTime;
 				bondLink.completion = bondLinkGauge;
 
 				// A winner is designated
@@ -67,42 +61,30 @@ public class LevelManager : MonoBehaviour {
 
 
 					if (!hasAlreadyShownWinScreen) {
-						// TODO create event for that
-						if (!pauseWin) {
-							//Remove any music by setting default snapshot
-							AudioSingleton<MusicAudioManager>.Instance.SetMusicDefaultSnapshot();
-							//Remove bound by setting default snapshot
-							AudioSingleton<SfxAudioManager>.Instance.SetSfxDefaultSnapshot();
-							AudioSingleton<MusicAudioManager>.Instance.PlayVictoryJingle();
-							//This two calls should be replaced by observing events rather than using invoke with time
-							AudioSingleton<VoiceAudioManager>.Instance.DelayPlayGameOver(1);
-							AudioSingleton<SfxAudioManager>.Instance.SetNoSfxOnMainMixerAfterVictory(1);
-							//Set the main default snapshot to restore initial set up
-							AudioSingleton<MenuAudioManager>.Instance.SetMainMenuSnapshot();
+						//Remove any music by setting default snapshot
+						AudioSingleton<MusicAudioManager>.Instance.SetMusicDefaultSnapshot();
+						//Remove bound by setting default snapshot
+						AudioSingleton<SfxAudioManager>.Instance.SetSfxDefaultSnapshot();
+						AudioSingleton<MusicAudioManager>.Instance.PlayVictoryJingle();
+						//This call should be replaced by observing events rather than using invoke with time
+						AudioSingleton<SfxAudioManager>.Instance.SetNoSfxOnMainMixerAfterVictory(1);
+						//Set the main default snapshot to restore initial set up
+						AudioSingleton<MenuAudioManager>.Instance.SetMainMenuSnapshot();
 
-							var p1 = bondLink.playerAStateController;
-							var p2 = bondLink.playerBStateController;
-							WinScreenManager.IdOfWonP1 = p1.GetPlayerId();
-							WinScreenManager.IdOfWonP2 = p2.GetPlayerId();
-							GameState.Instance.NotifyWinners(p1.GetPlayerId(), p2.GetPlayerId());
+						var p1 = bondLink.playerAStateController;
+						var p2 = bondLink.playerBStateController;
+						WinScreenManager.IdOfWonP1 = p1.GetPlayerId();
+						WinScreenManager.IdOfWonP2 = p2.GetPlayerId();
+						GameState.Instance.NotifyWinners(p1.GetPlayerId(), p2.GetPlayerId());
 
-							foreach (PlayerStateController player in players) {
-								player.SetGameOver ();
-							}
-							TimeManager.Pause (pauseWinDuration);
-							pauseWin = true;
-							pauseWinTimer = pauseWinDuration;
+						foreach (PlayerStateController player in players) {
+							player.SetGameOver ();
 						}
-						else
-						{
-							if (pauseWinTimer > 0) {
-								pauseWinTimer -= TimeManager.realDeltaTime;
-							} else {
-								WinScreenManager.showScreen ();
-								hasAlreadyShownWinScreen = true;
-							}
-
-						}
+						hasAlreadyShownWinScreen = true;
+						TimeManager.Pause(pauseWinDuration, null, () => {
+							AudioSingleton<VoiceAudioManager>.Instance.PlayGameOver();
+							WinScreenManager.showScreen ();
+						});
                     }
 				}
 			}
@@ -135,7 +117,6 @@ public class LevelManager : MonoBehaviour {
 		bondLink.LinkPlayers ( activePlayers[0].gameObject, activePlayers[1].gameObject);
 		activePlayers[0].SetBondLink(bondLink);
 		activePlayers[1].SetBondLink(bondLink);
-		gaugeDecreaseFactor = 0.00010f; // previously 0.00025
 		bondLinkGauge = 0;
 		appearedSinceSec = 0;
 

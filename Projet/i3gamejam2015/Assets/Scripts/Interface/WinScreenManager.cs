@@ -35,7 +35,7 @@ public class WinScreenManager : MonoBehaviour {
 	public List<WinChar> winChar;
 
 	// TEMP TODO refactor end of game jam alert
-	public int IdOfWonP1 = 1, IdOfWonP2 = 2, IdOfLevelToRestartTo;
+	public int IdOfWonP1 = 1, IdOfWonP2 = 2;
 
 	// Use this for initialization
 	void Start () {
@@ -99,7 +99,7 @@ public class WinScreenManager : MonoBehaviour {
 						
 						if(InControlObject != null)
 							Destroy(InControlObject);
-						SceneManager.LoadScene(IdOfLevelToRestartTo);
+						SceneManager.LoadScene(LevelSelectionManager.NameOfLevelScene(LevelSelectionManager.idOfLastChosenLevel));
 					break;
 
 					case StartMenuItem.LvlSelection:

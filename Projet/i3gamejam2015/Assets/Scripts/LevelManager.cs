@@ -84,7 +84,6 @@ public class LevelManager : MonoBehaviour {
 							var p2 = bondLink.playerBStateController;
 							WinScreenManager.IdOfWonP1 = p1.GetPlayerId();
 							WinScreenManager.IdOfWonP2 = p2.GetPlayerId();
-							WinScreenManager.IdOfLevelToRestartTo = SceneManager.GetActiveScene().buildIndex;
 							GameState.Instance.NotifyWinners(p1.GetPlayerId(), p2.GetPlayerId());
 
 							foreach (PlayerStateController player in players) {

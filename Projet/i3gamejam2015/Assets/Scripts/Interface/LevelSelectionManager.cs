@@ -6,7 +6,8 @@ using System.Collections.Generic;
 
 public class LevelSelectionManager : MonoBehaviour {
 
-    enum LvlSelectionItem { Spire, Pipes, Cathedrale, Forest};
+    enum LvlSelectionItem { Spire, Pipes, Cathedrale, Forest, Random};
+	private static readonly string[] RandomLevelList = {"LevelCathedrale", "LevelForest", "LevelOrgan", "LevelRoof"};
 
     public Image selectedLevelImage;
     public List<Sprite> levelList;
@@ -43,7 +44,11 @@ public class LevelSelectionManager : MonoBehaviour {
 			AudioSingleton<MenuAudioManager>.Instance.SetDefaultSnapshot();
             switch (menuSelectedItem)
             {
-                case LvlSelectionItem.Cathedrale:
+				case LvlSelectionItem.Random:
+					SceneManager.LoadScene(RandomLevelList[Random.Range(0, RandomLevelList.Length)]);
+					break;
+
+				case LvlSelectionItem.Cathedrale:
 					SceneManager.LoadScene("LevelCathedrale");
                     break;
 
@@ -82,7 +87,7 @@ public class LevelSelectionManager : MonoBehaviour {
         }
 		else if (!wasPressed[noControler - 1] && inputManager.AxisValueCtrl(noControler, InputManager.Vertical) > InputManager.AxisDeadZone)
         {
-            if (menuSelectedItem != LvlSelectionItem.Forest)
+            if (menuSelectedItem != LvlSelectionItem.Random)
             {
 				AudioSingleton<SfxAudioManager>.Instance.PlayCursor();
                 menuSelectedItem += 1;

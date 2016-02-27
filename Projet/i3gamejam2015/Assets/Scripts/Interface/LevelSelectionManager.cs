@@ -6,32 +6,36 @@ using System.Collections.Generic;
 
 public class LevelSelectionManager : MonoBehaviour {
 
-    enum LvlSelectionItem { Spire, Pipes, Cathedrale, Forest, Random};
-	private static readonly string[] RandomLevelList = {"LevelCathedrale", "LevelForest", "LevelOrgan", "LevelRoof"};
+	// The two MUST MATCH (in order, except for the random entry)
+    public enum LvlSelectionItem { Spire, Pipes, Cathedrale, Forest, Random};
+	private static readonly string[] RandomLevelList = { "LevelRoof", "LevelOrgan", "LevelCathedrale", "LevelForest" };
 
     public Image selectedLevelImage;
     public List<Sprite> levelList;
 
-    private LvlSelectionItem menuSelectedItem = LvlSelectionItem.Cathedrale;
+    private LvlSelectionItem menuSelectedItem;
 
     private bool[] wasPressed = new bool[4];
 	private InputManager inputManager;
+	public static LvlSelectionItem idOfLastChosenLevel = LvlSelectionItem.Cathedrale;
 
     // Use this for initialization
     void Start()
     {
 		inputManager = GetComponent<InputManager> ();
 		AudioSingleton<MenuAudioManager>.Instance.SetSelectStageSnapshot();
-    }
+		menuSelectedItem = idOfLastChosenLevel;
+		updateGui();
+	}
 
-    // Update is called once per frame
-    void Update()
+	// Update is called once per frame
+	void Update()
     {
         for (int i = 1; i < 5; i++)
             CheckControlerStartMenu(i);
 	}
 
-    void CheckControlerStartMenu(int noControler)
+    private void CheckControlerStartMenu(int noControler)
     {
 
 		if (inputManager.WasPressedCtrl(noControler, InputManager.A))
@@ -42,28 +46,8 @@ public class LevelSelectionManager : MonoBehaviour {
 
 			//reset menu music to default as best practice
 			AudioSingleton<MenuAudioManager>.Instance.SetDefaultSnapshot();
-            switch (menuSelectedItem)
-            {
-				case LvlSelectionItem.Random:
-					SceneManager.LoadScene(RandomLevelList[Random.Range(0, RandomLevelList.Length)]);
-					break;
-
-				case LvlSelectionItem.Cathedrale:
-					SceneManager.LoadScene("LevelCathedrale");
-                    break;
-
-                case LvlSelectionItem.Forest:
-					SceneManager.LoadScene("LevelForest");
-                    break;
-
-                case LvlSelectionItem.Pipes:
-					SceneManager.LoadScene("LevelOrgan");
-                    break;
-
-                case LvlSelectionItem.Spire:
-					SceneManager.LoadScene("LevelRoof");
-                    break;
-            }
+			idOfLastChosenLevel = menuSelectedItem;
+			SceneManager.LoadScene(NameOfLevelScene(menuSelectedItem));
         }
 		else if (inputManager.WasPressedCtrl(noControler, InputManager.B ))
 		{
@@ -80,8 +64,8 @@ public class LevelSelectionManager : MonoBehaviour {
             {
 				AudioSingleton<SfxAudioManager>.Instance.PlayCursor();
                 menuSelectedItem -= 1;
-                selectedLevelImage.sprite = levelList[(int)menuSelectedItem];
-                wasPressed[noControler - 1] = true;
+				updateGui();
+				wasPressed[noControler - 1] = true;
             }
 
         }
@@ -91,7 +75,7 @@ public class LevelSelectionManager : MonoBehaviour {
             {
 				AudioSingleton<SfxAudioManager>.Instance.PlayCursor();
                 menuSelectedItem += 1;
-                selectedLevelImage.sprite = levelList[(int)menuSelectedItem];
+				updateGui();
                 wasPressed[noControler - 1] = true;
             }
 
@@ -103,4 +87,15 @@ public class LevelSelectionManager : MonoBehaviour {
             wasPressed[noControler - 1] = false;
         }
     }
+
+	private void updateGui() {
+		selectedLevelImage.sprite = levelList[(int)menuSelectedItem];
+	}
+
+	public static string NameOfLevelScene(LvlSelectionItem menuSelectedItem) {
+		if (menuSelectedItem == LvlSelectionItem.Random)
+			return RandomLevelList[Random.Range(0, RandomLevelList.Length)];
+		else
+			return RandomLevelList[(int)menuSelectedItem];
+	}
 }

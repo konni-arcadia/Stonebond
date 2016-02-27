@@ -9,6 +9,7 @@ public class MusicAudioManager : BaseAudioManager {
 	public AudioMixerSnapshot PipesOfAwakeningSnapshot;
 	public AudioMixerSnapshot CloisterOfTheSilenceSnapshot;
 	public AudioMixerSnapshot RosetteOfTheWingeSnapshot;
+	public AudioMixerSnapshot CatacombsSnapshot;
 	public AudioMixerSnapshot MusicDefaultSnapshot;
 	public AudioMixerSnapshot PauseSnapshot;
 	public AudioMixerSnapshot MainDefaultSnapshot;
@@ -29,6 +30,10 @@ public class MusicAudioManager : BaseAudioManager {
 			break;
 		case Constants.StageEnum.LevelCathedrale:
 			AudioSingleton<MusicAudioManager>.Instance.SetRosetteOfTheWingeSnapshot();
+			break;
+
+		case Constants.StageEnum.LevelCatacombs:
+			AudioSingleton<MusicAudioManager>.Instance.SetCatacombsSnapshot();
 			break;
 		}
 	}
@@ -61,6 +66,11 @@ public class MusicAudioManager : BaseAudioManager {
 	public void SetSpireHighSnapshot()
 	{
 		SpireHighSnapshot.TransitionTo(transitionIn);
+	}
+
+	public void SetCatacombsSnapshot()
+	{
+		CatacombsSnapshot.TransitionTo(transitionIn);
 	}
 
 	public void SetCloisterOfTheSilence()

@@ -20,12 +20,16 @@ public class LevelManager : MonoBehaviour {
 	private bool hasAlreadyShownWinScreen, allowsCreateBond;
 	// Speed at which the bond gauge increases (previously 0.00025 * 60). This is bound to evolute as time goes.
 	public float gaugeIncreaseFactor = 0.006f, gaugeIncreaseMultiplier = 1.1f, gaugeIncreaseMaxFactor = 0.03f;
+	// Increase is done every five seconds
+	public float gaugeIncreaseMultiplierWithTime = 1.0001f;
+	private int lastTimeWhenIncreasedGaugeFactor, increaseGaugeEverySeconds = 5;
 
 	// Requires the objects to have already been spawned (PlayerSpawner::Awake, which is executed before)
 	void Start () {
         //Load the pause menu
 		SceneManager.LoadScene("Pause", LoadSceneMode.Additive);
 		SceneManager.LoadScene("WinScreen", LoadSceneMode.Additive);
+		lastTimeWhenIncreasedGaugeFactor = (int)Time.time + 1;
 	}
 
 	void Update() {
@@ -93,6 +97,12 @@ public class LevelManager : MonoBehaviour {
 		else {
 			gaugeFrame.SetActive(false);
 			gaugeInner.SetActive(false);
+		}
+
+		if ((int)Time.time >= lastTimeWhenIncreasedGaugeFactor + increaseGaugeEverySeconds && gaugeIncreaseMultiplierWithTime > 1.0f) {
+			gaugeIncreaseFactor = Mathf.Min(gaugeIncreaseMaxFactor, gaugeIncreaseFactor * gaugeIncreaseMultiplierWithTime);
+			Debug.Log("TEMP: increased bond link gauge factor to " + gaugeIncreaseFactor);
+			lastTimeWhenIncreasedGaugeFactor = (int)Time.time;
 		}
 	}
 

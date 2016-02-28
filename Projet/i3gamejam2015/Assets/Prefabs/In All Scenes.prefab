@@ -490,6 +490,10 @@ MonoBehaviour:
   gaugeFrame: {fileID: 127230}
   introDuration: 2.5
   pauseWinDuration: 1
+  gaugeIncreaseFactor: 0.006
+  gaugeIncreaseMultiplier: 1.1
+  gaugeIncreaseMaxFactor: 0.03
+  gaugeIncreaseMultiplierWithTime: 1.0001
 --- !u!212 &21200886
 SpriteRenderer:
   m_ObjectHideFlags: 1

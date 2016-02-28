@@ -10,7 +10,6 @@ public class LevelManager : MonoBehaviour {
 	private bool bondMode = false;
 	public GameObject bondLinkPrefab;
 	public GameObject gaugeInner, gaugeFrame;
-	private const float gaugeDecreaseFactor = 0.006f; // previously 0.00025
 	public float introDuration = 2;
 	public float pauseWinDuration = 1.0f;
 	private BondLink bondLink;
@@ -19,6 +18,8 @@ public class LevelManager : MonoBehaviour {
 		get { return FindObjectOfType<WinScreenManager>(); }
 	}
 	private bool hasAlreadyShownWinScreen, allowsCreateBond;
+	// Speed at which the bond gauge increases (previously 0.00025 * 60). This is bound to evolute as time goes.
+	public float gaugeIncreaseFactor = 0.006f, gaugeIncreaseMultiplier = 1.1f, gaugeIncreaseMaxFactor = 0.03f;
 
 	// Requires the objects to have already been spawned (PlayerSpawner::Awake, which is executed before)
 	void Start () {
@@ -52,7 +53,7 @@ public class LevelManager : MonoBehaviour {
 
 			if (appearedSinceSec >= BondLink.bondCreateDelayAfterMiddleBlastDuration) {
 				var distance = Vector3.Distance(bondLink.playerA.transform.position, bondLink.playerB.transform.position);
-				bondLinkGauge += distance * gaugeDecreaseFactor * Time.deltaTime;
+				bondLinkGauge += distance * gaugeIncreaseFactor * Time.deltaTime;
 				bondLink.completion = bondLinkGauge;
 
 				// A winner is designated
@@ -129,7 +130,8 @@ public class LevelManager : MonoBehaviour {
 		p2.SetBondLink(null);
 		p1.DisableShield ();
 		p2.DisableShield ();
-		Debug.Log("Leaving bond mode");
+		gaugeIncreaseFactor = Mathf.Min(gaugeIncreaseMaxFactor, gaugeIncreaseFactor * gaugeIncreaseMultiplier);
+		Debug.Log("Leaving bond mode, gauge increase factor will be " + gaugeIncreaseFactor);
 		bondMode = false;
 		allowsCreateBond = false;
 

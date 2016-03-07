@@ -192,9 +192,9 @@ MonoBehaviour:
   selectedLevelImage: {fileID: 1694560665}
   levelList:
   - {fileID: 21300000, guid: cb27c7e559bf6ec469589b95bbaad43e, type: 3}
+  - {fileID: 21300000, guid: 346696d98420c034e8cf23ef6f3102a8, type: 3}
   - {fileID: 21300000, guid: ba90d2d9ba09a784cb03de4185e19b4e, type: 3}
   - {fileID: 21300000, guid: 9f04357751aee174fb8250b56685128f, type: 3}
-  - {fileID: 21300000, guid: 346696d98420c034e8cf23ef6f3102a8, type: 3}
   - {fileID: 21300000, guid: ed34bc4e5bcc23d40b1b35226cf149c0, type: 3}
   - {fileID: 21300000, guid: 0945363ad6092b74c9220163efe8a0c6, type: 3}
 --- !u!114 &940891851

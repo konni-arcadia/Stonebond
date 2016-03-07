@@ -7,8 +7,8 @@ using System.Collections.Generic;
 public class LevelSelectionManager : MonoBehaviour {
 
 	// The two MUST MATCH (in order, except for the random entry)
-    public enum LvlSelectionItem { Spire, Pipes, Cathedrale, Forest, Catacombs, Random};
-	private static readonly string[] RandomLevelList = { "LevelRoof", "LevelOrgan", "LevelCathedrale", "LevelForest", "LevelCatacombs" };
+    public enum LvlSelectionItem { Forest, Pipes, Spire, Cathedrale, Catacombs, Random};
+	private static readonly string[] RandomLevelList = { "LevelForest", "LevelOrgan", "LevelRoof", "LevelCathedrale", "LevelCatacombs" };
 
     public Image selectedLevelImage;
     public List<Sprite> levelList;
@@ -17,7 +17,7 @@ public class LevelSelectionManager : MonoBehaviour {
 
     private bool[] wasPressed = new bool[4];
 	private InputManager inputManager;
-	public static LvlSelectionItem idOfLastChosenLevel = LvlSelectionItem.Cathedrale;
+	public static LvlSelectionItem idOfLastChosenLevel = LvlSelectionItem.Forest;
 
     // Use this for initialization
     void Start() {
@@ -57,7 +57,7 @@ public class LevelSelectionManager : MonoBehaviour {
             Destroy(gameObject);
         }
 
-		if (!wasPressed[noControler - 1] && inputManager.AxisValueCtrl(noControler, InputManager.Vertical) < -InputManager.AxisDeadZone)
+		if (!wasPressed[noControler - 1] && inputManager.AxisValueCtrl(noControler, InputManager.Horizontal) < -InputManager.AxisDeadZone)
         {
             if (menuSelectedItem != (LvlSelectionItem)0)
             {
@@ -68,7 +68,7 @@ public class LevelSelectionManager : MonoBehaviour {
             }
 
         }
-		else if (!wasPressed[noControler - 1] && inputManager.AxisValueCtrl(noControler, InputManager.Vertical) > InputManager.AxisDeadZone)
+		else if (!wasPressed[noControler - 1] && inputManager.AxisValueCtrl(noControler, InputManager.Horizontal) > InputManager.AxisDeadZone)
         {
             if (menuSelectedItem != LvlSelectionItem.Random)
             {
@@ -79,8 +79,8 @@ public class LevelSelectionManager : MonoBehaviour {
             }
 
         }
-		else if (inputManager.AxisValueCtrl(noControler, InputManager.Vertical) < InputManager.AxisDeadZone &&
-		         inputManager.AxisValueCtrl(noControler, InputManager.Vertical) > -InputManager.AxisDeadZone
+		else if (inputManager.AxisValueCtrl(noControler, InputManager.Horizontal) < InputManager.AxisDeadZone &&
+		         inputManager.AxisValueCtrl(noControler, InputManager.Horizontal) > -InputManager.AxisDeadZone
 		         && wasPressed[noControler - 1])
         {
             wasPressed[noControler - 1] = false;

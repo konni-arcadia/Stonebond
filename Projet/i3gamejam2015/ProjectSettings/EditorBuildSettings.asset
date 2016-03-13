@@ -18,6 +18,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Menu/Credits.unity
   - enabled: 1
+    path: Assets/Scenes/Menu/Pause.unity
+  - enabled: 1
     path: Assets/Scenes/Levels/LevelCathedrale.unity
   - enabled: 1
     path: Assets/Scenes/Levels/LevelForest.unity
@@ -26,8 +28,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Levels/LevelRoof.unity
   - enabled: 1
-    path: Assets/Scenes/Menu/Pause.unity
+    path: Assets/Scenes/Levels/LevelCatacombs.unity
   - enabled: 1
     path: Assets/Scenes/Menu/WinScreen.unity
-  - enabled: 1
-    path: Assets/Scenes/Levels/LevelCatacombs.unity

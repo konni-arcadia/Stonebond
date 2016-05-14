@@ -209,19 +209,28 @@ public class PlayerFXManager : MonoBehaviour
         SetBodyColor(Color.black);
         SetChromaColor(Color.black);
 
-        PlayerFXManager sourceFXManager = source.GetComponent<PlayerFXManager>();
-        sourceFXManager.SetOverlay(true);
-        sourceFXManager.SetBodyColor(Color.black);
-        sourceFXManager.SetChromaColor(Color.black);
+        if(source != null)
+        {
+            PlayerFXManager sourceFXManager = source.GetComponent<PlayerFXManager>();
+            sourceFXManager.SetOverlay(true);
+            sourceFXManager.SetBodyColor(Color.black);
+            sourceFXManager.SetChromaColor(Color.black);
+        }
     }
 
     private void HandleOnDie(Transform source, Vector2 attackDirection)
     {
-        ScreenShake.ShakeXY(Mathf.Abs(attackDirection.x) * 0.4f, 0.5f, Mathf.Abs(attackDirection.y) * 0.4f, 0.5f);
+        if(attackDirection != Vector2.zero)
+        {
+            ScreenShake.ShakeXY(Mathf.Abs(attackDirection.x) * 0.4f, 0.5f, Mathf.Abs(attackDirection.y) * 0.4f, 0.5f);
+        }
         SetOverlay(false);
 
-        PlayerFXManager sourceFXManager = source.GetComponent<PlayerFXManager>();
-        sourceFXManager.SetOverlay(false);
+        if(source != null)
+        {
+            PlayerFXManager sourceFXManager = source.GetComponent<PlayerFXManager>();
+            sourceFXManager.SetOverlay(false);
+        }
     }
 
     private void HandleOnCollisionAction(PlayerStatusProvider.CollisionType collisionType, Vector2 normal)

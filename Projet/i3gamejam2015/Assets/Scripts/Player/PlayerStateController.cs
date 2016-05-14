@@ -216,6 +216,12 @@ public class PlayerStateController : MonoBehaviour
         return state == State.CRYSTALED;
     }
 
+    public void Crystalize()
+    {
+        SetCrystaledState(respawnCrystaledTime);
+        statusProvider.setDie(null, Vector2.zero);
+    }
+
     public int GetPlayerId()
     {
         return playerId;

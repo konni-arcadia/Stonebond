@@ -108,6 +108,7 @@ public class PlayerStateController : MonoBehaviour
     // SPECIAL ATTACK
     // 
 
+    public bool specialAttackEnabled = true;
     public float specialAttackTime = 0.35f;
     public float specialAttackCancelTimeMin = 0.25f;
     public float specialAttackForceMin = 0.0f;
@@ -484,7 +485,7 @@ public class PlayerStateController : MonoBehaviour
         }
 
         // charge
-		if (inputManager.IsHeld(playerId, InputManager.BUTTON_CHARGE))
+		if (specialAttackEnabled && inputManager.IsHeld(playerId, InputManager.BUTTON_CHARGE))
         {
             if (attackCooldown == 0.0f)
             {

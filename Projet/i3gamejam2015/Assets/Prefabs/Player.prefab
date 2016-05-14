@@ -1493,6 +1493,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+  specialAttackEnabled: 0
   specialAttackTime: 0.55
   specialAttackCancelTimeMin: 0.25
   specialAttackForceMin: 0

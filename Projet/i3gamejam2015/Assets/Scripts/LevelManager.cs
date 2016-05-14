@@ -12,7 +12,14 @@ public class LevelManager : MonoBehaviour {
 	public GameObject gaugeInner, gaugeFrame;
 	public float introDuration = 2;
 	public float pauseWinDuration = 1.0f;
-	private BondLink bondLink;
+
+    // sudden death
+    public bool suddenDeathEnabled = true;
+    public float suddenDeathTimeSec = 60.0f;
+    private bool isSuddenDeath;
+    private float suddenDeathCounter;
+
+    private BondLink bondLink;
 	private float bondLinkGauge, appearedSinceSec;
 	private WinScreenManager WinScreenManager {
 		get { return FindObjectOfType<WinScreenManager>(); }
@@ -30,6 +37,7 @@ public class LevelManager : MonoBehaviour {
 		SceneManager.LoadScene("Pause", LoadSceneMode.Additive);
 		SceneManager.LoadScene("WinScreen", LoadSceneMode.Additive);
 		lastTimeWhenIncreasedGaugeFactor = (int)Time.time + 1;
+        suddenDeathCounter = suddenDeathTimeSec;
 	}
 
 	void Update() {
@@ -40,59 +48,48 @@ public class LevelManager : MonoBehaviour {
 			if (!player.IsCrystaled())
 				activePlayers.Add(player);
 		}
-		// Only allows the creation of the bond if all players have been active since the last cut
-		allowsCreateBond = allowsCreateBond ||
-			(activePlayers.Count == players.Length && !bondMode)
-			// Once many players have been killed, we can't create a bond anymore unless all players get back on track
-			&& activePlayers.Count >= 2;
 
-		if (activePlayers.Count == 2 && !bondMode && allowsCreateBond)
-			EnterBondMode(activePlayers);
+        // Only allows the creation of the bond if all players have been active since the last cut
+        allowsCreateBond = allowsCreateBond ||
+            (activePlayers.Count == players.Length && !bondMode)
+            // Once many players have been killed, we can't create a bond anymore unless all players get back on track
+            && activePlayers.Count >= 2;
 
-		if (bondMode && !TimeManager.isPaused) {
-			gaugeFrame.SetActive(true);
-			gaugeInner.SetActive(true);
-			gaugeInner.transform.localScale = new Vector3(bondLinkGauge, 1, 1);
-			appearedSinceSec += Time.deltaTime; // NB: the bond is updated only after the pause
+        if(activePlayers.Count == 2 && !bondMode && allowsCreateBond)
+            EnterBondMode(activePlayers);
 
-			if (appearedSinceSec >= BondLink.bondCreateDelayAfterMiddleBlastDuration) {
-				var distance = Vector3.Distance(bondLink.playerA.transform.position, bondLink.playerB.transform.position);
-				bondLinkGauge += distance * gaugeIncreaseFactor * Time.deltaTime;
-				bondLink.completion = bondLinkGauge;
+        if (bondMode && !TimeManager.isPaused) {
+            if(isSuddenDeath)
+            {
+                if(!hasAlreadyShownWinScreen)
+                {
+                    showWinScreen(bondLink.playerAStateController, bondLink.playerBStateController);
+                }
+            }
+            else
+            {
+                gaugeFrame.SetActive(true);
+                gaugeInner.SetActive(true);
+                gaugeInner.transform.localScale = new Vector3(bondLinkGauge, 1, 1);
+                appearedSinceSec += Time.deltaTime; // NB: the bond is updated only after the pause
 
-				// A winner is designated
-				if (bondLinkGauge > 1) {
-					bondLinkGauge = 1;
+                if(appearedSinceSec >= BondLink.bondCreateDelayAfterMiddleBlastDuration)
+                {
+                    var distance = Vector3.Distance(bondLink.playerA.transform.position, bondLink.playerB.transform.position);
+                    bondLinkGauge += distance * gaugeIncreaseFactor * Time.deltaTime;
+                    bondLink.completion = bondLinkGauge;
 
-
-					if (!hasAlreadyShownWinScreen) {
-						//Remove any music by setting default snapshot
-						AudioSingleton<MusicAudioManager>.Instance.SetMusicDefaultSnapshot();
-						//Remove bound by setting default snapshot
-						AudioSingleton<SfxAudioManager>.Instance.SetSfxDefaultSnapshot();
-						AudioSingleton<MusicAudioManager>.Instance.PlayVictoryJingle();
-						//This call should be replaced by observing events rather than using invoke with time
-						AudioSingleton<SfxAudioManager>.Instance.SetNoSfxOnMainMixerAfterVictory(1);
-						//Set the main default snapshot to restore initial set up
-						AudioSingleton<MenuAudioManager>.Instance.SetMainMenuSnapshot();
-
-						var p1 = bondLink.playerAStateController;
-						var p2 = bondLink.playerBStateController;
-						WinScreenManager.IdOfWonP1 = p1.GetPlayerId();
-						WinScreenManager.IdOfWonP2 = p2.GetPlayerId();
-						GameState.Instance.NotifyWinners(p1.GetPlayerId(), p2.GetPlayerId());
-
-						foreach (PlayerStateController player in players) {
-							player.SetGameOver ();
-						}
-						hasAlreadyShownWinScreen = true;
-						TimeManager.Pause(pauseWinDuration, null, () => {
-							AudioSingleton<VoiceAudioManager>.Instance.PlayGameOver();
-							WinScreenManager.showScreen ();
-						});
+                    // A winner is designated
+                    if(bondLinkGauge > 1)
+                    {
+                        bondLinkGauge = 1;
+                        if(!hasAlreadyShownWinScreen)
+                        {
+                            showWinScreen(bondLink.playerAStateController, bondLink.playerBStateController);
+                        }
                     }
-				}
-			}
+                }
+            }
 		}
 		else {
 			gaugeFrame.SetActive(false);
@@ -104,9 +101,57 @@ public class LevelManager : MonoBehaviour {
 			Debug.Log("TEMP: increased bond link gauge factor to " + gaugeIncreaseFactor);
 			lastTimeWhenIncreasedGaugeFactor = (int)Time.time;
 		}
+
+        if(suddenDeathEnabled)
+        {
+            if(suddenDeathCounter > 0.0f)
+            {
+                suddenDeathCounter -= Time.deltaTime;
+            }
+
+            // start sudden death if counter expired and the 4 players are alive
+            if(!isSuddenDeath && suddenDeathCounter <= 0.0f && activePlayers.Count == 4 && !bondMode)
+            {
+                Debug.Log("Sudden death!");
+                // TODO display some text, give user feedback!
+                isSuddenDeath = true;
+                foreach(var player in players)
+                {
+                    player.Crystalize();
+                }
+            }
+        }
 	}
 
-	public void bondHasBeenBrokenBy(PlayerStateController player) {
+    private void showWinScreen(PlayerStateController p1, PlayerStateController p2)
+    {
+        //Remove any music by setting default snapshot
+        AudioSingleton<MusicAudioManager>.Instance.SetMusicDefaultSnapshot();
+        //Remove bound by setting default snapshot
+        AudioSingleton<SfxAudioManager>.Instance.SetSfxDefaultSnapshot();
+        AudioSingleton<MusicAudioManager>.Instance.PlayVictoryJingle();
+        //This call should be replaced by observing events rather than using invoke with time
+        AudioSingleton<SfxAudioManager>.Instance.SetNoSfxOnMainMixerAfterVictory(1);
+        //Set the main default snapshot to restore initial set up
+        AudioSingleton<MenuAudioManager>.Instance.SetMainMenuSnapshot();
+
+        WinScreenManager.IdOfWonP1 = p1.GetPlayerId();
+        WinScreenManager.IdOfWonP2 = p2.GetPlayerId();
+        GameState.Instance.NotifyWinners(p1.GetPlayerId(), p2.GetPlayerId());
+
+        foreach(PlayerStateController player in players)
+        {
+            player.SetGameOver();
+        }
+        hasAlreadyShownWinScreen = true;
+        TimeManager.Pause(pauseWinDuration, null, () =>
+        {
+            AudioSingleton<VoiceAudioManager>.Instance.PlayGameOver();
+            WinScreenManager.showScreen();
+        });
+    }
+
+    public void bondHasBeenBrokenBy(PlayerStateController player) {
 		var p1 = bondLink.playerAStateController;
 		var p2 = bondLink.playerBStateController;
 		if (p1 == player || p2 == player) {

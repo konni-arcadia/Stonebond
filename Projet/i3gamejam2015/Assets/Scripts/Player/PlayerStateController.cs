@@ -282,7 +282,7 @@ public class PlayerStateController : MonoBehaviour
         stateElapsedTime += Time.deltaTime;
 
         // FIXME trying a dirty fix for the invisible bug
-        SetVisible(state != State.INVINCIBLE);
+        //SetVisible(state != State.INVINCIBLE);
 
         switch (state)
         {
@@ -949,6 +949,7 @@ public class PlayerStateController : MonoBehaviour
 
         if (stateElapsedTime > invincibleTime)
         {
+            SetVisible(true);
             SetIdleState();
             return;
         }

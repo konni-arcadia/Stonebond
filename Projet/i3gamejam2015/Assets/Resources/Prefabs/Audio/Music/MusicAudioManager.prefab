@@ -740,7 +740,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mixerGroup: {fileID: 24300001, guid: 7e945320774f9422bac7ff2ab7ebd5b5, type: 2}
-  SpireHighSnapshot: {fileID: 24561626, guid: 94dd6da4639d9437087e38b2baa433d4, type: 2}
+  SpireHighSnapshot: {fileID: 24563452, guid: 7e945320774f9422bac7ff2ab7ebd5b5, type: 2}
   PipesOfAwakeningSnapshot: {fileID: 24593520, guid: 7e945320774f9422bac7ff2ab7ebd5b5,
     type: 2}
   CloisterOfTheSilenceSnapshot: {fileID: 24515086, guid: 7e945320774f9422bac7ff2ab7ebd5b5,

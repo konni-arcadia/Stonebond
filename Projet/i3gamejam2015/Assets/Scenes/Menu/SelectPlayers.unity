@@ -251,7 +251,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e81a3510dda35ea4883d6037479c3520, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minPlayerNeeded: 1
+  minPlayerNeeded: 4
   alreadySelectedPlayers: 0
 --- !u!114 &280751383
 MonoBehaviour:

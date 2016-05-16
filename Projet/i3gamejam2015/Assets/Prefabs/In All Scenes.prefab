@@ -568,10 +568,10 @@ MonoBehaviour:
   suddenDeathFeedbackAnimator: {fileID: 9587752}
   suddenDeathEnabled: 1
   suddenDeathTimeSec: 120
-  gaugeIncreaseFactor: 0.015
-  gaugeIncreaseMultiplier: 4
-  gaugeIncreaseMaxFactor: 0.12
-  gaugeIncreaseMultiplierWithTime: 0
+  gaugeIncreaseFactor: 0.013
+  gaugeIncreaseMultiplier: 1
+  gaugeIncreaseMaxFactor: 0.3
+  gaugeIncreaseMultiplierWithTime: 1
 --- !u!212 &21200886
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -885,19 +885,19 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: gaugeIncreaseMultiplierWithTime
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: gaugeIncreaseFactor
-      value: 0.015
+      value: 0.013
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: gaugeIncreaseMultiplier
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: gaugeIncreaseMaxFactor
-      value: 0.12
+      value: 0.3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

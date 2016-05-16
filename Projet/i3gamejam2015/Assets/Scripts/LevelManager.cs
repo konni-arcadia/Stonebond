@@ -139,7 +139,7 @@ public class LevelManager : MonoBehaviour {
         //Remove bound by setting default snapshot
         AudioSingleton<SfxAudioManager>.Instance.SetSfxDefaultSnapshot();
         AudioSingleton<MusicAudioManager>.Instance.PlayVictoryJingle();
-        //This call should be replaced by observing events rather than using invoke with time
+        //Avoid any sfx while playing the jingle
 		AudioSingleton<SfxAudioManager>.Instance.SetNoSfxOnMainMixer();
         //Set the main default snapshot to restore initial set up
         AudioSingleton<MenuAudioManager>.Instance.SetMainMenuSnapshot();

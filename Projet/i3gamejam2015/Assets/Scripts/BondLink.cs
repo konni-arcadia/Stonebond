@@ -6,6 +6,9 @@ public class BondLink : MonoBehaviour {
 
 	public float completion; // should be between 0.0f and 1.0f
 
+	public float colliderLengthMargin = 3.0f;
+	public float colliderWidth = 0.5f;
+
 	public GameObject middlePoint;
 	public GameObject middleAnimation;
 	public Animator middleAnimator;
@@ -265,9 +268,15 @@ public class BondLink : MonoBehaviour {
 
 		// -- collider
 //		destroyCollider.transform.position = middleAnimation.transform.position;
-		float colliderSizeX = completion * linkLine.magnitude;
-		Vector2 colliderSize = new Vector2( colliderSizeX, 1);
-		destroyCollider.size = colliderSize;
+
+		//float colliderSizeX = completion * linkLine.magnitude;
+		float distanceBtwPlayers = linkLine.magnitude;
+		float colliderLength = distanceBtwPlayers - colliderLengthMargin;
+		if(colliderLength <= 0)
+			colliderLength = distanceBtwPlayers;
+
+		Vector2 colliderSize = new Vector2(colliderLength, colliderWidth);
+        destroyCollider.size = colliderSize;
 
 	}
 	

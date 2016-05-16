@@ -1000,9 +1000,9 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_Offset: {x: 0.038089752, y: -2.76}
+  m_Offset: {x: 0.038089752, y: -2.92}
   serializedVersion: 2
-  m_Size: {x: 31.92382, y: 1.4043951}
+  m_Size: {x: 31.92382, y: 1.76}
 --- !u!212 &1381921531
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1282,11 +1282,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 475536, guid: 541cf7c480da3444a901215230feca53, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -.359596193
+      value: -0.3595962
       objectReference: {fileID: 0}
     - target: {fileID: 475536, guid: 541cf7c480da3444a901215230feca53, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -.484003782
+      value: -0.48400378
       objectReference: {fileID: 0}
     - target: {fileID: 475536, guid: 541cf7c480da3444a901215230feca53, type: 2}
       propertyPath: m_LocalPosition.z
@@ -1579,7 +1579,7 @@ Transform:
   - {fileID: 1888236429}
   - {fileID: 1201172252}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
 --- !u!4 &2044629704 stripped
 Transform:
   m_PrefabParentObject: {fileID: 494978, guid: 4bb8f5089f5940b4e963dcea175b055d, type: 2}

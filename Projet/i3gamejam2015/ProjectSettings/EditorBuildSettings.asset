@@ -31,3 +31,5 @@ EditorBuildSettings:
     path: Assets/Scenes/Levels/LevelCatacombs.unity
   - enabled: 1
     path: Assets/Scenes/Menu/WinScreen.unity
+  - enabled: 1
+    path: Assets/Scenes/Menu/HowToPlay.unity

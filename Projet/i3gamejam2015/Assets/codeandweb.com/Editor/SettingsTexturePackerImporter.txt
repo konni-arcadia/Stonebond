@@ -2,16 +2,19 @@ version: 2
 importPivots: 0
 tpsheetFileNames:
 - Assets/codeandweb.com/Example/SpriteSheet/sprites.tpsheet
-- Assets/Sprites/Characters/Shred/Shred_spritesheet.tpsheet
+- Assets/Sprites/Characters/Shred/Old/Shred_spritesheet.tpsheet
 - Assets/Sprites/BondLinkSprite_Test.tpsheet
 - Assets/Sprites/FX/Link/Link_spritesheet.tpsheet
+- Assets/Sprites/Characters/Shred/ShredSpritesheet.tpsheet
 textureFileNames:
 - Assets/codeandweb.com/Example/SpriteSheet/sprites.png
-- Assets/Sprites/Characters/Shred/Shred_spritesheet.png
+- Assets/Sprites/Characters/Shred/Old/Shred_spritesheet.png
 - Assets/Sprites/BondLinkSprite_Test.png
 - Assets/Sprites/FX/Link/Link_spritesheet.png
+- Assets/Sprites/Characters/Shred/ShredSpritesheet.png
 normalmapFileNames:
 - Assets/codeandweb.com/Example/SpriteSheet/sprites_n.png
+- 
 - 
 - 
 - 

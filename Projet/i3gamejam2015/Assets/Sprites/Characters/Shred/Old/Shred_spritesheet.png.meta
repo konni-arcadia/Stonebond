@@ -1,7 +1,5 @@
 fileFormatVersion: 2
 guid: 7a12ce4704e44de4e9af83c9f804522c
-timeCreated: 1452786276
-licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
     21300000: Shred_falling_001
@@ -240,7 +238,7 @@ TextureImporter:
   grayScaleToAlpha: 0
   generateCubemap: 0
   cubemapConvolution: 0
-  cubemapConvolutionSteps: 8
+  cubemapConvolutionSteps: 7
   cubemapConvolutionExponent: 1.5
   seamlessCubemap: 0
   textureFormat: -3

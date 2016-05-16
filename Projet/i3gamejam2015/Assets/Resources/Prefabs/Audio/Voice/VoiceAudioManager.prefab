@@ -122,6 +122,7 @@ MonoBehaviour:
   VOICEGetReady: {fileID: 8300000, guid: a8d9c197841657a4b9cf0b15986bbef7, type: 3}
   VOICEFight: {fileID: 8300000, guid: 1c8e6ddce89247d49b8679457a47bdc2, type: 3}
   VOICEGameover: {fileID: 8300000, guid: c7b0b560c9799df438b0a3a9835203a5, type: 3}
+  VOICESuddenDeath: {fileID: 8300000, guid: a66ec60eed22aa3408ac169b29c428cb, type: 3}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

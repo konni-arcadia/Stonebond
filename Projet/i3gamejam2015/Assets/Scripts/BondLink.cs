@@ -266,8 +266,9 @@ public class BondLink : MonoBehaviour {
 		// -- collider
 //		destroyCollider.transform.position = middleAnimation.transform.position;
 		float colliderSizeX = completion * linkLine.magnitude;
-		Vector2 colliderSize = new Vector2( colliderSizeX, 1);
-		destroyCollider.size = colliderSize;
+//		Vector2 colliderSize = new Vector2( colliderSizeX, 1);
+        Vector2 colliderSize = new Vector2(1, 1);
+        destroyCollider.size = colliderSize;
 
 	}
 	

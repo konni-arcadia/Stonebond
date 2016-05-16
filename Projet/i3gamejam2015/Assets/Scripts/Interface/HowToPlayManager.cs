@@ -5,11 +5,13 @@ using UnityEngine.SceneManagement;
 public class HowToPlayManager : MonoBehaviour {
 
     private InputManager inputManager;
+    private float displayTime;
 
     // Use this for initialization
     void Start () {
         inputManager = GetComponent<InputManager>();
         AudioSingleton<MenuAudioManager>.Instance.SetMainMenuSnapshot();
+        displayTime = Time.time;
     }
 	
 	// Update is called once per frame
@@ -40,7 +42,7 @@ public class HowToPlayManager : MonoBehaviour {
         }
         else if(inputManager.WasPressedCtrl(noControler, InputManager.START))
         {
-            if (PlayerPrefs.HasKey("FromPlayerSelection"))
+            if (PlayerPrefs.HasKey("FromPlayerSelection") && (Time.time > (displayTime + 2)))
             {
                 PlayerPrefs.DeleteKey("FromPlayerSelection");
                 SceneManager.LoadSceneAsync("SelectLvl", LoadSceneMode.Additive);

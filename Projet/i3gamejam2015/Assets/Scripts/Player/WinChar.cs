@@ -8,7 +8,8 @@ public class WinChar : MonoBehaviour {
 	public float chromaColorDarkPct = 1.0f;
 	public float chromaColorBrightPct = 0.9f;
 	[SerializeField] private Image winCharImg;
-	public int playerId = 1;
+    [SerializeField] public Image winTextImg;
+    public int playerId = 1;
 	private Color bodyColorNormal;
 	//private Color bodyColorMin;
 	//private Color bodyColorMax;
@@ -44,6 +45,7 @@ public class WinChar : MonoBehaviour {
 	public void HideCharacter()
 	{
 		winCharImg.enabled = false;
+        winTextImg.enabled = false;
 	}
 
 }

@@ -433,7 +433,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -562,6 +562,8 @@ MonoBehaviour:
   DeathsVoices:
   - {fileID: 8300000, guid: 0e19f033a297c43db959c57c48452bd3, type: 3}
   - {fileID: 8300000, guid: 3a645f1d7c4214486ba9c84474dc0068, type: 3}
+  - {fileID: 8300000, guid: a1e89644f7a2e47bd8f9efcfcd894c07, type: 3}
+  - {fileID: 8300000, guid: 7350cc6620d244c51be1ef6736d5a3f5, type: 3}
   Rebirth: {fileID: 8300000, guid: 0971cce2bf5b1c54795d26542c3fe901, type: 3}
   WallSlide: {fileID: 8300000, guid: 9fa53a91053a9ad4183671e80ff69987, type: 3}
   ChargeAudioSource: {fileID: 8222226}

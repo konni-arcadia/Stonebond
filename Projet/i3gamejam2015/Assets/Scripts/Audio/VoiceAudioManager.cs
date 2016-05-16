@@ -10,6 +10,7 @@ public class VoiceAudioManager : BaseAudioManager {
 	public AudioClip VOICEGetReady;
 	public AudioClip VOICEFight;
 	public AudioClip VOICEGameover;
+	public AudioClip VOICESuddenDeath;
 
 	public void PlayTitle()
 	{
@@ -34,6 +35,11 @@ public class VoiceAudioManager : BaseAudioManager {
 	public void PlayFight()
 	{
 		GetAudioSource().PlayOneShot(VOICEFight);
+	}
+
+	public void PlaySuddenDeathVoice()
+	{
+		GetAudioSource().PlayOneShot(VOICESuddenDeath);
 	}
 
 	public void DelayPlayGameOver(float second)

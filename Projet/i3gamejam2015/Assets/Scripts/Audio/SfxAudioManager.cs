@@ -30,6 +30,7 @@ public class SfxAudioManager : BaseAudioManager {
 	public AudioClip Knockback;
 	public AudioClip[] Lands;
 	public AudioClip[] Deaths;
+	public AudioClip[] DeathsVoices;
 	public AudioClip Rebirth;
 	public AudioClip WallSlide;
 	#endregion
@@ -133,6 +134,7 @@ public class SfxAudioManager : BaseAudioManager {
 		{
 			//We can not do Deaths.Count to give a max value so I added a try catch if prefab is null or property size less than 2
 			GetAudioSource().PlayOneShot(Deaths[UnityEngine.Random.Range(0,2)]);
+			GetAudioSource().PlayOneShot(DeathsVoices[UnityEngine.Random.Range(0,2)]);
 		}
 		catch(System.Exception)
 		{

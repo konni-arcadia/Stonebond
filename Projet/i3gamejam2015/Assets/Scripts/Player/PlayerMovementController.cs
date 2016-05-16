@@ -103,7 +103,7 @@ public class PlayerMovementController : MonoBehaviour
         //Cache the vertical input.
         float v = isMovementEnabled && disallowDirectionTime == 0 ? inputManager.AxisValue(playerId, InputManager.Vertical) : 0;
 
-		// If the jump button is pressed and the player is grounded then the player should jump.
+        // If the jump button is pressed and the player is grounded then the player should jump.
 		if (isJumpEnabled && inputManager.WasPressed(playerId, InputManager.A)) {
 			bool isHoldingDown = v < 0.5 ? false : true;
 			// Standard way of jumping (allowed to jump)

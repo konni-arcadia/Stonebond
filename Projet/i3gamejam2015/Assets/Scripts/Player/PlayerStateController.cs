@@ -476,18 +476,15 @@ public class PlayerStateController : MonoBehaviour
         }
         
         // attack
-		if (inputManager.IsHeld(playerId, InputManager.BUTTON_ATTACK))
+		if (inputManager.WasPressed(playerId, InputManager.BUTTON_ATTACK))
         {
             if (attackCooldown == 0.0f)
             {
                 SetAttackState();
                 return;
             }
-            else if (inputManager.WasPressed (playerId, InputManager.BUTTON_ATTACK))
-            {
-                LogDebug("attack on CD");
-                statusProvider.setAttackFailed ();
-			}
+            LogDebug("attack on CD");
+            statusProvider.setAttackFailed ();
         }
 
         // charge

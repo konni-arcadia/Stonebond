@@ -91,7 +91,9 @@ public class MenuManager : MonoBehaviour {
 						break;
 
 					case StartMenuItem.HowTo:
-						return;
+                        SceneManager.LoadSceneAsync("HowToPlay", LoadSceneMode.Additive);
+                        AudioSingleton<MenuAudioManager>.Instance.SetDefaultSnapshot();
+                        break;
 				}
 				AudioSingleton<SfxAudioManager>.Instance.PlayValidate();
 				Destroy(gameObject);

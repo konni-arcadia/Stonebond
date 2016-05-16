@@ -579,7 +579,7 @@ MonoBehaviour:
   pauseWinDuration: 1
   suddenDeathFeedbackAnimator: {fileID: 9587752}
   suddenDeathEnabled: 1
-  suddenDeathTimeSec: 120
+  suddenDeathTimeSec: 60
   gaugeIncreaseFactor: 0.013
   gaugeIncreaseMultiplier: 1
   gaugeIncreaseMaxFactor: 0.3
@@ -893,7 +893,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 0}
       propertyPath: suddenDeathTimeSec
-      value: 120
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: gaugeIncreaseMultiplierWithTime

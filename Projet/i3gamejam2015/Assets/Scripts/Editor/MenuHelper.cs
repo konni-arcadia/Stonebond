@@ -15,5 +15,10 @@ class EditorScrips : EditorWindow {
         EditorApplication.OpenScene("Assets/Scenes/Menu/WinScreen.unity");
     }
 
+    [MenuItem("Stonebond/Open SelectPlayer")]
+    public static void OpenSelectPlayer() {
+        EditorApplication.OpenScene("Assets/Scenes/Menu/SelectPlayers.unity");
+    }
+
 }
 

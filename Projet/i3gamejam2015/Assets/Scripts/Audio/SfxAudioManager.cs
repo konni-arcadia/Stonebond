@@ -134,7 +134,7 @@ public class SfxAudioManager : BaseAudioManager {
 		{
 			//We can not do Deaths.Count to give a max value so I added a try catch if prefab is null or property size less than 2
 			GetAudioSource().PlayOneShot(Deaths[UnityEngine.Random.Range(0,2)]);
-			GetAudioSource().PlayOneShot(DeathsVoices[UnityEngine.Random.Range(0,2)]);
+			GetAudioSource().PlayOneShot(DeathsVoices[UnityEngine.Random.Range(0,4)]);
 		}
 		catch(System.Exception)
 		{
@@ -226,10 +226,5 @@ public class SfxAudioManager : BaseAudioManager {
 	public void SetNoSfxOnMainMixer()
 	{
 		MainNoSfxSnapshot.TransitionTo(transitionIn);
-	}
-
-	public void SetNoSfxOnMainMixerAfterVictory(float time)
-	{
-		//Invoke("SetNoSfxOnMainMixer", time);
 	}
 }

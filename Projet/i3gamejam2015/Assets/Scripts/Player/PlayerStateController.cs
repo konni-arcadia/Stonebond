@@ -36,7 +36,7 @@ public class PlayerStateController : MonoBehaviour
     private State state = State.NONE;
     private float stateElapsedTime;
     private float stateElapsedFixedTime;
-    private bool isBond = false;
+	private bool hasShield = false;
     private bool visible = true;
     private bool onGround = false;
     private bool onWall = false;
@@ -269,7 +269,6 @@ public class PlayerStateController : MonoBehaviour
 
     public void SetBondLink(BondLink bondLink)
     {
-        isBond = bondLink != null;
         statusProvider.setBoundStatus(bondLink != null);
     }
 
@@ -909,11 +908,13 @@ public class PlayerStateController : MonoBehaviour
 	//
 
 	public void ActivateShield() {
+		hasShield = true;
 		shieldAnimation.gameObject.SetActive (true);
 		shieldAnimation.Create ();
 	}
 
 	public void DisableShield() {
+		hasShield = false;
 		shieldAnimation.Break ();
 	}
 
@@ -1084,7 +1085,7 @@ public class PlayerStateController : MonoBehaviour
 
     private bool IsAttackable()
     {
-        if (isBond)
+		if (hasShield)
         {
             return false;
         }

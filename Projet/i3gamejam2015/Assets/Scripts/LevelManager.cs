@@ -25,6 +25,8 @@ public class LevelManager : MonoBehaviour {
 	private WinScreenManager WinScreenManager {
 		get { return FindObjectOfType<WinScreenManager>(); }
 	}
+	private float shieldsDeactivationDelayAfterBondDestroy = 0.3f; // in secs
+
 	private bool hasAlreadyShownWinScreen, allowsCreateBond;
 	// Speed at which the bond gauge increases (previously 0.00025 * 60). This is bound to evolute as time goes.
 	public float gaugeIncreaseFactor = 0.006f, gaugeIncreaseMultiplier = 1.1f, gaugeIncreaseMaxFactor = 0.03f;
@@ -190,14 +192,21 @@ public class LevelManager : MonoBehaviour {
 		Destroy(bondLink.gameObject);
 		p1.SetBondLink(null);
 		p2.SetBondLink(null);
-		p1.DisableShield ();
-		p2.DisableShield ();
+		StartCoroutine(DisableShieldsAfterBondDestroy(p1,p2));
 		gaugeIncreaseFactor = Mathf.Min(gaugeIncreaseMaxFactor, gaugeIncreaseFactor * gaugeIncreaseMultiplier);
 		Debug.Log("Leaving bond mode, gauge increase factor will be " + gaugeIncreaseFactor);
 		bondMode = false;
 		allowsCreateBond = false;
 
 		TimeManager.Pause(BondLink.bondBreakGameplayPauseDuration);
+	}
+	
+	private IEnumerator DisableShieldsAfterBondDestroy(PlayerStateController p1, PlayerStateController p2) 
+	{
+		yield return new WaitForSeconds(shieldsDeactivationDelayAfterBondDestroy);
+
+		p1.DisableShield ();
+		p2.DisableShield ();
 	}
 
 	private void GatherPlayers() {

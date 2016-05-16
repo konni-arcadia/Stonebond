@@ -61,9 +61,12 @@ public class PlayersSelectorManager : MonoBehaviour {
 			}
 
 			PlayerPrefs.SetString(PlayerSeleted, playerReadyString);
-			SceneManager.LoadSceneAsync("SelectLvl", LoadSceneMode.Additive);
+            PlayerPrefs.SetString("FromPlayerSelection", "true");
+            
+            //SceneManager.LoadSceneAsync("SelectLvl", LoadSceneMode.Additive);
+            SceneManager.LoadSceneAsync("HowToPlay", LoadSceneMode.Additive);
 
-			Destroy(gameObject);
+            Destroy(gameObject);
 		}
 
 		// Check sub-players controllers

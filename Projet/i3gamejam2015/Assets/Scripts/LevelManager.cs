@@ -14,6 +14,7 @@ public class LevelManager : MonoBehaviour {
 	public float pauseWinDuration = 1.0f;
 
     // sudden death
+	public Animator suddenDeathFeedbackAnimator;
     public bool suddenDeathEnabled = true;
     public float suddenDeathTimeSec = 60.0f;
     private bool isSuddenDeath;
@@ -113,7 +114,11 @@ public class LevelManager : MonoBehaviour {
             if(!isSuddenDeath && suddenDeathCounter <= 0.0f && activePlayers.Count == 4 && !bondMode)
             {
                 Debug.Log("Sudden death!");
-                // TODO display some text, give user feedback!
+
+				// Play sudden death feedback animation
+				Flash.Show();
+				suddenDeathFeedbackAnimator.Play("SuddenDeathApparition");
+
                 isSuddenDeath = true;
                 foreach(var player in players)
                 {

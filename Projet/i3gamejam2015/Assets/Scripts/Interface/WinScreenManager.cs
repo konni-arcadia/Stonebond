@@ -184,7 +184,9 @@ public class WinScreenManager : MonoBehaviour {
 
         List<int> idList = new List<int>(new int[] { 1, 2, 3, 4 });
 		winChar [0].playerId = IdOfWonP1;
+        winChar[0].winTextImg = Winner1;
 		winChar [1].playerId = IdOfWonP2;
+        winChar[1].winTextImg = Winner2;
         idList.Remove(IdOfWonP1);
         idList.Remove(IdOfWonP2);
 
@@ -193,8 +195,10 @@ public class WinScreenManager : MonoBehaviour {
         Looser4.sprite = playerTextSprites[idList[1] - 1];
         Scores[3].text = GameState.Instance.Player(idList[1]).TotalScore.ToString();
 		winChar [2].playerId = idList[0];
-		winChar [3].playerId = idList[1];
-		foreach (WinChar character in winChar)
+        winChar[2].winTextImg = Looser3;
+        winChar [3].playerId = idList[1];
+        winChar[3].winTextImg = Looser4;
+        foreach (WinChar character in winChar)
 			character.UpdateColor ();
     }
 }

@@ -1207,6 +1207,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   completion: 0
+  colliderLengthMargin: 3
+  colliderWidth: 0.5
   middlePoint: {fileID: 135664}
   middleAnimation: {fileID: 125126}
   middleAnimator: {fileID: 0}

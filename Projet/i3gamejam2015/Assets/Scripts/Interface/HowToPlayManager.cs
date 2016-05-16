@@ -10,7 +10,6 @@ public class HowToPlayManager : MonoBehaviour {
     // Use this for initialization
     void Start () {
         inputManager = GetComponent<InputManager>();
-        AudioSingleton<MenuAudioManager>.Instance.SetMainMenuSnapshot();
         displayTime = Time.time;
     }
 	

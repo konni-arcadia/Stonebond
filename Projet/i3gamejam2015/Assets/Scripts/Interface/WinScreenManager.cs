@@ -96,11 +96,12 @@ public class WinScreenManager : MonoBehaviour {
 						Application.Quit();
 					break;
 
-					case StartMenuItem.Restart:
+				case StartMenuItem.Restart:
 						
-						if(InControlObject != null)
-							Destroy(InControlObject);
-						SceneManager.LoadScene(LevelSelectionManager.NameOfLevelScene(LevelSelectionManager.idOfLastChosenLevel));
+					if (InControlObject != null)
+						Destroy (InControlObject);
+					SceneManager.LoadScene (LevelSelectionManager.NameOfLevelScene (LevelSelectionManager.idOfLastChosenLevel));
+					AudioSingleton<SfxAudioManager>.Instance.SetSfxDefaultSnapshot();
 					break;
 
 					case StartMenuItem.LvlSelection:

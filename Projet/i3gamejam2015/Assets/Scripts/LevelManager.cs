@@ -71,7 +71,9 @@ public class LevelManager : MonoBehaviour {
             {
                 gaugeFrame.SetActive(true);
                 gaugeInner.SetActive(true);
-                gaugeInner.transform.localScale = new Vector3(bondLinkGauge, 1, 1);
+                Vector3 newScale = gaugeInner.transform.localScale;
+                newScale.x = bondLinkGauge;
+                gaugeInner.transform.localScale = newScale;
                 appearedSinceSec += Time.deltaTime; // NB: the bond is updated only after the pause
 
                 if(appearedSinceSec >= BondLink.bondCreateDelayAfterMiddleBlastDuration)

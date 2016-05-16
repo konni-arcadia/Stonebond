@@ -1288,10 +1288,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxSpeed: 9
-  maxFallSpeed: 200
+  maxFallSpeed: 800
   breakForce: 0
-  initialJumpForce: 1000
-  extensionJumpForce: 4100
+  initialJumpForce: 1130
+  extensionJumpForce: 4300
   wallJumpLateralForce: 1000
   maxVelocityWhenGrinding: -5
   groundChecks:
@@ -1405,7 +1405,7 @@ MonoBehaviour:
   attackUpTimeMin: 0.26
   attackUpTimeMax: 0.26
   attackUpForceMin: 0
-  attackUpForceMax: 37500
+  attackUpForceMax: 35500
   attackUpHitboxStart: 0
   attackUpHitboxEnd: 0.95
   attackUpCurve:
@@ -1428,7 +1428,7 @@ MonoBehaviour:
   attackDownTimeMin: 0.26
   attackDownTimeMax: 0.26
   attackDownForceMin: 0
-  attackDownForceMax: 10000
+  attackDownForceMax: 0
   attackDownHitboxStart: 0
   attackDownHitboxEnd: 1
   attackDownCancelTimeMin: 0.08
@@ -1452,7 +1452,7 @@ MonoBehaviour:
   attackForwardTimeMin: 0.16
   attackForwardTimeMax: 0.16
   attackForwardForceMin: 0
-  attackForwardForceMax: 9000
+  attackForwardForceMax: 10000
   attackForwardHitboxStart: 0
   attackForwardHitboxEnd: 0.65
   attackForwardCurve:
@@ -1472,11 +1472,11 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   attackForwardCollider: {fileID: 6193008}
-  attackCooldownTime: 0.35
+  attackCooldownTime: 0.32
   chargeGravityReductionTime: 0.08
   chargeReadyTime: 0.5
-  chargeFullTime: 1.4
-  chargeOverflowTime: 1.7
+  chargeFullTime: 1.6
+  chargeOverflowTime: 1.8
   chargeInputCancelTimeMin: 0.3
   chargeReadyForceRatioCurve:
     serializedVersion: 2
@@ -1546,7 +1546,7 @@ MonoBehaviour:
   respawnCrystaledTime: 3.2
   initialCrystaledTime: 2.4
   respawnWarningTime: 1.2
-  invincibleAfterSpawnTime: 1
+  invincibleAfterSpawnTime: 0.8
   invinsibleBlinkInterval: 0.12
 --- !u!198 &19842690
 ParticleSystem:
@@ -13705,7 +13705,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: extensionJumpForce
-      value: 0
+      value: 4300
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: slashAttackHorizDashGravity
@@ -13725,11 +13725,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: invincibleAfterSpawnTime
-      value: 1
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: invinsibleBlinkInterval
-      value: .119999997
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: spawnTime
@@ -13757,7 +13757,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: initialJumpForce
-      value: 1000
+      value: 1130
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Name
@@ -13769,7 +13769,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: attackCooldownTime
-      value: .349999994
+      value: 0.32
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: attackVelocityUp
@@ -13993,11 +13993,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: attackUpTimeMax
-      value: .25999999
+      value: 0.29
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: attackUpTimeMin
-      value: .25999999
+      value: 0.29
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: attackDownTimeMin
@@ -14049,7 +14049,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: attackDownForceMax
-      value: 10000
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: attackForwardForceMin
@@ -14057,7 +14057,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: attackForwardForceMax
-      value: 9000
+      value: 10000
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: specialAttackCurve.m_Curve.Array.data[0].inSlope
@@ -14085,7 +14085,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: specialAttackForceMax
-      value: 3000
+      value: 8300
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: chargeTime
@@ -14389,7 +14389,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: attackUpForceMax
-      value: 37500
+      value: 35500
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: attackUpHitboxEnd
@@ -14529,11 +14529,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: chargeOverflowTime
-      value: 1.7
+      value: 1.8
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: chargeFullTime
-      value: 1.4
+      value: 1.6
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: chargeInputCancelTimeMin
@@ -14545,23 +14545,23 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: chargeReadyForceRatioCurve.m_Curve.Array.data[0].inSlope
-      value: 0.11813266
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: chargeReadyForceRatioCurve.m_Curve.Array.data[0].outSlope
-      value: 0.11813266
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: chargeReadyForceRatioCurve.m_Curve.Array.data[1].inSlope
-      value: 0.22685318
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: chargeReadyForceRatioCurve.m_Curve.Array.data[1].outSlope
-      value: 0.22685318
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: chargeReadyForceRatioCurve.m_Curve.Array.data[0].value
-      value: 0.2
+      value: 0.0054374547
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: chargeReadyForceRatioCurve.m_Curve.Array.data[0].time
@@ -14626,6 +14626,34 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: chargeOverflowBlinkInterval
       value: 0.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: frictionFactorAir
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: frictionFactorGround
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: maxFallSpeed
+      value: 800
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attackForwardHitboxStart
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: specialAttackEnabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: chargeReadyTime
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: chargeReadyForceRatioCurve.m_Curve.Array.data[1].value
+      value: 1.0054375
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

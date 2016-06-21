@@ -1,4 +1,4 @@
-﻿Shader "Sprites/Special Light Effects Xtreme"
+﻿Shader "Sprites/Special Light Effects Hyper Xtreme"
 {
 	Properties
 	{

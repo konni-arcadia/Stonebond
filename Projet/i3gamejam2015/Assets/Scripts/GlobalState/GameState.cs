@@ -27,7 +27,7 @@ public class GameState : Singleton<GameState> {
 		var p = new PlayerInfo();
 		p.Name = name;
 		p.Color = color;
-		p.BodyColor = Color.Lerp(Color.white, color, 0.3f);
+		p.BodyColor = Color.Lerp(Color.white, color, 0.8f);
 		p.ControllerId = controllerId;
 		players.Add(p);
 	}

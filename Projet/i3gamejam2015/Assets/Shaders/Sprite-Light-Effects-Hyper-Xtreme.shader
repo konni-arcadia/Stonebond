@@ -119,8 +119,8 @@
 			o.Alpha = lerp( srcTex.a, altTex.a, altMaskInfluence );
 			
 			
-			o.Emission = _ChromaTexColor.rgb * chrTex.a * 0.75
-			 + srcTex.rgb * _Color.rgb * (1-tintBurn) * srcTex.a * .5;
+			o.Emission = _ChromaTexColor.rgb * chrTex.a * 1
+			 + srcTex.rgb * _Color.rgb * srcTex.a * 1;
 			
 			//o.Normal = UnpackNormal ( lerp( neutralNormalMap, nmpTex, 1 ) );
 			o.Normal = UnpackNormal ( neutralNormalMap );

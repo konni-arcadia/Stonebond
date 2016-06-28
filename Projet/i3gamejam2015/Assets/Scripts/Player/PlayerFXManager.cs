@@ -5,11 +5,13 @@ public class PlayerFXManager : MonoBehaviour
     //
     // CHROMA
     //
-    
-    public float bodyColorDarkPct = 0.1f;
-    public float bodyColorBrightPct = 0.1f;
-    public float chromaColorDarkPct = 1.0f;
-    public float chromaColorBrightPct = 0.9f;
+
+    //public float bodyColorDarkPct = 0.1f;
+    //public float bodyColorBrightPct = 0.1f;
+    //public float chromaColorDarkPct = 1.0f;
+    //public float chromaColorBrightPct = 0.9f;
+
+    public float normalChromaLight = 0.6f;
 
     //
     // ATTACK
@@ -42,16 +44,18 @@ public class PlayerFXManager : MonoBehaviour
     // GLOBAL STATE
     //
 
-    private Color bodyColorNormal;
-    private Color bodyColorMin;
-    private Color bodyColorMax;
-    private Color chromaColorNormal;
-    private Color chromaColorMin;
-    private Color chromaColorMax;
+  //  private Color bodyColorNormal;
+   // private Color bodyColorMin;
+    //private Color bodyColorMax;
+  //  private Color chromaColorNormal;
+   // private Color chromaColorMin;
+  //  private Color chromaColorMax;
 
     // TODO use a state machine
     private bool overlay = false;
     private bool charge = false;
+
+    private GameState.PlayerInfo playerInfo;
 
     
     //
@@ -81,18 +85,19 @@ public class PlayerFXManager : MonoBehaviour
 
     void Start()
     {
-        GameState.PlayerInfo playerInfo = GameState.Instance.Player(stateController.GetPlayerId());
+        playerInfo = GameState.Instance.Player(stateController.GetPlayerId());
 
-        bodyColorNormal = playerInfo.BodyColor;
-        bodyColorMin = Color.Lerp(bodyColorNormal, Color.black, bodyColorDarkPct);
-        bodyColorMax = Color.Lerp(bodyColorNormal, Color.white, bodyColorBrightPct);
+        //bodyColorNormal = playerInfo.BodyColor;
+        //bodyColorMin = Color.Lerp(bodyColorNormal, Color.black, bodyColorDarkPct);
+        //bodyColorMax = Color.Lerp(bodyColorNormal, Color.white, bodyColorBrightPct);
 
-        chromaColorNormal = playerInfo.Color;
-        chromaColorMin = Color.Lerp(chromaColorNormal, Color.black, chromaColorDarkPct);
-        chromaColorMax = Color.Lerp(chromaColorNormal, Color.white, chromaColorBrightPct);
+        //chromaColorNormal = playerInfo.Color;
+        //chromaColorMin = Color.Lerp(chromaColorNormal, Color.black, chromaColorDarkPct);
+        //chromaColorMax = Color.Lerp(chromaColorNormal, Color.white, chromaColorBrightPct);
 
-        SetBodyColor(bodyColorNormal);
-        SetChromaColor(Color.black);
+        //   SetBodyColor(playerInfo.BodyColor);
+        // SetChromaColor(playerInfo.Color);
+        SetChromaLight(normalChromaLight);
     }
 
     void Update()
@@ -106,35 +111,37 @@ public class PlayerFXManager : MonoBehaviour
             switch (stateController.GetAimDirection())
             {
                 case PlayerStateController.AimDirection.UP:
-                    SetBodyAndChromaColor(attackUpChromaCurve.Evaluate(stateController.GetAttackPct()));
+                    SetChromaLight(attackUpChromaCurve.Evaluate(stateController.GetAttackPct()));
            
                     break;
                 case PlayerStateController.AimDirection.DOWN:
-                    SetBodyAndChromaColor(attackDownChromaCurve.Evaluate(stateController.GetAttackPct()));
+                    SetChromaLight(attackDownChromaCurve.Evaluate(stateController.GetAttackPct()));
                     break;
                 case PlayerStateController.AimDirection.FORWARD:
-                    SetBodyAndChromaColor(attackForwardChromaCurve.Evaluate(stateController.GetAttackPct()));
+                    SetChromaLight(attackForwardChromaCurve.Evaluate(stateController.GetAttackPct()));
                     break;
             }
 
         }
         else if (stateController.GetSpecialAttackPct() > 0.0f)
         {
-            SetBodyAndChromaColor(attackSpecialChromaCurve.Evaluate(stateController.GetSpecialAttackPct()));
+            SetChromaLight(attackSpecialChromaCurve.Evaluate(stateController.GetSpecialAttackPct()));
         }
         else if (!stateController.IsCrystaled() && stateController.GetAttackCooldownPct() > 0.0f)
         {
-            SetBodyAndChromaColor(attackCooldownChromaCurve.Evaluate(stateController.GetAttackCooldownPct()));
+            SetChromaLight(attackCooldownChromaCurve.Evaluate(stateController.GetAttackCooldownPct()));
         }
         else if(stateController.IsCrystaled())
         {
-            SetBodyColor(bodyColorNormal);
-            Color.Lerp(chromaColorNormal, Color.black, 0.75f);
+            SetChromaLight(0.2f);
+            //SetBodyColor(bodyColorNormal);
+            //Color.Lerp(chromaColorNormal, Color.black, 0.75f);
         }
         else
         {
-            SetBodyColor(bodyColorNormal);
-            SetChromaColor(chromaColorNormal);
+            SetChromaLight(normalChromaLight);
+           // SetBodyColor(bodyColorNormal);
+            //SetChromaColor(chromaColorNormal);
         }
     }
 
@@ -174,10 +181,10 @@ public class PlayerFXManager : MonoBehaviour
         switch (state)
         {
             case PlayerStatusProvider.ChargeState.LOAD:
-                SetBodyAndChromaColor(chargeLoadChromaMin + chargeLoadChromaCurve.Evaluate(statePct) * (chargeLoadChromaMax - chargeLoadChromaMin));
+                SetChromaLight(chargeLoadChromaMin + chargeLoadChromaCurve.Evaluate(statePct) * (chargeLoadChromaMax - chargeLoadChromaMin));
                 break;
             case PlayerStatusProvider.ChargeState.READY:
-                SetBodyAndChromaColor(chargeReadyChromaMin + forceRatio * (chargeReadyChromaMax - chargeReadyChromaMin));
+                SetChromaLight(chargeReadyChromaMin + forceRatio * (chargeReadyChromaMax - chargeReadyChromaMin));
                 break;
             case PlayerStatusProvider.ChargeState.FULL:
                 chargeOverflowBlinkCounter -= Time.deltaTime;
@@ -185,9 +192,8 @@ public class PlayerFXManager : MonoBehaviour
                 {
                     chargeOverflowBlinkVisible = !chargeOverflowBlinkVisible;
                     chargeOverflowBlinkCounter += chargeOverflowBlinkInterval;
-                       print("blink = " + chargeOverflowBlinkVisible);
                 }
-                SetBodyAndChromaColor(chargeOverflowBlinkVisible ? chargeLoadChromaMax : -1.0f);
+                SetChromaLight(chargeOverflowBlinkVisible ? chargeLoadChromaMax : -1.0f);
                 break;
         }
 
@@ -211,15 +217,13 @@ public class PlayerFXManager : MonoBehaviour
     {   
         Flash.Show(stateController.diePauseTime);
         SetOverlay(true);
-        SetBodyColor(Color.black);
-        SetChromaColor(Color.black);
+        SetShadow();
 
         if(source != null)
         {
             PlayerFXManager sourceFXManager = source.GetComponent<PlayerFXManager>();
             sourceFXManager.SetOverlay(true);
-            sourceFXManager.SetBodyColor(Color.black);
-            sourceFXManager.SetChromaColor(Color.black);
+            sourceFXManager.SetShadow();
         }
     }
 
@@ -277,53 +281,63 @@ public class PlayerFXManager : MonoBehaviour
     // HELPERS
     //
 
-    private void SetBodyAndChromaColor(float value)
+    private void SetChromaLight(float value)
     {
-        SetBodyColor(value);
-        SetChromaColor(value);
+        bodyRenderer.material.SetColor("_BodyColor", playerInfo.BodyColor);
+        bodyRenderer.material.SetColor("_ChromaColor", playerInfo.Color);
+        bodyRenderer.material.SetFloat("_ChromaLight", Mathf.Clamp(value, 0.0f, 1.0f));
+        //SetBodyColor(value);
+        //SetChromaColor(value);
     }
 
-    private void SetChromaColor(float value)
+    private void SetShadow()
     {
-        if (value < 0.0f)
-        {
-            SetChromaColor(Color.Lerp(chromaColorNormal, chromaColorMin, Mathf.Min(1.0f, Mathf.Abs(value))));
-        }
-        else if (value > 0.0f)
-        {
-            SetChromaColor(Color.Lerp(chromaColorNormal, chromaColorMax, Mathf.Min(1.0f, value)));
-        }
-        else
-        {
-            SetChromaColor(chromaColorNormal);
-        }
+        bodyRenderer.material.SetColor("_BodyColor", Color.black);
+        bodyRenderer.material.SetColor("_ChromaColor", Color.black);
+        bodyRenderer.material.SetFloat("_ChromaLight", 0.0f);
     }
 
-    private void SetBodyColor(float value)
-    {
-        if (value < 0.0f)
-        {
-            SetBodyColor(Color.Lerp(bodyColorNormal, bodyColorMin, Mathf.Min(1.0f, Mathf.Abs(value))));
-        }
-        else if (value > 0.0f)
-        {
-            SetBodyColor(Color.Lerp(bodyColorNormal, bodyColorMax, Mathf.Min(1.0f, value)));
-        }
-        else
-        {
-            SetBodyColor(chromaColorNormal);
-        }
-    }
+    //private void SetChromaColor(float value)
+    //{
+    //    if (value < 0.0f)
+    //    {
+    //        SetChromaColor(Color.Lerp(chromaColorNormal, chromaColorMin, Mathf.Min(1.0f, Mathf.Abs(value))));
+    //    }
+    //    else if (value > 0.0f)
+    //    {
+    //        SetChromaColor(Color.Lerp(chromaColorNormal, chromaColorMax, Mathf.Min(1.0f, value)));
+    //    }
+    //    else
+    //    {
+    //        SetChromaColor(chromaColorNormal);
+    //    }
+    //}
 
-    private void SetBodyColor(Color color)
-    {
-        bodyRenderer.material.SetColor("_Color", color);
-    }
+    //private void SetBodyColor(float value)
+    //{
+    //    if (value < 0.0f)
+    //    {
+    //        SetBodyColor(Color.Lerp(bodyColorNormal, bodyColorMin, Mathf.Min(1.0f, Mathf.Abs(value))));
+    //    }
+    //    else if (value > 0.0f)
+    //    {
+    //        SetBodyColor(Color.Lerp(bodyColorNormal, bodyColorMax, Mathf.Min(1.0f, value)));
+    //    }
+    //    else
+    //    {
+    //        SetBodyColor(chromaColorNormal);
+    //    }
+    //}
 
-    private void SetChromaColor(Color color)
-    {
-        bodyRenderer.material.SetColor("_ChromaTexColor", color);
-    }
+    //private void SetBodyColor(Color color)
+    //{
+    //    bodyRenderer.material.SetColor("_BodyColor", color);
+    //}
+
+    //private void SetChromaColor(Color color)
+    //{
+    //    bodyRenderer.material.SetColor("_ChromaColor", color);
+    //}
 
     private void SetOverlay(bool overlay)
     {

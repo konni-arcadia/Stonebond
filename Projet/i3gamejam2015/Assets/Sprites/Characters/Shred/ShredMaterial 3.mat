@@ -147,6 +147,18 @@ Material:
         second: 0
       data:
         first:
+          name: _TintBurn
+        second: 0
+      data:
+        first:
+          name: _TintEmissionFactor
+        second: 0.5
+      data:
+        first:
+          name: _ChromaEmissionFactor
+        second: 0.8
+      data:
+        first:
           name: _Parallax
         second: 0.02
       data:
@@ -183,16 +195,20 @@ Material:
         second: 0
       data:
         first:
-          name: _TintBurn
-        second: 0
+          name: _ChromaOpacity
+        second: 1
       data:
         first:
-          name: _TintEmissionFactor
-        second: 0.4
+          name: _ChromaLight
+        second: 1
       data:
         first:
-          name: _ChromaEmissionFactor
-        second: 0.8
+          name: _BodyEmissionFactor
+        second: 0.5
+      data:
+        first:
+          name: _BodyLightRate
+        second: 0.2
     m_Colors:
       data:
         first:
@@ -205,8 +221,16 @@ Material:
       data:
         first:
           name: _ChromaTexColor
-        second: {r: 0.022058845, g: 0.94490445, b: 1, a: 1}
+        second: {r: 0.08627451, g: 0.94509804, b: 1, a: 1}
       data:
         first:
           name: _Emission
         second: {r: 1, g: 1, b: 1, a: 1}
+      data:
+        first:
+          name: _BodyColor
+        second: {r: 0.08627451, g: 0.94509804, b: 1, a: 1}
+      data:
+        first:
+          name: _ChromaColor
+        second: {r: 0.08627451, g: 0.94509804, b: 1, a: 1}

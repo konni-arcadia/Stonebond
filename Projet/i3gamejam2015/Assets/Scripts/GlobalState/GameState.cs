@@ -27,7 +27,7 @@ public class GameState : Singleton<GameState> {
 		var p = new PlayerInfo();
 		p.Name = name;
 		p.Color = color;
-		p.BodyColor = Color.Lerp(Color.white, color, 0.8f);
+        p.BodyColor = color; // Color.Lerp(Color.white, color, 0.8f);
 		p.ControllerId = controllerId;
 		players.Add(p);
 	}
@@ -67,8 +67,8 @@ public class GameState : Singleton<GameState> {
 	private readonly Color[] predefinedPlayerColors = {
 		// Shred (red) 0xB3123B
 		new Color(0.701f, 0.070f, 0.231f),
-		// Buddy (blue) 0x00ACB4
-		new Color(0, 0.67f, 0.71f),
+		// Buddy (blue) old color: 0x00ACB4
+        new Color32(0x16, 0xF1, 0xFF, 0xFF),
 		// Wise (green) 0x0B9300
 		new Color(0.04f, 0.58f, 0f),
 		// Dextrous (yellow) 0xBBAD00

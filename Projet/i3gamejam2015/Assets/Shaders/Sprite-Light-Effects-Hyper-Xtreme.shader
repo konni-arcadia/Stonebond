@@ -9,17 +9,20 @@
 		_AlternateTexMask ("Alternate texture mask", 2D) = "white" {}
 		
 		_ChromaTex ("Chroma texture file", 2D) = "white" {}
-		_ChromaTexColor ("Chroma texture tint", Color) = (1,1,1,1)
+		_ChromaColor ("Chroma Color", Color) = (1,1,1,1)
 
 		_NormalMapTex ("Normal Map", 2D) = "white" {}				
 		
-		_Color ("Tint", Color) = (1,1,1,1)	
+		_BodyColor ("Body Color", Color) = (1,1,1,1)
 
         _TintBurn ("TintBurn", Range(0,1)) = 0.2
 
-        _TintEmissionFactor ("TintEmissionFactor", float) = 1.0
-        _ChromaEmissionFactor("ChromaEmissionFactor", float) = 1.0
-		
+        _BodyEmissionFactor ("BodyEmissionFactor", float) = 0.5
+        _ChromaEmissionFactor("ChromaEmissionFactor", float) = 0.8
+
+        _ChromaLight ("ChromaLight", range(0, 1)) = 1
+        _BodyLightRate ("BodyLightRate", range(0, 1)) = 0.3
+
 		[MaterialToggle] PixelSnap ("Pixel snap", Float) = 0
 	}
 
@@ -52,12 +55,14 @@
 		
 		float _AlternateBlend;
 		
-		fixed4 _Color;
-		fixed4 _ChromaTexColor;
+		fixed4 _BodyColor;
+		fixed4 _ChromaColor;
 
         float _TintBurn;
-        float _TintEmissionFactor;
+        float _BodyEmissionFactor;
         float _ChromaEmissionFactor;
+        float _ChromaLight;
+        float _BodyLightRate;
 
 		struct Input
 		{
@@ -93,13 +98,15 @@
 			
 			float altMaskInfluence = altMsk.rgb * _AlternateBlend;		
 						
-			o.Albedo = lerp( srcTex.rgb * _Color.rgb * (1.0 - _TintBurn) * srcTex.a, altTex.rgb * altTex.a, altMaskInfluence )
-				+ _Color.rgb * _TintBurn * srcTex.a * _Color.a;			
+			o.Albedo = lerp( srcTex.rgb * _BodyColor.rgb * (1.0 - _TintBurn) * srcTex.a, altTex.rgb * altTex.a, altMaskInfluence )
+				+ _BodyColor.rgb * _TintBurn * srcTex.a * _BodyColor.a;
 			
 			o.Alpha = lerp( srcTex.a, altTex.a, altMaskInfluence );
 						
-			o.Emission = _ChromaTexColor.rgb * chrTex.a * _ChromaEmissionFactor
-			 + srcTex.rgb * _Color.rgb * srcTex.a * _TintEmissionFactor;
+            float bodyOpacity = (1.0 - _BodyLightRate) + _BodyLightRate * _ChromaLight;
+
+            o.Emission = _ChromaColor.rgb * chrTex.a * _ChromaEmissionFactor  * _ChromaLight
+                + srcTex.rgb * _BodyColor.rgb * srcTex.a * _BodyEmissionFactor * bodyOpacity;
 			
 			//o.Normal = UnpackNormal ( lerp( neutralNormalMap, nmpTex, 1 ) );
 			o.Normal = UnpackNormal ( neutralNormalMap );

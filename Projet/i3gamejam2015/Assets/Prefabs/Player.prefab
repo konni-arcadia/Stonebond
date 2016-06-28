@@ -1131,10 +1131,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e91ff7b37153174aaa2108721e9bf34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bodyColorDarkPct: 0.1
-  bodyColorBrightPct: 0.1
-  chromaColorDarkPct: 1
-  chromaColorBrightPct: 0.8
+  normalChromaLight: 0.6
   attackForwardChromaCurve:
     serializedVersion: 2
     m_Curve:

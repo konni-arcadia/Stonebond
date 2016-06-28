@@ -1,3 +1,3 @@
-- hitwall, hitground velocity
-- add knockback to hitwall and hitground type
-- fix onewayplatform bug
+- screen shake: see sprites on side
+- moving horizontal platform bug
+- vertical plaform misplaced -> visible with wall slide

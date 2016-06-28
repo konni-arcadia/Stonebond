@@ -11,16 +11,14 @@
 		_ChromaTex ("Chroma texture file", 2D) = "white" {}
 		_ChromaTexColor ("Chroma texture tint", Color) = (1,1,1,1)
 
-		_NormalMapTex ("Normal Map", 2D) = "white" {}
+		_NormalMapTex ("Normal Map", 2D) = "white" {}				
 		
-		//
-		
-		_LightMap ("LightMap Texture", 2D) = "grey" {}
-		_LightMapBlend ("Light Blend", Range(0,1)) = 0
-		
-		_Color ("Tint", Color) = (1,1,1,1)
-		
-		_Emission ("Emission", Color) = (1,1,1,1)
+		_Color ("Tint", Color) = (1,1,1,1)	
+
+        _TintBurn ("TintBurn", Range(0,1)) = 0.2
+
+        _TintEmissionFactor ("TintEmissionFactor", float) = 1.0
+        _ChromaEmissionFactor("ChromaEmissionFactor", float) = 1.0
 		
 		[MaterialToggle] PixelSnap ("Pixel snap", Float) = 0
 	}
@@ -51,14 +49,15 @@
 		sampler2D _AlternateTexMask;
 		sampler2D _ChromaTex;
 		sampler2D _NormalMapTex;
-		sampler2D _LightMap;
 		
 		float _AlternateBlend;
-		float _LightMapBlend;
 		
 		fixed4 _Color;
 		fixed4 _ChromaTexColor;
-		fixed4 _Emission;
+
+        float _TintBurn;
+        float _TintEmissionFactor;
+        float _ChromaEmissionFactor;
 
 		struct Input
 		{
@@ -87,40 +86,20 @@
 			
 			fixed4 chrTex = tex2D(_ChromaTex, IN.uv_MainTex);
 			
-			fixed4 nmpTex = tex2D(_NormalMapTex, IN.uv_BumpMap);
-			//fixed4 neutralNormalMap = (0.5,0.5,0.5,1);
-			
-			fixed4 white = (1,1,1,1);
-			
-			fixed4 neutralNormalMap = (0,0,0,0);
-			
-			fixed4 selfEmission = white * 0.4;
-			selfEmission.a = 1;
-			
-			
-			fixed4 lmpTex = tex2D(_LightMap, screenUV);
+			fixed4 nmpTex = tex2D(_NormalMapTex, IN.uv_BumpMap);			
+            fixed4 neutralNormalMap = (0, 0, 0, 0);
 			
 			fixed4 srcTex = tex2D(_MainTex, IN.uv_MainTex) * IN.color;
 			
-			float altMaskInfluence = altMsk.rgb * _AlternateBlend;
+			float altMaskInfluence = altMsk.rgb * _AlternateBlend;		
+						
+			o.Albedo = lerp( srcTex.rgb * _Color.rgb * (1.0 - _TintBurn) * srcTex.a, altTex.rgb * altTex.a, altMaskInfluence )
+				+ _Color.rgb * _TintBurn * srcTex.a * _Color.a;			
 			
-			float tintBurn = 0.2;
-			
-			o.Albedo = srcTex.rgb * srcTex.a;
-			//o.Albedo = ( srcTex.rgb * IN.color * srcTex.a )
-				//+ ( _ChromaTexColor * chrTex.a );
-			o.Albedo = lerp( srcTex.rgb * _Color.rgb * (1-tintBurn) * srcTex.a, altTex.rgb * altTex.a, altMaskInfluence )
-				+ (_Color.rgb * tintBurn * srcTex.a * _Color.a)
-				;
-				//;
-			
-			//o.Alpha = srcTex.a;
-			// + chrTex.a;
 			o.Alpha = lerp( srcTex.a, altTex.a, altMaskInfluence );
-			
-			
-			o.Emission = _ChromaTexColor.rgb * chrTex.a * 1
-			 + srcTex.rgb * _Color.rgb * srcTex.a * 1;
+						
+			o.Emission = _ChromaTexColor.rgb * chrTex.a * _ChromaEmissionFactor
+			 + srcTex.rgb * _Color.rgb * srcTex.a * _TintEmissionFactor;
 			
 			//o.Normal = UnpackNormal ( lerp( neutralNormalMap, nmpTex, 1 ) );
 			o.Normal = UnpackNormal ( neutralNormalMap );

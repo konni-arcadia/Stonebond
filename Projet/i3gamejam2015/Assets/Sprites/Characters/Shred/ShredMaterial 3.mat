@@ -143,20 +143,60 @@ Material:
         second: 0
       data:
         first:
-          name: _LightMapBlend
+          name: _TintBurn
         second: 0
       data:
         first:
-          name: _TintBurn
+          name: _BodyEmissionFactor
+        second: 0.5
+      data:
+        first:
+          name: _ChromaEmissionFactor
+        second: 0.5
+      data:
+        first:
+          name: _ChromaLightPct
+        second: 1
+      data:
+        first:
+          name: _ChromaLightMin
+        second: 0.2
+      data:
+        first:
+          name: _ChromaLightMax
+        second: 1
+      data:
+        first:
+          name: _BodyLightMin
+        second: 0.7
+      data:
+        first:
+          name: _BodyLightMax
+        second: 1
+      data:
+        first:
+          name: _BodyChromaLightMin
+        second: 0.8
+      data:
+        first:
+          name: _BodyChromaLightMax
+        second: 1
+      data:
+        first:
+          name: _ChromaLight
+        second: 1
+      data:
+        first:
+          name: _BodyLightRate
+        second: 0.2
+      data:
+        first:
+          name: _LightMapBlend
         second: 0
       data:
         first:
           name: _TintEmissionFactor
         second: 0.5
-      data:
-        first:
-          name: _ChromaEmissionFactor
-        second: 0.8
       data:
         first:
           name: _Parallax
@@ -197,18 +237,6 @@ Material:
         first:
           name: _ChromaOpacity
         second: 1
-      data:
-        first:
-          name: _ChromaLight
-        second: 1
-      data:
-        first:
-          name: _BodyEmissionFactor
-        second: 0.5
-      data:
-        first:
-          name: _BodyLightRate
-        second: 0.2
     m_Colors:
       data:
         first:
@@ -220,17 +248,17 @@ Material:
         second: {r: 0.08823532, g: 0.94863313, b: 1, a: 1}
       data:
         first:
-          name: _ChromaTexColor
-        second: {r: 0.08627451, g: 0.94509804, b: 1, a: 1}
+          name: _ChromaColor
+        second: {r: 0.99215686, g: 0.36862746, b: 0.5254902, a: 1}
+      data:
+        first:
+          name: _BodyColor
+        second: {r: 0.99264705, g: 0.37224263, b: 0.52825075, a: 1}
       data:
         first:
           name: _Emission
         second: {r: 1, g: 1, b: 1, a: 1}
       data:
         first:
-          name: _BodyColor
-        second: {r: 0.08627451, g: 0.94509804, b: 1, a: 1}
-      data:
-        first:
-          name: _ChromaColor
+          name: _ChromaTexColor
         second: {r: 0.08627451, g: 0.94509804, b: 1, a: 1}

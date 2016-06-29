@@ -262,6 +262,16 @@ public class PlayerStateController : MonoBehaviour
         return stateElapsedTime / specialAttackTime;
     }
 
+    public float GetRespawnPct()
+    {
+        if (state != State.CRYSTALED || stateElapsedTime <= crystaledTime - respawnWarningTime)
+        {
+            return 0.0f;
+        }
+
+        return 1.0f - (crystaledTime - stateElapsedTime) / respawnWarningTime;
+    }
+
     public AimDirection GetAimDirection()
     {
         return aimDirection;

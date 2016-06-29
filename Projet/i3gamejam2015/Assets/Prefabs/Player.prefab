@@ -1131,150 +1131,108 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e91ff7b37153174aaa2108721e9bf34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  normalChromaLight: 0.6
+  chromaLightNormal: 0.5
+  chromaLightMin: 0.2
+  chromaLightMax: 1
   attackForwardChromaCurve:
     serializedVersion: 2
     m_Curve:
     - time: 0
       value: 0
-      inSlope: 2
-      outSlope: 2
+      inSlope: 5.6882777
+      outSlope: 5.6882777
       tangentMode: 0
-    - time: 0.4001885
-      value: 0.4953962
-      inSlope: -0.30119154
-      outSlope: -0.30119154
-      tangentMode: 0
-    - time: 0.60206425
-      value: 0.5004742
-      inSlope: -0.19546784
-      outSlope: -0.19546784
-      tangentMode: 0
-    - time: 1.0036576
-      value: -1.00916
-      inSlope: -8.070077
-      outSlope: -8.070077
+    - time: 1
+      value: 0
+      inSlope: -1.8430705
+      outSlope: -1.8430705
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   attackUpChromaCurve:
     serializedVersion: 2
     m_Curve:
     - time: 0
       value: 0
-      inSlope: 2
-      outSlope: 2
+      inSlope: 5.6882777
+      outSlope: 5.6882777
       tangentMode: 0
-    - time: 0.4001885
-      value: 0.4953962
-      inSlope: -0.30119154
-      outSlope: -0.30119154
-      tangentMode: 0
-    - time: 0.60206425
-      value: 0.5004742
-      inSlope: -0.19546784
-      outSlope: -0.19546784
-      tangentMode: 0
-    - time: 1.0036576
-      value: -1.00916
-      inSlope: -8.070077
-      outSlope: -8.070077
+    - time: 1
+      value: 0
+      inSlope: -1.8430705
+      outSlope: -1.8430705
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   attackDownChromaCurve:
     serializedVersion: 2
     m_Curve:
     - time: 0
       value: 0
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
-    - time: 0.4001885
-      value: 0.4953962
-      inSlope: -0.30119154
-      outSlope: -0.30119154
-      tangentMode: 0
-    - time: 0.60206425
-      value: 0.5004742
-      inSlope: -0.19546784
-      outSlope: -0.19546784
-      tangentMode: 0
-    - time: 1.0036576
-      value: -1.00916
-      inSlope: -8.070077
-      outSlope: -8.070077
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  attackSpecialChromaCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: -0.0021945867
-      value: 0.9999999
-      inSlope: 0.0000041571625
-      outSlope: 0.0000041571625
-      tangentMode: 0
-    - time: 0.83381414
-      value: 0.35881132
-      inSlope: -2.6308675
-      outSlope: -2.6308675
-      tangentMode: 0
-    - time: 1.0029261
-      value: -1.00458
-      inSlope: -20.062628
-      outSlope: -20.062628
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  attackCooldownChromaCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: -0.0034842147
-      value: -1.002892
-      inSlope: -0.03852916
-      outSlope: -0.03852916
-      tangentMode: 0
-    - time: 0.89896506
-      value: -0.99727464
-      inSlope: 0.029336575
-      outSlope: 0.029336575
-      tangentMode: 0
-    - time: 1.0027455
-      value: 0.00023753103
-      inSlope: 17.192198
-      outSlope: 17.192198
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  overlaySortingLayerName: HUD
-  overlaySortingOrder: 100
-  chargeLoadChromaMin: 0
-  chargeLoadChromaMax: 0.45
-  chargeReadyChromaMin: 0.55
-  chargeReadyChromaMax: 1
-  chargeOverflowBlinkInterval: 0.08
-  chargeLoadChromaCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 0
-      inSlope: 2.0384872
-      outSlope: 2.0384872
+      inSlope: 5.6882777
+      outSlope: 5.6882777
       tangentMode: 0
     - time: 1
-      value: 1
-      inSlope: 2.332556
-      outSlope: 2.332556
+      value: 0
+      inSlope: -1.8430705
+      outSlope: -1.8430705
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+  attackCooldownChromaCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  respawnChromaCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 1
+      inSlope: 3.0358908
+      outSlope: 3.0358908
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  killedChromaCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: -1.7978781
+      outSlope: -1.7978781
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: -0.11934711
+      outSlope: -0.11934711
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  overlaySortingLayerName: HUD
+  overlaySortingOrder: 100
+  killedChromaDuration: 0.8
 --- !u!114 &11415718
 MonoBehaviour:
   m_ObjectHideFlags: 1

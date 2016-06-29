@@ -15,13 +15,15 @@
 		
 		_BodyColor ("Body Color", Color) = (1,1,1,1)
 
-        _TintBurn ("TintBurn", Range(0,1)) = 0.2
+        _TintBurn ("Tint Burn", Range(0,1)) = 0.2
 
-        _BodyEmissionFactor ("BodyEmissionFactor", float) = 0.5
-        _ChromaEmissionFactor("ChromaEmissionFactor", float) = 0.8
+        _BodyEmissionFactor ("Body Emission Factor", float) = 0.5
+        _ChromaEmissionFactor("Chroma Emission Factor", float) = 0.8
 
-        _ChromaLight ("ChromaLight", range(0, 1)) = 1
-        _BodyLightRate ("BodyLightRate", range(0, 1)) = 0.3
+        _ChromaLightPct ("Chroma Light Pct", range(0, 1)) = 1
+        
+        _BodyChromaLightMin ("Body Chroma Light Min", float) = 0.7
+        _BodyChromaLightMax ("Body Chroma Light Max", float) = 1.0
 
 		[MaterialToggle] PixelSnap ("Pixel snap", Float) = 0
 	}
@@ -61,8 +63,10 @@
         float _TintBurn;
         float _BodyEmissionFactor;
         float _ChromaEmissionFactor;
-        float _ChromaLight;
-        float _BodyLightRate;
+        float _ChromaLightPct;
+        
+        float _BodyChromaLightMin;
+        float _BodyChromaLightMax;
 
 		struct Input
 		{
@@ -102,10 +106,10 @@
 				+ _BodyColor.rgb * _TintBurn * srcTex.a * _BodyColor.a;
 			
 			o.Alpha = lerp( srcTex.a, altTex.a, altMaskInfluence );
-						
-            float bodyOpacity = (1.0 - _BodyLightRate) + _BodyLightRate * _ChromaLight;
+						            
+            float bodyOpacity = _BodyChromaLightMin + (_BodyChromaLightMax - _BodyChromaLightMin) * _ChromaLightPct;
 
-            o.Emission = _ChromaColor.rgb * chrTex.a * _ChromaEmissionFactor  * _ChromaLight
+            o.Emission = _ChromaColor.rgb * chrTex.a * _ChromaEmissionFactor  * _ChromaLightPct
                 + srcTex.rgb * _BodyColor.rgb * srcTex.a * _BodyEmissionFactor * bodyOpacity;
 			
 			//o.Normal = UnpackNormal ( lerp( neutralNormalMap, nmpTex, 1 ) );

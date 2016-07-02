@@ -148,11 +148,11 @@ Material:
       data:
         first:
           name: _BodyEmissionFactor
-        second: 0.5
+        second: 0
       data:
         first:
           name: _ChromaEmissionFactor
-        second: 0.5
+        second: 0.8
       data:
         first:
           name: _ChromaLightPct

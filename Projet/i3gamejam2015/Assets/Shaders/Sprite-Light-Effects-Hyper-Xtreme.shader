@@ -95,9 +95,6 @@
 			
 			fixed4 chrTex = tex2D(_ChromaTex, IN.uv_MainTex);
 			
-			fixed4 nmpTex = tex2D(_NormalMapTex, IN.uv_BumpMap);			
-            fixed4 neutralNormalMap = (0, 0, 0, 0);
-			
 			fixed4 srcTex = tex2D(_MainTex, IN.uv_MainTex) * IN.color;
 			
 			float altMaskInfluence = altMsk.rgb * _AlternateBlend;		
@@ -112,9 +109,9 @@
             o.Emission = _ChromaColor.rgb * chrTex.a * _ChromaEmissionFactor  * _ChromaLightPct
                 + srcTex.rgb * _BodyColor.rgb * srcTex.a * _BodyEmissionFactor * bodyOpacity;
 			
-			//o.Normal = UnpackNormal ( lerp( neutralNormalMap, nmpTex, 1 ) );
-			o.Normal = UnpackNormal ( neutralNormalMap );
-			
+
+            fixed4 nmpTex = tex2D(_NormalMapTex, IN.uv_BumpMap);
+            o.Normal = UnpackNormal(nmpTex);
 		}
 		ENDCG
 	}

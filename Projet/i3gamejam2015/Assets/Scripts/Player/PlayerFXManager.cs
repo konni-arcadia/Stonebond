@@ -231,6 +231,11 @@ public class PlayerFXManager : MonoBehaviour
             PlayerFXManager sourceFXManager = source.GetComponent<PlayerFXManager>();
             sourceFXManager.SetOverlay(false);
         }
+
+		PlayerAnimationBreakDeath breakableStatue = gameObject.GetComponentInChildren<PlayerAnimationBreakDeath> ();
+		breakableStatue.hitDirection = attackDirection;
+		breakableStatue.Die ();
+
     }
 
     private void HandleOnCollisionAction(PlayerStatusProvider.CollisionType collisionType, Vector2 normal)

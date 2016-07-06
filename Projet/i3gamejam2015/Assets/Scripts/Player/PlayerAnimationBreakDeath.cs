@@ -100,12 +100,18 @@ public class PlayerAnimationBreakDeath : MonoBehaviour {
 			StartExplosionAnim (hitDirection);
 		}
 		
-		if (currentState == State.Exploding && internalClock > explosionDuration) {
+		if (currentState == State.Exploding && internalClock > explosionDuration + lyingDownDuration/2) {
 			currentState = State.LyingDownBrokenInPieces;
 			internalClock = 0.0f;
-//			for (int i = 0; i < rigidBodies.Length; i++) {
-//				rigidBodies [i].isKinematic = true;
-//			}
+			//Sequence seq = DOTween.Sequence ();
+			for (int i = 0; i < rigidBodies.Length; i++) {
+				rigidBodies [i].AddForce (Vector2.up * UnityEngine.Random.Range(10, 30), ForceMode2D.Impulse);
+				//seq.Insert (0, rigidBodies [i].transform.DOShakePosition (lyingDownDuration * 1.2f, new Vector3 (0.7f, 0.1f), 10, 180, false));
+			}
+			//seq.Play ();
+			//seq.OnComplete (() => {
+			//	//currentState = State.Inactive;
+			//});
 		}
 
 		if (currentState == State.LyingDownBrokenInPieces && internalClock > lyingDownDuration) {

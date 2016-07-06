@@ -1559,8 +1559,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minStrength: 0
   maxStrength: 50
-  explosionDuration: 2
-  lyingDownDuration: 1
+  explosionDuration: 1
+  lyingDownDuration: 2
   reassemblingDuration: 0.3
   hitDirection: {x: -5, y: 3}
   mustDie: 0

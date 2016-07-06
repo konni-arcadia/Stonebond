@@ -1164,7 +1164,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11476396, guid: 836fbacf6e74f402685c3fc42f4cfedb, type: 2}
       propertyPath: lyingDownDuration
-      value: 0.01
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 836fbacf6e74f402685c3fc42f4cfedb, type: 2}

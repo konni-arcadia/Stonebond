@@ -2838,7 +2838,7 @@ MonoBehaviour:
   maxStrength: 50
   explosionDuration: 1.2
   lyingDownDuration: 0.9
-  reassemblingDuration: 0.4
+  reassemblingDuration: 0.35
   fadingBackToInactiveDuration: 0.3
   hitDirection: {x: -5, y: 3}
 --- !u!114 &11415718

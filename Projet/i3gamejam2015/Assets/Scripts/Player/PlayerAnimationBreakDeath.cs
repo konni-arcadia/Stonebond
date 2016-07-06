@@ -6,13 +6,20 @@ using DG.Tweening;
 
 public class PlayerAnimationBreakDeath : MonoBehaviour {
 
+	// NB : bug, lorsque je fais bodyParts.SetActive(false) il disable les Sprite Renderer des objets enfants
+	// J'ai pas encore compris pourquoi
+	// Il serait possible de les re-enabler en chaîne mais j'aimerais comprendre
+	// Bon je l'ai fait
+
+	// TODO uniformiser : System.Random ou UnityEngine.Random mais pas les deux
+
 	// Calibration vars
 	public float minStrength;
 	public float maxStrength;
-	public float explosionDuration = 2.0f;
-	public float lyingDownDuration = 1.0f;
-	public float reassemblingDuration = 1.0f;
-	public float fadingBackToInactiveDuration = 0.5f;
+	public float explosionDuration = 1.2f;
+	public float lyingDownDuration = 0.9f;
+	public float reassemblingDuration = 0.35f;
+	public float fadingBackToInactiveDuration = 0.3f;
 	// TODO: add gravityScale (maybe)
 	// TODO: add the shaking before reassembling parameters (intervals if many shakes - re-code - and vibrato, strength, etc)
 	// TODO: add reassembling Easing function (maybe)
@@ -27,14 +34,16 @@ public class PlayerAnimationBreakDeath : MonoBehaviour {
 	private enum State {
 		Inactive, StartingDeath, Exploding, LyingDownBrokenInPieces, Reassembling, FadingBackToInactive
 	}
-	private State currentState;
+	private State currentState = State.Inactive;
 
 	// DEBUG VARS -- begin
 	public Vector2 hitDirection;
-	public bool mustDie;
+//	public bool mustDie;
 	// DEBUG VARS -- end
 
 	void Start () {
+		// set to position of parent
+		transform.localPosition = Vector3.zero;
 		bodyPartsContainer = transform.Find ("BodyParts").gameObject;
 		rand = new System.Random ();
 		rigidBodies = bodyPartsContainer.GetComponentsInChildren<Rigidbody2D> () as Rigidbody2D[];
@@ -64,6 +73,10 @@ public class PlayerAnimationBreakDeath : MonoBehaviour {
 			break;
 		default:
 			bodyPartsContainer.SetActive (true);
+			SpriteRenderer[] sprites = bodyPartsContainer.GetComponentsInChildren<SpriteRenderer> ();
+			foreach (var s in sprites) {
+				s.enabled = true;
+			}
 			break;
 		}
 
@@ -181,10 +194,10 @@ public class PlayerAnimationBreakDeath : MonoBehaviour {
 	void Update () {
 
 // DEBUG CODE
-		if (mustDie) {
-			mustDie = false;
-			Die ();
-		}
+//		if (mustDie) {
+//			mustDie = false;
+//			Die ();
+//		}
 // DEBUG CODE
 
 		internalClock += Time.deltaTime;

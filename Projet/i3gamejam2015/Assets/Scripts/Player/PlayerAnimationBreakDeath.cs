@@ -2,13 +2,16 @@
 using System.Collections;
 using System;
 
+using DG.Tweening;
+
 public class PlayerAnimationBreakDeath : MonoBehaviour {
 
 	// Calibration vars
 	public float minStrength;
 	public float maxStrength;
 	public float explosionDuration = 2.0f;
-	public float lyingDownDuration = 2.0f;
+	public float lyingDownDuration = 1.0f;
+	public float reassemblingDuration = 1.0f;
 
 	// Internal refs
 	private System.Random rand;
@@ -20,7 +23,6 @@ public class PlayerAnimationBreakDeath : MonoBehaviour {
 		Inactive, StartingDeath, Exploding, LyingDownBrokenInPieces, Reassembling
 	}
 	private State currentState;
-
 
 	public Vector2 hitDirection;
 	public bool mustDie;
@@ -108,14 +110,18 @@ public class PlayerAnimationBreakDeath : MonoBehaviour {
 
 		if (currentState == State.LyingDownBrokenInPieces && internalClock > lyingDownDuration) {
 			currentState = State.Reassembling;
+			Sequence seq = DOTween.Sequence ();
 			for (int i = 0; i < rigidBodies.Length; i++) {
 				rigidBodies [i].isKinematic = true;
-				rigidBodies [i].transform.localPosition = Vector3.zero;
-				rigidBodies [i].transform.localRotation = Quaternion.identity;
+//				rigidBodies [i].transform.localPosition = Vector3.zero;
+//				rigidBodies [i].transform.localRotation = Quaternion.identity;
+				seq.Insert (0, rigidBodies [i].transform.DOLocalMove (Vector3.zero, reassemblingDuration).SetEase(Ease.InCirc));
+				seq.Insert (0, rigidBodies [i].transform.DOLocalRotateQuaternion (Quaternion.identity, reassemblingDuration).SetEase(Ease.InCirc));
 			}
-
-currentState = State.Inactive;
-				
+			seq.Play ();
+			seq.OnComplete (() => {
+				currentState = State.Inactive;
+			});
 		}
 
 	}

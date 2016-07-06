@@ -2840,6 +2840,7 @@ MonoBehaviour:
   lyingDownDuration: 0.9
   reassemblingDuration: 0.35
   fadingBackToInactiveDuration: 0.3
+  numberOfSoubresauts: 6
   hitDirection: {x: -5, y: 3}
 --- !u!114 &11415718
 MonoBehaviour:

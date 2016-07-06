@@ -20,6 +20,7 @@ public class PlayerAnimationBreakDeath : MonoBehaviour {
 	public float lyingDownDuration = 0.9f;
 	public float reassemblingDuration = 0.35f;
 	public float fadingBackToInactiveDuration = 0.3f;
+	public int numberOfSoubresauts = 6; // ouais bon ca va hein me faites pas chier avec le nom
 	// TODO: add gravityScale (maybe)
 	// TODO: add the shaking before reassembling parameters (intervals if many shakes - re-code - and vibrato, strength, etc)
 	// TODO: add reassembling Easing function (maybe)
@@ -35,6 +36,7 @@ public class PlayerAnimationBreakDeath : MonoBehaviour {
 		Inactive, StartingDeath, Exploding, LyingDownBrokenInPieces, Reassembling, FadingBackToInactive
 	}
 	private State currentState = State.Inactive;
+	private int soubresautCounter; // cf. plus haut ma remarque sur le nom de la variable
 
 	// DEBUG VARS -- begin
 	public Vector2 hitDirection;
@@ -60,7 +62,7 @@ public class PlayerAnimationBreakDeath : MonoBehaviour {
 		}
 	}
 
-	// stops ongoing stuff if needed
+	// Stops ongoing stuff if needed
 	private void SetState(State newState) {
 
 		// set the state
@@ -82,7 +84,6 @@ public class PlayerAnimationBreakDeath : MonoBehaviour {
 
 	}
 
-	// NB: this is not an Animation in the traditional meaning. It is based on the physics engine.
 	private void StartExplosionAnim(Vector2 directionOfHit) {
 
 		// foolproof
@@ -119,7 +120,6 @@ public class PlayerAnimationBreakDeath : MonoBehaviour {
 
 	}
 
-	// NB: this is not an Animation in the traditional meaning. It is based on the physics engine.
 	private void StartLyingDownAnims() {
 
 		// foolproof
@@ -141,13 +141,26 @@ public class PlayerAnimationBreakDeath : MonoBehaviour {
 //			//currentState = State.Inactive;
 //		});
 
-		for (int i = 0; i < rigidBodies.Length; i++) {
-			rigidBodies [i].AddForce (Vector2.up * UnityEngine.Random.Range(10, 30), ForceMode2D.Impulse);
-		}
+		soubresautCounter = 0;
 
 	}
 
-	// NB: this is not an Animation in the traditional meaning. It is based on the physics engine.
+	private void UpdateLyingDownAnims() {
+
+		if (soubresautCounter > numberOfSoubresauts) {
+			return;
+		}
+
+		if (internalClock > soubresautCounter * lyingDownDuration / numberOfSoubresauts) {
+			soubresautCounter++;
+			Vector2 crystalPosition = gameObject.transform.position;
+			for (int i = 0; i < rigidBodies.Length; i++) {
+				Vector2 fragmentPosition = rigidBodies [i].gameObject.transform.position;
+				rigidBodies [i].AddForce ( ((crystalPosition - fragmentPosition).normalized + Vector2.up * UnityEngine.Random.Range(0.2f, 0.4f) ).normalized * UnityEngine.Random.Range(3, 12), ForceMode2D.Impulse);
+			}
+		}
+	}
+
 	private void StartReassemblingAnim() {
 
 		// foolproof
@@ -206,8 +219,12 @@ public class PlayerAnimationBreakDeath : MonoBehaviour {
 			StartExplosionAnim (hitDirection);
 		}
 		
-		if (currentState == State.Exploding && internalClock > explosionDuration + lyingDownDuration/2) {
+		if (currentState == State.Exploding && internalClock > explosionDuration) {
 			StartLyingDownAnims ();
+		}
+
+		if (currentState == State.LyingDownBrokenInPieces) {
+			UpdateLyingDownAnims ();
 		}
 
 		if (currentState == State.LyingDownBrokenInPieces && internalClock > lyingDownDuration) {

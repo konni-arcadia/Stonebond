@@ -148,15 +148,23 @@ Material:
       data:
         first:
           name: _BodyEmissionFactor
-        second: 0
+        second: 1
       data:
         first:
           name: _ChromaEmissionFactor
-        second: 0.8
+        second: 1
       data:
         first:
           name: _ChromaLightPct
-        second: 1
+        second: 0.572
+      data:
+        first:
+          name: _BodyChromaLightMin
+        second: -1.2
+      data:
+        first:
+          name: _BodyChromaLightMax
+        second: 1.2
       data:
         first:
           name: _ChromaLightMin
@@ -172,14 +180,6 @@ Material:
       data:
         first:
           name: _BodyLightMax
-        second: 1
-      data:
-        first:
-          name: _BodyChromaLightMin
-        second: 0.8
-      data:
-        first:
-          name: _BodyChromaLightMax
         second: 1
       data:
         first:

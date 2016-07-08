@@ -13,17 +13,19 @@
 
 		_NormalMapTex ("Normal Map", 2D) = "white" {}				
 		
-		_BodyColor ("Body Color", Color) = (1,1,1,1)
+        _BodyColor("Body Color", Color) = (1,1,1,1)
 
-        _TintBurn ("Tint Burn", Range(0,1)) = 0.2
+        _TintBurn("Tint Burn", Range(0,1)) = 0.2
 
-        _BodyEmissionFactor ("Body Emission Factor", float) = 0.5
+        _BodyEmissionFactor("Body Emission Factor", float) = 0.5
         _ChromaEmissionFactor("Chroma Emission Factor", float) = 0.8
 
-        _ChromaLightPct ("Chroma Light Pct", range(0, 1)) = 1
-        
-        _BodyChromaLightMin ("Body Chroma Light Min", float) = 0.7
-        _BodyChromaLightMax ("Body Chroma Light Max", float) = 1.0
+        _ChromaLightPct("Chroma Light Pct", range(0, 1)) = 1
+
+        _BodyChromaLightMin("Body Chroma Light Min", float) = 0.7
+        _BodyChromaLightMax("Body Chroma Light Max", float) = 1.0
+
+        _NormalYModifier("Normal Y Modifier (hacky fix)", float) = 1.0
 
 		[MaterialToggle] PixelSnap ("Pixel snap", Float) = 0
 	}
@@ -34,8 +36,8 @@
 		{ 
 			"Queue"="Transparent" 
 			"IgnoreProjector"="True" 
-			//"RenderType"="Opaque" 
-			"RenderType"="Transparent"
+			"RenderType"="Opaque" 
+			//"RenderType"="Transparent"
 			"PreviewType"="Plane"
 			"CanUseSpriteAtlas"="True"
 		}
@@ -67,6 +69,8 @@
         
         float _BodyChromaLightMin;
         float _BodyChromaLightMax;
+
+        float _NormalYModifier;
 
 		struct Input
 		{
@@ -111,7 +115,7 @@
 
             fixed4 nmpTex = tex2D(_NormalMapTex, IN.uv_MainTex);
             o.Normal = UnpackNormal(nmpTex);
-            o.Normal.y = -o.Normal.y; // normal doesn't seem to point to right direction.. still buggy is seems :/
+            o.Normal.y = o.Normal.y * _NormalYModifier; // FIXME dirty hack to most likely a bigger problem...
 		}
 		ENDCG
 	}

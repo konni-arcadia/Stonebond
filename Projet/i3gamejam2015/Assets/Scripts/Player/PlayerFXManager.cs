@@ -99,7 +99,8 @@ public class PlayerFXManager : MonoBehaviour
         }                       
         else if(stateController.GetAttackCooldownPct() > 0.0f)
         {
-            SetChromaLightCurveValue(attackCooldownChromaCurve.Evaluate(stateController.GetAttackCooldownPct()));
+            //SetChromaLightCurveValue(attackCooldownChromaCurve.Evaluate(stateController.GetAttackCooldownPct()));
+            SetChromaLightCurveValue(chromaLightNormal);
         }
         else
         {

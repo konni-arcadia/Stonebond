@@ -104,14 +104,14 @@
 			
 			o.Alpha = lerp( srcTex.a, altTex.a, altMaskInfluence );
 						            
-            float bodyOpacity = _BodyChromaLightMin + (_BodyChromaLightMax - _BodyChromaLightMin) * _ChromaLightPct;
+            float bodyOpacity = lerp(_BodyChromaLightMin, _BodyChromaLightMax, _ChromaLightPct);
 
             o.Emission = _ChromaColor.rgb * chrTex.a * _ChromaEmissionFactor  * _ChromaLightPct
                 + srcTex.rgb * _BodyColor.rgb * srcTex.a * _BodyEmissionFactor * bodyOpacity;
-			
 
-            fixed4 nmpTex = tex2D(_NormalMapTex, IN.uv_BumpMap);
+            fixed4 nmpTex = tex2D(_NormalMapTex, IN.uv_MainTex);
             o.Normal = UnpackNormal(nmpTex);
+            o.Normal.y = -o.Normal.y; // normal doesn't seem to point to right direction.. still buggy is seems :/
 		}
 		ENDCG
 	}

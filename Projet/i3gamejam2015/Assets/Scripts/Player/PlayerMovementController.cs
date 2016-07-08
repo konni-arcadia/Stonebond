@@ -267,7 +267,7 @@ public class PlayerMovementController : MonoBehaviour
 
     public void setFacingRight(bool facingRight)
     {
-        Vector2 val = transform.localScale;
+        Vector3 val = transform.localScale;
         val.x = facingRight ? 1 : -1;
         transform.localScale = val;
     }

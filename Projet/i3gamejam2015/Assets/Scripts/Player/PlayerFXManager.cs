@@ -107,7 +107,6 @@ public class PlayerFXManager : MonoBehaviour
             SetChromaLightCurveValue(chromaLightNormal);
         }
 
-        // FIXME dirty hack...
         bodyRenderer.material.SetFloat("_NormalYModifier", transform.GetComponent<PlayerMovementController>().isFacingRight() ? -1.0f : 1.0f);
     }
 

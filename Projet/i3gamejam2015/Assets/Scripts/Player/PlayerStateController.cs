@@ -20,6 +20,7 @@ public class PlayerStateController : MonoBehaviour
     //
 
     public int playerId;
+    public bool attackable = true;
 
     private enum State
     {
@@ -1088,7 +1089,7 @@ public class PlayerStateController : MonoBehaviour
 
     private bool IsAttackable()
     {
-		if (hasShield)
+		if (!attackable || hasShield)
         {
             return false;
         }

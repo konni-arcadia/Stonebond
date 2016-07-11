@@ -66,23 +66,23 @@ public class GameState : Singleton<GameState> {
 	private List<PlayerInfo> players = new List<PlayerInfo>();
 	private readonly Color[] playerBodyColors = {
 		// Shred (red) old color: 0xB3123B
-        new Color32(0xFD, 0x5E, 0x86, 0xFF),
+        new Color32(0xFD, 0x5C, 0x8F, 0xFF),
 		// Buddy (blue) old color: 0x00ACB4
-        new Color32(0x16, 0xF1, 0xFF, 0xFF),
+        new Color32(0x16, 0xD9, 0xEF, 0xFF),
 		// Wise (green) old color: 0x0B9300
         new Color32(0x51, 0xFF, 0x43, 0xFF),
 		// Dextrous (yellow) old color: 0xBBAD00
-		new Color32(0xFF, 0xF1, 0x45, 0xFF),
+		new Color32(0xFF, 0xEB, 0x00, 0xFF),
     };
 
     private readonly Color[] playerChromaColors = {
 		// Shred (red) a bit more green
         new Color32(0xFD, 0x90, 0x86, 0xFF),
 		// Buddy (blue) same as body
-        new Color32(0x16, 0xF1, 0xFF, 0xFF),
+        new Color32(0x16, 0xD9, 0xEF, 0xFF),
 		// Wise (green) same as body
         new Color32(0x51, 0xFF, 0x43, 0xFF),
 		// Dextrous (yellow) same as body
-		new Color32(0xFF, 0xF1, 0x45, 0xFF),
+		new Color32(0xFF, 0xEB, 0x00, 0xFF),
     };
 }

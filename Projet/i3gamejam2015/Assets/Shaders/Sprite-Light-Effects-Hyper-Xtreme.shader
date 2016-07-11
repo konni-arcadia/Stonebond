@@ -30,8 +30,8 @@
 		{ 
 			"Queue"="Transparent" 
 			"IgnoreProjector"="True" 
-			"RenderType"="Opaque" 
-			//"RenderType"="Transparent"
+			//"RenderType"="Opaque" 
+			"RenderType"="Transparent"
 			"PreviewType"="Plane"
 			"CanUseSpriteAtlas"="True"
 		}
@@ -42,8 +42,17 @@
 		Blend One OneMinusSrcAlpha
 
 		CGPROGRAM
-		#pragma surface surf Lambert vertex:vert nofog keepalpha
+		#pragma surface surf CustomLambert vertex:vert nofog keepalpha
 		#pragma multi_compile _ PIXELSNAP_ON
+
+        half4 LightingCustomLambert(SurfaceOutput s, half3 lightDir, half atten) {
+            half NdotL = dot(s.Normal, lightDir);
+            half diff = NdotL * 0.75 + 0.25;
+            half4 c;
+            c.rgb = s.Albedo * _LightColor0.rgb * (diff * atten);
+            c.a = s.Alpha;
+            return c;
+        }
 
 		sampler2D _MainTex;		
 		sampler2D _ChromaTex;

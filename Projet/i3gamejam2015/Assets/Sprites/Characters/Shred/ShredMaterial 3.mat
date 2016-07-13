@@ -73,13 +73,6 @@ Material:
           m_Offset: {x: 0, y: 0}
       data:
         first:
-          name: _MaskTex
-        second:
-          m_Texture: {fileID: 2800000, guid: cfce1e91129a06a478e6f5c869cef884, type: 3}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
           name: _ParallaxMap
         second:
           m_Texture: {fileID: 0}
@@ -120,6 +113,13 @@ Material:
           m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _MaskTex
+        second:
+          m_Texture: {fileID: 2800000, guid: cfce1e91129a06a478e6f5c869cef884, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
     m_Floats:
       data:
         first:
@@ -144,6 +144,30 @@ Material:
       data:
         first:
           name: _LightMapBlend
+        second: 0
+      data:
+        first:
+          name: _TintBurn
+        second: 0
+      data:
+        first:
+          name: _BodyEmissionFactor
+        second: 1
+      data:
+        first:
+          name: _ChromaEmissionFactor
+        second: 1
+      data:
+        first:
+          name: _ChromaLightPct
+        second: 0
+      data:
+        first:
+          name: _BodyChromaLightMin
+        second: 0
+      data:
+        first:
+          name: _BodyChromaLightMax
         second: 0
       data:
         first:
@@ -181,6 +205,42 @@ Material:
         first:
           name: _Metallic
         second: 0
+      data:
+        first:
+          name: _ChromaLightMin
+        second: 0.2
+      data:
+        first:
+          name: _ChromaLightMax
+        second: 1
+      data:
+        first:
+          name: _BodyLightMin
+        second: 0.7
+      data:
+        first:
+          name: _BodyLightMax
+        second: 1
+      data:
+        first:
+          name: _ChromaLight
+        second: 1
+      data:
+        first:
+          name: _BodyLightRate
+        second: 0.2
+      data:
+        first:
+          name: _TintEmissionFactor
+        second: 0.5
+      data:
+        first:
+          name: _ChromaOpacity
+        second: 1
+      data:
+        first:
+          name: _NormalYModifier
+        second: 1
     m_Colors:
       data:
         first:
@@ -189,12 +249,20 @@ Material:
       data:
         first:
           name: _Color
-        second: {r: 0.7, g: 0.901, b: 0.913, a: 1}
+        second: {r: 0.08823532, g: 0.94863313, b: 1, a: 1}
       data:
         first:
           name: _ChromaTexColor
-        second: {r: 0.022058845, g: 0.94490445, b: 1, a: 1}
+        second: {r: 0.08627451, g: 0.94509804, b: 1, a: 1}
       data:
         first:
           name: _Emission
         second: {r: 1, g: 1, b: 1, a: 1}
+      data:
+        first:
+          name: _ChromaColor
+        second: {r: 0.99215686, g: 0.36862746, b: 0.5254902, a: 1}
+      data:
+        first:
+          name: _BodyColor
+        second: {r: 0.99264705, g: 0.37224263, b: 0.52825075, a: 1}

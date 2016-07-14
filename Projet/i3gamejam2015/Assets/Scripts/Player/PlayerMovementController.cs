@@ -9,7 +9,8 @@ public class PlayerMovementController : MonoBehaviour
     public float breakForce;
     public float initialJumpForce;
     public float extensionJumpForce;
-    public float wallJumpLateralForce;
+    public float wallJumpLateralForce; // Original value 1000
+    public float wallJumpDisallowDirectionTime; // Original value 0.3
     public float maxVelocityWhenGrinding;
     public Transform[] groundChecks;			// A position marking where to check if the player is grounded.
     public Transform raycastBase, wallJumpCheck;
@@ -185,7 +186,7 @@ public class PlayerMovementController : MonoBehaviour
             {
                 body.AddForce(new Vector2(isFacingRight() ? -wallJumpLateralForce : wallJumpLateralForce, 0));
                 setFacingRight(!isFacingRight());
-                disallowDirectionTime = 0.3f;
+                disallowDirectionTime = wallJumpDisallowDirectionTime;
                 inWallJump = true;
             }
 

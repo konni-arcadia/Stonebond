@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MovingPlatform : MonoBehaviour {
+public class VerticalMovingPlatform : MonoBehaviour {
 
     public Transform leftBound;
     public Transform rightBound;
@@ -34,17 +34,17 @@ public class MovingPlatform : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	    if(platform.position.x < bounds[0].position.x)
+	    if(platform.position.y < bounds[0].position.y)
         {
             currentBoundIndex = 1;
             surfaceEffector.speed = surfaceEffectorSpeed;
         }
-        if(platform.position.x > bounds[1].position.x)
+        if(platform.position.y > bounds[1].position.y)
         {
             currentBoundIndex = 0;
             surfaceEffector.speed = -surfaceEffectorSpeed;
         }
 
-        platform.position += new Vector3((currentBoundIndex == 0 ? -1 : 1) * movementSpeed * Time.deltaTime, 0f, 0f);
+        platform.position += new Vector3(0f, (currentBoundIndex == 0 ? -1 : 1) * movementSpeed * Time.deltaTime, 0f);
 	}
 }

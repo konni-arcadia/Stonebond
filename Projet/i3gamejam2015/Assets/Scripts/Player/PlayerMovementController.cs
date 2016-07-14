@@ -36,6 +36,11 @@ public class PlayerMovementController : MonoBehaviour
 	private bool isMovementEnabled = true;
     private bool isFrictionEnabled = true;
 
+    // moving platform support
+    private Transform activePlatform;
+    private Vector2 activeLocalPlatformPoint;
+    private Vector2 activeGlobalPlatformPoint;
+
     private Rigidbody2D body;
     private InputManager inputManager;
     private Collider2D coll;
@@ -65,9 +70,30 @@ public class PlayerMovementController : MonoBehaviour
     {
         if (gameOver)
             return;
+        
+        if(activePlatform != null)
+        {
+            Vector2 newGlobalPlatformPoint = activePlatform.TransformPoint(activeLocalPlatformPoint);
+            var moveDistance = (newGlobalPlatformPoint - activeGlobalPlatformPoint);
+            if(moveDistance != Vector2.zero)
+            {
+                body.MovePosition(body.position + moveDistance);
+            }
+        }
 
         bool wasGrounded = grounded;
-        grounded = body.velocity.y <= 0 && IsHittingSolid(raycastBase, groundChecks, Vector2.down);
+        Transform groundHit = null;
+        grounded = body.velocity.y <= 0 && IsHittingSolid(raycastBase, groundChecks, Vector2.down, out groundHit);
+        if(groundHit != null && groundHit != activePlatform)
+        {
+            activePlatform = groundHit;
+            activeGlobalPlatformPoint = transform.position;
+            activeLocalPlatformPoint = activePlatform.InverseTransformPoint(transform.position);
+        }
+        else
+        {
+            activePlatform = null;
+        }
 
         if (wasGrounded != grounded)
         {
@@ -124,7 +150,6 @@ public class PlayerMovementController : MonoBehaviour
             wantJumpExtension &= body.velocity.y > 0;		// not able to extend jump anymore when grounded
         else
             wantJumpExtension = false;
-
     }
 
     void FixedUpdate()
@@ -276,6 +301,12 @@ public class PlayerMovementController : MonoBehaviour
     private RaycastHit2D[] raycastHits = new RaycastHit2D[32];
     public bool IsHittingSolid(Vector2 a, Vector2 b, Vector2 movementDirection)
     {
+        Transform dummy;
+        return IsHittingSolid(a, b, movementDirection, out dummy);
+    }
+
+    private bool IsHittingSolid(Vector2 a, Vector2 b, Vector2 movementDirection, out Transform transform)
+    {
         int hitCount = Physics2D.LinecastNonAlloc(a, b, raycastHits, 1 << LayerMask.NameToLayer("Ground"));
         for(int i  = 0; i < hitCount; ++i)
         {
@@ -286,31 +317,39 @@ public class PlayerMovementController : MonoBehaviour
                 continue;
             }
             
-            if (hit.collider.transform.GetComponent<OneWayPlatform>() == null)
+            if (hit.collider.transform.GetComponent<OneWayPlatform>() != null)
             {
-                // not a one way platform, this is an hit
-                return true;
+                // only collide with one way platform if the player is going down
+                if(Vector2.Angle(movementDirection, Vector2.down) >= oneWayPlatformHitAngle)
+                {
+                    continue;
+                }                
             }
-            
-            // only collide with one way platform if the player is going down
-            if(Vector2.Angle(movementDirection, Vector2.down) < oneWayPlatformHitAngle)
-            {
-                return true;
-            }
+
+            transform = hit.transform;
+            return true;
         }
-        
+
+        transform = null;
         return false;
     }
 
     public bool IsHittingSolid(Transform start, Transform[] ends, Vector2 movementDirection)
     {
+        Transform dummy;
+        return IsHittingSolid(start, ends, movementDirection, out dummy);
+    }
+
+    private bool IsHittingSolid(Transform start, Transform[] ends, Vector2 movementDirection, out Transform transform)
+    {
         for (int i = 0; i < ends.Length; i++)
         {
-            if(IsHittingSolid(start.position, ends [i].position, movementDirection))
+            if(IsHittingSolid(start.position, ends [i].position, movementDirection, out transform))
             {
                 return true;
             }
         }
+        transform = null;
         return false;
     }
 

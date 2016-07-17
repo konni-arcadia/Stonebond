@@ -30,6 +30,8 @@ public class PlayerFXManager : MonoBehaviour
 
     private PlayerStatusProvider statusProvider;
     private PlayerStateController stateController;
+    private PlayerMovementController movementController;
+    private Transform body;
     private SpriteRenderer bodyRenderer;
     private string originalSortingLayerName;
     private int originalSortingOrder;
@@ -50,7 +52,9 @@ public class PlayerFXManager : MonoBehaviour
     {
         statusProvider = transform.GetComponent<PlayerStatusProvider>();
         stateController = transform.GetComponent<PlayerStateController>();
-        bodyRenderer = transform.Find("CharacterSprites").Find("Body").GetComponent<SpriteRenderer>();
+        movementController = transform.GetComponent<PlayerMovementController>();
+        body = transform.Find("CharacterSprites").Find("Body");
+        bodyRenderer = body.GetComponent<SpriteRenderer>();
 
         statusProvider.OnHorizontalKnockbackAction += HandleOnHorizontalKnockback;
         statusProvider.OnVerticalKnockbackAction += HandleOnVerticalKnockback;
@@ -99,7 +103,6 @@ public class PlayerFXManager : MonoBehaviour
         }                       
         else if(stateController.GetAttackCooldownPct() > 0.0f)
         {
-            //SetChromaLightCurveValue(attackCooldownChromaCurve.Evaluate(stateController.GetAttackCooldownPct()));
             SetChromaLightCurveValue(chromaLightNormal);
         }
         else
@@ -108,6 +111,16 @@ public class PlayerFXManager : MonoBehaviour
         }
 
         bodyRenderer.material.SetFloat("_NormalYModifier", transform.GetComponent<PlayerMovementController>().isFacingRight() ? -1.0f : 1.0f);
+
+        if(movementController.isOnWall())
+        {
+            // fix sprite position while player is sliding on wall
+            body.transform.localPosition = new Vector3(0.18f, 0.0f, 0.0f);
+        }
+        else
+        {
+            body.transform.localPosition = Vector3.zero;
+        }
     }
 
     //

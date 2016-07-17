@@ -70,21 +70,27 @@ public class PlayerMovementController : MonoBehaviour
     {
         if (gameOver)
             return;
-        
+
         if(activePlatform != null)
         {
             Vector2 newGlobalPlatformPoint = activePlatform.TransformPoint(activeLocalPlatformPoint);
             var moveDistance = (newGlobalPlatformPoint - activeGlobalPlatformPoint);
             if(moveDistance != Vector2.zero)
             {
-                body.MovePosition(body.position + moveDistance);
+                // only affect player position if he is not moving
+                // fixme horizontal platform?
+                float h = isMovementEnabled && disallowDirectionTime == 0 ? inputManager.AxisValue(playerId, InputManager.Horizontal) : 0;
+                if(Mathf.Abs(h) < Mathf.Epsilon)
+                {
+                    body.position = body.position + moveDistance;
+                }
             }
         }
 
         bool wasGrounded = grounded;
         Transform groundHit = null;
         grounded = body.velocity.y <= 0 && IsHittingSolid(raycastBase, groundChecks, Vector2.down, out groundHit);
-        if(groundHit != null && groundHit != activePlatform)
+        if(groundHit != null)
         {
             activePlatform = groundHit;
             activeGlobalPlatformPoint = transform.position;
@@ -289,6 +295,11 @@ public class PlayerMovementController : MonoBehaviour
     public bool isGrounded()
     {
         return grounded;
+    }
+
+    public bool isOnWall()
+    {
+        return onWall;
     }
 
     public void setFacingRight(bool facingRight)

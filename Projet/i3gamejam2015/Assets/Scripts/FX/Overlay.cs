@@ -10,25 +10,25 @@ public class Overlay : MonoBehaviour {
     public float flashTime = 0.5f;
     public AnimationCurve flashCurve;
 
-    private float pause = 0.0f;
+    private float delay = 0.0f;
+    private float duration;
     private float counter = 0.0f;
 
-    private float r, g, b;
-
-    private AnimationCurve actualCurve;
+    private Color color;
+    private AnimationCurve curve;
 
     // Use this for initialization
-    void Awake () {
+    public void Awake () {
         spriteRenderer = GetComponent<SpriteRenderer> ();
         spriteRenderer.enabled = false;
 
         instance = this;
     }
 
-    void Update () {
-        if (pause > 0.0f)
+    public void Update () {
+        if (delay > 0.0f)
         {
-            pause -= TimeManager.realDeltaTime;
+            delay -= TimeManager.realDeltaTime;
         }
         else
         {
@@ -39,40 +39,44 @@ public class Overlay : MonoBehaviour {
                 {
                     spriteRenderer.enabled = false;
                     counter = 0.0f;
-                    return;
                 }
-
-                float pct = 1.0f - counter / flashTime;
-                float alpha = actualCurve.Evaluate(pct);
-                spriteRenderer.color = new Color(instance.r, instance.g, instance.b, alpha);
+                else
+                {
+                    UpdateSpriteColor();                    
+                }
             }           
         }
     }
 
-    public static void ShowFlash(float pause = 0.0f) {
+    private void UpdateSpriteColor()
+    {
+        float pct = 1.0f - counter / duration;
+        float alpha = curve.Evaluate(pct);
+        spriteRenderer.color = new Color(color.r, color.g, color.b, alpha);
+    }
+
+    public static void ShowFlash(float delay = 0.0f) {
         if (instance == null) {
             return;
         }
 
-        Show (instance.flashTime, instance.flashCurve, 1.0f, 1.0f, 1.0f, false, pause);
+        Show (instance.flashTime, instance.flashCurve, Color.white, delay);
     }
 
-    //public static void ShowReverse2(float duration) {
-    //    if (instance == null) {
-    //        return;
-    //    }
+    public static void Show(float duration, AnimationCurve curve, Color color, float delay = 0.0f)
+    {
+        if(instance == null)
+        {
+            return;
+        }
 
-    //    Show (duration, instance.curve, 1.0f, 1.0f, 1.0f, false, 0.0f);
-    //}
-
-    private static void Show(float duration, AnimationCurve curve, float r, float g, float b, bool reverse, float pause) {
-        instance.actualCurve = curve;
+        instance.duration = duration;
         instance.counter = duration;
-        instance.r = r;
-        instance.g = g;
-        instance.b = b;
-        instance.pause = pause;
+        instance.curve = curve;        
+        instance.color = color;
+        instance.delay = delay;
+
         instance.spriteRenderer.enabled = true;
-        instance.spriteRenderer.color = new Color (instance.r, instance.g, instance.b, reverse ? 0.0f : 1.0f);
+        instance.UpdateSpriteColor();
     }
 }

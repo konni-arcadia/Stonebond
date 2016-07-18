@@ -34,12 +34,7 @@ public class PlayerMovementController : MonoBehaviour
     private bool inWallJump = false;
 	private bool isJumpEnabled = true;
 	private bool isMovementEnabled = true;
-    private bool isFrictionEnabled = true;
-
-    // moving platform support
-    private Transform activePlatform;
-    private Vector2 activeLocalPlatformPoint;
-    private Vector2 activeGlobalPlatformPoint;
+    private bool isFrictionEnabled = true;  
 
     private Rigidbody2D body;
     private InputManager inputManager;
@@ -71,35 +66,12 @@ public class PlayerMovementController : MonoBehaviour
         if (gameOver)
             return;
 
-        if(activePlatform != null)
-        {
-            Vector2 newGlobalPlatformPoint = activePlatform.TransformPoint(activeLocalPlatformPoint);
-            var moveDistance = (newGlobalPlatformPoint - activeGlobalPlatformPoint);
-            if(moveDistance != Vector2.zero)
-            {
-                // only affect player position if he is not moving
-                // fixme horizontal platform?
-                float h = isMovementEnabled && disallowDirectionTime == 0 ? inputManager.AxisValue(playerId, InputManager.Horizontal) : 0;
-                if(Mathf.Abs(h) < Mathf.Epsilon)
-                {
-                    body.position = body.position + moveDistance;
-                }
-            }
-        }
+        UpdateHorizMovingPlatform();        
 
         bool wasGrounded = grounded;
         Transform groundHit = null;
         grounded = body.velocity.y <= 0 && IsHittingSolid(raycastBase, groundChecks, Vector2.down, out groundHit);
-        if(groundHit != null)
-        {
-            activePlatform = groundHit;
-            activeGlobalPlatformPoint = transform.position;
-            activeLocalPlatformPoint = activePlatform.InverseTransformPoint(transform.position);
-        }
-        else
-        {
-            activePlatform = null;
-        }
+        SetHorizMovingPlatformGroundHit(groundHit);      
 
         if (wasGrounded != grounded)
         {
@@ -372,5 +344,47 @@ public class PlayerMovementController : MonoBehaviour
             Physics2D.IgnoreCollision(hit.collider, coll, true);
     }
 
-    
+
+    #region Horiz Moving Platform
+
+    // moving platform support
+    private Transform activeHorizMovingPlatform;
+    private Vector2 activeLocalHorizMovingPlatformPoint;
+    private Vector2 activeGlobalHorizMovingPlatformPoint;
+
+    private void UpdateHorizMovingPlatform()
+    {
+        if(activeHorizMovingPlatform != null)
+        {
+            Vector2 newGlobalPlatformPoint = activeHorizMovingPlatform.TransformPoint(activeLocalHorizMovingPlatformPoint);
+            var moveDistance = (newGlobalPlatformPoint - activeGlobalHorizMovingPlatformPoint);
+            if(moveDistance != Vector2.zero)
+            {
+                // only affect player position if he is not moving
+                float h = isMovementEnabled && disallowDirectionTime == 0 ? inputManager.AxisValue(playerId, InputManager.Horizontal) : 0;
+                if(Mathf.Abs(h) < Mathf.Epsilon)
+                {
+                    body.position = body.position + moveDistance;
+                }
+            }
+        }
+    }
+
+    private void SetHorizMovingPlatformGroundHit(Transform groundHit)
+    {
+        // moving platform must have the HorizontalMovingPlatform script attached to its parent
+        if(groundHit != null && groundHit.GetComponentInParent<HorizontalMovingPlatform>() != null)
+        {            
+            activeHorizMovingPlatform = groundHit;
+            activeGlobalHorizMovingPlatformPoint = transform.position;
+            activeLocalHorizMovingPlatformPoint = activeHorizMovingPlatform.InverseTransformPoint(transform.position);
+        }
+        else
+        {
+            activeHorizMovingPlatform = null;
+        }
+    }
+
+    #endregion
+
 }

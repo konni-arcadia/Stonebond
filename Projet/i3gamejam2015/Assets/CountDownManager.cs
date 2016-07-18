@@ -23,7 +23,7 @@ public class CountDownManager : MonoBehaviour {
 	
 	public void OnFightTextShown()
 	{
-		Flash.Show ();
+        Overlay.ShowFlash ();
 		//Debug.Log("OnFightTextShown");
 		AudioSingleton<VoiceAudioManager>.Instance.PlayFight();
     }

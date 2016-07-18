@@ -119,8 +119,8 @@ public class LevelManager : MonoBehaviour {
             {
                 Debug.Log("Sudden death!");
 
-				// Play sudden death feedback animation
-				Flash.Show();
+                // Play sudden death feedback animation
+                Overlay.ShowFlash();
 				suddenDeathFeedbackAnimator.Play("SuddenDeathApparition");
 
                 isSuddenDeath = true;
@@ -170,7 +170,7 @@ public class LevelManager : MonoBehaviour {
 		ExitBondMode(p1, p2);
 
 		ScreenShake.ShakeXY (1.0f, 2.0f, 1.0f, 2.0f);
-		Flash.Show ();
+        Overlay.ShowFlash ();
 	}
 
 	private void EnterBondMode(List<PlayerStateController> activePlayers) {

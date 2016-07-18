@@ -159,8 +159,8 @@ public class PlayerFXManager : MonoBehaviour
     }
 
     private void HandleOnDieWarning(Transform source, Vector2 attackDirection)
-    {   
-        Flash.Show(stateController.diePauseTime);
+    {
+        Overlay.ShowFlash(stateController.diePauseTime);
         SetOverlay(true);
         SetShadow();
 

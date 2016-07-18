@@ -541,15 +541,15 @@ MonoBehaviour:
   flashCurve:
     serializedVersion: 2
     m_Curve:
-    - time: -0.021560866
-      value: 0.9960783
-      inSlope: -3.5430214
-      outSlope: -3.5430214
+    - time: 0
+      value: 1
+      inSlope: -2.1810708
+      outSlope: -2.1810708
       tangentMode: 0
-    - time: 1.0064516
-      value: 0.0000032614917
-      inSlope: -0.11860496
-      outSlope: -0.11860496
+    - time: 1
+      value: 0
+      inSlope: -0.08639159
+      outSlope: -0.08639159
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -593,6 +593,23 @@ MonoBehaviour:
   gaugeFrame: {fileID: 127230}
   introDuration: 2.5
   pauseWinDuration: 3
+  pauseWinFadeOutCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 1
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  pauseWinFadeOutColor: {r: 1, g: 1, b: 1, a: 0}
   suddenDeathFeedbackAnimator: {fileID: 9587752}
   suddenDeathEnabled: 1
   suddenDeathTimeSec: 60

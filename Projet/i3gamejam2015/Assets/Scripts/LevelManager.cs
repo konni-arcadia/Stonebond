@@ -12,6 +12,8 @@ public class LevelManager : MonoBehaviour {
 	public GameObject gaugeInner, gaugeFrame;
 	public float introDuration = 2;
 	public float pauseWinDuration = 1.0f;
+    public AnimationCurve pauseWinFadeOutCurve;
+    public Color pauseWinFadeOutColor;
 
     // sudden death
 	public Animator suddenDeathFeedbackAnimator;
@@ -158,6 +160,7 @@ public class LevelManager : MonoBehaviour {
             AudioSingleton<VoiceAudioManager>.Instance.PlayGameOver();
             WinScreenManager.showScreen();
         });
+        Overlay.Show(pauseWinDuration, pauseWinFadeOutCurve, pauseWinFadeOutColor);
     }
 
     public void bondHasBeenBrokenBy(PlayerStateController player) {

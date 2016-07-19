@@ -41,6 +41,7 @@ public class PlayerStateController : MonoBehaviour
     private bool visible = true;
     private bool onGround = false;
     private bool onWall = false;
+    private bool bonded = false;
 
     public Collider2D bodyCollider;
 
@@ -132,6 +133,8 @@ public class PlayerStateController : MonoBehaviour
     public float knockbackForceDown = 20000.0f;
     public float knockbackForceForward = 30000.0f;
     public AnimationCurve knockbackCurve;
+
+    public bool knockbackWhenAttackBondedPlayer = true;
 
     //
     // CRYSTALED
@@ -280,7 +283,8 @@ public class PlayerStateController : MonoBehaviour
 
     public void SetBondLink(BondLink bondLink)
     {
-        statusProvider.setBoundStatus(bondLink != null);
+        bonded = bondLink != null;
+        statusProvider.setBoundStatus(bonded);
     }
 
     //
@@ -990,6 +994,10 @@ public class PlayerStateController : MonoBehaviour
                 enemy.SetKnockbackState(aimDirection);
                 SetKnockbackState(enemy.aimDirection);
             }
+            else if (knockbackWhenAttackBondedPlayer && !bonded && enemy.bonded)
+            {
+                SetKnockbackState(GetOppositeDirection(aimDirection));
+            }
             else if (enemy.IsAttackable())
             {
                 enemy.HitWithAttack(transform, aimDirection);
@@ -1119,6 +1127,21 @@ public class PlayerStateController : MonoBehaviour
             return movementController.isFacingRight() != enemy.movementController.isFacingRight();
 
         return false;
+    }
+
+    private AimDirection GetOppositeDirection(AimDirection dir)
+    {
+        switch(dir)
+        {
+            case AimDirection.UP:
+                return AimDirection.DOWN;
+            case AimDirection.DOWN:
+                return AimDirection.UP;
+            case AimDirection.FORWARD:
+                return AimDirection.FORWARD;
+        }
+
+        return AimDirection.FORWARD; // unreachable
     }
 
     private void SetVisible(bool visible)

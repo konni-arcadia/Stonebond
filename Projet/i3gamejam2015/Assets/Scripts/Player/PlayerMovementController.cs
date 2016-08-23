@@ -9,7 +9,8 @@ public class PlayerMovementController : MonoBehaviour
     public float breakForce;
     public float initialJumpForce;
     public float extensionJumpForce;
-    public float wallJumpLateralForce;
+    public float wallJumpLateralForce; // Original value 1000
+    public float wallJumpDisallowDirectionTime; // Original value 0.3
     public float maxVelocityWhenGrinding;
     public Transform[] groundChecks;			// A position marking where to check if the player is grounded.
     public Transform raycastBase, wallJumpCheck;
@@ -33,7 +34,7 @@ public class PlayerMovementController : MonoBehaviour
     private bool inWallJump = false;
 	private bool isJumpEnabled = true;
 	private bool isMovementEnabled = true;
-    private bool isFrictionEnabled = true;
+    private bool isFrictionEnabled = true;  
 
     private Rigidbody2D body;
     private InputManager inputManager;
@@ -65,8 +66,12 @@ public class PlayerMovementController : MonoBehaviour
         if (gameOver)
             return;
 
+        UpdateHorizMovingPlatform();        
+
         bool wasGrounded = grounded;
-        grounded = body.velocity.y <= 0 && IsHittingSolid(raycastBase, groundChecks, Vector2.down);
+        Transform groundHit = null;
+        grounded = body.velocity.y <= 0 && IsHittingSolid(raycastBase, groundChecks, Vector2.down, out groundHit);
+        SetHorizMovingPlatformGroundHit(groundHit);      
 
         if (wasGrounded != grounded)
         {
@@ -123,7 +128,6 @@ public class PlayerMovementController : MonoBehaviour
             wantJumpExtension &= body.velocity.y > 0;		// not able to extend jump anymore when grounded
         else
             wantJumpExtension = false;
-
     }
 
     void FixedUpdate()
@@ -185,7 +189,7 @@ public class PlayerMovementController : MonoBehaviour
             {
                 body.AddForce(new Vector2(isFacingRight() ? -wallJumpLateralForce : wallJumpLateralForce, 0));
                 setFacingRight(!isFacingRight());
-                disallowDirectionTime = 0.3f;
+                disallowDirectionTime = wallJumpDisallowDirectionTime;
                 inWallJump = true;
             }
 
@@ -265,15 +269,26 @@ public class PlayerMovementController : MonoBehaviour
         return grounded;
     }
 
+    public bool isOnWall()
+    {
+        return onWall;
+    }
+
     public void setFacingRight(bool facingRight)
     {
-        Vector2 val = transform.localScale;
+        Vector3 val = transform.localScale;
         val.x = facingRight ? 1 : -1;
         transform.localScale = val;
     }
 
     private RaycastHit2D[] raycastHits = new RaycastHit2D[32];
     public bool IsHittingSolid(Vector2 a, Vector2 b, Vector2 movementDirection)
+    {
+        Transform dummy;
+        return IsHittingSolid(a, b, movementDirection, out dummy);
+    }
+
+    private bool IsHittingSolid(Vector2 a, Vector2 b, Vector2 movementDirection, out Transform transform)
     {
         int hitCount = Physics2D.LinecastNonAlloc(a, b, raycastHits, 1 << LayerMask.NameToLayer("Ground"));
         for(int i  = 0; i < hitCount; ++i)
@@ -285,31 +300,39 @@ public class PlayerMovementController : MonoBehaviour
                 continue;
             }
             
-            if (hit.collider.transform.GetComponent<OneWayPlatform>() == null)
+            if (hit.collider.transform.GetComponent<OneWayPlatform>() != null)
             {
-                // not a one way platform, this is an hit
-                return true;
+                // only collide with one way platform if the player is going down
+                if(Vector2.Angle(movementDirection, Vector2.down) >= oneWayPlatformHitAngle)
+                {
+                    continue;
+                }                
             }
-            
-            // only collide with one way platform if the player is going down
-            if(Vector2.Angle(movementDirection, Vector2.down) < oneWayPlatformHitAngle)
-            {
-                return true;
-            }
+
+            transform = hit.transform;
+            return true;
         }
-        
+
+        transform = null;
         return false;
     }
 
     public bool IsHittingSolid(Transform start, Transform[] ends, Vector2 movementDirection)
     {
+        Transform dummy;
+        return IsHittingSolid(start, ends, movementDirection, out dummy);
+    }
+
+    private bool IsHittingSolid(Transform start, Transform[] ends, Vector2 movementDirection, out Transform transform)
+    {
         for (int i = 0; i < ends.Length; i++)
         {
-            if(IsHittingSolid(start.position, ends [i].position, movementDirection))
+            if(IsHittingSolid(start.position, ends [i].position, movementDirection, out transform))
             {
                 return true;
             }
         }
+        transform = null;
         return false;
     }
 
@@ -321,5 +344,47 @@ public class PlayerMovementController : MonoBehaviour
             Physics2D.IgnoreCollision(hit.collider, coll, true);
     }
 
-    
+
+    #region Horiz Moving Platform
+
+    // moving platform support
+    private Transform activeHorizMovingPlatform;
+    private Vector2 activeLocalHorizMovingPlatformPoint;
+    private Vector2 activeGlobalHorizMovingPlatformPoint;
+
+    private void UpdateHorizMovingPlatform()
+    {
+        if(activeHorizMovingPlatform != null)
+        {
+            Vector2 newGlobalPlatformPoint = activeHorizMovingPlatform.TransformPoint(activeLocalHorizMovingPlatformPoint);
+            var moveDistance = (newGlobalPlatformPoint - activeGlobalHorizMovingPlatformPoint);
+            if(moveDistance != Vector2.zero)
+            {
+                // only affect player position if he is not moving
+                float h = isMovementEnabled && disallowDirectionTime == 0 ? inputManager.AxisValue(playerId, InputManager.Horizontal) : 0;
+                if(Mathf.Abs(h) < Mathf.Epsilon)
+                {
+                    body.position = body.position + moveDistance;
+                }
+            }
+        }
+    }
+
+    private void SetHorizMovingPlatformGroundHit(Transform groundHit)
+    {
+        // moving platform must have the HorizontalMovingPlatform script attached to its parent
+        if(groundHit != null && groundHit.GetComponentInParent<HorizontalMovingPlatform>() != null)
+        {            
+            activeHorizMovingPlatform = groundHit;
+            activeGlobalHorizMovingPlatformPoint = transform.position;
+            activeLocalHorizMovingPlatformPoint = activeHorizMovingPlatform.InverseTransformPoint(transform.position);
+        }
+        else
+        {
+            activeHorizMovingPlatform = null;
+        }
+    }
+
+    #endregion
+
 }

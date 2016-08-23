@@ -140,7 +140,7 @@ GameObject:
   - 212: {fileID: 21256972}
   - 114: {fileID: 11407652}
   m_Layer: 0
-  m_Name: Flash
+  m_Name: Overlay
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -266,6 +266,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 12.359596, y: -26.515997, z: 0}
   m_LocalScale: {x: 0.78, y: 0.78, z: 0.8882812}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 471198}
   m_RootOrder: 3
@@ -277,7 +278,8 @@ Transform:
   m_GameObject: {fileID: 142138}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.146, y: 8.492, z: 0}
-  m_LocalScale: {x: 1, y: 0.8, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 493130}
   - {fileID: 430692}
@@ -293,6 +295,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -101.6404, y: 36.484005, z: 0}
   m_LocalScale: {x: 0.78000003, y: 0.78000003, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 471198}
   m_RootOrder: 2
@@ -304,7 +307,8 @@ Transform:
   m_GameObject: {fileID: 127230}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.22, y: 8.43, z: 0}
-  m_LocalScale: {x: 1, y: 0.8, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 475536}
   m_RootOrder: 1
@@ -317,6 +321,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 2.4400005, y: -0.0099983215, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 414246}
   m_RootOrder: 1
@@ -329,6 +334,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 12.359596, y: -26.515997, z: 0}
   m_LocalScale: {x: 0.78, y: 0.78, z: 1.1257696}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 471198}
   m_RootOrder: 1
@@ -341,6 +347,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 5.66, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 441760}
   m_RootOrder: 0
@@ -353,6 +360,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 433184}
   m_Father: {fileID: 455498}
@@ -366,6 +374,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1000, y: 1000, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 455498}
   m_RootOrder: 2
@@ -378,6 +387,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 441760}
   - {fileID: 471198}
@@ -393,6 +403,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.03999996, y: -0.0099983215, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 414246}
   m_RootOrder: 2
@@ -405,6 +416,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.023, y: 0.023, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 489790}
   - {fileID: 431424}
@@ -421,6 +433,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.3595962, y: -0.48400378, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 489950}
   - {fileID: 417630}
@@ -437,6 +450,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 114.35957, y: -50.515995, z: 0}
   m_LocalScale: {x: 0.7800001, y: 0.7800001, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 471198}
   m_RootOrder: 0
@@ -449,6 +463,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 6.9977393, y: 0.880597, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 475536}
   m_RootOrder: 0
@@ -461,6 +476,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2.3500004, y: -0.0099983215, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 414246}
   m_RootOrder: 0
@@ -522,22 +538,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flashTime: 0.5
-  curve:
+  flashCurve:
     serializedVersion: 2
     m_Curve:
-    - time: -0.004987805
-      value: 1.0020602
-      inSlope: -3.2312827
-      outSlope: -3.2312827
+    - time: 0
+      value: 1
+      inSlope: -2.1810708
+      outSlope: -2.1810708
       tangentMode: 0
-    - time: 1.0044004
-      value: -0.007060528
-      inSlope: -0.19828165
-      outSlope: -0.19828165
+    - time: 1
+      value: 0
+      inSlope: -0.08639159
+      outSlope: -0.08639159
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
 --- !u!114 &11430964
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -576,7 +592,24 @@ MonoBehaviour:
   gaugeInner: {fileID: 142138}
   gaugeFrame: {fileID: 127230}
   introDuration: 2.5
-  pauseWinDuration: 1
+  pauseWinDuration: 3
+  pauseWinFadeOutCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 1
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  pauseWinFadeOutColor: {r: 1, g: 1, b: 1, a: 0}
   suddenDeathFeedbackAnimator: {fileID: 9587752}
   suddenDeathEnabled: 1
   suddenDeathTimeSec: 60

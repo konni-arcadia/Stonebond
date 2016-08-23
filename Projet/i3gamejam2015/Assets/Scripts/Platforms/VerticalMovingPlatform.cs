@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class VertMov : MonoBehaviour {
+public class VerticalMovingPlatform : MonoBehaviour {
 
     public Transform leftBound;
     public Transform rightBound;

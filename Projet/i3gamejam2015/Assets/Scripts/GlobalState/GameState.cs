@@ -16,18 +16,18 @@ public class GameState : Singleton<GameState> {
 
 	// May be moved somewhere else; just to ensure that during development we always have exactly 4 players.
 	protected GameState() {
-		AddPlayer("P1", predefinedPlayerColors[0], 1);
-		AddPlayer("P2", predefinedPlayerColors[1], 2);
-		AddPlayer("P3", predefinedPlayerColors[2], 3);
-		AddPlayer("P4", predefinedPlayerColors[3], 4);
+		AddPlayer("P1", playerBodyColors[0], playerChromaColors[0], 1);
+		AddPlayer("P2", playerBodyColors[1], playerChromaColors[1], 2);
+		AddPlayer("P3", playerBodyColors[2], playerChromaColors[2], 3);
+		AddPlayer("P4", playerBodyColors[3], playerChromaColors[3], 4);
 	}
 
 	// Adds a new player.
-	public void AddPlayer(string name, Color color, int controllerId) {
+	private void AddPlayer(string name, Color bodyColor, Color chromaColor, int controllerId) {
 		var p = new PlayerInfo();
 		p.Name = name;
-		p.Color = color;
-		p.BodyColor = Color.Lerp(Color.white, color, 0.8f);
+		p.Color = chromaColor;
+        p.BodyColor = bodyColor;
 		p.ControllerId = controllerId;
 		players.Add(p);
 	}
@@ -64,14 +64,25 @@ public class GameState : Singleton<GameState> {
 	// PRIVATE
 	//
 	private List<PlayerInfo> players = new List<PlayerInfo>();
-	private readonly Color[] predefinedPlayerColors = {
-		// Shred (red) 0xB3123B
-		new Color(0.701f, 0.070f, 0.231f),
-		// Buddy (blue) 0x00ACB4
-		new Color(0, 0.67f, 0.71f),
-		// Wise (green) 0x0B9300
-		new Color(0.04f, 0.58f, 0f),
-		// Dextrous (yellow) 0xBBAD00
-		new Color(0.73f, 0.68f, 0f),
-	};
+	private readonly Color[] playerBodyColors = {
+		// Shred (red) old color: 0xB3123B
+        new Color32(0xFD, 0x5C, 0x8F, 0xFF),
+		// Buddy (blue) old color: 0x00ACB4
+        new Color32(0x16, 0xD9, 0xEF, 0xFF),
+		// Wise (green) old color: 0x0B9300
+        new Color32(0x51, 0xFF, 0x43, 0xFF),
+		// Dextrous (yellow) old color: 0xBBAD00
+		new Color32(0xFF, 0xEB, 0x00, 0xFF),
+    };
+
+    private readonly Color[] playerChromaColors = {
+		// Shred (red) a bit more green
+        new Color32(0xFD, 0x90, 0x86, 0xFF),
+		// Buddy (blue) same as body
+        new Color32(0x16, 0xD9, 0xEF, 0xFF),
+		// Wise (green) same as body
+        new Color32(0x51, 0xFF, 0x43, 0xFF),
+		// Dextrous (yellow) same as body
+		new Color32(0xFF, 0xEB, 0x00, 0xFF),
+    };
 }

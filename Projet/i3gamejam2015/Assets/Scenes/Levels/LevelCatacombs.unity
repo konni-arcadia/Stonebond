@@ -461,6 +461,46 @@ Prefab:
       propertyPath: m_Name
       value: Left VertMovingPlatform
       objectReference: {fileID: 0}
+    - target: {fileID: 469568, guid: 29fcddba3a9684ad5869b3b4e3a4a166, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 4.44
+      objectReference: {fileID: 0}
+    - target: {fileID: 417428, guid: 29fcddba3a9684ad5869b3b4e3a4a166, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 25259732, guid: 29fcddba3a9684ad5869b3b4e3a4a166, type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 109982, guid: 29fcddba3a9684ad5869b3b4e3a4a166, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6163758, guid: 29fcddba3a9684ad5869b3b4e3a4a166, type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6151672, guid: 29fcddba3a9684ad5869b3b4e3a4a166, type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6151672, guid: 29fcddba3a9684ad5869b3b4e3a4a166, type: 2}
+      propertyPath: m_Size.y
+      value: 0.53
+      objectReference: {fileID: 0}
+    - target: {fileID: 6151672, guid: 29fcddba3a9684ad5869b3b4e3a4a166, type: 2}
+      propertyPath: m_Offset.y
+      value: -0.04
+      objectReference: {fileID: 0}
+    - target: {fileID: 6163758, guid: 29fcddba3a9684ad5869b3b4e3a4a166, type: 2}
+      propertyPath: m_Size.y
+      value: 0.69
+      objectReference: {fileID: 0}
+    - target: {fileID: 6163758, guid: 29fcddba3a9684ad5869b3b4e3a4a166, type: 2}
+      propertyPath: m_Offset.y
+      value: -0.46
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 29fcddba3a9684ad5869b3b4e3a4a166, type: 2}
   m_IsPrefabParent: 0
@@ -842,6 +882,30 @@ Prefab:
     - target: {fileID: 195668, guid: 29fcddba3a9684ad5869b3b4e3a4a166, type: 2}
       propertyPath: m_Name
       value: Right VertMovingPlatform
+      objectReference: {fileID: 0}
+    - target: {fileID: 469568, guid: 29fcddba3a9684ad5869b3b4e3a4a166, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 4.44
+      objectReference: {fileID: 0}
+    - target: {fileID: 417428, guid: 29fcddba3a9684ad5869b3b4e3a4a166, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6151672, guid: 29fcddba3a9684ad5869b3b4e3a4a166, type: 2}
+      propertyPath: m_Offset.y
+      value: -0.04
+      objectReference: {fileID: 0}
+    - target: {fileID: 6151672, guid: 29fcddba3a9684ad5869b3b4e3a4a166, type: 2}
+      propertyPath: m_Size.y
+      value: 0.53
+      objectReference: {fileID: 0}
+    - target: {fileID: 6163758, guid: 29fcddba3a9684ad5869b3b4e3a4a166, type: 2}
+      propertyPath: m_Size.y
+      value: 0.69
+      objectReference: {fileID: 0}
+    - target: {fileID: 6163758, guid: 29fcddba3a9684ad5869b3b4e3a4a166, type: 2}
+      propertyPath: m_Offset.y
+      value: -0.46
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 29fcddba3a9684ad5869b3b4e3a4a166, type: 2}

@@ -5,7 +5,7 @@ public class SuddenDeathFeedbackManager : MonoBehaviour
 {
 	public void OnSuddenDeathTextShown()
 	{
-		Flash.Show();
+        Overlay.ShowFlash();
 		AudioSingleton<VoiceAudioManager>.Instance.PlaySuddenDeathVoice();
 	}
 }

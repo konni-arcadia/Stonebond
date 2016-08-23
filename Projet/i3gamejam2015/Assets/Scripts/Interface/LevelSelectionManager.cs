@@ -17,7 +17,7 @@ public class LevelSelectionManager : MonoBehaviour {
 
     private bool[] wasPressed = new bool[4];
 	private InputManager inputManager;
-	public static LvlSelectionItem idOfLastChosenLevel = LvlSelectionItem.Forest;
+	public static LvlSelectionItem idOfLastChosenLevel = LvlSelectionItem.Pipes;
 
     // Use this for initialization
     void Start() {
@@ -88,6 +88,7 @@ public class LevelSelectionManager : MonoBehaviour {
     }
 
 	private void updateGui() {
+		// Debug.Log(menuSelectedItem);
 		selectedLevelImage.sprite = levelList[(int)menuSelectedItem];
 	}
 

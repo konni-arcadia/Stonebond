@@ -7,8 +7,8 @@ using System.Collections.Generic;
 public class LevelSelectionManager : MonoBehaviour {
 
 	// The two MUST MATCH (in order, except for the random entry)
-    public enum LvlSelectionItem { Forest, Pipes, Spire, Cathedrale, Catacombs, Random};
-	private static readonly string[] RandomLevelList = { "LevelForest", "LevelOrgan", "LevelRoof", "LevelCathedrale", "LevelCatacombs" };
+    public enum LvlSelectionItem { Random, Pipes, Forest, Spire, Cathedrale, Catacombs };
+	private static readonly string[] RandomLevelList = { "LevelOrgan", "LevelForest", "LevelRoof", "LevelCathedrale", "LevelCatacombs" };
 
     public Image selectedLevelImage;
     public List<Sprite> levelList;
@@ -70,7 +70,7 @@ public class LevelSelectionManager : MonoBehaviour {
         }
 		else if (!wasPressed[noControler - 1] && inputManager.AxisValueCtrl(noControler, InputManager.Horizontal) > InputManager.AxisDeadZone)
         {
-            if (menuSelectedItem != LvlSelectionItem.Random)
+            if (menuSelectedItem != LvlSelectionItem.Catacombs)
             {
 				AudioSingleton<SfxAudioManager>.Instance.PlayCursor();
                 menuSelectedItem += 1;
@@ -88,7 +88,7 @@ public class LevelSelectionManager : MonoBehaviour {
     }
 
 	private void updateGui() {
-		// Debug.Log(menuSelectedItem);
+		Debug.Log(menuSelectedItem);
 		selectedLevelImage.sprite = levelList[(int)menuSelectedItem];
 	}
 
@@ -96,6 +96,6 @@ public class LevelSelectionManager : MonoBehaviour {
 		if (menuSelectedItem == LvlSelectionItem.Random)
 			return RandomLevelList[Random.Range(0, RandomLevelList.Length)];
 		else
-			return RandomLevelList[(int)menuSelectedItem];
+			return RandomLevelList[ 1 + (int)menuSelectedItem ];
 	}
 }

@@ -10,6 +10,9 @@ public class LevelSelectionManager : MonoBehaviour {
     public enum LvlSelectionItem { Random, Pipes, Forest, Spire, Cathedrale, Catacombs };
 	private static readonly string[] RandomLevelList = { "LevelOrgan", "LevelForest", "LevelRoof", "LevelCathedrale", "LevelCatacombs" };
 
+	// Will be initialised automatically, so there is no need to hard-code the number of levels below.
+	private int LvlSelectionItemCount;
+
     public Image selectedLevelImage;
     public List<Sprite> levelList;
 
@@ -21,6 +24,7 @@ public class LevelSelectionManager : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
+    	LvlSelectionItemCount = System.Enum.GetNames(typeof(LvlSelectionItem)).Length;
 		inputManager = GetComponent<InputManager> ();
 		AudioSingleton<MenuAudioManager>.Instance.SetSelectStageSnapshot();
 		menuSelectedItem = idOfLastChosenLevel;
@@ -30,7 +34,7 @@ public class LevelSelectionManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update()
     {
-        for (int i = 1; i < 5; i++)
+        for (int i = 1; i < LvlSelectionItemCount; i++)
             CheckControlerStartMenu(i);
 	}
 
@@ -59,24 +63,32 @@ public class LevelSelectionManager : MonoBehaviour {
 
 		if (!wasPressed[noControler - 1] && inputManager.AxisValueCtrl(noControler, InputManager.Horizontal) < -InputManager.AxisDeadZone)
         {
-            if (menuSelectedItem != (LvlSelectionItem)0)
+			AudioSingleton<SfxAudioManager>.Instance.PlayCursor();
+            if (menuSelectedItem != (LvlSelectionItem)0) // first one
             {
-				AudioSingleton<SfxAudioManager>.Instance.PlayCursor();
                 menuSelectedItem -= 1;
-				updateGui();
-				wasPressed[noControler - 1] = true;
+            } else {
+            	// we are at the first one and we want to go backward
+            	// => back loop to last
+                menuSelectedItem = (LvlSelectionItem)(LvlSelectionItemCount-1);
             }
+			updateGui();
+			wasPressed[noControler - 1] = true;
 
         }
 		else if (!wasPressed[noControler - 1] && inputManager.AxisValueCtrl(noControler, InputManager.Horizontal) > InputManager.AxisDeadZone)
         {
-            if (menuSelectedItem != LvlSelectionItem.Catacombs)
+			AudioSingleton<SfxAudioManager>.Instance.PlayCursor();
+            if (menuSelectedItem != (LvlSelectionItem)(LvlSelectionItemCount-1)) // last one
             {
-				AudioSingleton<SfxAudioManager>.Instance.PlayCursor();
                 menuSelectedItem += 1;
-				updateGui();
-                wasPressed[noControler - 1] = true;
+            } else {
+            	// we are at the last one and we want to go forward
+            	// => forward loop to first
+                menuSelectedItem = (LvlSelectionItem)0;
             }
+			updateGui();
+            wasPressed[noControler - 1] = true;
 
         }
 		else if (inputManager.AxisValueCtrl(noControler, InputManager.Horizontal) < InputManager.AxisDeadZone &&
@@ -96,6 +108,6 @@ public class LevelSelectionManager : MonoBehaviour {
 		if (menuSelectedItem == LvlSelectionItem.Random)
 			return RandomLevelList[Random.Range(0, RandomLevelList.Length)];
 		else
-			return RandomLevelList[ 1 + (int)menuSelectedItem ];
+			return RandomLevelList[ 1 + (int)menuSelectedItem ]; // +1 because Random is before all the others in the enum
 	}
 }

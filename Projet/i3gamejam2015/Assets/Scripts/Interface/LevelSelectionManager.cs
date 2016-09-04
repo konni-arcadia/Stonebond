@@ -108,6 +108,6 @@ public class LevelSelectionManager : MonoBehaviour {
 		if (menuSelectedItem == LvlSelectionItem.Random)
 			return RandomLevelList[Random.Range(0, RandomLevelList.Length)];
 		else
-			return RandomLevelList[ 1 + (int)menuSelectedItem ]; // +1 because Random is before all the others in the enum
+			return RandomLevelList[ (int)menuSelectedItem - 1 ]; // -1 because Random is before all the others in the enum
 	}
 }

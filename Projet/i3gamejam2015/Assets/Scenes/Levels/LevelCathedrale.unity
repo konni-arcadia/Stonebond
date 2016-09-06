@@ -134,7 +134,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11457596, guid: c5501fad9ab5b144ea2d91b926a85505, type: 2}
       propertyPath: startToLeft
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 455170, guid: c5501fad9ab5b144ea2d91b926a85505, type: 2}
       propertyPath: m_LocalPosition.y
@@ -142,7 +142,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 441814, guid: c5501fad9ab5b144ea2d91b926a85505, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 4.04
+      value: 3.89
+      objectReference: {fileID: 0}
+    - target: {fileID: 464030, guid: c5501fad9ab5b144ea2d91b926a85505, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c5501fad9ab5b144ea2d91b926a85505, type: 2}
@@ -637,6 +641,10 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 100814, guid: 541cf7c480da3444a901215230feca53, type: 2}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11463618, guid: 541cf7c480da3444a901215230feca53, type: 2}
+      propertyPath: timeScale
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -1256,15 +1264,23 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11457596, guid: c5501fad9ab5b144ea2d91b926a85505, type: 2}
       propertyPath: movementSpeed
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 441814, guid: c5501fad9ab5b144ea2d91b926a85505, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 4.04
+      value: 3.89
       objectReference: {fileID: 0}
     - target: {fileID: 455170, guid: c5501fad9ab5b144ea2d91b926a85505, type: 2}
       propertyPath: m_LocalPosition.y
       value: -3.89
+      objectReference: {fileID: 0}
+    - target: {fileID: 11457596, guid: c5501fad9ab5b144ea2d91b926a85505, type: 2}
+      propertyPath: startToLeft
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 464030, guid: c5501fad9ab5b144ea2d91b926a85505, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c5501fad9ab5b144ea2d91b926a85505, type: 2}

@@ -19,6 +19,7 @@ public class PlayerAnimationStateVarsProvider : MonoBehaviour {
             Debug.Log("Animator n'a pas pu etre trouve dans le joueur " + name);
         }
 
+		// Register to status events
         myStatusProvider.OnAxisHChanged += AxisHChangedAction;
         myStatusProvider.OnVelocityYChanged += VelocityYChangedAction;
         myStatusProvider.OnGroundedStatusChanged += GroundedAction;
@@ -31,6 +32,23 @@ public class PlayerAnimationStateVarsProvider : MonoBehaviour {
 		myStatusProvider.OnHorizontalKnockbackAction += HorizontalKnockbackAction;
         myStatusProvider.OnDieAction += DieAction;
         myStatusProvider.OnRespawnWarningAction += RespawnAction;
+	}
+
+	void OnDestroy()
+	{
+		// Unregister from status events
+		myStatusProvider.OnAxisHChanged -= AxisHChangedAction;
+		myStatusProvider.OnVelocityYChanged -= VelocityYChangedAction;
+		myStatusProvider.OnGroundedStatusChanged -= GroundedAction;
+		myStatusProvider.OnGrindingStatusChanged -= OnWallAction;
+		myStatusProvider.OnAttackStartAction -= HandleOnAttackStartAction;
+		myStatusProvider.OnAttackStopAction -= HandleOnAttackStopAction;
+		myStatusProvider.OnChargeStartAction -= ChargeStartAction;
+		myStatusProvider.OnChargeStopAction -= ChargeStopAction;		
+		myStatusProvider.OnVerticalKnockbackAction -= VerticalKnockbackAction;
+		myStatusProvider.OnHorizontalKnockbackAction -= HorizontalKnockbackAction;
+		myStatusProvider.OnDieAction -= DieAction;
+		myStatusProvider.OnRespawnWarningAction -= RespawnAction;
 	}
 
     public void AxisHChangedAction(float axisHValue)

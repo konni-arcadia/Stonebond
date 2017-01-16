@@ -164,6 +164,34 @@ Material:
         second: 0
       data:
         first:
+          name: _Stencil
+        second: 0
+      data:
+        first:
+          name: _StencilComp
+        second: 8
+      data:
+        first:
+          name: _StencilOp
+        second: 0
+      data:
+        first:
+          name: _StencilReadMask
+        second: 255
+      data:
+        first:
+          name: _StencilWriteMask
+        second: 255
+      data:
+        first:
+          name: _ColorMask
+        second: 15
+      data:
+        first:
+          name: _UseUIAlphaClip
+        second: 0
+      data:
+        first:
           name: _Parallax
         second: 0.02
       data:
@@ -200,34 +228,6 @@ Material:
         second: 0
       data:
         first:
-          name: _Stencil
-        second: 0
-      data:
-        first:
-          name: _StencilComp
-        second: 8
-      data:
-        first:
-          name: _StencilOp
-        second: 0
-      data:
-        first:
-          name: _StencilReadMask
-        second: 255
-      data:
-        first:
-          name: _StencilWriteMask
-        second: 255
-      data:
-        first:
-          name: _ColorMask
-        second: 15
-      data:
-        first:
-          name: _UseUIAlphaClip
-        second: 0
-      data:
-        first:
           name: _AlternateBlend
         second: 0
       data:
@@ -246,15 +246,15 @@ Material:
       data:
         first:
           name: _Color
-        second: {r: 0.9103, g: 0.721, b: 0.7693, a: 1}
+        second: {r: 0.99215686, g: 0.36078432, b: 0.56078434, a: 1}
+      data:
+        first:
+          name: _ChromaTexColor
+        second: {r: 0.99215686, g: 0.5647059, b: 0.5254902, a: 1}
       data:
         first:
           name: _Emission
         second: {r: 1, g: 1, b: 1, a: 1}
-      data:
-        first:
-          name: _ChromaTexColor
-        second: {r: 0.701, g: 0.07, b: 0.231, a: 1}
       data:
         first:
           name: _Specular

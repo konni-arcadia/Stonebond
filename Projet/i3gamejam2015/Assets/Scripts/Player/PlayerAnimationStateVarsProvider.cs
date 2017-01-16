@@ -35,36 +35,40 @@ public class PlayerAnimationStateVarsProvider : MonoBehaviour {
 
     public void AxisHChangedAction(float axisHValue)
     {
-        if(myAnimator != null)
-            myAnimator.SetFloat("VelocityX", axisHValue);
-    }
-   
-    public void VelocityYChangedAction(float velocityYValue)
-    {
-        if (myAnimator != null)
-            myAnimator.SetFloat("VelocityY", velocityYValue);
+		if(myAnimator == null || !myAnimator.isInitialized)
+			return;
+		
+		myAnimator.SetFloat("VelocityX", axisHValue);
     }
 
+    public void VelocityYChangedAction(float velocityYValue)
+    {
+		if(myAnimator == null || !myAnimator.isInitialized)
+			return;
+
+		myAnimator.SetFloat("VelocityY", velocityYValue);
+    }
 
     public void GroundedAction(bool isGrounded)
     {
-        if (myAnimator != null)
-            myAnimator.SetBool("Grounded", isGrounded);
+		if(myAnimator == null || !myAnimator.isInitialized)
+			return;
+			
+		myAnimator.SetBool("Grounded", isGrounded);
     }
-
 
     public void OnWallAction(bool isOnWall)
     {
-        if (myAnimator != null)
-            myAnimator.SetBool("Riding", isOnWall);
+		if(myAnimator == null || !myAnimator.isInitialized)
+			return;
+
+		myAnimator.SetBool("Riding", isOnWall);
     }
 
     private void HandleOnAttackStartAction(PlayerStatusProvider.AttackType attackType, Vector2 direction)
     {
-        if (myAnimator == null)
-        {
-            return;
-        }
+		if(myAnimator == null || !myAnimator.isInitialized)
+			return;
 
         switch (attackType)
         {
@@ -85,10 +89,8 @@ public class PlayerAnimationStateVarsProvider : MonoBehaviour {
 
     private void HandleOnAttackStopAction (PlayerStatusProvider.AttackType attackType, bool cancelled)
     {
-        if (myAnimator == null)
-        {
-            return;
-        }
+		if(myAnimator == null || !myAnimator.isInitialized)
+			return;
 
         if(cancelled)
         {           
@@ -98,43 +100,57 @@ public class PlayerAnimationStateVarsProvider : MonoBehaviour {
 
 	public void ChargeStartAction()
 	{
-		if (myAnimator != null)
-			myAnimator.SetBool("Charge", true);
+		if(myAnimator == null || !myAnimator.isInitialized)
+			return;
+
+		myAnimator.SetBool("Charge", true);
 	}
 
 	public void ChargeStopAction(bool complete)
 	{
-		if (myAnimator != null)
-			myAnimator.SetBool("Charge", false);
+		if(myAnimator == null || !myAnimator.isInitialized)
+			return;
+
+		myAnimator.SetBool("Charge", false);
 	}       
 
     public void HorizontalKnockbackAction()
     {
-        if (myAnimator != null)
-            myAnimator.SetTrigger("KnockBack");
+		if(myAnimator == null || !myAnimator.isInitialized)
+			return;
+
+		myAnimator.SetTrigger("KnockBack");
     }
 
 	public void VerticalKnockbackAction()
 	{
-		if (myAnimator != null)
-			myAnimator.SetTrigger("KnockBack");
+		if(myAnimator == null || !myAnimator.isInitialized)
+			return;
+
+		myAnimator.SetTrigger("KnockBack");
 	}
 
     public void DieAction(Transform source, Vector2 deathVector)
     {
-        if (myAnimator != null)
-            myAnimator.SetTrigger("Die");
+		if(myAnimator == null || !myAnimator.isInitialized)
+			return;
+
+		myAnimator.SetTrigger("Die");
     }
 
     public void RespawnAction(bool initial)
     {
-        if (myAnimator != null)
-            myAnimator.SetTrigger("Respawn");
+		if(myAnimator == null || !myAnimator.isInitialized)
+			return;
+
+		myAnimator.SetTrigger("Respawn");
     }
 
     public void OnInvincibleStatusChangedAction(bool isInvicible)
     {
-        if (myAnimator != null)
-            myAnimator.SetBool("Invincible", isInvicible);
+		if(myAnimator == null || !myAnimator.isInitialized)
+			return;
+
+		myAnimator.SetBool("Invincible", isInvicible);
     }      
 }

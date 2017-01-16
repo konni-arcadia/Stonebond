@@ -189,12 +189,12 @@ Material:
       data:
         first:
           name: _Color
-        second: {r: 0.7, g: 0.901, b: 0.913, a: 1}
+        second: {r: 0.08627451, g: 0.8509804, b: 0.9372549, a: 1}
+      data:
+        first:
+          name: _ChromaTexColor
+        second: {r: 0.08627451, g: 0.8509804, b: 0.9372549, a: 1}
       data:
         first:
           name: _Emission
         second: {r: 1, g: 1, b: 1, a: 1}
-      data:
-        first:
-          name: _ChromaTexColor
-        second: {r: 0, g: 0.67, b: 0.71, a: 1}

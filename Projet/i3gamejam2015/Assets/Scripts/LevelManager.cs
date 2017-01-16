@@ -29,6 +29,9 @@ public class LevelManager : MonoBehaviour {
 	}
 	private float shieldsDeactivationDelayAfterBondDestroy = 0.3f; // in secs
 
+	public float distBtwLinkedPlayers;
+	public float minDistBtwLinkedPlayersToChargeGauge = 3.0f;
+
 	private bool hasAlreadyShownWinScreen, allowsCreateBond;
 	// Speed at which the bond gauge increases (previously 0.00025 * 60). This is bound to evolute as time goes.
 	public float gaugeIncreaseFactor = 0.006f, gaugeIncreaseMultiplier = 1.1f, gaugeIncreaseMaxFactor = 0.03f;
@@ -82,19 +85,26 @@ public class LevelManager : MonoBehaviour {
 
                 if(appearedSinceSec >= BondLink.bondCreateDelayAfterMiddleBlastDuration)
                 {
-                    var distance = Vector3.Distance(bondLink.playerA.transform.position, bondLink.playerB.transform.position);
-                    bondLinkGauge += distance * gaugeIncreaseFactor * Time.deltaTime;
-                    bondLink.completion = bondLinkGauge;
+					// Compute distance between the two linked players
+					distBtwLinkedPlayers = Vector3.Distance(bondLink.playerA.transform.position, bondLink.playerB.transform.position);
 
-                    // A winner is designated
-                    if(bondLinkGauge > 1)
-                    {
-                        bondLinkGauge = 1;
-                        if(!hasAlreadyShownWinScreen)
-                        {
-                            showWinScreen(bondLink.playerAStateController, bondLink.playerBStateController);
-                        }
-                    }
+					// Check minimal distance between players
+					if(distBtwLinkedPlayers >= minDistBtwLinkedPlayersToChargeGauge)
+					{
+						// Compute gauge increase
+						bondLinkGauge += distBtwLinkedPlayers * gaugeIncreaseFactor * Time.deltaTime;
+	                    bondLink.completion = bondLinkGauge;
+
+	                    // A winner is designated
+	                    if(bondLinkGauge > 1)
+	                    {
+	                        bondLinkGauge = 1;
+	                        if(!hasAlreadyShownWinScreen)
+	                        {
+	                            showWinScreen(bondLink.playerAStateController, bondLink.playerBStateController);
+	                        }
+	                    }
+					}
                 }
             }
 		}

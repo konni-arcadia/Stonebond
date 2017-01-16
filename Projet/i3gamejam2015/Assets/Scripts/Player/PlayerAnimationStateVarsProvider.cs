@@ -1,37 +1,38 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerAnimationStateVarsProvider : MonoBehaviour {
-
+public class PlayerAnimationStateVarsProvider : MonoBehaviour
+{
     PlayerStatusProvider myStatusProvider;
     Animator myAnimator;
 
-	// Use this for initialization
-	void Awake () {
-        myStatusProvider = GetComponent<PlayerStatusProvider>();
-        myAnimator = GetComponentInChildren<Animator>();
-        if(myStatusProvider == null)
-        {
-            Debug.Log("PlayerStatusProvider n'a pas pu etre trouve dans le joueur " + name);
-        }
-        if (myAnimator == null)
-        {
-            Debug.Log("Animator n'a pas pu etre trouve dans le joueur " + name);
-        }
+	void Awake ()
+	{
+		// Get the player status provider
+		myStatusProvider = GetComponent<PlayerStatusProvider>();
+		if(myStatusProvider == null) {
+			Debug.Log("PlayerStatusProvider n'a pas pu etre trouve dans le joueur " + name);
+		}
+
+		// Get the animator
+		myAnimator = GetComponentInChildren<Animator>();
+		if (myAnimator == null) {
+			Debug.Log("Animator n'a pas pu etre trouve dans le joueur " + name);
+		}
 
 		// Register to status events
-        myStatusProvider.OnAxisHChanged += AxisHChangedAction;
-        myStatusProvider.OnVelocityYChanged += VelocityYChangedAction;
-        myStatusProvider.OnGroundedStatusChanged += GroundedAction;
-        myStatusProvider.OnGrindingStatusChanged += OnWallAction;
-        myStatusProvider.OnAttackStartAction += HandleOnAttackStartAction;
-        myStatusProvider.OnAttackStopAction += HandleOnAttackStopAction;
+		myStatusProvider.OnAxisHChanged += AxisHChangedAction;
+		myStatusProvider.OnVelocityYChanged += VelocityYChangedAction;
+		myStatusProvider.OnGroundedStatusChanged += GroundedAction;
+		myStatusProvider.OnGrindingStatusChanged += OnWallAction;
+		myStatusProvider.OnAttackStartAction += HandleOnAttackStartAction;
+		myStatusProvider.OnAttackStopAction += HandleOnAttackStopAction;
 		myStatusProvider.OnChargeStartAction += ChargeStartAction;
 		myStatusProvider.OnChargeStopAction += ChargeStopAction;		
-        myStatusProvider.OnVerticalKnockbackAction += VerticalKnockbackAction;
+		myStatusProvider.OnVerticalKnockbackAction += VerticalKnockbackAction;
 		myStatusProvider.OnHorizontalKnockbackAction += HorizontalKnockbackAction;
-        myStatusProvider.OnDieAction += DieAction;
-        myStatusProvider.OnRespawnWarningAction += RespawnAction;
+		myStatusProvider.OnDieAction += DieAction;
+		myStatusProvider.OnRespawnWarningAction += RespawnAction;
 	}
 
 	void OnDestroy()

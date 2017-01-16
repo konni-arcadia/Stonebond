@@ -96,9 +96,9 @@
             o.Emission = chromaTex.rgb * _ChromaColor.rgb * chromaTex.a * _ChromaEmissionFactor  * _ChromaLightPct
                 + mainTex.rgb * _BodyColor.rgb * mainTex.a * _BodyEmissionFactor * bodyOpacity;
 
-            fixed4 nmpTex = tex2D(_NormalMapTex, IN.uv_MainTex);
-            o.Normal = UnpackNormal(nmpTex);
-            o.Normal.y = o.Normal.y * _NormalYModifier;
+            //fixed4 nmpTex = tex2D(_NormalMapTex, IN.uv_MainTex);
+            //o.Normal = UnpackNormal(nmpTex);
+            //o.Normal.y = o.Normal.y * _NormalYModifier;
 		}
 		ENDCG
 	}

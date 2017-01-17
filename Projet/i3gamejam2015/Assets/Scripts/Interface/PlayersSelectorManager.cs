@@ -30,8 +30,11 @@ public class PlayersSelectorManager : MonoBehaviour {
 		bool canStart = true;
 		int nbChosen = 0;
 		for (int i = 0; i < listPlayerSelector.Length; i++) {
+
+			// Only player 1 can go back
+			if(i == 0)
+				CheckGoBackPrevious(i + 1);
 			
-			CheckGoBackPrevious(i + 1);
 			if (listPlayerSelector [i].HasChoosen) {
 				nbChosen++;
 			}

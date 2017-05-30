@@ -20,3 +20,5 @@ It was held in Lausanne, Switzerland with around thirty people from the young sw
 The game jam theme was "42" and we decided to do a 4-player game with a 2 player winning condition. The game is meant to represent a bond between members of a regional game development scene. It constitutes a creative space where creators can share knowledge, ideas and experiences. As such, the challenges were not only in the core creation of the game but also in the sharing structure and atmosphere we had to build and sustain. 
 
 Thanks for your support! Hope you enjoy our new type of multiplayer couch madness!
+
+http://store.steampowered.com/app/524240/STONEBOND_The_Gargoyles_Domain/

@@ -1,5 +1,4 @@
-# Stonebond
-Stonebond - The Gargoyle's Domain
+# Stonebond - The Gargoyle's Domain
 
 WARNING: This is a local 4 PLAYER-ONLY COUCH GAME
 
